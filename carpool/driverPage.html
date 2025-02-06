@@ -1,17 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver</title>
-    <link rel="stylesheet" href="Capstone-Project/css/driverPage.css">
-</head>
-<body>
-    <div class="features">
-        <button id="activity" class="feature">Feature 1</button>
-        <button id="history" class="feature">Feature 2</button>
-        <button id="earnings" class="feature">Feature 3</button>
-        <button id="vehicles" class="feature">Feature 4</button>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Button Features</title>
+        <link rel="stylesheet" href="css/driverPage.css">
+    </head>
+    <body>
+        <div class="features">
+            <button id="activity" class="feature"
+                data-content="scheduleContent">Feature 1</button>
+            <button id="history" class="feature"
+                data-content="historyContent">Feature 2</button>
+            <button id="earnings" class="feature"
+                data-content="earningsContent">Feature 3</button>
+            <button id="vehicles" class="feature"
+                data-content="vehicleContent">Feature 4</button>
+        </div>
+        <div class="contents">
+            <div class="scheduleContent">
+                <div class="addRides">
+                    <table>
+                        <tr>
+                            <td>Date</td>
+                            <td>
+                                <select id="weekdays" name="weekdays">
+                                    <option value="monday">Monday</option>
+                                    <option value="tuesday">Tuesday</option>
+                                    <option value="wednesday">Wednesday</option>
+                                    <option value="thursday">Thursday</option>
+                                    <option value="friday">Friday</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Time
+                            </td>
+                            <td>
+                                <select id="hour" name="hour">
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                </select>
+                                :
+                                <select id="min" name="min">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Pick-Up Point :
+                            </td>
+                            <td>
+                                <select id="pickUpPoint" name="pickUpPoint">
+                                    <option value="apu">APU</option>
+                                    <option value="lrt">LRT Bukit Jalil</option>
+                                    <option value="sriPetaling">APU</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Drop-Off Point :
+                            </td>
+                            <td>
+                                <select id="dropOffPoint" name="dropOffPoint">
+                                    <option value="apu">APU</option>
+                                    <option value="lrt">LRT Bukit Jalil</option>
+                                    <option value="sriPetaling">APU</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="displayRides">
+                    test
+                </div>
+            </div>
+            <div class="historyContent" style="display: none;">testing2</div>
+            <div class="earningsContent" style="display: none;">testing3</div>
+            <div class="vehicleContent" style="display: none;">testing4</div>
+        </div>
+        <script src="js/driverPage.js"></script>
+    </body>
 </html>
