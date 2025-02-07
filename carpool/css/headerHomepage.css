@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.topbar{
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    justify-content: space-between;
+    background: linear-gradient(to right, #0B1A40, #1E3A8A);
+    color: white;
+}
+
+.topbar h1{
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.topbar button{
+    padding: 8px 15px;
+    color: white;
+    background-color: #1E3A8A;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    font-size: 17px;
+    text-shadow: #0B1A40;
+    margin-right: 10px;
+    align-items: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.topbar button:hover{
+    background-color: #007bff;
+}
+
+.navbar{
+    background-color: #0B1A40;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.navbar ul{
+    justify-content: center;
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li{
+    margin: 0 25px;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;   
+    font-weight: bold;
+    padding: 12px 20px;
+}
+
+.navbar ul li a:hover{
+    color: #007bff;
+    text-underline-position: below;
+}
