@@ -1,26 +1,27 @@
 .features {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     gap: 10px;
     margin-top: 20px;
     padding: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    /* background-color: #f8f9fa; */
+    /* border: 1px solid #ddd; */
+    /* border-radius: 5px; */
 }
 
 .feature {
     flex: 1;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     text-align: center;
     position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .feature::after {
@@ -30,7 +31,7 @@
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: #ffffff;
+    background-color: #000000;
     transition: width 0.3s ease, left 0.3s ease;
 }
 
@@ -42,35 +43,39 @@
 
 .contents {
     margin-top: 20px;
-}
-
-.scheduleContent,
-.historyContent,
-.earningsContent,
-.vehicleContent {
-    display: none;
-}
-
-.scheduleContent.active,
-.historyContent.active,
-.earningsContent.active,
-.vehicleContent.active {
-    display: block;
-}
-
-.addRides {
-    flex: 1;
-}
-
-.displayRides {
-    flex: 1;
-    background-color: #f8f9fa;
-    padding: 10px;
+    padding: 20px;
+    background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.scheduleContent {
+.ridesContent,
+.activityContent,
+.earningsContent,
+.vehicleContent,
+.historyContent {
+    display: none;
+}
+
+/* Flex layout for the rides content */
+.ridesContent {
     display: flex;
     gap: 20px;
+}
+
+.addTable {
+    flex: 1;
+}
+
+.addedRides {
+    flex: 1;
+}
+
+/* Optional styling for the addTable and addedRides sections */
+.addTable table, .addedRides table {
+    /* width: 100%; */
+}
+
+button {
+    margin-top: 20px; /* Add spacing above the button */
 }

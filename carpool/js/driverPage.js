@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const contentId = this.getAttribute('data-content');
 
             contents.forEach(content => {
-                if (content.classList.contains(contentId)) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
+                // Remove 'active' class from all contents
+                content.style.display = 'none';
             });
+
+            // Add 'active' class to the selected content
+            document.querySelector('.' + contentId).style.display = 'block';
 
             // Remove 'active' class from all buttons
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -21,4 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
         });
     });
+
+    // By default, show the first content and mark the first button as active
+    if (buttons.length > 0 && contents.length > 0) {
+        buttons[0].classList.add('active');
+        contents[0].style.display = 'block';
+    }
 });
