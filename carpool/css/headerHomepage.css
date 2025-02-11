@@ -51,7 +51,8 @@
 }
 
 .navbar ul li{
-    margin: 0 25px;
+    position: relative;
+    margin: 0 20px;
 }
 
 .navbar ul li a{
@@ -60,9 +61,41 @@
     font-size: 18px;   
     font-weight: bold;
     padding: 12px 20px;
+    display: block;
 }
 
 .navbar ul li a:hover{
     color: #007bff;
     text-underline-position: below;
 }
+
+/*dropdown*/
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1E3A8A;
+    border-radius: 5px;
+    min-width: 100px;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+}
+
+.dropdown-content li a{
+    padding: 10px 15px;
+    display: block;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+}
+
+.dropdown-content li{
+    margin:0;
+    width: 100%;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
