@@ -1,34 +1,16 @@
+<?php
+    include ("dbconn.php");
+    include ("headerHomepage.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/headerHomepage.css">
+    <title>Homepage</title>
     <link rel="stylesheet" href="css/homepage.css">
-    <title>headerHomepage</title>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">APshare</div>
-        <ul class = "navlinks">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Passenger</a></li>
-            <li><a href="#">Driver</a></li>
-            <li><a href="#">News</a></li>
-            <li class="dropdown">
-                <a href="#">Support</a>
-                <ul class="dropdown-content">
-                    <li><a href="">FAQ</a></li>
-                </ul>   
-            </li>
-        </ul>
-        <div class="buttons">
-            <button class="login">Login</button>
-            <button class="signup">Sign Up</button>
-        </div>
-    </div>
-    <!-- for home page -->
     <div class="homepage-container">
         <div class="wrapper">
             <div class="ads">
@@ -62,6 +44,7 @@
             </div>
         </div>
         <div class="slogan-1">
+            <br><br><br>
             <h1>Lorem ipsum dolor sit amet.</h1>
             <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
                 Cupiditate iure enim odio necessitatibus dolorem aut vel, blanditiis 
@@ -76,6 +59,7 @@
             <div class="wave" id="wave4" style="--i:4;"></div>
         </div>
         <div class="ourservices">
+            <br><br><br>
             <h2>Our Services</h2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
@@ -107,7 +91,6 @@
                 wave4.style.backgroundPositionX = 100 + value * -2 + 'px';
             })
         </script>
-    
     </div>
 </body>
 </html>
