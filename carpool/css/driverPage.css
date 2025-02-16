@@ -2,17 +2,19 @@
     display: flex;
     flex-wrap: wrap; /* Ensures responsiveness */
     gap: 20px; /* Space between the two divs */
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     width: 100%; /* Make sure it takes full width */
 }
 
 .addRides,
 .historyTable {
-    flex: 1; /* Make both divs take equal space */
-    /* min-width: 300px; Ensures they don't collapse on smaller screens */
-    /* max-width: 48%; Prevents them from stretching too much */
-    margin-left: 40px;
+    flex: 1; /* Allows both divs to take equal space */
+    max-width: 500px; /* Prevents them from stretching too much */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content inside */
+    text-align: center;
     border: 2px solid black;
 }
 
@@ -47,7 +49,7 @@
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: #000000;
+    background-color: #d75c5c;
     transition: width 0.3s ease, left 0.3s ease;
 }
 

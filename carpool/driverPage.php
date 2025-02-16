@@ -1,5 +1,6 @@
 <?php
-include("dbconn.php")
+include("dbconn.php");
+include("headerHomepage.php")
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +35,7 @@ include("dbconn.php")
     <div class="activityContent">recentActivities</div>
     <div class="rideContent" style="display: none;">
       <div class="addRides">
-        <form action method="post" id="addRide">
+        <form action="php/driver/addRideProcess.php" method="post" id="addRide">
           <table class="addRidesTable">
             <tr>
               <td>
