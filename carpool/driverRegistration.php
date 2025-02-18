@@ -1,6 +1,7 @@
 <?php
-include("dbconn.php")
-  ?>
+include("dbconn.php");
+include("headerHomepage.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@ include("dbconn.php")
 </head>
 
 <body>
-  <div class="forms">
+  <div class="driverRegForm">
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
       enctype="multipart/form-data">
       <div id="driverSection">
@@ -100,12 +101,20 @@ include("dbconn.php")
           <tr>
             <td>Type</td>
             <td>
-              <input type="text" name="vehicleType" id="vehicleType" required>
+              <select name="vehicleType" id="vehicleType" required>
+                <option value="">Select Vehicle Type</option>
+                <option value="motorcar">Motorcar</option>
+                <option value="pickup">Pickup Truck</option>
+                <option value="jeep">Jeep</option>
+                <option value="van">Van</option>
+                <option value="mpv">MPV</option>
+                <option value="suv">SUV</option>
+              </select>
               <span class="error" id="vehicleTypeError"></span>
             </td>
           </tr>
           <tr>
-            <td>Year</td>
+            <td>Manufacturing Year</td>
             <td>
               <input type="number" name="vehicleYear" id="vehicleYear" required min="1900" max="2099">
               <span class="error" id="vehicleYearError"></span>
@@ -114,16 +123,39 @@ include("dbconn.php")
           <tr>
             <td>Brand</td>
             <td>
-              <input type="text" name="vehicleBrand" id="vehicleBrand" required>
+              <select name="vehicleBrand" id="vehicleBrand" required onchange="updateModels()">
+                <option value="">Select Brand</option>
+                <option value="Perodua">Perodua</option>
+                <option value="Proton">Proton</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
+                <option value="Nissan">Nissan</option>
+                <option value="Mazda">Mazda</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Kia">Kia</option>
+              </select>
               <span class="error" id="vehicleBrandError"></span>
             </td>
           </tr>
           <tr>
-            <td>Color</td>
+            <td>Model</td>
             <td>
-              <input type="text" name="vehicleColor" id="vehicleColor" required>
-              <span class="error" id="vehicleColorError"></span>
+              <select name="vehicleModel" id="vehicleModel" required>
+                <option value="">Select Model</option>
+              </select>
+              <span class="error" id="vehicleModelError"></span>
             </td>
+          </tr>
+
+          <script src="js/register/vehicleSelection.js"></script>
+
+          <td>Color</td>
+          <td>
+            <input type="text" name="vehicleColor" id="vehicleColor" required>
+            <span class="error" id="vehicleColorError"></span>
+          </td>
           </tr>
           <tr>
             <td>Plate Number</td>
@@ -135,8 +167,7 @@ include("dbconn.php")
           <tr>
             <td>Seat Number</td>
             <td>
-              <input type="number" name="seatNo" id="seatNo" required min="1">
-              <span class="error" id="seatNoError"></span>
+              <input type="number" name="seatNo" id="seatNo" required readonly>
             </td>
           </tr>
           <tr>

@@ -29,31 +29,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (in_array($fileType, $allowedTypes)) {
     if (move_uploaded_file($_FILES["license_photo"]["tmp_name"], $targetFilePath)) {
-        // Insert User
-        $insertUserSQL = "INSERT INTO user (tpnumber, password, role) VALUES ('$tpNumber', '$password', 'driver')";
-        if (mysqli_query($conn, $insertUserSQL)) {
-            $user_id = mysqli_insert_id($conn); // Get the newly created user ID
-            
-            // Insert Driver Data
-            $insertDriverSQL = "INSERT INTO driver (email,firstname, lastname, phone_no, license_no, license_expiry_date, license_photo, user_id, rating, pending, registration_date) 
-                                VALUES ('$email','$fName', '$lName', '$phone', '$license', '$licenseExp', '$targetFilePath', '$user_id', '5', 'pending', '$date')";
-            
-            if (mysqli_query($conn, $insertDriverSQL)) {
-                echo "<script>alert('Driver Registered Successfully!'); window.location.href='successPage.php';</script>";
-            } else {
-                echo "Error inserting driver: " . mysqli_error($conn);
-            }
-        } else {
-            echo "Error inserting user: " . mysqli_error($conn);
-        }
-    } else {
-        echo "Error uploading license photo.";
-    }
-} else {
-    echo "Invalid file type. Only JPG, JPEG, and PNG allowed.";
-}
+      // Insert User
+      $insertUserSQL = "INSERT INTO user (tpnumber, password, role) VALUES ('$tpNumber', '$password', 'driver')";
+      if (mysqli_query($conn, $insertUserSQL)) {
+        $user_id = mysqli_insert_id($conn); // Get the newly created user ID
 
-mysqli_close($conn);
+        // Insert Driver Data
+        $insertDriverSQL = "INSERT INTO driver (email,firstname, lastname, phone_no, license_no, license_expiry_date, license_photo, user_id, rating, pending, registration_date) 
+                                VALUES ('$email','$fName', '$lName', '$phone', '$license', '$licenseExp', '$targetFilePath', '$user_id', '5', 'pending', '$date')";
+
+        if (mysqli_query($conn, $insertDriverSQL)) {
+          $driver_id = mysqli_insert_id($conn);
+
+          $vehicleType = $_POST["vehicleType"];
+          $vehicleBrand = $_POST["vehicleBrand"]; // Selected Brand
+          $vehicleModel = $_POST["vehicleModel"]; // Selected Model
+          $vehicleYear = $_POST["vehicleYear"];
+          $vehicleColor = $_POST["vehicleColor"];
+          $seatNum = $_POST["seatNo"];
+          $plateNo = $_POST["plateNo"];
+
+          $insertVehicleSQL = "INSERT INTO vehicle (type, year, brand, color, plate_no, seat_no, driver_id)
+                                VALUES ('$vehicleType', '$vehicleYear', '$vehicleBrand', '$vehicleColor', '$plateNo', '$seatNum', '$driver_id')";
+                                
+          if(mysqli_query($conn,$insertVehicleSQL)){
+            echo "<script>alert('Driver Registered Successfully!'); window.location.href='../../successPage.php';</script>";
+          }
+        } else {
+          echo "Error inserting driver: " . mysqli_error($conn);
+        }
+      } else {
+        echo "Error inserting user: " . mysqli_error($conn);
+      }
+    } else {
+      echo "Error uploading license photo.";
+    }
+  } else {
+    echo "Invalid file type. Only JPG, JPEG, and PNG allowed.";
+  }
+
+  mysqli_close($conn);
 }
 
 ?>
