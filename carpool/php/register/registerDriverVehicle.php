@@ -16,21 +16,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $licenseExp = $_POST["txtExpDate"];
     $date = date("Y-m-d");
 
+    //Check if user is APU's student or staff
     $checkApuSQL = "SELECT * FROM apu WHERE tpnumber = '$tpNumber'";
     $apuResult = mysqli_query($conn, $checkApuSQL);
+    //Check if the user has registered
+    $checkUser = "SELECT * FROM user WHERE tpnumber = '$tpNumber'";
+    $userResult = mysqli_query($conn,$checkUser);
 
+    //Message if the user is not an APU student of staff
     if (mysqli_num_rows($apuResult) == 0) {
-        echo "<script>alert('Error: TP Number does not exist in APU records!'); window.history.back();</script>";
+        echo "<script>alert('Error: TP Number does not exist in APU records!'); window.location.href = document.referrer + '?clear=true'";
         exit();
     }
 
+    //Message if the user is registered
+    if(mysqli_num_rows($userResult) > 0){
+      echo"<script>alert('Error: You have registered! Please proceed to login!');window.location.href='../../login.php';</script>";
+      exit();
+    }
+
     // Set upload folder
-    $targetDirFront = "../../image/licenses/front";
-    $targetDirBack = "../../image/licenses/back";
+    $targetDirFront = "../../image/licenses/front/";
+    $targetDirBack = "../../image/licenses/back/";
 
     // Ensure directory exists
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
+    if (!is_dir($targetDirFront)) {
+        mkdir($targetDirFront, 0777, true);
+    }
+    if (!is_dir($targetDirBack)) {
+        mkdir($targetDirBack, 0777, true);
     }
 
     // Handling License Front Photo
@@ -52,13 +66,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Insert into User Table
             $insertUserSQL = "INSERT INTO user (tpnumber, password, role) VALUES ('$tpNumber', '$password', 'driver')";
             if (mysqli_query($conn, $insertUserSQL)) {
-                $user_id = mysqli_insert_id($conn); // Get the newly created user ID
+                //Capture the newly generated user ID
+                $user_id = mysqli_insert_id($conn); 
 
                 // Insert into Driver Table
                 $insertDriverSQL = "INSERT INTO driver (email, firstname, lastname, phone_no, license_no, license_expiry_date, license_photo_front, license_photo_back, user_id, rating, status, registration_date) 
                                     VALUES ('$email', '$fName', '$lName', '$phone', '$license', '$licenseExp', '$frontTargetFilePath', '$backTargetFilePath', '$user_id', '5', 'pending', '$date')";
 
                 if (mysqli_query($conn, $insertDriverSQL)) {
+                    //Capture the newly generated driver ID
                     $driver_id = mysqli_insert_id($conn);
 
                     $vehicleType = $_POST["vehicleType"];
@@ -74,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                          VALUES ('$vehicleType', '$vehicleYear', '$vehicleBrand', '$vehicleModel', '$vehicleColor', '$plateNo', '$seatNum', '$driver_id')";
 
                     if (mysqli_query($conn, $insertVehicleSQL)) {
-                        echo "<script>alert('Driver Registered Successfully!'); window.location.href='../../successPage.php';</script>";
+                        echo "<script>alert('Driver Registered Successfully!'); window.location.href='../../success.php';</script>";
                     } else {
                         echo "Error inserting vehicle: " . mysqli_error($conn);
                     }
