@@ -66,11 +66,7 @@
             <div class="rolecard">
                 <div class="role">
                     <div class="icon">
-                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none">
-                            <circle cx="12" cy="8" r="6" />
-                            <path d="M15.477 12.89C17.279 11.301 19 9.5 19 7.1 19 3.6 15.866 1 12 1S5 3.6 5 7.1c0 2.4 1.721 4.201 3.523 5.79" />
-                            <path d="M12 14v8M8 18h8" />
-                        </svg>
+                        <img src="image/homepage/driver.png" alt="driver icon" width="130px" height="120px">
                     </div>   
                     <h2>Driver</h2>             
                     <p>Join our community of drivers and start earning by sharing your rides with passengers heading in the same direction.</p>
@@ -78,10 +74,7 @@
                 </div>
                 <div class="role">
                     <div class="icon">
-                    <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none">
-                        <circle cx="12" cy="8" r="5" />
-                        <path d="M3 21v-2a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v2" />
-                    </svg>
+                        <img src="image/homepage/passenger.png" alt="passenger icon" width="120px" height="110px">
                     </div>
                     <h2>Passenger</h2>
                     <p>Find convenient and affordable rides to your destination. Connect with reliable drivers in your area.</p>
@@ -96,19 +89,11 @@
                 <div class="feature-wrapper">
                     <div class="feature-list swiper-wrapper">
                         <div class="feature-item swiper-slide">
-                            <h2>name</h2>
+                            <h2>Ride Creation</h2>
+                            <p>Create your own ride</p>
                         </div>
                         <div class="feature-item swiper-slide">
-                            <h2>name</h2>
-                        </div>
-                        <div class="feature-item swiper-slide">
-                            <h2>name</h2>
-                        </div>
-                        <div class="feature-item swiper-slide">
-                            <h2>name</h2>
-                        </div>
-                        <div class="feature-item swiper-slide">
-                            <h2>name</h2>
+                            <h2>Earnings</h2>
                         </div>
                         <div class="feature-item swiper-slide">
                             <h2>name</h2>

@@ -71,7 +71,10 @@ input:checked + label .description{
     transform: translateY(0) !important;
 }
 
-
+/* .card[for="a2"]{
+    background-image:url('../image/homepage/ad2.jpg');
+} */
+/*slogan*/
 .slogan-1{
     text-align: center;
     height: 80vh;
@@ -80,15 +83,16 @@ input:checked + label .description{
 .slogan-1 h1{
     margin-top: 100px;
     text-transform: uppercase;
-    color: white;
+    color: #ffc107;
     font-weight: bold;
 }
 .slogan-1 h4{
     margin-top: 50px;
     text-align: center;
+    margin-left: 320px;
     margin-bottom: 15rem;
     width: 800px;
-    color: white;
+    color: #e1e8eb;
 }
 
 /*wave effect*/
@@ -139,39 +143,40 @@ input:checked + label .description{
 /*services*/
 .ourservices {
     background-color: white;
-    height: 45rem;
+    height: 49rem;
 }
 
 .ourservices h1{
     color: black;
     text-align: center;
+    font-size: 40px;
 }
 
 .rolecard{
     display: flex;
-    gap: 2rem;
+    gap: 5rem;
     justify-content: center;
 }
 
 .role{
-    background: rgb(253, 253, 253);
+    background: #f8f8f8;
     border-radius: 12px;
     padding: 5rem;
     width: 500px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 6px rgba(0,0,0,0.3);
     transition: all 0.3 ease;
 }
 
 .role:hover{
     box-shadow: 0px 10px 30px -5px rgba(0,0,0,0.5);
-    transition: 0.2 ease;
+    transition: 0.5 ease;
 }
 
 .icon{
     background: #e3f2fd;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 125px;
     border-radius: 50%;
     display: flex;
     align-items: center;
