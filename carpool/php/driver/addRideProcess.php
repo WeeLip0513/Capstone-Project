@@ -1,22 +1,71 @@
 <?php
-include("dbconn.php"); // Include database connection
+session_start(); // Start session if not already started
+include("../../dbconn.php"); // Include database connection
+
+function calculateFare($pickup, $dropoff, $time)
+{
+    // Define base fares for routes
+    $fares = [
+        "lrt_bukit_jalil-apu" => 4,
+        "apu-pavilion_bukit_jalil" => 7,
+        "apu-sri_petaling" => 7,
+        "pavilion_bukit_jalil-apu" => 7,
+        "pavilion_bukit_jalil-sri_petaling" => 7
+    ];
+
+    // Format input to match keys
+    $routeKey = strtolower("$pickup-$dropoff");
+
+    // Check if the route exists in fares array
+    if (!isset($fares[$routeKey])) {
+        return "Invalid route selected.";
+    }
+
+    // Get base fare
+    $fare = $fares[$routeKey];
+
+    // Convert time to hours and check if it's peak hour (18:00 - 20:00)
+    $hour = (int) date("H", strtotime($time));
+
+    if ($hour >= 18 && $hour < 20) {
+        $fare *= 1.2; // Increase by 20% during peak hours
+    }
+
+    return $fare;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form values
-    $day = $_POST['day'];
+    $date = $_POST['txtDate']; // Ensure the input field name matches
     $hour = $_POST['hour'];
     $minute = $_POST['minute'];
     $pickup = $_POST['pickup'];
     $dropoff = $_POST['dropoff'];
     $vehicle = $_POST['vehicle'];
     $slots = $_POST['seatNo'];
+    $driver_id = $_SESSION['driverID'];
 
-    // Combine hour and minute to form time
+    // echo $date;
+    // echo $hour;
+    // echo $minute;
+    // echo $pickup;
+    // echo $dropoff;
+    // echo $vehicle;
+    echo $slots;
+    echo $driver_id;
+
+    // Convert date to day of the week
+    $dayOfWeek = strtolower(date("l", strtotime($day)));
+
+    // Format time
     $time = $hour . ":" . $minute;
 
+    // Calculate fare
+    $price = calculateFare($pickup, $dropoff, $time);
+
     // Insert data into the rides table
-    $sql = "INSERT INTO rides (day, time, pickup, dropoff, vehicle) 
-            VALUES ('$day', '$time', '$pickup', '$dropoff', '$vehicle')";
+    $sql = "INSERT INTO rides (date, day, time, pick_up_point, drop_off_point, price, slots_available, vehicle_id, driver_id) 
+            VALUES ('$date', '$dayOfWeek', '$time', '$pickup', '$dropoff', '$price', '$slots', '$vehicle', '$driver_id')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Ride added successfully!";

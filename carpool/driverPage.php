@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("dbconn.php");
 include("headerHomepage.php");
 
@@ -22,6 +23,8 @@ if (mysqli_num_rows($result) == 1) {
   $backLicensePath = str_replace("../../", "", $backImgPath);
 
   $driverID = $driver['id'];
+  $_SESSION['driverID'] = $driverID;
+  echo $_SESSION['driverID'];
 } else {
   echo "No driver record found!";
 }
@@ -130,7 +133,7 @@ if (mysqli_num_rows($result) == 1) {
                   <option value="apu">APU</option>
                   <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
                   <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
-                  <option value="srt_petaling">Sri Petaling</option>
+                  <option value="sri_petaling">Sri Petaling</option>
                 </select>
                 <span class="error" id="pickupError"></span>
               </td>
@@ -145,7 +148,7 @@ if (mysqli_num_rows($result) == 1) {
                   <option value="apu">APU</option>
                   <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
                   <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
-                  <option value="srt_petaling">Sri Petaling</option>
+                  <option value="sri_petaling">Sri Petaling</option>
                 </select>
                 <span class="error" id="dropoffError"></span>
               </td>
@@ -157,6 +160,31 @@ if (mysqli_num_rows($result) == 1) {
               <td>
                 <select name="vehicle" id="vehicle">
                   <option value="">Select Vehicle</option> <!-- Default option -->
+                  <?php
+                  // Fetch vehicles linked to this driver
+                  $getVehicleSQL = "SELECT * FROM vehicle WHERE driver_id = '$driverID'";
+                  $vehicleResult = mysqli_query($conn, $getVehicleSQL);
+
+                  if (mysqli_num_rows($vehicleResult) > 0) {
+                    while ($vehicle = mysqli_fetch_assoc($vehicleResult)) {
+                      $vehicleID = $vehicle['id'];
+                      $plateNo = $vehicle['plate_no'];
+                      echo "<option value='$vehicleID'>$plateNo</option>";
+                    }
+                  } else {
+                    echo "<option value=''>No Vehicles Available</option>";
+                  }
+                  ?>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h2>Slots: </h2>
+              </td>
+              <td>
+                <select name="seatNo" id="seatNo">
+                  <option value="">Seats Available</option> <!-- Default option -->
                   <?php
                   // Fetch vehicles linked to this driver
                   $getVehicleSQL = "SELECT * FROM vehicle WHERE driver_id = '$driverID'";
