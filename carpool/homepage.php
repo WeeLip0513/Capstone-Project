@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
@@ -60,21 +61,68 @@
         </div>
         <div class="ourservices">
             <br><br><br>
-            <h2>Our Services</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Cupiditate iure enim odio necessitatibus dolorem aut vel, blanditiis 
-                laborum doloremque consequuntur similique facilis quo facere minima saepe 
-                ipsa perferendis tempore molestiae reiciendis, veniam sequi fuga ab optio 
-                adipisci! Aperiam ad, dolorum at quia et deleniti molestias neque cumque assumenda 
-                distinctio quo? sefehofeoveivee esfneofnei.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Cupiditate iure enim odio necessitatibus dolorem aut vel, blanditiis 
-                laborum doloremque consequuntur similique facilis quo facere minima saepe 
-                ipsa perferendis tempore molestiae reiciendis, veniam sequi fuga ab optio 
-                adipisci! Aperiam ad, dolorum at quia et deleniti molestias neque cumque assumenda 
-                distinctio quo? sefehofeoveivee esfneofnei.
-            </p>
+            <h1>Choose Your Role</h1>
+            <br><br><br>
+            <div class="rolecard">
+                <div class="role">
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none">
+                            <circle cx="12" cy="8" r="6" />
+                            <path d="M15.477 12.89C17.279 11.301 19 9.5 19 7.1 19 3.6 15.866 1 12 1S5 3.6 5 7.1c0 2.4 1.721 4.201 3.523 5.79" />
+                            <path d="M12 14v8M8 18h8" />
+                        </svg>
+                    </div>   
+                    <h2>Driver</h2>             
+                    <p>Join our community of drivers and start earning by sharing your rides with passengers heading in the same direction.</p>
+                    <a href="/driver" class="learn-more">Learn More</a>
+                </div>
+                <div class="role">
+                    <div class="icon">
+                    <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" fill="none">
+                        <circle cx="12" cy="8" r="5" />
+                        <path d="M3 21v-2a7 7 0 0 1 7-7h4a7 7 0 0 1 7 7v2" />
+                    </svg>
+                    </div>
+                    <h2>Passenger</h2>
+                    <p>Find convenient and affordable rides to your destination. Connect with reliable drivers in your area.</p>
+                    <a href="/passenger" class="learn-more">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="feature">
+            <br><br><br>
+            <h1>Our Features</h1>
+            <div class="feature-container swiper">
+                <div class="feature-wrapper">
+                    <div class="feature-list swiper-wrapper">
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                        <div class="feature-item swiper-slide">
+                            <h2>name</h2>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-slide-button swiper-button-prev"></div>
+                    <div class="swiper-slide-button swiper-button-next"></div>
+                </div>
+            </div>
         </div>
         <script>
             let wave1 = document.getElementById('wave1');
@@ -91,6 +139,8 @@
                 wave4.style.backgroundPositionX = 100 + value * -2 + 'px';
             })
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="js/homepage/swiper.js"></script>
     </div>
 </body>
 </html>

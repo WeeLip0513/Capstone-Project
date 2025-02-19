@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">APshare</div>
+        <div class="logo">APool</div>
         <ul class = "navlinks">
             <li><a href="#">Home</a></li>
             <li><a href="#">About Us</a></li>
