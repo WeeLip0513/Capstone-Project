@@ -18,17 +18,42 @@
 
 .login-container{
     width: 50%;
-    background: #fff;
+    background: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px;
 }
-
+.passenger-container{
+    opacity: 0;
+    z-index: 1;
+}
+form{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 50px;
+}
+h1{
+    color: var(--grad-clrl);
+}
+.infield{
+    position: relative;
+    margin: 8px 0px;
+    padding: 20px;
+    width: 100%;
+}
+input{
+    width: 100%;
+    padding: 12px 8px;
+    background-color: #FFFFFF;
+}
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px 8px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -56,7 +81,7 @@ input {
     background-color: #333;
 }
 
-.overlay-container {
+/* .overlay-container {
     width: 50%;
     background-color: #00204a;
     color: white;
@@ -64,10 +89,10 @@ input {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 0px;
 }
 
 .overlay-container button {
     background-color: transparent;
     border: 1px solid white;
-}
+} */

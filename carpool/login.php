@@ -16,7 +16,7 @@ include("headerHomepage.php");
 
 <body>
     <div class="login-all-container">
-        <div class="login-container">
+        <div class="login-container passenger-container">
             <form action="#">
                 <h1>Login</h1>
                 <div class="infield">
