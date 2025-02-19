@@ -164,7 +164,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">
-        <img src="<?php echo htmlspecialchars($licensePath); ?>" alt="profile picture">
+        <img src="<?php echo htmlspecialchars($licensePath); ?>" alt="license photo" width="30%" height="40%">
       </div>
     </div>
   </div>

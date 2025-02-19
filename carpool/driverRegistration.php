@@ -82,10 +82,17 @@ include("headerHomepage.php");
             </td>
           </tr>
           <tr>
-            <td>License Photo</td>
+            <td>License Photo (Front)</td>
             <td>
               <input type="file" id="license_photo" name="license_photo" accept="image/*" required>
               <span class="error" id="license_photoError"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>License Photo (Back)</td>
+            <td>
+              <input type="file" id="license_photo_back" name="license_photo_back" accept="image/*" required>
+              <span class="error" id="license_photoBackError"></span>
             </td>
           </tr>
           <tr>
