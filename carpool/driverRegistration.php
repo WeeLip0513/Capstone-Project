@@ -13,9 +13,15 @@ include("headerHomepage.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register Driver & Vehicle</title>
   <script src="js/register/driverValidation.js" defer></script>
+  <script src="js/register/vehicleSelection.js" defer></script>
 </head>
 
 <body>
+  <script>
+    window.onload = function () {
+      document.getElementById("registrationForm").reset();
+    };
+  </script>
   <div class="driverRegForm">
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
       enctype="multipart/form-data">
@@ -157,8 +163,6 @@ include("headerHomepage.php");
             </td>
           </tr>
 
-          <script src="js/register/vehicleSelection.js"></script>
-          
           <tr>
             <td>Color</td>
             <td>
@@ -177,7 +181,7 @@ include("headerHomepage.php");
             <td>Seat Number</td>
             <td>
               <input type="number" name="seatNo" id="seatNo" required readonly>
-              <span class="error" id="seatNo"></span>
+              <span class="error" id="seatNoError"></span>
             </td>
           </tr>
           <tr>
@@ -190,6 +194,7 @@ include("headerHomepage.php");
       </div>
     </form>
   </div>
+
 </body>
 
 </html>
