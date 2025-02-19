@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pickup = $_POST['pickup'];
     $dropoff = $_POST['dropoff'];
     $vehicle = $_POST['vehicle'];
+    $slots = $_POST['seatNo'];
 
     // Combine hour and minute to form time
     $time = $hour . ":" . $minute;

@@ -58,7 +58,7 @@ include("headerHomepage.php");
           </tr>
           <tr>
             <td>
-              Email :
+              Email
             </td>
             <td>
               <input type="text" name="txtEmail" id="txtEmail" required
@@ -99,6 +99,11 @@ include("headerHomepage.php");
             <td>
               <input type="file" id="license_photo_back" name="license_photo_back" accept="image/*" required>
               <span class="error" id="license_photo_backError"></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center;">
+              <p>NOTES: Upload your license image in format of "yourname.jpg/jpeg/png"</p>
             </td>
           </tr>
           <tr>

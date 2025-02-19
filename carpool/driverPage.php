@@ -2,7 +2,7 @@
 include("dbconn.php");
 include("headerHomepage.php");
 
-$_SESSION['id'] = 5;
+$_SESSION['id'] = 7;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -11,17 +11,31 @@ mysqli_stmt_bind_param($stmt, "i", $userID);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-if (mysqli_num_rows($result) > 0) {
+if (mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
   echo "<pre>";
   print_r($driver); // Debugging: Print driver details
   echo "</pre>";
-  $imgPath = $driver['license_photo'];
-  $licensePath = str_replace("../../", "", $imgPath);
+  $frontImgPath = $driver['license_photo_front'];
+  $backImgPath = $driver['license_photo_back'];
+  $frontLicensePath = str_replace("../../", "", $frontImgPath);
+  $backLicensePath = str_replace("../../", "", $backImgPath);
+
+  $driverID = $driver['id'];
 } else {
   echo "No driver record found!";
 }
 ?>
+
+<script>
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const dd = String(today.getDate()).padStart(2, "0");
+
+  const todayDate = `${yyyy}-${mm}-${dd}`;
+  console.log(todayDate); // Example: "2025-02-16"
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +45,7 @@ if (mysqli_num_rows($result) > 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Driver</title>
   <link rel="stylesheet" href="css/driverPage.css" />
+  <script src="js/driver/addRideValidation.js"></script>
 </head>
 
 <body>
@@ -55,29 +70,24 @@ if (mysqli_num_rows($result) > 0) {
     <div class="activityContent">recentActivities</div>
     <div class="rideContent" style="display: none;">
       <div class="addRides">
-        <form action="php/driver/addRideProcess.php" method="post" id="addRide">
+        <form action="php/driver/addRideProcess.php" method="post" id="addRide" novalidate>
           <table class="addRidesTable">
             <tr>
               <td>
-                <h2>Day :</h2>
+                <h2>Date: </h2>
               </td>
               <td>
-                <select name="day" id="day" required>
-                  <option value="monday">Monday</option>
-                  <option value="tuesday">Tuesday</option>
-                  <option value="wednesday">Wednesday</option>
-                  <option value="thursday">Thursday</option>
-                  <option value="friday">Friday</option>
-                </select>
-                <span class="error" id="dayError"></span>
+                <input type="date" name="txtDate" id="txtDate">
+                <span class="error" id="txtDateError"></span>
               </td>
             </tr>
             <tr>
               <td>
-                <h2>Time :</h2>
+                <h2>Time:</h2>
               </td>
               <td>
                 <select name="hour" id="hour" required>
+                  <option value="">HH</option>
                   <option value="06">06</option>
                   <option value="07">07</option>
                   <option value="08">08</option>
@@ -93,6 +103,7 @@ if (mysqli_num_rows($result) > 0) {
                   <option value="18">18</option>
                 </select>
                 <select name="minute" id="minute" required>
+                  <option value="">MM</option>
                   <option value="00">00</option>
                   <option value="05">05</option>
                   <option value="10">10</option>
@@ -111,39 +122,62 @@ if (mysqli_num_rows($result) > 0) {
             </tr>
             <tr>
               <td>
-                <h2>Pick-Up Point :</h2>
+                <h2>Pick-Up Point: </h2>
               </td>
               <td>
                 <select name="pickup" id="pickup" required>
+                  <option value="">Select Pick-Up Point</option>
                   <option value="apu">APU</option>
                   <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
+                  <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
+                  <option value="srt_petaling">Sri Petaling</option>
                 </select>
                 <span class="error" id="pickupError"></span>
               </td>
             </tr>
             <tr>
               <td>
-                <h2>Drop-Off Point :</h2>
+                <h2>Drop-Off Point: </h2>
               </td>
               <td>
                 <select name="dropoff" id="dropoff" required>
+                  <option value="">Select Drop-Off Point</option>
                   <option value="apu">APU</option>
                   <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
+                  <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
+                  <option value="srt_petaling">Sri Petaling</option>
                 </select>
                 <span class="error" id="dropoffError"></span>
               </td>
             </tr>
             <tr>
               <td>
-                <h2>Vehicle :</h2>
+                <h2>Vehicle: </h2>
               </td>
               <td>
-                <select name="vehicle" id="vehicle">vehicle</select>
+                <select name="vehicle" id="vehicle">
+                  <option value="">Select Vehicle</option> <!-- Default option -->
+                  <?php
+                  // Fetch vehicles linked to this driver
+                  $getVehicleSQL = "SELECT * FROM vehicle WHERE driver_id = '$driverID'";
+                  $vehicleResult = mysqli_query($conn, $getVehicleSQL);
+
+                  if (mysqli_num_rows($vehicleResult) > 0) {
+                    while ($vehicle = mysqli_fetch_assoc($vehicleResult)) {
+                      $vehicleID = $vehicle['id'];
+                      $plateNo = $vehicle['plate_no'];
+                      echo "<option value='$vehicleID'>$plateNo</option>";
+                    }
+                  } else {
+                    echo "<option value=''>No Vehicles Available</option>";
+                  }
+                  ?>
+                </select>
               </td>
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <input type="submit" value="Submit" name="btnSubmit" class="button" />
+                <input type="submit" value="Add Ride" name="btnSubmit" class="button" />
               </td>
             </tr>
           </table>
@@ -164,7 +198,9 @@ if (mysqli_num_rows($result) > 0) {
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">
-        <img src="<?php echo htmlspecialchars($licensePath); ?>" alt="license photo" width="30%" height="40%">
+        <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
+          height="40%">
+        <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%" height="40%">
       </div>
     </div>
   </div>
