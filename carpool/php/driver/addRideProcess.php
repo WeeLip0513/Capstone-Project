@@ -7,10 +7,13 @@ function calculateFare($pickup, $dropoff, $time)
     // Define base fares for routes
     $fares = [
         "lrt_bukit_jalil-apu" => 4,
-        "apu-pavilion_bukit_jalil" => 7,
+        "apu-lrt_bukit_jalil" => 4,
+        "apu-pav_bukit_jalil" => 7,
+        "pav_bukit_jalil-apu" => 7,
         "apu-sri_petaling" => 7,
-        "pavilion_bukit_jalil-apu" => 7,
-        "pavilion_bukit_jalil-sri_petaling" => 7
+        "sri_petaling-apu" => 7,
+        "pav_bukit_jalil-sri_petaling" => 7,
+        "sri_petaling-pav_bukit_jalil" => 7,
     ];
 
     // Format input to match keys
@@ -45,12 +48,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $slots = $_POST['seatNo'];
     $driver_id = $_SESSION['driverID'];
 
-    // echo $date;
-    // echo $hour;
-    // echo $minute;
-    // echo $pickup;
-    // echo $dropoff;
-    // echo $vehicle;
+    echo $date;
+    echo $hour;
+    echo $minute;
+    echo $pickup;
+    echo $dropoff;
+    echo $vehicle;
     echo $slots;
     echo $driver_id;
 
@@ -63,13 +66,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Calculate fare
     $price = calculateFare($pickup, $dropoff, $time);
 
+    // echo $price;
+
     // Insert data into the rides table
-    $sql = "INSERT INTO rides (date, day, time, pick_up_point, drop_off_point, price, slots_available, vehicle_id, driver_id) 
+    $sql = "INSERT INTO ride (date, day, time, pick_up_point, drop_off_point, price, slots_available, vehicle_id, driver_id) 
             VALUES ('$date', '$dayOfWeek', '$time', '$pickup', '$dropoff', '$price', '$slots', '$vehicle', '$driver_id')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Ride added successfully!";
-        header("Location: driverPage.php?success=1"); // Redirect to driver page with success message
         exit();
     } else {
         echo "Error: " . mysqli_error($conn);

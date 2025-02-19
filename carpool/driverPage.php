@@ -104,6 +104,9 @@ if (mysqli_num_rows($result) == 1) {
                   <option value="16">16</option>
                   <option value="17">17</option>
                   <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
                 </select>
                 <select name="minute" id="minute" required>
                   <option value="">MM</option>
@@ -158,8 +161,8 @@ if (mysqli_num_rows($result) == 1) {
                 <h2>Vehicle: </h2>
               </td>
               <td>
-                <select name="vehicle" id="vehicle">
-                  <option value="">Select Vehicle</option> <!-- Default option -->
+                <select name="vehicle" id="vehicle" onchange="updateSlots()">
+                  <option value="">Select Vehicle</option>
                   <?php
                   // Fetch vehicles linked to this driver
                   $getVehicleSQL = "SELECT * FROM vehicle WHERE driver_id = '$driverID'";
@@ -169,7 +172,8 @@ if (mysqli_num_rows($result) == 1) {
                     while ($vehicle = mysqli_fetch_assoc($vehicleResult)) {
                       $vehicleID = $vehicle['id'];
                       $plateNo = $vehicle['plate_no'];
-                      echo "<option value='$vehicleID'>$plateNo</option>";
+                      $seatNumber = $vehicle['seat_no'] - 1;
+                      echo "<option value='$vehicleID' data-seats='$seatNumber'>$plateNo</option>";
                     }
                   } else {
                     echo "<option value=''>No Vehicles Available</option>";
@@ -183,26 +187,28 @@ if (mysqli_num_rows($result) == 1) {
                 <h2>Slots: </h2>
               </td>
               <td>
-                <select name="seatNo" id="seatNo">
-                  <option value="">Seats Available</option> <!-- Default option -->
-                  <?php
-                  // Fetch vehicles linked to this driver
-                  $getVehicleSQL = "SELECT * FROM vehicle WHERE driver_id = '$driverID'";
-                  $vehicleResult = mysqli_query($conn, $getVehicleSQL);
+                <input type="number" name="seatNo" id="seatNo" min="1" disabled>
 
-                  if (mysqli_num_rows($vehicleResult) > 0) {
-                    while ($vehicle = mysqli_fetch_assoc($vehicleResult)) {
-                      $vehicleID = $vehicle['id'];
-                      $plateNo = $vehicle['plate_no'];
-                      echo "<option value='$vehicleID'>$plateNo</option>";
+                <script>
+                  function updateSlots() {
+                    const vehicleSelect = document.getElementById('vehicle');
+                    const seatInput = document.getElementById('seatNo');
+                    const selectedOption = vehicleSelect.options[vehicleSelect.selectedIndex];
+                    const maxSeats = selectedOption.getAttribute('data-seats');
+
+                    if (maxSeats && selectedOption.value !== "") {
+                      seatInput.max = maxSeats;
+                      seatInput.value = maxSeats;
+                      seatInput.removeAttribute('disabled');
+                    } else {
+                      seatInput.value = "";
+                      seatInput.setAttribute('disabled', 'true');
                     }
-                  } else {
-                    echo "<option value=''>No Vehicles Available</option>";
                   }
-                  ?>
-                </select>
+                </script>
               </td>
             </tr>
+
             <tr>
               <td colspan="2" style="text-align: center">
                 <input type="submit" value="Add Ride" name="btnSubmit" class="button" />
