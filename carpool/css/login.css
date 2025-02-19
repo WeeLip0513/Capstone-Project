@@ -35,7 +35,7 @@
     padding: 0px 40px;
     transition: all 0.6 ease-in-out;
 }
-.passenger-container{
+.sign-in-container{
     z-index: 2;
 }
 form{
@@ -121,22 +121,102 @@ input:focus ~ label{
     cursor: pointer;
     position: absolute;
     left: 50%;
-    top: 304px;
+    top: 289px;
     transform: translateX(-50%);
     width: 143.67px;
+    height: 40px;
+    border: 1px solid #FFFFFF;
+    background: transparent;
+    border-radius: 20px;
+
 }
-/* .overlay-container {
-    width: 50%;
-    background-color: #00204a;
-    color: white;
+.overlay{
+    position: relative;
+    background: var(--linear-grad);
+    color: #FFFFFF;
+    left: -150%;
+    height: 100%;
+    width: 250%;
+    transition: transform 0.6s ease-in-out;
+}
+.overlay-signup{
+    position: absolute;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px;
+    flex-direction: column;
+    padding: 0px 40px;
+    text-align: center;
+    height: 100%;
+    width: 340px;
+    transition: 0.6s ease-in-out;
+}
+.signup-right{
+    right: 0;
+    transform: translateX(0%);
+}
+.signup-left{
+    right: 0;
+    transform: translateX(-12%);
+}
+.overlay-signup h1{
+    color: #FFFFFF;
+}
+p{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 25px 0px 35px;
+}
+.overlay-signup button{
+    border: none;
+    background-color: transparent;
+}
+.signup-right-active .overlay-container{
+    transform: translateX(-150%);
+}
+.signup-right-active .overlay{
+    transform: translateX(50%);
+}
+.signup-right-active .signup-right{
+    transform: translateX(35%);
+}
+.signup-right-active .signup-left{
+    transform: translateX(25%);
+}
+.signup-right-active .sign-in-container{
+    transform: translateX(20%);
+    opacity: 0;
+}
+.signup-right-active .sign-up-container{
+    transform: translateX(66.7%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
 }
 
-.overlay-container button {
-    background-color: transparent;
-    border: 1px solid white;
-} */
+@keyframes show{
+    0%, 50%{
+        opacity: 0;
+        z-index: 1;
+    }
+    50.1%, 100%{
+        opacity: 1;
+        z-index: 5;
+    }
+}
+.btnScaled{
+    animation: scaleBtn 0.6s;
+}
+@keyframes scaleBtn {
+    0% {
+        width: 143.67px
+    }
+    50% {
+        width: 250px
+    }
+    0% {
+        width: 143.67px
+    }
+}
