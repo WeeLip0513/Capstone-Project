@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+:root {
+    --linear-grad: linear-gradient(to right, #141E30, #243B55);
+    --grad-clr1: #141E30;
+    --grad-clr2: #243B55;
+}
 
 .login-all-container{
-    display: flex;
+    display: grid;
+    place-content: center;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -13,21 +19,24 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 13px;
     overflow: hidden;
-    margin-top: 30px;
 }
 
 .login-container{
-    width: 50%;
+    /* width: 50%;
     background: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 40px; */
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    padding: 0px 40px;
+    transition: all 0.6 ease-in-out;
 }
 .passenger-container{
-    opacity: 0;
-    z-index: 1;
+    z-index: 2;
 }
 form{
     height: 100%;
@@ -35,52 +44,87 @@ form{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 50px;
+    padding: 0px 50px ;
+    
 }
 h1{
-    color: var(--grad-clrl);
+    color: var(--grad-clr1);
 }
 .infield{
     position: relative;
     margin: 8px 0px;
-    padding: 20px;
+    padding: 2px;
+    padding-top: 20px;
     width: 100%;
 }
 input{
     width: 100%;
-    padding: 12px 8px;
-    background-color: #FFFFFF;
-}
-input {
-    width: 100%;
-    padding: 12px 8px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.forgot {
-    text-decoration: none;
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.log-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #000;
-    color: white;
+    padding: 12px 15px;
+    background-color: #f3f3f3;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    outline: none;
+}
+label{
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 2px;
+    background: var(--linear-grad);
     transition: 0.3s;
 }
-
-.log-button:hover {
-    background-color: #333;
+input:focus ~ label{
+    width: 100%;
 }
-
+ a{
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0px;
+ }
+ a.forgot{
+    padding-bottom: 3px;
+    border-bottom: 2px solid #FFFFFF;
+ }
+ .log-button{
+    border-radius: 20px;
+    border: 1px solid var(--grad-clr1);
+    background: var(--grad-clr2);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+ }
+.login-container button{
+    margin-top: 17px;
+    transform: 80ms ease-in;
+}
+.login-container button:hover{
+    background: #FFFFFF;
+    color: var(--grad-clr1);
+}
+.overlay-container{
+    position: absolute;
+    top: 0;
+    left: 60%;
+    width: 40%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 10;
+}
+#overlayBtn {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 304px;
+    transform: translateX(-50%);
+    width: 143.67px;
+}
 /* .overlay-container {
     width: 50%;
     background-color: #00204a;

@@ -15,7 +15,7 @@ include("headerHomepage.php");
 </head>
 
 <body>
-    <div class="login-all-container">
+    <div class="login-all-container" id="login-all-container">
         <div class="login-container passenger-container">
             <form action="#">
                 <h1>Login</h1>
@@ -40,6 +40,7 @@ include("headerHomepage.php");
                     <button class="log-button">Sign Up</button>
                 </div>
             </div>
+            <button id="overlayBtn"></button>
         </div>
     </div>
 </body>
