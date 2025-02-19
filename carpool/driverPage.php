@@ -1,6 +1,26 @@
 <?php
 include("dbconn.php");
-include("headerHomepage.php")
+include("headerHomepage.php");
+
+$_SESSION['id'] = 5;
+$userID = $_SESSION['id'];
+
+$query = "SELECT * FROM driver WHERE user_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $userID);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+if (mysqli_num_rows($result) > 0) {
+  $driver = mysqli_fetch_assoc($result);
+  echo "<pre>";
+  print_r($driver); // Debugging: Print driver details
+  echo "</pre>";
+  $imgPath = $driver['license_photo'];
+  $licensePath = str_replace("../../", "", $imgPath);
+} else {
+  echo "No driver record found!";
+}
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +162,11 @@ include("headerHomepage.php")
     </div>
     <div class="earningsContent" style="display: none">earning</div>
     <div class="historyContent" style="display: none">history</div>
-    <div class="profileContent" style="display: none">Profile</div>
+    <div class="profileContent" style="display: none">Profile
+      <div class="licenseImg">
+        <img src="<?php echo htmlspecialchars($licensePath); ?>" alt="profile picture">
+      </div>
+    </div>
   </div>
   <script src="js/driver/driverPage.js"></script>
 </body>
