@@ -92,7 +92,7 @@ include("headerHomepage.php");
             <td>License Photo (Back)</td>
             <td>
               <input type="file" id="license_photo_back" name="license_photo_back" accept="image/*" required>
-              <span class="error" id="license_photoBackError"></span>
+              <span class="error" id="license_photo_backError"></span>
             </td>
           </tr>
           <tr>
@@ -158,12 +158,13 @@ include("headerHomepage.php");
           </tr>
 
           <script src="js/register/vehicleSelection.js"></script>
-
-          <td>Color</td>
-          <td>
-            <input type="text" name="vehicleColor" id="vehicleColor" required>
-            <span class="error" id="vehicleColorError"></span>
-          </td>
+          
+          <tr>
+            <td>Color</td>
+            <td>
+              <input type="text" name="vehicleColor" id="vehicleColor" required>
+              <span class="error" id="vehicleColorError"></span>
+            </td>
           </tr>
           <tr>
             <td>Plate Number</td>
@@ -176,6 +177,7 @@ include("headerHomepage.php");
             <td>Seat Number</td>
             <td>
               <input type="number" name="seatNo" id="seatNo" required readonly>
+              <span class="error" id="seatNo"></span>
             </td>
           </tr>
           <tr>
