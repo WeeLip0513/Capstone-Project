@@ -6,9 +6,7 @@
     --grad-clr2: #243B55;
 }
 
-.login-all-container{
-    display: grid;
-    place-content: center;
+.login-all-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,9 +17,16 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 13px;
     overflow: hidden;
+    /* position: relative;
+    width: 850px;
+    height: 500px;
+    background-color: #FFFFFF;
+    box-shadow: 25px 30px 55px #5557;
+    border-radius: 13px;
+    overflow: hidden; */
 }
 
-.login-container{
+.login-container {
     /* width: 50%;
     background: #FFFFFF;
     display: flex;
@@ -35,29 +40,38 @@
     padding: 0px 40px;
     transition: all 0.6 ease-in-out;
 }
-.sign-in-container{
+
+.sign-up-container {
+    z-index: 1;
+    opacity: 0;
+}
+
+.sign-in-container {
     z-index: 2;
 }
-form{
+
+form {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 50px ;
-    
+    padding: 0px 50px;
 }
-h1{
+
+h1 {
     color: var(--grad-clr1);
 }
-.infield{
+
+.infield {
     position: relative;
     margin: 8px 0px;
     padding: 2px;
     padding-top: 20px;
     width: 100%;
 }
-input{
+
+input {
     width: 100%;
     padding: 12px 15px;
     background-color: #f3f3f3;
@@ -65,7 +79,8 @@ input{
     border: none;
     outline: none;
 }
-label{
+
+label {
     position: absolute;
     left: 50%;
     top: 100%;
@@ -75,20 +90,24 @@ label{
     background: var(--linear-grad);
     transition: 0.3s;
 }
-input:focus ~ label{
+
+input:focus~label {
     width: 100%;
 }
- a{
+
+a {
     color: #333;
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0px;
- }
- a.forgot{
+}
+
+a.forgot {
     padding-bottom: 3px;
     border-bottom: 2px solid #FFFFFF;
- }
- .log-button{
+}
+
+.log-button {
     border-radius: 20px;
     border: 1px solid var(--grad-clr1);
     background: var(--grad-clr2);
@@ -98,15 +117,18 @@ input:focus ~ label{
     padding: 12px 45px;
     letter-spacing: 1px;
     text-transform: uppercase;
- }
-.login-container button{
+}
+
+.login-container button {
     margin-top: 17px;
     transform: 80ms ease-in;
 }
-.login-container button:hover{
+
+.login-container button:hover {
     background: #FFFFFF;
     color: var(--grad-clr1);
 }
+
 .overlay-container{
     position: absolute;
     top: 0;
@@ -115,7 +137,7 @@ input:focus ~ label{
     height: 100%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
-    z-index: 10;
+    z-index: 9;
 }
 #overlayBtn {
     cursor: pointer;
@@ -139,7 +161,7 @@ input:focus ~ label{
     width: 250%;
     transition: transform 0.6s ease-in-out;
 }
-.overlay-signup{
+.overlay-panel{
     position: absolute;
     display: flex;
     align-items: center;
@@ -152,11 +174,11 @@ input:focus ~ label{
     transition: 0.6s ease-in-out;
 }
 .signup-right{
-    right: 0;
+    right: 0%;
     transform: translateX(0%);
 }
 .signup-left{
-    right: 0;
+    right: 60%;
     transform: translateX(-12%);
 }
 .overlay-signup h1{
@@ -219,4 +241,4 @@ p{
     0% {
         width: 143.67px
     }
-}
+} 
