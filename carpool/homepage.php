@@ -44,20 +44,78 @@
                 </label>
             </div>
         </div>
-        <div class="slogan-1">
-            <br><br><br>
-            <h1>Lorem ipsum dolor sit amet.</h1>
-            <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Cupiditate iure enim odio necessitatibus dolorem aut vel, blanditiis 
-                laborum doloremque consequuntur similique facilis quo facere minima saepe 
-                ipsa perferendis tempore molestiae reiciendis, veniam sequi fuga ab optio 
-                adipisci! Aperiam ad, dolorum at quia et deleniti molestias neque cumque assumenda 
-                distinctio quo? sefehofeoveivee esfneofnei.
-            </h4>
-            <div class="wave" id="wave1" style="--i:1;"></div>
-            <div class="wave" id="wave2" style="--i:2;"></div>
-            <div class="wave" id="wave3" style="--i:3;"></div>
-            <div class="wave" id="wave4" style="--i:4;"></div>
+        <br><br><br><br><br><br>
+        <div class="second-section">
+            <div class="driver-features-slider">
+                <div class="driver-content-container">
+                    <h5>Driver Features</h5>
+                    <h2>Create your ride and start earning!</h2>
+                    <div class="driver-list-style">
+                        <ul>Create your own ride</ul>
+                        <ul>Create your own ride</ul>
+                        <ul>Create your own ride</ul>
+                    </div>
+                </div>
+                <div class="slider">
+                    <div class="slide-track">
+                        <div class="slide">
+                            <img src="image/homepage/driver1.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver2.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver3.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver4.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver5.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver6.jpg" alt="Driver Features">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="driver-features-slider">
+                <div class="driver-content-container">
+                    <h5>Passenger Features</h5>
+                    <h2>Create your ride and start earning!</h2>
+                    <div class="driver-list-style">
+                        <ul>Create your own ride</ul>
+                        <ul>Create your own ride</ul>
+                        <ul>Create your own ride</ul>
+                    </div>
+                </div>
+                <div class="slider">
+                    <div class="slide-track">
+                        <div class="slide">
+                            <img src="image/homepage/driver1.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver2.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver3.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver4.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver5.jpg" alt="Driver Features">
+                        </div>
+                        <div class="slide">
+                            <img src="image/homepage/driver6.jpg" alt="Driver Features">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="wave" id="wave1" style="--i:1;"></div>
+                <div class="wave" id="wave2" style="--i:2;"></div>
+                <div class="wave" id="wave3" style="--i:3;"></div>
+                <div class="wave" id="wave4" style="--i:4;"></div>
         </div>
         <div class="ourservices">
             <br><br><br>
@@ -70,7 +128,7 @@
                     </div>   
                     <h2>Driver</h2>             
                     <p>Join our community of drivers and start earning by sharing your rides with passengers heading in the same direction.</p>
-                    <a href="/driver" class="learn-more">Learn More</a>
+                    <a href="/driver" class="learn-more">Sign Up</a>
                 </div>
                 <div class="role">
                     <div class="icon">
@@ -78,19 +136,19 @@
                     </div>
                     <h2>Passenger</h2>
                     <p>Find convenient and affordable rides to your destination. Connect with reliable drivers in your area.</p>
-                    <a href="/passenger" class="learn-more">Learn More</a>
+                    <a href="/passenger" class="learn-more">Sign Up</a>
                 </div>
             </div>
         </div>
-        <div class="feature">
+        <div class="benefits">
             <br><br><br>
-            <h1>Our Features</h1>
+            <h1>Carpool Today, produce a better day!</h1>
             <div class="feature-container swiper">
                 <div class="feature-wrapper">
                     <div class="feature-list swiper-wrapper">
                         <div class="feature-item swiper-slide">
-                            <h2>Ride Creation</h2>
-                            <p>Create your own ride</p>
+                            <h2>Cost Saving & Convenience</h2>
+                            <p>Share the Ride, Split the Cost, Enjoy the Journey!</p>
                         </div>
                         <div class="feature-item swiper-slide">
                             <h2>Earnings</h2>
