@@ -48,14 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $slots = $_POST['seatNo'];
     $driver_id = $_SESSION['driverID'];
 
-    echo $date;
-    echo $hour;
-    echo $minute;
-    echo $pickup;
-    echo $dropoff;
-    echo $vehicle;
-    echo $slots;
-    echo $driver_id;
+    // echo $date;
+    // echo $hour;
+    // echo $minute;
+    // echo $pickup;
+    // echo $dropoff;
+    // echo $vehicle;
+    // echo $slots;
+    // echo $driver_id;
 
     // Convert date to day of the week
     $dayOfWeek = strtolower(date("l", strtotime($day)));
