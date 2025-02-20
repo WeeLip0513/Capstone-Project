@@ -16,7 +16,7 @@ include("headerHomepage.php");
 
 <body>
     <div class="login-all-container" id="login-all-container">
-        <div class="login-container passenger-container">
+        <div class="login-container sign-in-container">
             <form action="#">
                 <h1>Login</h1>
                 <div class="infield">
@@ -34,7 +34,7 @@ include("headerHomepage.php");
         </div>
         <div class="overlay-container" id="overlay-Con">
             <div class="overlay">
-                <div class="overlay-signup">
+                <div class="overlay-signup signup-right">
                     <h1>Let's Ride!</h1>
                     <p>Starts your journey with us</p>
                     <button class="log-button">Sign Up</button>
@@ -43,6 +43,23 @@ include("headerHomepage.php");
             <button id="overlayBtn"></button>
         </div>
     </div>
+
+    <script>
+        const loginallcontainer= document.getElementById('login-all-container')
+        const overlayCon= document.getElementById('overlay-Con')
+        const overlayBtn= document.getElementById('overlayBtn')
+
+        overlayBtn.addEventListener('click', ()=> {
+            loginallcontainer.classList.toggle('signup-right-active')
+
+            overlayBtn.classList.remove('btnScaled');
+            window.requestAnimationFrame( ()=>{
+                overlayBtn.classList.add('btnScaled');
+            })
+        })
+    </script>
+
 </body>
+
 
 </html>
