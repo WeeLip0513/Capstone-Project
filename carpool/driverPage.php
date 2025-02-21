@@ -30,16 +30,6 @@ if (mysqli_num_rows($result) == 1) {
 }
 ?>
 
-<script>
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
-  const dd = String(today.getDate()).padStart(2, "0");
-
-  const todayDate = `${yyyy}-${mm}-${dd}`;
-  console.log(todayDate); // Example: "2025-02-16"
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +38,9 @@ if (mysqli_num_rows($result) == 1) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Driver</title>
   <link rel="stylesheet" href="css/driverPage.css" />
-  <script src="js/driver/addRideValidation.js"></script>
+  <!-- <script src="js/driver/addRideValidation.js"></script> -->
+  <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
+  <script src="js/driver/driverPage.js" defer></script>
 </head>
 
 <body>
@@ -72,8 +64,8 @@ if (mysqli_num_rows($result) == 1) {
   <div class="contents">
     <div class="activityContent">recentActivities</div>
     <div class="rideContent" style="display: none;">
-      <div class="addRides">
-        <form action="php/driver/addRideProcess.php" method="post" id="addRide" novalidate>
+      <div class="addRides" id="addRideContainer">
+        <form id="addRideForm" method="POST" action="php/driver/addRideProcess.php" novalidate>
           <table class="addRidesTable">
             <tr>
               <td>
@@ -180,6 +172,7 @@ if (mysqli_num_rows($result) == 1) {
                   }
                   ?>
                 </select>
+                <span class="error" id="vehicleError"></span>
               </td>
             </tr>
             <tr>
@@ -208,37 +201,93 @@ if (mysqli_num_rows($result) == 1) {
                 </script>
               </td>
             </tr>
-
             <tr>
               <td colspan="2" style="text-align: center">
-                <input type="submit" value="Add Ride" name="btnSubmit" class="button" />
+                <button type="button" onclick="if(validateRideForm()) showConfirmation()">Add Ride</button>
               </td>
             </tr>
           </table>
         </form>
       </div>
-      <div class="historyTable">
-        <table class="rideHistory">
-          <tr>
-            <td>day</td>
-            <td>pickup</td>
-            <td>dropoff</td>
-            <td>time</td>
-          </tr>
+      <div id="confirmation" class="confirmation" style="display : none;">
+        <h2>Confirm Your Ride</h2>
+        <p id="rideDetails"></p>
+        <button onclick="submitForm()">Confirm</button>
+        <button onclick="hideConfirmation()">Cancel</button>
+      </div>
+      <?php
+      // Get the date range for last week's Sunday to Saturday
+      $last_sunday = date('Y-m-d', strtotime('last sunday -6 days')); // Previous week's Sunday
+      $last_saturday = date('Y-m-d', strtotime('last sunday')); // Previous week's Saturday
+      
+      $sql = "SELECT id, date, DAYNAME(date) AS day, TIME_FORMAT(time, '%h:%i %p') AS formatted_time, 
+               pick_up_point, drop_off_point, slots_available, price, driver_id, vehicle_id
+        FROM ride 
+        WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
+        ORDER BY date ASC";
+
+      $result = $conn->query($sql);
+      ?>
+      <div class="historyTable" id="historyContainer">
+        <table class="rideHistory" border="1px">
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Pickup</th>
+              <th>Dropoff</th>
+              <th>Slots</th>
+              <th>Price</th>
+              <th>Driver ID</th>
+              <th>Vehicle ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                  <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
+                  <td>{$row['id']}</td>
+                  <td>{$row['date']}</td>
+                  <td>{$row['day']}</td>
+                  <td>{$row['formatted_time']}</td>
+                  <td>{$row['pick_up_point']}</td>
+                  <td>{$row['drop_off_point']}</td>
+                  <td>{$row['slots_available']}</td>
+                  <td>\${$row['price']}</td>
+                  <td>{$row['driver_id']}</td>
+                  <td>{$row['vehicle_id']}</td>
+                </tr>";
+              }
+            } else {
+              echo "<tr><td colspan='11'>No rides found from the previous week</td></tr>";
+            }
+            ?>
+          </tbody>
         </table>
       </div>
-    </div>
-    <div class="earningsContent" style="display: none">earning</div>
-    <div class="historyContent" style="display: none">history</div>
-    <div class="profileContent" style="display: none">Profile
-      <div class="licenseImg">
-        <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
-          height="40%">
-        <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%" height="40%">
+
+      <!-- Button to Add Selected Rides -->
+      <button onclick="addSelectedRides()">Add Selected Rides</button>
+
+      <script>
+
+      </script>
+      <div class="earningsContent" style="display: none">earning</div>
+      <div class="historyContent" style="display: none">history</div>
+      <div class="profileContent" style="display: none">Profile
+        <div class="licenseImg">
+          <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
+            height="40%">
+          <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%"
+            height="40%">
+        </div>
       </div>
     </div>
-  </div>
-  <script src="js/driver/driverPage.js"></script>
 </body>
 
 </html>

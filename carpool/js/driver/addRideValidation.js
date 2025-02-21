@@ -1,110 +1,94 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("addRide");
-
-  // Get form elements
-  const date = document.getElementById("txtDate");
-  const hour = document.getElementById("hour");
-  const minute = document.getElementById("minute");
-  const pickup = document.getElementById("pickup");
-  const dropoff = document.getElementById("dropoff");
-  const vehicle = document.getElementById("vehicle");
-
-  // Get error message elements
-  const dateError = document.getElementById("txtDateError");
-  const timeError = document.getElementById("timeError");
-  const pickupError = document.getElementById("pickupError");
-  const dropoffError = document.getElementById("dropoffError");
-
-  // Function to validate selection
-  function validateField(field, errorElement, message) {
-    if (field.value.trim() === "") {
-      errorElement.textContent = message;
-      field.classList.add("error-border"); // Add red border
-      return false;
-    } else {
-      errorElement.textContent = "";
-      field.classList.remove("error-border"); // Remove red border
-      return true;
-    }
-  }
-
-  // Function to validate date selection (must be strictly after today)
-  function validateDate() {
-    const selectedDate = new Date(date.value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate comparison
-    selectedDate.setHours(0, 0, 0, 0);
-
-    if (date.value.trim() === "") {
-      dateError.textContent = "Please select a date.";
-      date.classList.add("error-border");
-      return false;
-    } else if (selectedDate <= today) { // Prevents today and past dates
-      dateError.textContent = "Date must be after today.";
-      date.classList.add("error-border");
-      return false;
-    } else {
-      dateError.textContent = "";
-      date.classList.remove("error-border");
-      return true;
-    }
-  }
-
-  // Function to validate time selection
-  function validateTime() {
-    let isHourValid = validateField(hour, timeError, "Please select a valid hour.");
-    let isMinuteValid = validateField(minute, timeError, "Please select a valid minute.");
-    return isHourValid && isMinuteValid;
-  }
-
-  // Function to validate pickup point
-  function validatePickup() {
-    return validateField(pickup, pickupError, "Please select a pickup point.");
-  }
-
-  // Function to validate drop-off point
-  function validateDropoff() {
-    if (dropoff.value.trim() === "") {
-      dropoffError.textContent = "Please select a drop-off point.";
-      dropoff.classList.add("error-border");
-      return false;
-    } else if (pickup.value === dropoff.value) {
-      dropoffError.textContent = "Pickup and drop-off points cannot be the same.";
-      dropoff.classList.add("error-border");
-      return false;
-    } else {
-      dropoffError.textContent = "";
-      dropoff.classList.remove("error-border");
-      return true;
-    }
-  }
-
-  // Function to validate vehicle selection
-  function validateVehicle() {
-    return validateField(vehicle, document.createElement("span"), "Please select a vehicle.");
-  }
-
-  // Attach event listeners for real-time validation
-  date.addEventListener("change", validateDate);
-  hour.addEventListener("change", validateTime);
-  minute.addEventListener("change", validateTime);
-  pickup.addEventListener("change", validatePickup);
-  dropoff.addEventListener("change", validateDropoff);
-  vehicle.addEventListener("change", validateVehicle);
-
-  // Form submission validation
-  form.addEventListener("submit", function (event) {
-    let isValid = true;
-
-    if (!validateDate()) isValid = false;
-    if (!validateTime()) isValid = false;
-    if (!validatePickup()) isValid = false;
-    if (!validateDropoff()) isValid = false;
-    if (!validateVehicle()) isValid = false;
-
-    if (!isValid) {
-      event.preventDefault(); // Prevent form submission if any validation fails
-    }
+  const addRideButton = document.querySelector("button[onclick*='showConfirmation']");
+  addRideButton.addEventListener("click", function () {
+      if (validateRideForm()) {
+          showConfirmation();
+      }
   });
-});
 
+  function validateRideForm() {
+      let isValid = true;
+
+      // Date Validation
+      const txtDate = document.getElementById("txtDate");
+      const txtDateError = document.getElementById("txtDateError");
+      if (txtDate.value.trim() === "") {
+          txtDateError.textContent = "Please select a date.";
+          isValid = false;
+      } else {
+          txtDateError.textContent = "";
+      }
+
+      // Time Validation
+      const hour = document.getElementById("hour");
+      const minute = document.getElementById("minute");
+      const timeError = document.getElementById("timeError");
+      if (hour.value === "" || minute.value === "") {
+          timeError.textContent = "Please select a valid time.";
+          isValid = false;
+      } else {
+          timeError.textContent = "";
+      }
+
+      // Pickup Validation
+      const pickup = document.getElementById("pickup");
+      const pickupError = document.getElementById("pickupError");
+      if (pickup.value === "") {
+          pickupError.textContent = "Please select a pick-up point.";
+          isValid = false;
+      } else {
+          pickupError.textContent = "";
+      }
+
+      // Drop-off Validation
+      const dropoff = document.getElementById("dropoff");
+      const dropoffError = document.getElementById("dropoffError");
+      if (dropoff.value === "") {
+          dropoffError.textContent = "Please select a drop-off point.";
+          isValid = false;
+      } else {
+          dropoffError.textContent = "";
+      }
+
+      // Vehicle Validation
+      const vehicle = document.getElementById("vehicle");
+      const vehicleError = document.getElementById("vehicleError");
+      if (vehicle.value === "") {
+          vehicleError.textContent = "Please select a vehicle.";
+          isValid = false;
+      } else {
+          vehicleError.textContent = "";
+      }
+
+      return isValid;
+  }
+
+  function showConfirmation() {
+      const confirmationBox = document.getElementById("confirmation");
+      const rideDetails = document.getElementById("rideDetails");
+
+      const date = document.getElementById("txtDate").value;
+      const time = document.getElementById("hour").value + ":" + document.getElementById("minute").value;
+      const pickup = document.getElementById("pickup").options[document.getElementById("pickup").selectedIndex].text;
+      const dropoff = document.getElementById("dropoff").options[document.getElementById("dropoff").selectedIndex].text;
+      const vehicle = document.getElementById("vehicle").options[document.getElementById("vehicle").selectedIndex].text;
+
+      rideDetails.innerHTML = `
+          <strong>Date:</strong> ${date} <br>
+          <strong>Time:</strong> ${time} <br>
+          <strong>Pick-Up:</strong> ${pickup} <br>
+          <strong>Drop-Off:</strong> ${dropoff} <br>
+          <strong>Vehicle:</strong> ${vehicle} 
+      `;
+
+      confirmationBox.style.display = "block";
+  }
+
+  window.hideConfirmation = function () {
+      document.getElementById("confirmation").style.display = "none";
+  };
+
+  window.submitForm = function () {
+      document.getElementById("addRide").submit();
+  };
+});
