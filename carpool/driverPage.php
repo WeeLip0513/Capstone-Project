@@ -46,7 +46,7 @@ if (mysqli_num_rows($result) == 1) {
 <body>
   <div class="features">
     <button id="recentActivities" class="featureBtn" data-content="activityContent">
-      Recent Activities
+      Upcoming Rides
     </button>
     <button id="addRides" class="featureBtn" data-content="rideContent">
       Add Rides
@@ -62,7 +62,7 @@ if (mysqli_num_rows($result) == 1) {
     </button>
   </div>
   <div class="contents">
-    <div class="activityContent">recentActivities</div>
+    <div class="activityContent">Upcoming Rides</div>
     <div class="rideContent" style="display: none;">
       <div class="addRides" id="addRideContainer">
         <form id="addRideForm" method="POST" action="php/driver/addRideProcess.php" novalidate>
@@ -220,11 +220,13 @@ if (mysqli_num_rows($result) == 1) {
       $last_sunday = date('Y-m-d', strtotime('last sunday -6 days')); // Previous week's Sunday
       $last_saturday = date('Y-m-d', strtotime('last sunday')); // Previous week's Saturday
       
-      $sql = "SELECT id, date, DAYNAME(date) AS day, TIME_FORMAT(time, '%h:%i %p') AS formatted_time, 
-               pick_up_point, drop_off_point, slots_available, price, driver_id, vehicle_id
-        FROM ride 
-        WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
-        ORDER BY date ASC";
+      $sql = "SELECT id, date, DAYNAME(date) AS day, 
+              TIME_FORMAT(time, '%h:%i %p') AS formatted_time, 
+              pick_up_point, drop_off_point, slots_available, price, driver_id, vehicle_id
+              FROM ride 
+              WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
+              AND status = 'completed' 
+              ORDER BY date ASC;";
 
       $result = $conn->query($sql);
       ?>
@@ -233,7 +235,6 @@ if (mysqli_num_rows($result) == 1) {
           <thead>
             <tr>
               <th>Select</th>
-              <th>ID</th>
               <th>Date</th>
               <th>Day</th>
               <th>Time</th>
@@ -241,8 +242,6 @@ if (mysqli_num_rows($result) == 1) {
               <th>Dropoff</th>
               <th>Slots</th>
               <th>Price</th>
-              <th>Driver ID</th>
-              <th>Vehicle ID</th>
             </tr>
           </thead>
           <tbody>
@@ -251,43 +250,39 @@ if (mysqli_num_rows($result) == 1) {
               while ($row = $result->fetch_assoc()) {
                 echo "<tr>
                   <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
-                  <td>{$row['id']}</td>
                   <td>{$row['date']}</td>
                   <td>{$row['day']}</td>
                   <td>{$row['formatted_time']}</td>
                   <td>{$row['pick_up_point']}</td>
                   <td>{$row['drop_off_point']}</td>
                   <td>{$row['slots_available']}</td>
-                  <td>\${$row['price']}</td>
-                  <td>{$row['driver_id']}</td>
-                  <td>{$row['vehicle_id']}</td>
+                  <td>RM {$row['price']}.00</td>
                 </tr>";
               }
             } else {
               echo "<tr><td colspan='11'>No rides found from the previous week</td></tr>";
             }
             ?>
+            <tr>
+              <td colspan="10">
+                <!-- Button to Add Selected Rides -->
+                <button onclick="addSelectedRides()">Add Selected Rides</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
-
-      <!-- Button to Add Selected Rides -->
-      <button onclick="addSelectedRides()">Add Selected Rides</button>
-
-      <script>
-
-      </script>
-      <div class="earningsContent" style="display: none">earning</div>
-      <div class="historyContent" style="display: none">history</div>
-      <div class="profileContent" style="display: none">Profile
-        <div class="licenseImg">
-          <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
-            height="40%">
-          <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%"
-            height="40%">
-        </div>
+    </div>
+    <div class="earningsContent" style="display: none">earning</div>
+    <div class="historyContent" style="display: none">history</div>
+    <div class="profileContent" style="display: none">Profile
+      <div class="licenseImg">
+        <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
+          height="40%">
+        <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%" height="40%">
       </div>
     </div>
+  </div>
 </body>
 
 </html>

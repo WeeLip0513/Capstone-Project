@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vehicle = $_POST['vehicle'];
     $slots = $_POST['seatNo'];
     $driver_id = $_SESSION['driverID'];
+    $status = "upcoming";
 
     // echo $date;
     // echo $hour;
@@ -69,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // echo $price;
 
     // Insert data into the rides table
-    $sql = "INSERT INTO ride (date, day, time, pick_up_point, drop_off_point, price, slots_available, vehicle_id, driver_id) 
-            VALUES ('$date', '$dayOfWeek', '$time', '$pickup', '$dropoff', '$price', '$slots', '$vehicle', '$driver_id')";
+    $sql = "INSERT INTO ride (date, day, time, pick_up_point, drop_off_point, price, slots_available, status, vehicle_id, driver_id) 
+            VALUES ('$date', '$dayOfWeek', '$time', '$pickup', '$dropoff', '$price', '$slots', '$status', '$vehicle', '$driver_id')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Ride added successfully!";
