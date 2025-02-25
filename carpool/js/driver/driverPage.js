@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.style.border = "2px solid red";
         } else {
             errorElement.textContent = "";
-            input.style.border = "2px solid green";
+            input.style.border = "2px solid #ffc107";
         }
     }
 
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         } else {
             pickupError.textContent = "";
-            pickup.style.border = "2px solid green";
+            pickup.style.border = "2px solid #ffc107";
         }
 
         // Check if drop-off is selected
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         } else {
             dropoffError.textContent = "";
-            dropoff.style.border = "2px solid green";
+            dropoff.style.border = "2px solid #ffc107";
         }
 
         // Check if both are selected and not the same
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
             txtDate.style.border = "2px solid red";
         } else {
             txtDateError.textContent = "";
-            txtDate.style.border = "2px solid green";
+            txtDate.style.border = "2px solid #ffc107";
         }
     }
 
