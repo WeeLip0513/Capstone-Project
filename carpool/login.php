@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include("dbconn.php");
 include("headerHomepage.php");
 ?>
@@ -90,4 +90,4 @@ include("headerHomepage.php");
 </body>
 
 
-</html>
+</html> -->

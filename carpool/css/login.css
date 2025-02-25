@@ -80,6 +80,26 @@ input {
     outline: none;
 }
 
+.infield input:focus{
+    outline: 0;
+}
+
+.infield.success input{
+    border-color: green;
+}
+
+.infield.error input{
+    border-color: red;
+}
+
+.infield .error{
+    color: red;
+}
+
+/* .error-input {
+    border: 2px solid red;
+} */
+
 label {
     position: absolute;
     left: 50%;
@@ -242,3 +262,4 @@ p{
         width: 143.67px
     }
 } 
+
