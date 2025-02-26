@@ -2,13 +2,16 @@
     border: 2px red solid;
 } */
 
-html, body {
-    overflow-x: hidden; /* Prevents horizontal scrolling */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+
+html,
+body {
+    /* overflow: hidden; */
+    /* Prevents horizontal scrolling */
     width: 100%;
     margin: 0;
     justify-content: space-around;
     padding: 0;
-
 }
 
 .features {
@@ -24,12 +27,13 @@ html, body {
 .featureBtn {
     flex: 1;
     padding: 10px 20px;
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
+    background-color: black;
+    color: #2b83ff;
     cursor: pointer;
-    font-size: 16px;
+    border: none;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: "Exo 2";
     text-align: center;
     position: relative;
     transition: background-color 0.3s ease;
@@ -41,8 +45,8 @@ html, body {
     bottom: -2px;
     left: 50%;
     width: 0;
-    height: 2px;
-    background-color: #d75c5c;
+    height: 4px;
+    background-color: whitesmoke;
     transition: width 0.3s ease, left 0.3s ease;
 }
 
@@ -56,10 +60,10 @@ html, body {
     margin: auto;
     margin-top: 20px;
     padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    background-color: black;
+    /* border: 1px solid #ddd; */
     border-radius: 15px;
-    height: 70vh;
+    height: 80vh;
     justify-content: center;
     align-items: center;
     width: 98vw;
@@ -74,97 +78,168 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     /* Ensures responsiveness */
-    gap: 20px;
+    gap: 15px;
     /* Space between the two divs */
     justify-content: center;
     align-items: center;
     width: 100%;
     /* Make sure it takes full width */
     height: 100%;
+    margin-left: 40px;
 }
 
 .addRides {
     flex: 1;
-    /* Makes addRides take more space than historyTable */
-    width: 100%;
-    max-width: 100%;
+    /* width: 650px; */
+    /* Fixed width */
+    /* height: 600px; */
+    /* Fixed height */
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     text-align: center;
-    border: 2px solid black;
     border-radius: 15px;
+    background-color: #2b83ff;
+    box-shadow: 0px 4px 10px rgb(98, 98, 98);
+    padding: 30px;
+    position: relative;
 }
 
-.addRides h1{
-    margin-top: 30px;
+.addRides h1 {
+    font-size: 35px;
+    color: whitesmoke;
+}
+
+.addRides form {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .addRidesTable {
     width: 100%;
-    /* Ensures table takes full width */
-    max-width: 100%;
-    /* Removes any restriction */
     border-collapse: collapse;
-    table-layout: fixed; /* Prevents uneven spacing */
-    margin: auto;
-    height: 96%;
-    margin-top: 10px;
+    table-layout: fixed;
 }
 
 .addRidesTable td {
-    width: 100%;
     padding: 10px;
+    position: relative;
+    /* To contain error messages */
+}
+
+.addRidesTable td:first-child {
+    width: 40%;
+}
+
+.addRidesTable td:last-child {
+    width: 100%;
 }
 
 .addRidesTable td h2 {
     text-align: left;
-    margin-left: 10px;
     font-size: 20px;
+    color: white;
+    margin-bottom: 5px;
+    /* margin-left: 40px; */
 }
 
-.addRidesTable tr td:first-child {
-    text-align: left;
-    width: 35%;
-}
-
-.addRidesTable tr td:last-child {
-    text-align: left;
-    width: 65%;
-}
-
-
-/* Make all inputs and selects fill the available space */
 .addRidesTable input,
 .addRidesTable select {
-    width: 100%;
-    padding: 12px;
+    width: 100% !important;
+    /* Ensure it takes full width */
+    max-width: 100%;
+    /* Prevents overflow */
+    padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     box-sizing: border-box;
+    background-color: whitesmoke;
     text-align: center;
-    color: #ffc107;
-    background-color: rgba(65, 0, 85, 0.8); /* 50% transparency */
+    color: #afafaf;
+    box-shadow: 0px 4px 10px rgba(1, 35, 109, 0.8);
+    /* color: #00b52a; */
 }
 
-/* Flexbox for time input */
+/* Keep input height consistent */
+.addRidesTable input,
+.addRidesTable select {
+    height: 45px;
+    /* Set a fixed height */
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.input-container .error {
+    position: absolute;
+    bottom: -7px;
+    left: 15px;
+    text-align: left;
+}
+
+/* Ensure error messages don’t stretch the form */
+.error {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    width: 100%;
+    text-align: left;
+    left: 15px;
+    bottom: -7px;
+}
+
+.error-border {
+    border: 2px solid red !important;
+}
+
+#timeError {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+/* Time container */
 .time-container {
     display: flex;
     gap: 10px;
-    /* Space between hour and minute */
     width: 100%;
 }
 
 .time-container select {
     flex: 1;
-    /* Both dropdowns take equal width */
 }
 
+/* Fix button size */
+#addRideBtn {
+    color: #2b83ff;
+    background-color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#addRideBtn:hover {
+    color: #ffffff;
+    background-color: #0359d1;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    border: none;
+}
+
+
 .historyTable {
-    flex: 1;
+    flex: 2;
     /* Takes half the space of addRides */
-    width: 100%;
+    width: 800px;
     /* Prevent excessive stretching */
     display: flex;
     flex-direction: column;
@@ -174,48 +249,142 @@ html, body {
     padding: 20px;
     /* border: 2px black solid; */
     border-radius: 10px;
+    overflow-x: auto;
+}
+
+.historyTable h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.historySlots {
+    font-weight: bold;
 }
 
 .rideHistory {
-    width: 100%;
-    border-collapse: separate; /* Ensures rounded corners work */
-    border-spacing: 0; /* No extra space between cells */
+    border-collapse: separate;
+    border-spacing: 0;
     border-radius: 10px;
     overflow: hidden;
-    /* border: 2px solid black;  */
-    /* Outer table border */
+    background-color: white;
+    color: #2b83ff;
+    width: 700px;
+    /* margin: 30px; */
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.rideHistory th, .rideHistory td {
+/* Ensure all columns remain fixed */
+.rideHistory th,
+.rideHistory td {
     padding: 10px;
-    border: 1px solid black; /* Adds border to cells */
+    padding-top: 5px;
     text-align: center;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* Prevents text from wrapping */
+}
+
+.rideHistory th {
+    padding-top: 8px;
+}
+
+.rideHistory tr {
+    margin-bottom: 10px;
+    /* Increase gap between rows */
+}
+
+/* Prevent stretching */
+.rideHistory tbody tr td {
+    max-width: 100px;
+    /* Prevents excessive column stretching */
+}
+
+.rideHistory .divider-row {
+    width: 100%;
 }
 
 /* Rounded corners for first and last cells */
 .rideHistory thead tr:first-child th:first-child {
-    border-top-left-radius: 15px;
+    border-top-left-radius: 10px;
 }
 
 .rideHistory thead tr:first-child th:last-child {
-    border-top-right-radius: 15px;
+    border-top-right-radius: 10px;
 }
 
 .rideHistory tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 15px;
+    border-bottom-left-radius: 10px;
 }
 
 .rideHistory tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 10px;
 }
 
-.error {
-    color: red;
-    font-size: 14px;
-    display: block;
-    margin-top: 5px;
+/* Styles the centered divider */
+.centered-line {
+    width: 100%;
+    /* Adjust to control the width of the line */
+    margin: 10px auto;
+    /* Centers the line horizontally */
+    height: 5px;
+    background-color: #2b83ff;
+    /* Color of the dividing line */
+    padding: 0px;
 }
 
-.error-border {
-    border: 2px solid red;
+.addSelectBtn {
+    color: white;
+    background-color: #2b83ff;
+    width: 200px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    font-size: 16px;
+    /* margin-top: 10px; */
+    margin-bottom: 20px;
+}
+
+.addSelectBtn:hover {
+    color: #004aa5;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    border: none;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.pagination-dot {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0 5px;
+    user-select: none;
+    color: #ccc;
+    /* Default color */
+}
+
+.pagination-dot.active {
+    color: #007bff;
+    /* Highlight the active page */
+    font-weight: bold;
+}
+
+.pagination-dot:hover {
+    color: #0056b3;
+}
+
+.empty-row td {
+    background-color: white;
+    /* Light background */
+    height: 36px;
+    /* Match existing row height */
+    border: none;
 }

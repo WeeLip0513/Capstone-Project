@@ -54,10 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!input.value.trim()) {
             errorElement.textContent = errorMessage;
             errorElement.style.color = "red";
-            input.style.border = "2px solid red";
+            input.style.border = "3px solid red";
         } else {
             errorElement.textContent = "";
-            input.style.border = "2px solid #ffc107";
+            input.style.border = "3px solid #009432";
+            input.style.color = "#2c2c2c";
+            input.style.fontWeight = "bold";
         }
     }
 
@@ -73,30 +75,35 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!pickup.value) {
             pickupError.textContent = "Please select a pick-up point.";
             pickupError.style.color = "red";
-            pickup.style.border = "2px solid red";
+            pickup.style.border = "3px solid red";
             isValid = false;
         } else {
             pickupError.textContent = "";
-            pickup.style.border = "2px solid #ffc107";
+            pickup.style.border = "3px solid #009432";
+            pickup.style.color = "#2c2c2c";
+            pickup.style.fontWeight = "bold";
         }
 
         // Check if drop-off is selected
         if (!dropoff.value) {
             dropoffError.textContent = "Please select a drop-off point.";
             dropoffError.style.color = "red";
-            dropoff.style.border = "2px solid red";
+            dropoff.style.border = "3px solid red";
+            dropoff.style.fontWeight = "bold";
             isValid = false;
         } else {
             dropoffError.textContent = "";
-            dropoff.style.border = "2px solid #ffc107";
+            dropoff.style.border = "3px solid #009432";
+            dropoff.style.color = "#2c2c2c";
+            dropoff.style.fontWeight = "bold";
         }
 
         // Check if both are selected and not the same
         if (pickup.value && dropoff.value && pickup.value === dropoff.value) {
             dropoffError.textContent = "Pickup and Drop-off cannot be the same.";
             dropoffError.style.color = "red";
-            pickup.style.border = "2px solid red";
-            dropoff.style.border = "2px solid red";
+            pickup.style.border = "3px solid red";
+            dropoff.style.border = "3px solid red";
             isValid = false;
         }
 
@@ -109,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!txtDate.value.trim()) {
             txtDateError.textContent = "Please select a date.";
             txtDateError.style.color = "red";
-            txtDate.style.border = "2px solid red";
+            txtDate.style.border = "3px solid red";
         } else {
             txtDateError.textContent = "";
-            txtDate.style.border = "2px solid #ffc107";
+            txtDate.style.border = "3px solid #009432";
+            txtDate.style.color = "#2c2c2c";
+            txtDate.style.fontWeight = "bold";
         }
     }
 
@@ -129,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let isValid = true;
 
         validateDate();
-        validateField(hour, timeError, "Please select a valid time.");
+        validateField(hour, timeError, "");
         validateField(minute, timeError, "Please select a valid time.");
         validateField(pickup, pickupError, "Please select a pick-up point.");
         validateField(dropoff, dropoffError, "Please select a drop-off point.");
@@ -145,6 +154,98 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return isValid;
     };
+
+    const rowsPerPage = 7; // Show 7 rows per page
+    const tableBody = document.getElementById("tableBody");
+    let rows = Array.from(tableBody.querySelectorAll("tr:not(.divider-row):not(.pageControl):not(.create-btn-row)")); // Exclude dividers & pagination row
+    const bottomDividerRow = tableBody.querySelectorAll(".divider-row")[1]; // Locate the last divider-row
+    const createButtonRow = document.querySelector(".create-btn-row"); // The row containing the button
+    const checkboxes = document.querySelectorAll(".rideCheckbox"); // Get all checkboxes
+
+    let currentPage = 1;
+    let totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    function showPage(page) {
+        let start = (page - 1) * rowsPerPage;
+        let end = start + rowsPerPage;
+
+        // Hide all rows first
+        rows.forEach(row => (row.style.display = "none"));
+
+        // Get actual rows for the page
+        let visibleRows = rows.slice(start, end);
+        visibleRows.forEach(row => (row.style.display = "table-row"));
+
+        // Remove previously added empty rows
+        document.querySelectorAll(".empty-row").forEach(row => row.remove());
+
+        // Fill with empty rows if needed
+        let missingRows = rowsPerPage - visibleRows.length;
+        for (let i = 0; i < missingRows; i++) {
+            let emptyRow = document.createElement("tr");
+            emptyRow.classList.add("empty-row"); // Optional class for styling
+            let columnCount = 6; // Match your table column count
+
+            for (let j = 0; j < columnCount; j++) {
+                let emptyCell = document.createElement("td");
+                emptyCell.textContent = ""; // No content
+                emptyRow.appendChild(emptyCell);
+            }
+            
+            // Insert empty row before the bottom divider-row
+            tableBody.insertBefore(emptyRow, bottomDividerRow);
+        }
+
+        updatePagination();
+        updateButtonVisibility();
+    }
+
+    function changePage(page) {
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            showPage(currentPage);
+        }
+    }
+
+    function updatePagination() {
+        const paginationRow = document.querySelector(".pageControl");
+        paginationRow.innerHTML = ""; // Clear previous pagination
+
+        const paginationContainer = document.createElement("td");
+        paginationContainer.setAttribute("colspan", "6");
+        paginationContainer.style.textAlign = "center";
+
+        for (let i = 1; i <= totalPages; i++) {
+            const dot = document.createElement("span");
+            dot.classList.add("pagination-dot");
+            if (i === currentPage) dot.classList.add("active");
+
+            dot.textContent = "•"; // Dot character
+            dot.style.cursor = "pointer";
+            dot.style.fontSize = "24px";
+            dot.style.margin = "0 5px";
+            dot.style.color = i === currentPage ? "#007bff" : "#ccc";
+
+            dot.addEventListener("click", () => changePage(i));
+
+            paginationContainer.appendChild(dot);
+        }
+
+        paginationRow.appendChild(paginationContainer);
+    }
+
+    function updateButtonVisibility() {
+        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        createButtonRow.style.display = anyChecked ? "table-row" : "none";
+    }
+
+    // Attach event listeners to checkboxes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", updateButtonVisibility);
+    });
+
+    showPage(currentPage);
+
 });
 
 // Show Confirmation Pop-up
@@ -190,9 +291,9 @@ function submitForm() {
     }
 
     console.log("✅ Form found. Submitting...");
-    
+
     // Hide confirmation popup to prevent interference
-    document.getElementById("confirmation").style.display = "none"; 
+    document.getElementById("confirmation").style.display = "none";
 
     // Submit the form
     form.submit();
@@ -203,35 +304,35 @@ function addSelectedRides() {
 
     // Get all checked checkboxes
     document.querySelectorAll('.rideCheckbox:checked').forEach(checkbox => {
-      let ride = JSON.parse(checkbox.dataset.ride);
-      let newDate = getThisWeekDate(ride.day); // Get the current week's date based on the day
-      ride.newDate = newDate;
-      selectedRides.push(ride);
+        let ride = JSON.parse(checkbox.dataset.ride);
+        let newDate = getThisWeekDate(ride.day); // Get the current week's date based on the day
+        ride.newDate = newDate;
+        selectedRides.push(ride);
     });
 
     if (selectedRides.length > 0) {
-      console.log("Adding Rides:", selectedRides);
+        console.log("Adding Rides:", selectedRides);
 
-      // Send data to PHP via AJAX
-      fetch("php/driver/addSelectedRide.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(selectedRides)
-      })
-        .then(response => response.text())
-        .then(data => {
-          alert("Rides Added Successfully!");
-          console.log(data);
+        // Send data to PHP via AJAX
+        fetch("php/driver/addSelectedRide.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(selectedRides)
         })
-        .catch(error => console.error("Error:", error));
+            .then(response => response.text())
+            .then(data => {
+                alert("Rides Added Successfully!");
+                console.log(data);
+            })
+            .catch(error => console.error("Error:", error));
     } else {
-      alert("No rides selected!");
+        alert("No rides selected!");
     }
-  }
+}
 
-  function getThisWeekDate(dayName) {
+function getThisWeekDate(dayName) {
     let today = new Date();
     let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -245,4 +346,4 @@ function addSelectedRides() {
     newDate.setDate(today.getDate() + difference);
 
     return newDate.toISOString().split('T')[0]; // Return YYYY-MM-DD format
-  }
+}

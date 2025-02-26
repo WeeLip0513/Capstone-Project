@@ -3,7 +3,7 @@ session_start();
 include("dbconn.php");
 include("headerHomepage.php");
 
-$_SESSION['id'] = 7;
+$_SESSION['id'] = 8;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -14,9 +14,9 @@ $result = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
-  echo "<pre>";
-  print_r($driver); // Debugging: Print driver details
-  echo "</pre>";
+  // echo "<pre>";
+  // print_r($driver); // Debugging: Print driver details
+  // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
   $frontLicensePath = str_replace("../../", "", $frontImgPath);
@@ -24,7 +24,7 @@ if (mysqli_num_rows($result) == 1) {
 
   $driverID = $driver['id'];
   $_SESSION['driverID'] = $driverID;
-  echo $_SESSION['driverID'];
+  // echo $_SESSION['driverID'];
 } else {
   echo "No driver record found!";
 }
@@ -41,6 +41,11 @@ if (mysqli_num_rows($result) == 1) {
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
   <script src="js/driver/driverPage.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -70,9 +75,9 @@ if (mysqli_num_rows($result) == 1) {
           <table class="addRidesTable">
             <tr>
               <td>
-              <h2>Date</h2>
+                <h2>Date</h2>
               </td>
-              <td>
+              <td class="input-container">
                 <input type="date" name="txtDate" id="txtDate">
                 <span class="error" id="txtDateError"></span>
               </td>
@@ -125,7 +130,7 @@ if (mysqli_num_rows($result) == 1) {
               <td>
                 <h2>Pick-Up Point</h2>
               </td>
-              <td>
+              <td class="input-container">
                 <select name="pickup" id="pickup" required>
                   <option value="">Select Pick-Up Point</option>
                   <option value="apu">APU</option>
@@ -140,7 +145,7 @@ if (mysqli_num_rows($result) == 1) {
               <td>
                 <h2>Drop-Off Point</h2>
               </td>
-              <td>
+              <td class="input-container">
                 <select name="dropoff" id="dropoff" required>
                   <option value="">Select Drop-Off Point</option>
                   <option value="apu">APU</option>
@@ -155,7 +160,7 @@ if (mysqli_num_rows($result) == 1) {
               <td>
                 <h2>Vehicle</h2>
               </td>
-              <td>
+              <td class="input-container">
                 <select name="vehicle" id="vehicle" onchange="updateSlots()">
                   <option value="">Select Vehicle</option>
                   <?php
@@ -182,7 +187,7 @@ if (mysqli_num_rows($result) == 1) {
               <td>
                 <h2>Slots</h2>
               </td>
-              <td>
+              <td class="input-container">
                 <input type="number" name="seatNo" id="seatNo" min="1" disabled>
 
                 <script>
@@ -195,6 +200,9 @@ if (mysqli_num_rows($result) == 1) {
                     if (maxSeats && selectedOption.value !== "") {
                       seatInput.max = maxSeats;
                       seatInput.value = maxSeats;
+                      seatInput.style.color = "black";
+                      seatInput.style.fontWeight = "bold";
+                      seatInput.style.border = "3px solid #009432"
                       seatInput.removeAttribute('disabled');
                     } else {
                       seatInput.value = "";
@@ -206,7 +214,8 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <button type="button" onclick="if(validateRideForm()) showConfirmation()">Add Ride</button>
+                <button type="button" onclick="if(validateRideForm()) showConfirmation()"
+                  id="addRideBtn">Create</button>
               </td>
             </tr>
           </table>
@@ -234,42 +243,57 @@ if (mysqli_num_rows($result) == 1) {
       $result = $conn->query($sql);
       ?>
       <div class="historyTable" id="historyContainer">
+        <h1>Add Rides From Previous Activities</h1>
         <table class="rideHistory">
           <thead>
             <tr>
-              <th>Select</th>
-              <th>Date</th>
+              <td colspan="6"></td>
+            </tr>
+            <tr>
+              <!-- <th></th> -->
+              <th></th>
               <th>Day</th>
               <th>Time</th>
-              <th>Pickup</th>
-              <th>Dropoff</th>
+              <th>Pick-Up</th>
+              <th>Drop-Off</th>
               <th>Slots</th>
-              <th>Price</th>
+              <!-- <th></th> -->
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
+            <!-- Centered Divider after Header -->
+            <tr class="divider-row">
+              <td colspan="6">
+                <div class="centered-line"></div>
+              </td>
+            </tr>
             <?php
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
                 echo "<tr>
                   <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
-                  <td>{$row['date']}</td>
                   <td>{$row['day']}</td>
                   <td>{$row['formatted_time']}</td>
                   <td>{$row['pick_up_point']}</td>
                   <td>{$row['drop_off_point']}</td>
-                  <td>{$row['slots_available']}</td>
-                  <td>RM {$row['price']}.00</td>
+                  <td class='historySlots'>{$row['slots_available']}</td>
                 </tr>";
               }
             } else {
-              echo "<tr><td colspan='11'>No rides found from the previous week</td></tr>";
+              echo "<tr><td colspan='6'>No rides found from the previous week</td></tr>";
             }
             ?>
-            <tr>
-              <td colspan="10">
-                <!-- Button to Add Selected Rides -->
-                <button onclick="addSelectedRides()">Add Selected Rides</button>
+            <tr class="divider-row">
+              <td colspan="6">
+                <div class="centered-line"></div>
+              </td>
+            </tr>
+            <tr class="pageControl" height="15px">
+              <!-- insert the paganition here -->
+            </tr>
+            <tr class="create-btn-row" style="display: none;">
+              <td colspan="6" style="text-align: center;">
+                <button class="addSelectBtn" onclick="addSelectedRides()">Create Selected Rides</button>
               </td>
             </tr>
           </tbody>
