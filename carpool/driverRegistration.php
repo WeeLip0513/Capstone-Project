@@ -14,6 +14,7 @@ include("headerHomepage.php");
   <title>Register Driver & Vehicle</title>
   <script src="js/register/driverValidation.js" defer></script>
   <script src="js/register/vehicleSelection.js" defer></script>
+  <link rel="stylesheet" href="css/driverReg.css">
 </head>
 
 <body>
@@ -25,7 +26,7 @@ include("headerHomepage.php");
   <div class="driverRegForm">
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
       enctype="multipart/form-data">
-      <div id="driverSection">
+      <div class="driverSection" id="driverSection">
         <h1>Register Driver</h1>
         <table>
           <tr>

@@ -1,0 +1,75 @@
+/* *{
+    border: 2px red solid;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+
+html,
+body {
+    overflow-x: hidden;
+    /* Prevents horizontal scrolling */
+    width: 100%;
+    margin: 0;
+    justify-content: space-around;
+    padding: 0;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.featureBtn {
+    flex: 1;
+    padding: 10px 20px;
+    background-color: black;
+    color: #2b83ff;
+    cursor: pointer;
+    border: none;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: "Exo 2";
+    text-align: center;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.featureBtn::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background-color: whitesmoke;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.featureBtn:hover::after,
+.featureBtn.active::after {
+    width: 60%;
+    left: 20%;
+}
+
+.contents {
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: black;
+    /* border: 1px solid #ddd; */
+    border-radius: 15px;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    width: 98vw;
+}
+
+.contents>div {
+    display: none;
+
+}
