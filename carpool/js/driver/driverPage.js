@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 emptyCell.textContent = ""; // No content
                 emptyRow.appendChild(emptyCell);
             }
-            
+
             // Insert empty row before the bottom divider-row
             tableBody.insertBefore(emptyRow, bottomDividerRow);
         }
@@ -260,26 +260,51 @@ function showConfirmation() {
     const pickup = document.getElementById("pickup").options[document.getElementById("pickup").selectedIndex].text;
     const dropoff = document.getElementById("dropoff").options[document.getElementById("dropoff").selectedIndex].text;
     const vehicle = document.getElementById("vehicle").options[document.getElementById("vehicle").selectedIndex].text;
+    const slots = document.getElementById("seatNo").value;
 
     rideDetails.innerHTML = `
-        <strong>Date:</strong> ${date} <br>
-        <strong>Time:</strong> ${time} <br>
-        <strong>Pick-Up:</strong> ${pickup} <br>
-        <strong>Drop-Off:</strong> ${dropoff} <br>
-        <strong>Vehicle:</strong> ${vehicle} 
-    `;
+    <table>
+        <tr>
+            <th>Date</th>
+            <td>${date}</td>
+        </tr>
+        <tr>
+            <th>Time</th>
+            <td>${time}</td>
+        </tr>
+        <tr>
+            <th>Pick-Up</th>
+            <td>${pickup}</td>
+        </tr>
+        <tr>
+            <th>Drop-Off</th>
+            <td>${dropoff}</td>
+        </tr>
+        <tr>
+            <th>Vehicle</th>
+            <td>${vehicle}</td>
+        </tr>
+        <tr>
+            <th>Slots</th>
+            <td>${slots}</td>
+        </tr>
+    </table>`;
 
-    confirmationBox.style.display = "block";
-    document.getElementById('addRideContainer').style.display = 'none';
-    document.getElementById('historyContainer').style.display = 'none';
+    document.getElementById("confirmation").style.display = "flex";
+
+    // Hide other sections without affecting layout shifts
+    document.getElementById("addRideContainer").style.display = "none";
+    document.getElementById("historyContainer").style.display = "none";
 
 }
 
 // Hide Confirmation Pop-up
 function hideConfirmation() {
-    document.getElementById('confirmation').style.display = 'none';
-    document.getElementById('addRideContainer').style.display = 'block';
-    document.getElementById('historyContainer').style.display = 'block';
+    document.getElementById("confirmation").style.display = "none";
+
+    // Restore previous sections
+    document.getElementById("addRideContainer").style.display = "flex";
+    document.getElementById("historyContainer").style.display = "flex";
 }
 
 function submitForm() {
@@ -346,4 +371,78 @@ function getThisWeekDate(dayName) {
     newDate.setDate(today.getDate() + difference);
 
     return newDate.toISOString().split('T')[0]; // Return YYYY-MM-DD format
+}
+function showSelectedRidesConfirmation() {
+    let selectedRides = [];
+
+    // Get all checked checkboxes
+    document.querySelectorAll('.rideCheckbox:checked').forEach(checkbox => {
+        let ride = JSON.parse(checkbox.dataset.ride);
+        selectedRides.push(ride);
+    });
+
+    if (selectedRides.length === 0) {
+        alert("No rides selected!");
+        return;
+    }
+
+    // Populate confirmation modal with selected ride details
+    const rideDetailsContainer = document.getElementById("selectedRideDetails");
+    rideDetailsContainer.innerHTML = selectedRides.map((ride, index) => `
+        <div class="ride-info">
+            <strong>Ride ${index + 1}:</strong><br>
+            <strong>Day:</strong> ${ride.day} <br>
+            <strong>Time:</strong> ${ride.formatted_time} <br>
+            <strong>Pick-Up:</strong> ${ride.pick_up_point} <br>
+            <strong>Drop-Off:</strong> ${ride.drop_off_point} <br>
+            <strong>Slots Available:</strong> ${ride.slots_available} <br>
+            <hr>
+        </div>
+    `).join('');
+
+    // Show confirmation pop-up
+    document.getElementById("selectedRidesConfirmation").style.display = "block";
+
+    // Restore previous sections
+    document.getElementById("addRideContainer").style.display = "none";
+    document.getElementById("historyContainer").style.display = "none";
+}
+
+// Hide the confirmation modal
+function hideSelectedRidesConfirmation() {
+    document.getElementById("selectedRidesConfirmation").style.display = "none";
+
+    // Restore previous sections
+    document.getElementById("addRideContainer").style.display = "flex";
+    document.getElementById("historyContainer").style.display = "flex";
+}
+
+// Function to process the selected rides
+function submitSelectedRides() {
+    let selectedRideIds = [];
+
+    document.querySelectorAll('.rideCheckbox:checked').forEach(checkbox => {
+        selectedRideIds.push(checkbox.value); // Collect ride IDs
+    });
+
+    if (selectedRideIds.length === 0) {
+        alert("No rides selected!");
+        return;
+    }
+
+    console.log("Submitting the following rides:", selectedRideIds);
+
+    // Here, you would send this data to your backend for processing
+    // Example: Use AJAX to submit to PHP
+    fetch('process_selected_rides.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ride_ids: selectedRideIds })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert("Selected rides created successfully!");
+            hideSelectedRidesConfirmation(); // Hide the pop-up after submission
+        })
+        .catch(error => console.error("Error submitting rides:", error));
 }

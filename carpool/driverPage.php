@@ -37,7 +37,8 @@ if (mysqli_num_rows($result) == 1) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Driver</title>
-  <link rel="stylesheet" href="css/driverPage.css" />
+  <link rel="stylesheet" href="css/driverPage/driverPage.css" />
+  <link rel="stylesheet" href="css/driverPage/addRide.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
   <script src="js/driver/driverPage.js" defer></script>
@@ -221,11 +222,36 @@ if (mysqli_num_rows($result) == 1) {
           </table>
         </form>
       </div>
-      <div id="confirmation" class="confirmation" style="display : none;">
-        <h2>Confirm Your Ride</h2>
-        <p id="rideDetails"></p>
-        <button onclick="submitForm()">Confirm</button>
-        <button onclick="hideConfirmation()">Cancel</button>
+      <div id="confirmation" class="confirmation" style="display: none;">
+        <h2>Ride Confirmation</h2>
+        <div id="rideDetails" class="rideDetails">
+          <table>
+            <tr>
+              <th>Date</th>
+              <td>${date}</td>
+            </tr>
+            <tr>
+              <th>Time</th>
+              <td>${time}</td>
+            </tr>
+            <tr>
+              <th>Pick-Up</th>
+              <td>${pickup}</td>
+            </tr>
+            <tr>
+              <th>Drop-Off</th>
+              <td>${dropoff}</td>
+            </tr>
+            <tr>
+              <th>Vehicle</th>
+              <td>${vehicle}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="confirmationBtn">
+          <button onclick="submitForm()">Confirm</button>
+          <button onclick="hideConfirmation()">Cancel</button>
+        </div>
       </div>
       <?php
       // Get the date range for last week's Sunday to Saturday
@@ -293,11 +319,19 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr class="create-btn-row" style="display: none;">
               <td colspan="6" style="text-align: center;">
-                <button class="addSelectBtn" onclick="addSelectedRides()">Create Selected Rides</button>
+                <button class="addSelectBtn" onclick="showSelectedRidesConfirmation()">Create Selected Rides</button>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div id="selectedRidesConfirmation" class="confirmation-modal" style="display: none;">
+        <div class="modal-content">
+          <h2>Confirm Selected Rides</h2>
+          <div id="selectedRideDetails"></div>
+          <button onclick="addSelectedRides()">Confirm</button>
+          <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
+        </div>
       </div>
     </div>
     <div class="earningsContent" style="display: none">earning</div>
