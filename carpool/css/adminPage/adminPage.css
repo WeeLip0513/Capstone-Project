@@ -8,13 +8,13 @@
 
 body {
     min-height: 100vh;
-    background: white;
+    background: rgb(18, 18, 18);
     background-size: cover;
     background-position: center;
 }
 
 .admin-sidebar {
-    background: #1b1a1b;
+    background: #2b64ff;
     width: 250px;
     height: 100vh;
     position: fixed;
