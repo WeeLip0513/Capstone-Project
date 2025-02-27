@@ -1,15 +1,18 @@
-
+/* *{
+    border: solid 3px red;
+} */
 /*three cards*/
 .wrapper{
-    height: 77vh;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .ads{
+    margin-top: 5rem;
     width: 100%;
-    height: 600px;
+    height: 500px;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -71,8 +74,14 @@ input:checked + label .description{
     transform: translateY(0) !important;
 }
 
-/* .card[for="a2"]{
-    background-image:url('../image/homepage/ad1.jpg');
+/* .card[for="a1"]{
+    background-image:url('../image/homepage/image2.jpg');
+} 
+.card[for="a2"]{
+    background-image:url('../image/homepage/image4.jpg');
+}
+.card[for="a3"]{
+    background-image:url('../image/homepage/image3.jpg');
 } */
 /*slogan*/
 
@@ -109,18 +118,19 @@ input:checked + label .description{
 }
 
 .slider {
-    height: 400px;
+    height: 300px;
     width: 50%;
     position: relative;
     display: grid;
     place-items: center;
     overflow: hidden;
-    margin-top: 40px;
+    margin-left: 28px;
+    margin-top: 10px;
 }
 
 .slide-track {
     display: flex;
-    width: calc(250px * 6);
+    width: calc(320px * 6);
     animation: scroll 10s linear infinite;
 }
 
@@ -129,12 +139,11 @@ input:checked + label .description{
 }
 
 .slide{
-    height: 200px;
-    width: 250px;
+    height: 230px;
+    width: 320px;
     align-items: center;
     padding: 10px;
     perspective: 100px;
-    border-radius: 10%;
 }
 
 @keyframes scroll {
@@ -142,7 +151,7 @@ input:checked + label .description{
         transform: translateX(0);
     }
     100%{
-        transform:  translateX(calc(-250px * 3));
+        transform:  translateX(calc(-320px * 3));
     }
     
 }
@@ -150,6 +159,7 @@ input:checked + label .description{
 .slide img{
     width: 100%;
     transition: transform 1s;
+    border-radius: 5%;
 }
 
 .slide img:hover{
@@ -162,7 +172,7 @@ input:checked + label .description{
     background: linear-gradient(to right, rgb(52, 58, 64)0%,
     rgba(255,255,255, 0)100%);
     content: '';
-    height: 70%;
+    height: 90%;
     position: absolute;
     width: 15%;
     z-index: 2;
