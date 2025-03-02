@@ -45,7 +45,7 @@ form {
     padding: 0px 50px;
 }
 
-h1 {
+form h1 {
     color: var(--grad-clr1);
 }
 
@@ -78,7 +78,8 @@ label {
     transition: 0.3s;
 }
 
-#tpLabel, #passwordLabel {
+#tpLabel,
+#passwordLabel {
     position: absolute;
     left: 50%;
     bottom: 0;
@@ -90,7 +91,7 @@ label {
     z-index: 1 !important;
 }
 
-.error{
+.error {
     color: red;
     font-size: 12px;
     display: none;
@@ -138,7 +139,7 @@ a.forgot {
     color: var(--grad-clr1);
 }
 
-.overlay-container{
+.overlay-container {
     position: absolute;
     top: 0;
     left: 60%;
@@ -148,6 +149,7 @@ a.forgot {
     transition: transform 0.6s ease-in-out;
     z-index: 9;
 }
+
 #overlayBtn {
     cursor: pointer;
     position: absolute;
@@ -161,7 +163,8 @@ a.forgot {
     border-radius: 20px;
 
 }
-.overlay{
+
+.overlay {
     position: relative;
     background: var(--linear-grad);
     color: #FFFFFF;
@@ -170,7 +173,8 @@ a.forgot {
     width: 250%;
     transition: transform 0.6s ease-in-out;
 }
-.overlay-panel{
+
+.overlay-panel {
     position: absolute;
     display: flex;
     align-items: center;
@@ -182,73 +186,153 @@ a.forgot {
     width: 340px;
     transition: 0.6s ease-in-out;
 }
-.signup-right{
+
+.signup-right {
     right: 0%;
     transform: translateX(0%);
 }
-.signup-left{
+
+.signup-left {
     right: 60%;
     transform: translateX(-12%);
 }
-.overlay-signup h1{
-    color: #FFFFFF;
+
+.overlay-panel h1 {
+    color: #FFFFFF !important;
 }
-p{
+
+p {
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
     letter-spacing: 0.5px;
     margin: 25px 0px 35px;
 }
-.overlay-signup button{
+
+.overlay-panel .log-button {
     border: none;
     background-color: transparent;
 }
-.signup-right-active .overlay-container{
+
+.signup-right-active .overlay-container {
     transform: translateX(-150%);
 }
-.signup-right-active .overlay{
+
+.signup-right-active .overlay {
     transform: translateX(50%);
 }
-.signup-right-active .signup-right{
+
+.signup-right-active .signup-right {
     transform: translateX(35%);
 }
-.signup-right-active .signup-left{
+
+.signup-right-active .signup-left {
     transform: translateX(25%);
 }
-.signup-right-active .sign-in-container{
+
+.signup-right-active .sign-in-container {
     transform: translateX(20%);
     opacity: 0;
 }
-.signup-right-active .sign-up-container{
+
+.signup-right-active .sign-up-container {
     transform: translateX(66.7%);
     opacity: 1;
     z-index: 5;
     animation: show 0.6s;
 }
 
-@keyframes show{
-    0%, 50%{
+@keyframes show {
+
+    0%,
+    50% {
         opacity: 0;
         z-index: 1;
     }
-    50.1%, 100%{
+
+    50.1%,
+    100% {
         opacity: 1;
         z-index: 5;
     }
 }
-.btnScaled{
+
+.btnScaled {
     animation: scaleBtn 0.6s;
 }
+
 @keyframes scaleBtn {
     0% {
         width: 143.67px
     }
+
     50% {
         width: 250px
     }
+
     0% {
         width: 143.67px
     }
-} 
+}
 
+.login-container.sign-up-container {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px !important;
+    gap: 10px;
+    opacity: 0 !important;
+    z-index: 1;
+}
+
+.login-container.sign-up-container h1 {
+    margin-bottom: 25px !important;
+}
+
+.signup-right-active .login-container.sign-up-container {
+    opacity: 1 !important;
+    z-index: 10;
+}
+
+.login-container.sign-up-container .log-button {
+    width: 200px;
+    margin: 10px 0;
+    padding: 12px 0;
+}
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 30px;
+    width: 400px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--grad-clr1);
+}
+
+#resetFeedback {
+    margin-top: 15px;
+    font-size: 14px;
+    display: none;
+}
