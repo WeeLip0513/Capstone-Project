@@ -10,4 +10,5 @@
     } else {
       // echo 'Connection established!';
     }
+    return $conn;
 ?>
