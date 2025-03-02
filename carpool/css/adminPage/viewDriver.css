@@ -1,0 +1,26 @@
+/* *{
+    border: 2px solid red;
+} */
+
+.driver-profile-container{
+    margin-left: 16rem;
+    margin-top: 30px;
+    color: white;
+    margin-right: 2.5rem;
+}
+
+.form-title h2{
+    color: white;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.column{
+    display: flex;
+    column-gap: 30rem;
+}
+
+.license-image img{
+    width: 300px;
+    height: 200px;
+}

@@ -1,0 +1,74 @@
+.driver-list-container{
+    margin-left: 16rem;
+    margin-right: 2.5rem;
+    margin-top: 30px;
+}
+
+.driver-list-title h2{
+    font-size: 25px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.driver-list-title h4{
+    color: rgb(101, 103, 103);
+}
+.table-container{
+    margin-top: 50px;
+}
+
+table{
+    width: 100%;
+    color: white;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th{
+    font-size: 18px;
+    text-align: center;
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: 600;
+    padding: 12px 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+td{
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    text-align: center;
+}
+
+table tr:hover {
+    background-color: #7c7c7c;
+}
+
+table a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #2b64ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+table a:hover {
+    background-color: #1a4cd1;
+    box-shadow: 0 4px 8px rgba(43, 100, 255, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .driver.table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .driver-list-container {
+        width: 100%;
+        margin-left: 5rem;
+    }
+}
