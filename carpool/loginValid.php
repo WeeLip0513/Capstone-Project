@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Invalid TP Number format. Must be TP + 6 digits.'); window.history.back();</script>";
         exit();
     }
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
     // Check user in database
     $query = "SELECT tpnumber, password, role FROM user WHERE tpnumber = ?";
     $stmt = $conn->prepare($query);

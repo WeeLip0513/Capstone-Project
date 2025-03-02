@@ -163,9 +163,9 @@ include("headerHomepage.php");
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Reset Password</h2>
-            <form id="resetPasswordForm">
+            <form action="testpasswordreset.php" method="POST" id="resetPasswordForm">
                 <div class="infield">
-                    <input type="email" placeholder="Registered email" required>
+                    <input type="email" name="email" id="email" placeholder="Registered email">
                     <label></label>
                 </div>
                 <br>
@@ -189,7 +189,7 @@ include("headerHomepage.php");
 
         // Handle Form Submission
         document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+            e.preventDefault(); 
             const email = this.querySelector('input').value;
             const feedback = document.getElementById('resetFeedback');
 
