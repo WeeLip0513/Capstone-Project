@@ -18,6 +18,7 @@
 .column{
     display: flex;
     column-gap: 30rem;
+    margin-bottom: 20px;
 }
 
 .license-image img{

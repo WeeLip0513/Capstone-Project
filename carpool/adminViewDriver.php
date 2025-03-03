@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include("dbconn.php"); 
+include("../dbconn.php"); 
 include("adminsidebar.php");
 
 if(isset($_GET['id'])){
@@ -41,37 +41,37 @@ if(isset($_GET['id'])){
         <div class="driver-form">
             <div class="column">
                 <div class="firstname">
-                    <h4>First Name:</h4>
+                    <h4>First Name:</h4><br>
                     <p><?php echo htmlspecialchars($row['firstname']);?></p>
                 </div>
                 <div class="lastname">
-                    <h4>Last Name:</h4>
+                    <h4>Last Name:</h4><br>
                     <p><?php echo htmlspecialchars($row['lastname']);?></p>
                 </div>
             </div>
             <div class="column">
                 <div class="email">
-                    <h4>Email:</h4>
+                    <h4>Email:</h4><br>
                     <p><?php echo htmlspecialchars($row['email']);?></p>
                 </div>
                 <div class="phone_no">
-                    <h4>Phone Number:</h4>
+                    <h4>Phone Number:</h4><br>
                     <p><?php echo htmlspecialchars($row['phone_no']);?></p>
                 </div>
             </div>
             <div class="column">
                 <div class="license-expiry-date">
-                    <h4>License Expiry Date:</h4>
+                    <h4>License Expiry Date:</h4><br>
                     <p><?php echo htmlspecialchars($row['license_expiry_date']);?></p>
                 </div>
                 <div class="reg-date">
-                    <h4>Registration Date:</h4>
+                    <h4>Registration Date:</h4><br>
                     <p><?php echo htmlspecialchars($row['registration_date']);?></p>
                 </div>
             </div>
             <div class="column">
                 <div class="license-photo-front">
-                    <h4>License Front:</h4>
+                    <h4>License Front:</h4><br>
                     <div class="license-image">
                         <?php 
                         $frontImgPath = $row['license_photo_front'];
@@ -81,7 +81,7 @@ if(isset($_GET['id'])){
                     </div>
                 </div>
                 <div class="license-photo-back">
-                    <h4>License Back:</h4>
+                    <h4>License Back:</h4><br>
                     <div class="license-image">
                         <?php 
                         $backImgPath = $row['license_photo_back'];
