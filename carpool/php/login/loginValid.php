@@ -7,13 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tpnumber = trim($_POST["tpnumber"]);
     $password = trim($_POST["password"]);
 
-    // Validate TP Number Format (TP + 6 digits)
     if(!preg_match('/^TP\d{6}$/', $tpnumber)){
         echo "<script>alert('Invalid TP Number format. Must be TP + 6 digits.'); window.history.back();</script>";
         exit();
     }
 
-    // Check user in database
     $query = "SELECT tpnumber, password, role FROM user WHERE tpnumber = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $tpnumber);
