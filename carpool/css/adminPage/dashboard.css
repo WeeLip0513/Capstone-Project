@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.dashboard-container{
+    margin-left: 16rem;
+}
+
+.welcome{
+    margin-top: 30px;
+}
+
+.welcome h1{
+    color: white;
+    font-size: 25px;
+}
+
+.welcome h3{
+    margin-top: 5px;
+    color: rgb(101, 103, 103);
+    font-size: 13px;
+}
+
+.first-row-container{
+    margin-top: 2rem;
+    display: flex;
+    column-gap: 15px;
+}
+
+.first-row-item{
+    height: 150px;
+    width: 400px;
+    background-color: rgb(80, 80, 81);
+    box-shadow: 0 2px 10px rgba(171, 171, 171, 0.3);
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        margin-left: 5rem;
+    }
+    
+}
