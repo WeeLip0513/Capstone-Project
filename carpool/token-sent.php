@@ -1,19 +1,15 @@
 <?php
 
-
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
 $conn = require __DIR__ . "/dbconn.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
-
-    // Generate token with 30-minute expiry
     $token = bin2hex(random_bytes(16));
     $token_hash = hash("sha256", $token);
-    $expiry = date("Y-m-d H:i:s", time() + 1800); // 30 minutes
+    $expiry = date("Y-m-d H:i:s", time() + 60 * 30); 
 
-    // Update database using prepared statement
     $stmt = $conn->prepare("UPDATE user SET 
         reset_token_hash = ?,
         reset_token_expires_at = ?
@@ -29,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // $mail->Body = "Click to reset: http://localhost/Capstone-Project/carpool/reset-password.php?token=$token";
         $mail->Body = <<<END
 
-        Click <a href="http://localhost/Capstone-Project/carpool/php/login/resetpass/reset-password.php?token=$token">here</a>
+        Click <a href="http://localhost/Capstone-Project/reset-password.php?token=$token">here</a>
         to reset your password
 
         END;
@@ -37,9 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->send();
     }
 
-    // // Generic response
-    // header("Location: /password-reset-sent");
-    // exit();
+    // Generic response
+    header("Location: /password-reset-sent");
+    exit();
 }
 
 
