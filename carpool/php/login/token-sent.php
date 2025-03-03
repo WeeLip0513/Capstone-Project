@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->Subject = "Password Reset";
         $mail->Body = <<<END
 
-        Click <a href="http://localhost/Capstone-Project/carpool/reset-password.php?token=$token">here</a>
+        Click <a href="http://localhost/Capstone-Project/carpool/reset-password-page.php?token=$token">here</a>
         to reset your password
 
         END;
