@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("dbconn.php");
-include("headerHomepage.php");
+include("../dbconn.php");
+include("../headerHomepage.php");
 
-$_SESSION['id'] = 8;
+$_SESSION['id'] = 10;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -22,6 +22,9 @@ if (mysqli_num_rows($result) == 1) {
   $frontLicensePath = str_replace("../../", "", $frontImgPath);
   $backLicensePath = str_replace("../../", "", $backImgPath);
 
+  // echo $frontLicensePath;
+  // echo $backLicensePath;
+
   $driverID = $driver['id'];
   $_SESSION['driverID'] = $driverID;
   // echo $_SESSION['driverID'];
@@ -37,11 +40,11 @@ if (mysqli_num_rows($result) == 1) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Driver</title>
-  <link rel="stylesheet" href="css/driverPage/driverPage.css" />
-  <link rel="stylesheet" href="css/driverPage/addRide.css">
+  <link rel="stylesheet" href="../css/driverPage/driverPage.css" />
+  <link rel="stylesheet" href="../css/driverPage/addRide.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
-  <script src="js/driver/driverPage.js" defer></script>
+  <script src="../js/driver/driverPage.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link

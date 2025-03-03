@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
             { id: "license_photo_back", pattern: /^.+$/, message: "Upload a photo of you license (back side)" },
         ];
         
-
         fields.forEach(field => {
             const input = document.getElementById(field.id);
             const errorSpan = document.getElementById(field.id + "Error");
