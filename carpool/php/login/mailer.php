@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . ("/vendor/autoload.php");
+require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/vendor/autoload.php';
 
 $mail = new PHPMailer(true);
 

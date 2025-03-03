@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("dbconn.php");
+
+$conn = require __DIR__ . '/../../dbconn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tpnumber = trim($_POST["tpnumber"]);
@@ -28,13 +29,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["role"] = $user["role"];
 
             // Redirect based on role
+            $base_url = "http://" . $_SERVER['HTTP_HOST'] . "/Capstone-Project/carpool/";
             if ($user["role"] == "admin") {
-                header("Location: homepage.php");
+                header("Location: " . $base_url . "admin/homepage.php");
             } elseif ($user["role"] == "driver") {
-                header("Location: driverPage.php");
+                header("Location: " . $base_url . "driver/driverPage.php");
             } else {
-                header("Location: driverRegistration.php");
+                header("Location: " . $base_url . "passenger/driverRegistration.php");
             }
+            // if ($user["role"] == "admin") {
+            //     header("Location: /homepage.php");
+            // } elseif ($user["role"] == "driver") {
+            //     header("Location: driver/driverPage.php");
+            // } else {
+            //     header("Location: driverRegistration.php");
+            // }
             exit();
         } else {
             echo "<script>alert('Incorrect password.'); window.history.back();</script>";

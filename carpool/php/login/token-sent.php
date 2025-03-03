@@ -2,7 +2,7 @@
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
-$conn = require __DIR__ . "/dbconn.php";
+$conn = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/dbconn.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
@@ -18,14 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("sss", $token_hash, $expiry, $email);
 
     if ($stmt->execute() && $conn->affected_rows > 0) {
-        $mail = require __DIR__ . "/php/login/mailer.php";
-        $mail->setFrom("noreply@example.com", "noreply@gmail.com"); // noreply sender
+        $mail = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/php/login/mailer.php';
+        $mail->setFrom("noreply@example.com", "noreply@gmail.com");
         $mail->addAddress($email);
         $mail->Subject = "Password Reset";
-        // $mail->Body = "Click to reset: http://localhost/Capstone-Project/carpool/reset-password.php?token=$token";
         $mail->Body = <<<END
 
-        Click <a href="http://localhost/Capstone-Project/reset-password.php?token=$token">here</a>
+        Click <a href="http://localhost/Capstone-Project/carpool/reset-password.php?token=$token">here</a>
         to reset your password
 
         END;
@@ -40,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-// *Enable error reporting*
+// // *Enable error reporting*
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);  
 
@@ -92,7 +91,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //     $mail->addAddress($email);  // Use variable, not string 'email'
 
 //     $mail->Subject = "Password Reset";
-//     $mail->Body = "Reset link: http://localhost/Capstone-Project/carpool/reset-password.php?token=$token";
+//     $mail->Body = <<<END
+
+//     Click <a href="http://localhost/Capstone-Project/carpool/reset-password.php?token=$token">here</a>
+//     to reset your password
+
+//     END;
 
 //     try {
 //         $mail->send();
