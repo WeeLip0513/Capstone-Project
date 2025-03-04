@@ -1,6 +1,6 @@
-/* *{
+*{
     border: 2px solid red;
-} */
+}
 
 .driver-profile-container{
     margin-left: 16rem;
@@ -18,7 +18,7 @@
 .column{
     display: flex;
     column-gap: 30rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .license-image img{
