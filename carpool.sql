@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 24, 2025 at 07:05 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Mar 03, 2025 at 06:38 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,12 +50,11 @@ INSERT INTO `apu` (`id`, `tpnumber`, `name`, `age`) VALUES
 
 CREATE TABLE `driver` (
   `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `phone_no` varchar(20) NOT NULL,
   `license_no` varchar(20) NOT NULL,
   `license_expiry_date` varchar(20) NOT NULL,
-  `license_photo_front` varchar(50) NOT NULL,
-  `license_photo_back` varchar(50) NOT NULL,
+  `license_photo_front` varchar(100) NOT NULL,
+  `license_photo_back` varchar(100) NOT NULL,
   `registration_date` date NOT NULL,
   `rating` int(5) NOT NULL,
   `status` varchar(20) NOT NULL,
@@ -88,7 +87,6 @@ CREATE TABLE `driver_transaction` (
 CREATE TABLE `passenger` (
   `id` int(11) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `phone_no` varchar(20) NOT NULL,
   `registration_date` date NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -139,12 +137,19 @@ CREATE TABLE `ride` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `tpnumber` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `role` varchar(20) NOT NULL
+  `password` varchar(45) DEFAULT NULL,
+  `role` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
   `reset_token_hash` varchar(64) DEFAULT NULL,
   `reset_token_expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `tpnumber`, `password`, `role`, `email`, `reset_token_hash`, `reset_token_expires_at`) VALUES
+(9, 'TP074620', 'Tp074620@1712', 'driver', 'eric.ongwz17@gmail.com', '0d2696533fa8e4dacb2da0070b21d9bd96dd94e910de3394370b97feb9200544', '2025-03-03 15:07:09');
 
 -- --------------------------------------------------------
 
@@ -216,7 +221,9 @@ ALTER TABLE `ride`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `reset_token_hash` (`reset_token_hash`);
 
 --
 -- Indexes for table `vehicle`
@@ -269,7 +276,7 @@ ALTER TABLE `ride`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `vehicle`

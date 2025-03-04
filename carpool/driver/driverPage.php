@@ -3,7 +3,7 @@ session_start();
 include("../dbconn.php");
 include("../headerHomepage.php");
 
-$_SESSION['id'] = 10;
+$_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -14,13 +14,13 @@ $result = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
-  // echo "<pre>";
-  // print_r($driver); // Debugging: Print driver details
-  // echo "</pre>";
+  echo "<pre>";
+  print_r($driver); // Debugging: Print driver details
+  echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
-  $frontLicensePath = str_replace("../../", "", $frontImgPath);
-  $backLicensePath = str_replace("../../", "", $backImgPath);
+  $frontLicensePath = str_replace("../../../", "../", $frontImgPath);
+  $backLicensePath = str_replace("../../../", "../", $backImgPath);
 
   // echo $frontLicensePath;
   // echo $backLicensePath;
@@ -75,7 +75,7 @@ if (mysqli_num_rows($result) == 1) {
     <div class="rideContent" style="display: none;">
       <div class="addRides" id="addRideContainer">
         <h1>Create Rides Now !</h1><br>
-        <form id="addRideForm" method="POST" action="php/driver/addRideProcess.php" novalidate>
+        <form id="addRideForm" method="POST" action="../php/driver/addRideProcess.php" novalidate>
           <table class="addRidesTable">
             <tr>
               <td>
@@ -218,8 +218,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <button type="button" onclick="if(validateRideForm()) showConfirmation()"
-                  id="addRideBtn">Create</button>
+                <button type="button" id="addRideBtn">Create</button>
               </td>
             </tr>
           </table>
@@ -334,6 +333,12 @@ if (mysqli_num_rows($result) == 1) {
           <div id="selectedRideDetails"></div>
           <button onclick="addSelectedRides()">Confirm</button>
           <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
+        </div>
+      </div>
+      <div id="conflictRides" class="conflictRides" style="display: none;">
+        <div class="conflictBtn" id="conflictBtn">
+          <button class="replaceRideBtn" id="replaceRideBtn">Replace</button>
+          <button class="keepBtn" id="keepBtn">Keep</button>
         </div>
       </div>
     </div>
