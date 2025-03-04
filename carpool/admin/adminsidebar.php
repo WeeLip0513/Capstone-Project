@@ -1,11 +1,11 @@
-<?php include("dbconn.php"); ?>
+<?php include("../dbconn.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/adminPage/adminsidebar.css">
+    <link rel="stylesheet" href="../css/adminPage/adminsidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
             <div class="close-btn">
                 <i class="fas fa-times"></i>
             </div>
-            <img src="image/admin/logo.jpg" alt="logo">
+            <img src="../image/admin/logo.jpg" alt="logo">
             <h1>Welcome Admin</h1>
         </header>
         <div class="menu">

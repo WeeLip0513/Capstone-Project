@@ -31,7 +31,7 @@ if(isset($_GET['id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/adminPage/viewDriver.css">
+    <link rel="stylesheet" href="../css/adminPage/viewDriver.css">
 </head>
 <body>
     <div class="driver-profile-container">
@@ -75,7 +75,7 @@ if(isset($_GET['id'])){
                     <div class="license-image">
                         <?php 
                         $frontImgPath = $row['license_photo_front'];
-                        $frontLicensePath = str_replace("../../", "", $frontImgPath);
+                        $frontLicensePath = str_replace("../../", "../", $frontImgPath);
                         ?>
                         <img src="<?php echo $frontLicensePath; ?>" alt="License Front">                    
                     </div>
@@ -85,7 +85,7 @@ if(isset($_GET['id'])){
                     <div class="license-image">
                         <?php 
                         $backImgPath = $row['license_photo_back'];
-                        $backLicensePath = str_replace("../../", "", $backImgPath);
+                        $backLicensePath = str_replace("../../", "../", $backImgPath);
                         ?>
                         <img src="<?php echo $backLicensePath; ?>" alt="License Back">                    
                     </div>
