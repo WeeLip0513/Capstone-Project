@@ -50,12 +50,11 @@ INSERT INTO `apu` (`id`, `tpnumber`, `name`, `age`) VALUES
 
 CREATE TABLE `driver` (
   `id` int(11) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `phone_no` varchar(20) NOT NULL,
   `license_no` varchar(20) NOT NULL,
   `license_expiry_date` varchar(20) NOT NULL,
-  `license_photo_front` varchar(50) NOT NULL,
-  `license_photo_back` varchar(50) NOT NULL,
+  `license_photo_front` varchar(100) NOT NULL,
+  `license_photo_back` varchar(100) NOT NULL,
   `registration_date` date NOT NULL,
   `rating` int(5) NOT NULL,
   `status` varchar(20) NOT NULL,
@@ -88,7 +87,6 @@ CREATE TABLE `driver_transaction` (
 CREATE TABLE `passenger` (
   `id` int(11) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
   `phone_no` varchar(20) NOT NULL,
   `registration_date` date NOT NULL,
   `user_id` int(11) NOT NULL,

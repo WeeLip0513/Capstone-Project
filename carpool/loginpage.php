@@ -16,7 +16,7 @@ include("headerHomepage.php");
 <body>
     <div class="login-all-container" id="login-all-container">
         <div class="login-container sign-in-container">
-            <form id="form" action="loginValid.php" method="POST">
+            <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
                 <h1>Login</h1>
                 <div class="infield">
                     <input type="text" placeholder="TP Number" name="tpnumber" id="tpnumber" />
@@ -35,8 +35,8 @@ include("headerHomepage.php");
         </div>
         <div class="login-container sign-up-container">
             <h1>Register As</h1>
-            <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
-            <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
+            <button class="log-button" onclick="location.href='register/passengerRegistration.php'">Passenger</button>
+            <button class="log-button" onclick="location.href='register/driverRegistration.php'">Driver</button>
         </div>
 
         <div class="overlay-container" id="overlay-Con">
@@ -158,12 +158,13 @@ include("headerHomepage.php");
         });
     </script>
 
+    <iframe name="hiddenFrame" style="display:none;"></iframe>
 
     <div id="passwordResetModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Reset Password</h2>
-            <form action="testpasswordreset.php" method="POST" id="resetPasswordForm">
+            <form action="/Capstone-Project/carpool/php/login/token-sent.php" method="POST" id="resetPasswordForm" target="hiddenFrame">
                 <div class="infield">
                     <input type="email" name="email" id="email" placeholder="Registered email">
                     <label></label>
@@ -187,9 +188,10 @@ include("headerHomepage.php");
             document.getElementById('passwordResetModal').style.display = 'none';
         });
 
+
         // Handle Form Submission
         document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
-            e.preventDefault(); 
+            // e.preventDefault();
             const email = this.querySelector('input').value;
             const feedback = document.getElementById('resetFeedback');
 
@@ -211,6 +213,7 @@ include("headerHomepage.php");
             }, 1500);
         });
 
+
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
@@ -221,6 +224,7 @@ include("headerHomepage.php");
             element.style.color = color;
             element.style.display = 'block';
         }
+
     </script>
 </body>
 
