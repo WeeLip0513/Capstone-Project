@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "txtTP", pattern: /^TP\d{6}$/, message: "Please enter a valid TP Number. Example: TP012345" },
         { id: "txtFname", pattern: /^[A-Za-z]+$/, message: "Invalid first name (only letters allowed)" },
         { id: "txtLname", pattern: /^[A-Za-z]+$/, message: "Invalid last name (only letters allowed)" },
-        { id: "txtPass", pattern: /^(?=.*[\|~`+=_\-!@#$%^&*:"<>,./;'[\]{}\\])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least 8 characters, ONE special character, ONE uppercase letter, and ONE number" },       
-        { id: "txtEmail", pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/, message: "Invalid email format" },
+        { id: "txtPass", pattern: /^(?=.*[|~`+=_!@#$%^&*:"<>?,./;'\\{}[\]-])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least 8 characters, ONE special character, ONE uppercase letter, and ONE number" },
+        { id: "txtEmail", pattern: /^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email format" },
         { id: "txtPhone", pattern: /^01\d{8,9}$/, message: "Please enter a valid phone number. Example: 0123456789" },
         { id: "txtLicense", pattern: /^\d{7}[A-Za-z0-9]{7}$/, message: "Please enter a valid license number. Example: 0123456 U3OsjdU" },
         { id: "txtExpDate", pattern: /^\d{4}-\d{2}-\d{2}$/, message: "Please select your license expiry date." },
@@ -38,58 +38,82 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    function checkDatabase(tpNumber, licenseNumber, callback) {
-        fetch("../php/register/checkUser.php", {
+    function checkDatabase(tpNumber, licenseNumber, email, callback) {
+        fetch("php/register/checkUser.php", { 
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `tpnumber=${tpNumber}&license=${licenseNumber}`
+            body: `tpnumber=${tpNumber}&license=${licenseNumber}&email=${email}`
         })
-            .then(response => response.json())
-            .then(data => callback(data))
-            .catch(error => console.error("Error:", error));
+        .then(response => response.text()) // Read raw response as text
+        .then(text => {
+            console.log("🔍 Raw Response:", text); // Debugging
+            try {
+                const data = JSON.parse(text); // Convert to JSON
+                console.log("✅ Parsed JSON:", data);
+                callback(data); // ✅ Call the callback with the result
+            } catch (error) {
+                console.error("❌ JSON Parse Error:", error);
+            }
+        })
+        .catch(error => console.error("❌ Fetch Error:", error));
     }
-
+    
     nextButton.addEventListener("click", function () {
         let isValid = true;
-
+    
         validationRules.forEach(field => {
             const input = document.getElementById(field.id);
             if (!validateInput(input, field.pattern, field.message)) {
                 isValid = false;
             }
         });
-
+    
         if (isValid) {
             const tpNumber = document.getElementById("txtTP").value.trim();
             const licenseNumber = document.getElementById("txtLicense").value.trim();
+            const email = document.getElementById("txtEmail").value.trim();
+            
             const tpErrorSpan = document.getElementById("txtTPError");
             const licenseErrorSpan = document.getElementById("txtLicenseError");
-
-            checkDatabase(tpNumber, licenseNumber, function (result) {
+            const emailErrorSpan = document.getElementById("txtEmailError");
+    
+            // ✅ Call checkDatabase with a callback
+            checkDatabase(tpNumber, licenseNumber, email, function (result) {
+                let hasErrors = false;
+    
                 tpErrorSpan.textContent = "";
                 licenseErrorSpan.textContent = "";
-
+                emailErrorSpan.textContent = "";
+    
                 if (result.tpDoesNotExist) {
                     tpErrorSpan.textContent = "TP Number does not exist in the APU table!";
-                    return;  // 🚫 STOP HERE if TP does not exist
+                    hasErrors = true;
                 }
-
+    
                 if (result.tpAlreadyRegistered) {
-                    tpErrorSpan.textContent = "TP Number is already registered!";
-                    return;
+                    tpErrorSpan.textContent += (tpErrorSpan.textContent ? "\n" : "") + "TP Number is already registered!";
+                    hasErrors = true;
                 }
-
+    
                 if (result.licenseAlreadyRegistered) {
                     licenseErrorSpan.textContent = "License Number is already registered!";
-                    return;
+                    hasErrors = true;
                 }
-
-                // ✅ Proceed to vehicle form only if no issues
-                driverForm.style.display = "none";
-                vehicleForm.style.display = "block";
+    
+                if (result.emailAlreadyRegistered) {
+                    emailErrorSpan.textContent = "Email is already registered!";
+                    hasErrors = true;
+                }
+    
+                // ✅ Proceed to vehicle form **only if there are no errors**
+                if (!hasErrors) {
+                    driverForm.style.display = "none";
+                    vehicleForm.style.display = "block";
+                }
             });
         }
     });
+    
 
     backButton.addEventListener("click", function () {
         vehicleForm.style.display = "none";

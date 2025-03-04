@@ -1,30 +1,30 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-include("../../dbconn.php");
+header('Content-Type: application/json');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $plateNo = isset($_POST["plateNo"]) ? mysqli_real_escape_string($conn, $_POST["plateNo"]) : "";
+$plateNo = $_POST['plateNo'] ?? '';
 
-    if (empty($plateNo)) {
-        echo json_encode(["error" => "Missing plate number"]);
-        exit;
-    }
-
-    $query = "SELECT * FROM vehicle WHERE plate_no = '$plateNo'";
-    $result = mysqli_query($conn, $query);
-
-    if (!$result) {
-        echo json_encode(["error" => mysqli_error($conn)]);
-        exit;
-    }
-
-    if (mysqli_num_rows($result) > 0) {
-        echo json_encode(["exists" => true]);
-    } else {
-        echo json_encode(["exists" => false]);
-    }
+if ($plateNo === '') {
+    echo json_encode(["exists" => false, "error" => "No plate number provided"]);
+    exit;
 }
 
-mysqli_close($conn);
+// Database connection
+include("../../dbconn.php");
+
+if ($conn->connect_error) {
+    echo json_encode(["exists" => false, "error" => "Database connection failed"]);
+    exit;
+}
+
+// Query database
+$stmt = $conn->prepare("SELECT COUNT(*) FROM vehicle WHERE plate_no = ?");
+$stmt->bind_param("s", $plateNo);
+$stmt->execute();
+$stmt->bind_result($count);
+$stmt->fetch();
+$stmt->close();
+$conn->close();
+
+// Return result
+echo json_encode(["exists" => $count > 0]);
 ?>
