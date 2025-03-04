@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "txtTP", pattern: /^TP\d{6}$/, message: "Please enter a valid TP Number. Example: TP012345" },
         { id: "txtFname", pattern: /^[A-Za-z]+$/, message: "Invalid first name (only letters allowed)" },
         { id: "txtLname", pattern: /^[A-Za-z]+$/, message: "Invalid last name (only letters allowed)" },
-        { id: "txtPass", pattern: /^(?=.*[|~`+=_-!@#$%^&*:"<>?,./;'[\]{}\\|])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least 8 characters, ONE special character, ONE uppercase letter, and ONE number" },
+        { id: "txtPass", pattern: /^(?=.*[\|~`+=_\-!@#$%^&*:"<>,./;'[\]{}\\])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least 8 characters, ONE special character, ONE uppercase letter, and ONE number" },       
         { id: "txtEmail", pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/, message: "Invalid email format" },
         { id: "txtPhone", pattern: /^01\d{8,9}$/, message: "Please enter a valid phone number. Example: 0123456789" },
         { id: "txtLicense", pattern: /^\d{7}[A-Za-z0-9]{7}$/, message: "Please enter a valid license number. Example: 0123456 U3OsjdU" },
@@ -44,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `tpnumber=${tpNumber}&license=${licenseNumber}`
         })
-        .then(response => response.json())
-        .then(data => callback(data))
-        .catch(error => console.error("Error:", error));
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error("Error:", error));
     }
 
     nextButton.addEventListener("click", function () {
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (result.tpDoesNotExist) {
                     tpErrorSpan.textContent = "TP Number does not exist in the APU table!";
                     return;  // 🚫 STOP HERE if TP does not exist
-                } 
+                }
 
                 if (result.tpAlreadyRegistered) {
                     tpErrorSpan.textContent = "TP Number is already registered!";
