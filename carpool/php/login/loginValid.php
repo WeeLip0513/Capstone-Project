@@ -35,13 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 header("Location: " . $base_url . "passenger/driverRegistration.php");
             }
-            // if ($user["role"] == "admin") {
-            //     header("Location: /homepage.php");
-            // } elseif ($user["role"] == "driver") {
-            //     header("Location: driver/driverPage.php");
-            // } else {
-            //     header("Location: driverRegistration.php");
-            // }
             exit();
         } else {
             echo "<script>alert('Incorrect password.'); window.history.back();</script>";

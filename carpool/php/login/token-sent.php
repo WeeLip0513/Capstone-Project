@@ -38,9 +38,9 @@ try {
         $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
 
         $stmt = $conn->prepare("UPDATE user SET 
-        reset_token_hash = ?,
-        reset_token_expires_at = ?
-        WHERE email = ?");
+                                    reset_token_hash = ?,
+                                    reset_token_expires_at = ?
+                                WHERE email = ?");
 
         $stmt->bind_param("sss", $token_hash, $expiry, $email);
         
@@ -52,7 +52,7 @@ try {
             $mail->Subject = "Password Reset";
             $mail->Body = <<<END
 
-        Click <a href="http://localhost/Capstone-Project/carpool/reset-password-page.php?token=$token">here</a>
+        Click <a href="http://localhost/Capstone-Project/carpool/resetpasspage.php?token=$token">here</a>
         to reset your password
 
         END;
