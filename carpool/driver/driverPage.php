@@ -262,7 +262,7 @@ if (mysqli_num_rows($result) == 1) {
       
       $sql = "SELECT id, date, DAYNAME(date) AS day, 
               TIME_FORMAT(time, '%h:%i %p') AS formatted_time, 
-              pick_up_point, drop_off_point, slots_available, price, driver_id, vehicle_id
+              pick_up_point, drop_off_point, slots_available,slots, price, driver_id, vehicle_id
               FROM ride 
               WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
               AND status = 'completed' 
@@ -304,7 +304,7 @@ if (mysqli_num_rows($result) == 1) {
                   <td>{$row['formatted_time']}</td>
                   <td>{$row['pick_up_point']}</td>
                   <td>{$row['drop_off_point']}</td>
-                  <td class='historySlots'>{$row['slots_available']}</td>
+                  <td class='historySlots'>{$row['slots']}</td>
                 </tr>";
               }
             } else {
