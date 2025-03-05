@@ -1,42 +1,75 @@
 <?php
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
-
+header('Content-Type: application/json');
 $conn = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/dbconn.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email'];
-    $token = bin2hex(random_bytes(16));
-    $token_hash = hash("sha256", $token);
-    $expiry = date("Y-m-d H:i:s", time() + 60 * 30); 
+$response = ['success' => false, 'message' => ''];
 
-    $stmt = $conn->prepare("UPDATE user SET 
+try {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+
+        if (!$email) {
+            $response['message'] = 'Please enter a valid email address';
+            echo json_encode($response);
+            exit();
+        }
+        // validate email
+        $stmt = $conn->prepare("SELECT id FROM user WHERE email = ? LIMIT 1");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+
+        if ($stmt->get_result()->num_rows === 0) {
+            $response['message'] = 'Email not registered';
+            echo json_encode($response);
+            exit();
+        }
+
+        if ($conn->affected_rows === 0) {
+            $response['message'] = 'Email not found in our system';
+            echo json_encode($response);
+            exit();
+        }
+
+        // generate token
+        $token = bin2hex(random_bytes(16));
+        $token_hash = hash("sha256", $token);
+        $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+
+        $stmt = $conn->prepare("UPDATE user SET 
         reset_token_hash = ?,
         reset_token_expires_at = ?
         WHERE email = ?");
 
-    $stmt->bind_param("sss", $token_hash, $expiry, $email);
-
-    if ($stmt->execute() && $conn->affected_rows > 0) {
-        $mail = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/php/login/mailer.php';
-        $mail->setFrom("noreply@example.com", "noreply@gmail.com");
-        $mail->addAddress($email);
-        $mail->Subject = "Password Reset";
-        $mail->Body = <<<END
+        $stmt->bind_param("sss", $token_hash, $expiry, $email);
+        
+        // call mailer send reset email
+        if ($stmt->execute() && $conn->affected_rows > 0) {
+            $mail = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/php/login/mailer.php';
+            $mail->setFrom("noreply@example.com", "noreply@gmail.com");
+            $mail->addAddress($email);
+            $mail->Subject = "Password Reset";
+            $mail->Body = <<<END
 
         Click <a href="http://localhost/Capstone-Project/carpool/reset-password-page.php?token=$token">here</a>
         to reset your password
 
         END;
 
-        $mail->send();
-    }
+            $mail->send();
+        }
 
-    // Generic response
-    header("Location: /password-reset-sent");
-    exit();
+        // response
+        $response['success'] = true;
+        $response['message'] = 'Reset instructions sent';
+    }
+} catch (Exception $e) {
+    $response['message'] = 'Server error';
 }
 
+echo json_encode($response);
+exit();
 
 
 // // *Enable error reporting*
