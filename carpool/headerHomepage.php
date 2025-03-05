@@ -7,11 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/headerHomepage.css">
+    <link rel="icon" type="image/png" href="image/icon-logo.png">
+
     <!-- <title>headerHomepage</title> -->
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">APool</div>
+        <div class="logo"><img src="image/logo.png" alt="logo"></div>
         <ul class = "navlinks">
             <li><a href="#">Home</a></li>
             <li><a href="#">About Us</a></li>
