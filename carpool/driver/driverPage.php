@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../dbconn.php");
-include("../headerHomepage.php");
+include("../userHeader.php");
 
 $_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
