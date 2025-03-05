@@ -26,7 +26,7 @@ include("headerHomepage.php");
   </script>
   <div class="driverRegForm">
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" novalidate>
       <div class="driverSection" id="driverSection">
         <h1>Register Driver</h1>
         <table>
