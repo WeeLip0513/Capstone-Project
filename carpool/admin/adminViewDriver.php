@@ -6,7 +6,10 @@ include("adminsidebar.php");
 if(isset($_GET['id'])){
     $driver_id = $_GET['id'];
 
-    $sql = "SELECT * FROM driver WHERE id = ?";
+    // $sql = "SELECT * FROM driver WHERE id = ?";
+    $sql = "SELECT d.*, u.email FROM driver d
+            INNER JOIN user u ON d.user_id = u.id 
+            WHERE d.id = ?";
     $stmt = mysqli_prepare($conn,$sql);
 
     mysqli_stmt_bind_param($stmt,"i",$driver_id);

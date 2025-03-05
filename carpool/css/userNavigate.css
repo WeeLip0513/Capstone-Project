@@ -16,7 +16,7 @@
 }
 
 .tabs{
-    background: white;
+    background: rgb(216, 216, 216);
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
     padding: 10px;
     border-radius: 5rem;
@@ -79,3 +79,6 @@ label{
     transform: translateX(1100px);
 }
 
+@media (max-width) {
+     ;
+}
