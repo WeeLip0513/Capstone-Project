@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     VALUES ('$vehicleType', '$vehicleYear', '$vehicleBrand', '$vehicleModel', '$vehicleColor', '$plateNo', '$seatNum', '$driver_id')";
 
                 if (mysqli_query($conn, $insertVehicleSQL)) {
-                    echo "<script>alert('Driver Registered Successfully!'); window.location.href='../login.php';</script>";
+                    echo "<script>alert('Driver Registered Successfully!'); window.location.href='../login/login.php';</script>";
                 } else {
                     echo "<script>alert('Error inserting vehicle: " . mysqli_error($conn) . "'); window.history.back();</script>";
                 }

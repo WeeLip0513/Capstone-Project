@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const plateNo = document.getElementById("plateNo");
   const seatNo = document.getElementById("seatNo");
   const vehicleForm = document.getElementById("vehicleSection");
+  const plateNoError = document.getElementById("plateNoError");
+  const registerButton = document.getElementById("registerButton");
 
   // Disable brand and model initially
   vehicleBrand.disabled = true;
@@ -18,29 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
   vehicleYear.setAttribute("min", minYear);
   vehicleYear.setAttribute("max", currentYear);
 
-  // Error Messages
-  const errorMessages = {
-    vehicleType: "Please select a vehicle type",
-    vehicleYear: `Year must be between ${minYear}-${currentYear}`,
-    vehicleBrand: "Please select a vehicle brand",
-    vehicleModel: "Please select a vehicle model",
-    vehicleColor: "Please enter a valid vehicle color",
-    plateNo: "Plate number must be alphanumeric",
-    seatNo: "Seat number is required",
-  };
-
   // Vehicle Type → Seat Mapping
   const seatMapping = {
-    sedan: 5,
-    hatchback: 5,
-    suv: 7,
-    mpv: 7,
-    pickup: 2,
-    van: 12,
-    jeep: 4,
+    sedan: 5, hatchback: 5, suv: 7, mpv: 7, pickup: 2, van: 12, jeep: 4,
   };
 
-  // Vehicle Type → Brand → Model Mapping
+  // Vehicle Data (Brands & Models)
   const vehicleData = {
     sedan: {
       brands: ["Toyota", "Honda", "Nissan", "Proton", "Perodua"],
@@ -153,22 +138,12 @@ document.addEventListener("DOMContentLoaded", function () {
     updateBrands();
     updateSeatNumber();
   });
+
   vehicleBrand.addEventListener("change", updateModels);
 
-  vehicleForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    if (!vehicleType.value) {
-      alert("Please select a vehicle type first.");
-      return;
-    }
-
-    vehicleForm.submit();
-  });
-
-  // Check if Plate Number Already Exists (AJAX Request)
+  // Check if Plate Number Exists (AJAX Request)
   function checkPlateNumberExists(callback) {
-    console.log("Checking plate number..."); // Debugging log
+    console.log("Checking plate number...");
     fetch("php/register/checkVehicle.php", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -176,32 +151,36 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("Server Response:", data); // Debugging log
+        console.log("Server Response:", data);
         if (data.exists) {
-          document.getElementById("plateNoError").textContent = "Plate number already exists!";
+          plateNoError.textContent = "Plate number already exists!";
           callback(false); // Prevent submission
         } else {
-          document.getElementById("plateNoError").textContent = "";
+          plateNoError.textContent = "";
           callback(true); // Allow submission
         }
       })
       .catch(error => {
         console.error("Error checking plate number:", error);
+        plateNoError.textContent = "Error checking plate number.";
         callback(false); // Prevent submission on error
       });
-  }  
+  }
 
-  // Modify form submission validation
-  vehicleForm.addEventListener("submit", function (event) {
+  // Handle form submission only when "Register" button is clicked
+  registerButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    if (!vehicleType.value) {
+      alert("Please select a vehicle type first.");
+      return;
+    }
+
     checkPlateNumberExists(function (isValid) {
-      if (!isValid) {
-        event.preventDefault(); // Stop form submission if plate exists
-      } else {
+      if (isValid) {
         console.log("Form submitted!");
-        vehicleForm.submit();
+        registrationForm.submit();
       }
     });
   });
-  
-
 });

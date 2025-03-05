@@ -206,7 +206,7 @@ include("headerHomepage.php");
           <tr>
             <td colspan="2" style="text-align: center;">
               <button type="button" id="backButton">Back</button>
-              <input type="submit" value="Register">
+              <button type="submit" id="registerButton">Register</button>
             </td>
           </tr>
         </table>
