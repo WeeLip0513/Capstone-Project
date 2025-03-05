@@ -9,7 +9,7 @@
 <body>
     <div class="user-bar">
         <div class="logo">
-            <img src="logo.png" alt="logo">
+            <img src="image/logo.png" alt="logo">
         </div>
         <div class="logout-button">
             <button onclick="location.href='logout.php'">Log Out</button>        

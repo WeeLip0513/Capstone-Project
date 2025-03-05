@@ -27,7 +27,7 @@ if (mysqli_num_rows($result) == 1) {
 
   $driverID = $driver['id'];
   $_SESSION['driverID'] = $driverID;
-  // echo $_SESSION['driverID'];
+  echo $_SESSION['driverID'];
 } else {
   echo "No driver record found!";
 }
@@ -218,7 +218,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <button type="button" id="addRideBtn">Create</button>
+                <button type="button" id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
               </td>
             </tr>
           </table>

@@ -33,7 +33,7 @@ if (!$ride_id || !$date || !$hour || !$minute || !$pickup || !$dropoff || !$vehi
 }
 
 // Convert to MySQL time format
-$time = "$hour:$minute:00";
+$time = "$hour:$minute";
 
 // Prepare SQL statement
 $sql = "UPDATE ride SET date=?, time=?, pick_up_point=?, drop_off_point=?, vehicle_id=?, slots_available=? WHERE id=?";

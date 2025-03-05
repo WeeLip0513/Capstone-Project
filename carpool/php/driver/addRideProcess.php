@@ -59,7 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // echo $driver_id;
 
     // Convert date to day of the week
-    $dayOfWeek = strtolower(date("l", strtotime($day)));
+    $dayOfWeek = strtolower(date("l", strtotime($date)));
+
 
     // Format time
     $time = $hour . ":" . $minute;
@@ -74,7 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$date', '$dayOfWeek', '$time', '$pickup', '$dropoff', '$price', '$slots', '$slots', '$status', '$vehicle', '$driver_id')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "Ride added successfully!";
+        echo "<script>
+        alert('Ride Added Successfully!');
+        window.location.href = '../../driver/driverPage.php'; // Change to the actual filename
+    </script>";
         exit();
     } else {
         echo "Error: " . mysqli_error($conn);
