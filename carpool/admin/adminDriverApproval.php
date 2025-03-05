@@ -1,11 +1,15 @@
 <?php 
 session_start();
-include("dbconn.php"); 
+include("../dbconn.php"); 
 include("adminsidebar.php");
 ?>
 
 <?php
-    $sql = "SELECT id, firstname, lastname, email, phone_no, status FROM driver WHERE status = 'pending'";
+    // $sql = "SELECT id, firstname, lastname, phone_no, status FROM driver WHERE status = 'pending'";
+    $sql = "SELECT d.id, d.firstname, d.lastname, d.phone_no, d.status, u.email 
+        FROM driver d
+        INNER JOIN user u ON d.user_id = u.id 
+        WHERE d.status = 'pending'";
     $results = mysqli_query($conn, $sql);
 ?>
 
@@ -15,7 +19,7 @@ include("adminsidebar.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Approval</title>
-    <link rel="stylesheet" href="css/adminPage/driverApproval.css">
+    <link rel="stylesheet" href="../css/adminPage/driverApproval.css">
 </head>
 <body>
     <div class="driver-list-container">

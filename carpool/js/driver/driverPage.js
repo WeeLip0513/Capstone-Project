@@ -372,41 +372,121 @@ function getThisWeekDate(dayName) {
 
     return newDate.toISOString().split('T')[0]; // Return YYYY-MM-DD format
 }
-function showSelectedRidesConfirmation() {
-    let selectedRides = [];
 
-    // Get all checked checkboxes
+function showSelectedRidesConfirmation() {
+    let selectedRideIds = [];
+
     document.querySelectorAll('.rideCheckbox:checked').forEach(checkbox => {
-        let ride = JSON.parse(checkbox.dataset.ride);
-        selectedRides.push(ride);
+        selectedRideIds.push(checkbox.value);
     });
 
-    if (selectedRides.length === 0) {
+    if (selectedRideIds.length === 0) {
         alert("No rides selected!");
         return;
     }
 
-    // Populate confirmation modal with selected ride details
-    const rideDetailsContainer = document.getElementById("selectedRideDetails");
-    rideDetailsContainer.innerHTML = selectedRides.map((ride, index) => `
-        <div class="ride-info">
-            <strong>Ride ${index + 1}:</strong><br>
-            <strong>Day:</strong> ${ride.day} <br>
-            <strong>Time:</strong> ${ride.formatted_time} <br>
-            <strong>Pick-Up:</strong> ${ride.pick_up_point} <br>
-            <strong>Drop-Off:</strong> ${ride.drop_off_point} <br>
-            <strong>Slots Available:</strong> ${ride.slots_available} <br>
-            <hr>
-        </div>
-    `).join('');
+    if (selectedRideIds.length > 7) {
+        alert("You can select a maximum of 7 rides at a time.");
+        return;
+    }
 
-    // Show confirmation pop-up
-    document.getElementById("selectedRidesConfirmation").style.display = "block";
+    console.log("Checking for conflicts before submission...");
 
-    // Restore previous sections
-    document.getElementById("addRideContainer").style.display = "none";
-    document.getElementById("historyContainer").style.display = "none";
+    fetch('../php/driver/checkMultipleRideConflicts.php', {  // PHP script to check conflicts
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ride_ids: selectedRideIds })
+    })
+        .then(response => response.text())  // Read as plain text for debugging
+        .then(text => {
+            console.log("Raw Conflict Check Response:", text);
+
+            try {
+                return JSON.parse(text);
+            } catch (error) {
+                console.error("Invalid JSON response. Full response:", text);
+                throw new Error("Server returned invalid JSON.");
+            }
+        })
+        .then(conflicts => {
+            if (conflicts.length > 0) {
+                showConflictingRides(conflicts, selectedRideIds);
+            } else {
+                submitSelectedRides(selectedRideIds);  // No conflicts, proceed with submission
+            }
+        })
+        .catch(error => console.error("Error checking ride conflicts:", error));
 }
+
+function showConflictingRides(conflicts, selectedRideIds) {
+    const conflictDiv = document.getElementById('conflictRides');
+    let conflictHTML = `
+        <h3>Conflicting Ride(s) Found</h3>
+        <p>Select which conflicting rides you want to replace:</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Pickup</th>
+                    <th>Dropoff</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    conflicts.forEach(ride => {
+        conflictHTML += `
+                <tr style="background-color: #ffcccc;">
+                    <td><input type="checkbox" class="replaceCheckbox" value="${ride.ride_id}"></td>
+                    <td><strong>Conflict</strong></td>
+                    <td>${ride.ride_date}</td>
+                    <td>${ride.ride_time}</td>
+                    <td>${ride.pickup}</td>
+                    <td>${ride.dropoff}</td>
+                </tr>`;
+    });
+
+    conflictHTML += `</tbody></table>
+        <button onclick="replaceSelectedRides()">Replace Selected Rides</button>
+        <button onclick="cancelConflictCheck()">Cancel</button>`;
+
+    conflictDiv.innerHTML = conflictHTML;
+    conflictDiv.style.display = "block";
+}
+
+function replaceSelectedRides() {
+    let replaceRideIds = [];
+
+    document.querySelectorAll('.replaceCheckbox:checked').forEach(checkbox => {
+        replaceRideIds.push(checkbox.value);
+    });
+
+    if (replaceRideIds.length === 0) {
+        alert("No conflicting rides selected for replacement!");
+        return;
+    }
+
+    console.log("Replacing rides:", replaceRideIds);
+
+    fetch('../php/driver/replaceSelectedRides.php', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ride_ids: replaceRideIds })
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert("Selected conflicting rides replaced successfully!");
+            document.getElementById('conflictRides').style.display = "none";
+        })
+        .catch(error => console.error("Error replacing rides:", error));
+}
+
+function cancelConflictCheck() {
+    document.getElementById('conflictRides').style.display = "none";
+}
+
 
 // Hide the confirmation modal
 function hideSelectedRidesConfirmation() {
@@ -422,7 +502,7 @@ function submitSelectedRides() {
     let selectedRideIds = [];
 
     document.querySelectorAll('.rideCheckbox:checked').forEach(checkbox => {
-        selectedRideIds.push(checkbox.value); // Collect ride IDs
+        selectedRideIds.push(checkbox.value);
     });
 
     if (selectedRideIds.length === 0) {
@@ -430,11 +510,14 @@ function submitSelectedRides() {
         return;
     }
 
+    if (selectedRideIds.length > 7) {
+        alert("You can select a maximum of 7 rides at a time.");
+        return;
+    }
+
     console.log("Submitting the following rides:", selectedRideIds);
 
-    // Here, you would send this data to your backend for processing
-    // Example: Use AJAX to submit to PHP
-    fetch('process_selected_rides.php', {
+    fetch('../php/addSelectedRides.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ride_ids: selectedRideIds })
@@ -442,7 +525,206 @@ function submitSelectedRides() {
         .then(response => response.json())
         .then(data => {
             alert("Selected rides created successfully!");
-            hideSelectedRidesConfirmation(); // Hide the pop-up after submission
+            hideSelectedRidesConfirmation();
         })
         .catch(error => console.error("Error submitting rides:", error));
 }
+
+
+function validateAndCheckConflict() {
+    if (!validateRideForm()) {
+        return; // Stop if form validation fails
+    }
+
+    checkRideConflict(); // This function is async, so we need to handle it properly
+}
+
+let selectedRideId = null; // Store ride_id globally
+
+function checkRideConflict() {
+    const date = document.getElementById('txtDate').value;
+    const hour = document.getElementById('hour').value;
+    const minute = document.getElementById('minute').value;
+    const pickup = document.getElementById('pickup').value;
+    const dropoff = document.getElementById('dropoff').value;
+
+    if (!date || !hour || !minute || !pickup || !dropoff) {
+        alert("Please select a date, time, and locations first.");
+        return;
+    }
+
+    fetch('../php/driver/checkRideConflict.php', {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `date=${date}&hour=${hour}&minute=${minute}`
+    })
+        .then(response => response.text())  // Read as plain text for debugging
+        .then(text => {
+            console.log("Raw Response:", text);
+            try {
+                return JSON.parse(text); // Try parsing JSON
+            } catch (error) {
+                console.error("Invalid JSON response. Full response:", text);
+                throw new Error("Server returned invalid JSON.");
+            }
+        })
+        .then(conflicts => {
+            console.log("Parsed JSON:", conflicts);
+            const conflictDiv = document.getElementById('conflictRides');
+            const conflictBtn = document.getElementById('conflictBtn');
+            const addRideContainer = document.getElementById('addRideContainer');
+            const historyContainer = document.getElementById('historyContainer');
+
+            if (conflicts.length > 0) {
+                selectedRideId = conflicts[0].ride_id; // Store ride_id globally
+
+                let conflictHTML = `
+            <h3>Conflicting Ride(s) Found</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Pickup</th>
+                        <th>Dropoff</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f2f2f2;">
+                        <td><strong>Your Ride</strong></td>
+                        <td>${date}</td>
+                        <td>${hour}:${minute}</td>
+                        <td>${pickup}</td>
+                        <td>${dropoff}</td>
+                    </tr>`;
+
+                conflicts.forEach(ride => {
+                    conflictHTML += `
+                    <tr style="background-color: #ffcccc;">
+                        <td><strong>Conflict</strong></td>
+                        <td>${ride.ride_date}</td>
+                        <td>${ride.ride_time}</td>
+                        <td>${ride.pickup}</td>
+                        <td>${ride.dropoff}</td>
+                    </tr>`;
+                });
+
+                conflictHTML += `</tbody></table>`;
+
+                conflictDiv.innerHTML = conflictHTML;
+                conflictDiv.appendChild(conflictBtn); // Show buttons
+
+                conflictDiv.style.display = "block";
+                addRideContainer.style.display = "none";
+                historyContainer.style.display = "none";
+            } else {
+                showConfirmation();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+function replaceRide() {
+    if (!selectedRideId) {
+        alert("Error: No ride ID selected for replacement.");
+        return;
+    }
+
+    const rideData = {
+        ride_id: selectedRideId,
+        date: document.getElementById('txtDate').value,
+        hour: document.getElementById('hour').value,
+        minute: document.getElementById('minute').value,
+        pickup: document.getElementById('pickup').value,
+        dropoff: document.getElementById('dropoff').value,
+        vehicle: document.getElementById('vehicle').value,
+        seatNo: document.getElementById('seatNo').value
+    };
+
+    console.log("🚀 Sending Replace Ride Request:", rideData);
+
+    fetch('../php/driver/replaceRide.php', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // Send JSON
+        body: JSON.stringify(rideData)
+    })
+        .then(response => response.text()) // Read as plain text first
+        .then(text => {
+            console.log("🔍 Raw Response:", text); // Log full response
+
+            try {
+                return JSON.parse(text); // Try parsing JSON
+            } catch (error) {
+                console.error("❌ Invalid JSON. Server Response:", text);
+                throw new Error("Server returned invalid JSON.");
+            }
+        })
+        .then(data => {
+            console.log("✅ Parsed JSON:", data);
+            if (data.status === "success") {
+                alert("Ride replaced successfully!");
+
+                // Hide conflict section and show add ride/history containers
+                document.getElementById('conflictRides').style.display = "none";
+                document.getElementById('addRideContainer').style.display = "flex";
+                document.getElementById('historyContainer').style.display = "flex";
+
+                // Clear all form fields
+                document.getElementById('addRideForm').reset(); // Reset form if it has id="rideForm"
+
+                // Manually clear dropdown selections if needed
+                document.getElementById('txtDate').value = "";
+                document.getElementById('hour').value = "";
+                document.getElementById('minute').value = "";
+                document.getElementById('pickup').selectedIndex = 0;
+                document.getElementById('dropoff').selectedIndex = 0;
+                document.getElementById('vehicle').selectedIndex = 0;
+                document.getElementById('seatNo').value = "";
+
+                document.querySelectorAll('#addRideForm input, #addRideForm select').forEach(field => {
+                    field.style.border = "1px solid #ccc"; // Reset to default
+                });
+
+            } else {
+                alert("Failed to replace ride: " + data.message);
+                console.error("❌ Replace Ride Error:", data.message);
+            }
+        })
+        .catch(error => console.error('❌ Fetch Error:', error));
+}
+
+document.getElementById('replaceRideBtn').addEventListener('click', replaceRide);
+
+document.getElementById('keepBtn').addEventListener('click', function () {
+    // Hide conflict section
+    document.getElementById('conflictRides').style.display = "none";
+    document.getElementById('addRideContainer').style.display = "flex";
+    document.getElementById('historyContainer').style.display = "flex";
+
+    // Reset form fields
+    document.getElementById('rideForm').reset(); // Assuming your form has id="rideForm"
+
+    // If some fields are not inside a form, manually clear them:
+    document.getElementById('txtDate').value = "";
+    document.getElementById('hour').value = "";
+    document.getElementById('minute').value = "";
+    document.getElementById('pickup').selectedIndex = 0;
+    document.getElementById('dropoff').selectedIndex = 0;
+    document.getElementById('vehicle').selectedIndex = 0;
+    document.getElementById('seatNo').value = "";
+});
+
+
+
+document.querySelectorAll('.rideCheckbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        let selectedCheckboxes = document.querySelectorAll('.rideCheckbox:checked');
+
+        if (selectedCheckboxes.length > 7) {
+            alert("You can select a maximum of 7 rides.");
+            this.checked = false; // Uncheck the latest selection
+        }
+    });
+});

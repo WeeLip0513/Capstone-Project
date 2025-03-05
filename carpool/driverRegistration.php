@@ -13,7 +13,8 @@ include("headerHomepage.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register Driver & Vehicle</title>
   <script src="js/register/driverValidation.js" defer></script>
-  <script src="js/register/vehicleSelection.js" defer></script>
+  <!-- <script src="../js/register/vehicleSelection.js" defer></script> -->
+  <script src="js/register/vehicleValidation.js" defer></script>
   <link rel="stylesheet" href="css/driverReg.css">
 </head>
 
@@ -25,7 +26,7 @@ include("headerHomepage.php");
   </script>
   <div class="driverRegForm">
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" novalidate>
       <div class="driverSection" id="driverSection">
         <h1>Register Driver</h1>
         <table>
@@ -123,7 +124,8 @@ include("headerHomepage.php");
             <td>
               <select name="vehicleType" id="vehicleType" required>
                 <option value="">Select Vehicle Type</option>
-                <option value="motorcar">Motorcar</option>
+                <option value="sedan">Sedan</option>
+                <option value="hatchback">Hatchback</option>
                 <option value="pickup">Pickup Truck</option>
                 <option value="jeep">Jeep</option>
                 <option value="van">Van</option>
@@ -136,10 +138,21 @@ include("headerHomepage.php");
           <tr>
             <td>Manufacturing Year</td>
             <td>
-              <input type="number" name="vehicleYear" id="vehicleYear" required min="1900" max="2099">
+              <input type="number" name="vehicleYear" id="vehicleYear" required>
               <span class="error" id="vehicleYearError"></span>
             </td>
           </tr>
+
+          <script>
+            // Get the current year
+            const currentYear = new Date().getFullYear();
+
+            // Set min and max values dynamically
+            const vehicleYearInput = document.getElementById("vehicleYear");
+            vehicleYearInput.min = currentYear - 20;
+            vehicleYearInput.max = currentYear;
+            vehicleYearInput.value = currentYear; // Default to current year
+          </script>
           <tr>
             <td>Brand</td>
             <td>
@@ -193,7 +206,7 @@ include("headerHomepage.php");
           <tr>
             <td colspan="2" style="text-align: center;">
               <button type="button" id="backButton">Back</button>
-              <input type="submit" value="Register">
+              <button type="submit" id="registerButton">Register</button>
             </td>
           </tr>
         </table>
