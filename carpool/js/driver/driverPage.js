@@ -401,11 +401,11 @@ function showSelectedRidesConfirmation() {
 
         selectedRides.push({
             ride_id: rideData.id,
-            date: rideData.day,
+            date: rideData.day.toLowerCase(), // Ensure lowercase (though unnecessary for dates)
             hour: rideData.formatted_time.split(':')[0], // Extract hour
             minute: rideData.formatted_time.split(':')[1], // Extract minute
-            pickup: rideData.pick_up_point,
-            dropoff: rideData.drop_off_point
+            pickup: rideData.pick_up_point.toLowerCase(), // Convert pickup point to lowercase
+            dropoff: rideData.drop_off_point.toLowerCase() // Convert dropoff point to lowercase
         });
     });
 
@@ -420,6 +420,10 @@ function showSelectedRidesConfirmation() {
     }
 
     console.log("Checking for conflicts before submission...");
+    
+    // ✅ Log the lowercase date(s) being sent to PHP
+    console.log("Date(s) being sent to PHP (lowercase):", selectedRides.map(ride => ride.date));
+    console.log("Pickup & Dropoff (lowercase):", selectedRides.map(ride => ({pickup: ride.pickup, dropoff: ride.dropoff})));
 
     fetch('../php/driver/checkMultipleRideConflicts.php', {
         method: "POST",
@@ -437,18 +441,20 @@ function showSelectedRidesConfirmation() {
             throw new Error("Server returned invalid JSON.");
         }
     })
-    .then(conflicts => {
-        if (!Array.isArray(conflicts)) {
-            console.error("Invalid response format: Expected an array, got:", conflicts);
+    .then(responseData => {
+        if (!responseData || !Array.isArray(responseData.conflicts)) {
+            console.error("Invalid response format: Expected an array inside an object, got:", responseData);
             throw new Error("Unexpected server response.");
         }
-
+    
+        const conflicts = responseData.conflicts;
+    
         if (conflicts.length > 0) {
             showConflictingRides(selectedRides, conflicts);
         } else {
-            submitSelectedRides(selectedRides.map(ride => ride.ride_id)); // No conflicts, proceed with submission
+            submitSelectedRides(selectedRides.map(ride => ride.ride_id));
         }
-    })
+    })    
     .catch(error => console.error("❌ Error checking ride conflicts:", error));
 }
 
@@ -477,12 +483,13 @@ function showConflictingRides(newRides, conflicts) {
             <tr style="background-color: #ffcccc;">
                 <td></td> 
                 <td><strong>Existing Ride</strong></td>
-                <td>${ride.ride_date}</td>
-                <td>${ride.ride_time}</td>
-                <td>${ride.pickup}</td>
-                <td>${ride.dropoff}</td>
+                <td>${ride.date}</td> <!-- Fix: Use "date" instead of "ride_date" -->
+                <td>${ride.time}</td> <!-- Fix: Use "time" instead of "ride_time" -->
+                <td>${ride.pick_up_point}</td> <!-- Fix: Use "pick_up_point" instead of "pickup" -->
+                <td>${ride.drop_off_point}</td> <!-- Fix: Use "drop_off_point" instead of "dropoff" -->
             </tr>`;
     });
+    
 
     // ✅ Show new rides (WITH checkboxes for replacement)
     newRides.forEach(ride => {
