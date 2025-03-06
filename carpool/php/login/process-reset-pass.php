@@ -43,28 +43,6 @@ $stmt->execute();
 // echo "<script>alert('Password updated. You can now login.'); window.history.back();</script>";
 echo "<script>
         alert('Password updated successfully!');
-        const timerElement = document.createElement('div');
-        timerElement.style.position = 'fixed';
-        timerElement.style.top = '20px';
-        timerElement.style.right = '20px';
-        timerElement.style.padding = '10px';
-        timerElement.style.background = '#d4edda';
-        timerElement.style.border = '1px solid #c3e6cb';
-        timerElement.style.borderRadius = '5px';
-        document.body.appendChild(timerElement);
-
-        // Start countdown
-        let seconds = 10;
-        timerElement.textContent = `Redirecting to login in \${seconds} seconds...`;
-
-        const interval = setInterval(() => {
-            seconds--;
-            timerElement.textContent = `Redirecting to login in \${seconds} seconds...`;
-            
-            if (seconds <= 0) {
-                clearInterval(interval);
-                window.location.href = '/Capstone-Project/carpool/loginpage.php';
-            }
-        }, 1000);
+        window.location.href = '/Capstone-Project/carpool/loginpage.php'
       </script>";
 ?>

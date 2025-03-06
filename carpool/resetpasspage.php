@@ -41,26 +41,23 @@ include("headerHomepage.php");
 </head>
 
 <body>
-    <div class="reset-container">
-        <form method="post" action="/Capstone-Project/carpool/php/login/process-reset-pass.php">
-            <h1>Reset Password</h1>
-            <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
-
-            <div class="panel">
-                <input type="password" id="password" name="password" placeholder="New Password">
-                <span class="error" id="passwordError">Password is required</span>
-            </div>
-
-
-            <div class="panel">
-                <input type="password" id="passwordConfirmation" name="password_confirmation"
-                    placeholder="Confirm Password">
-                <span class="error" id="passwordConfirmationError">Passwords must match</span>
-            </div>
-
-
-            <button class="confirm-button" type="submit">Send</button>
-        </form>
+    <div class="wrapper">
+        <div class="reset">
+            <form method="post" action="/Capstone-Project/carpool/php/login/process-reset-pass.php">
+                <h1>Reset Password</h1>
+                <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+                <div class="panel">
+                    <input type="password" id="password" name="password" placeholder="New Password">
+                    <span class="error" id="passwordError">Password is required</span>
+                </div>
+                <div class="panel">
+                    <input type="password" id="passwordConfirmation" name="password_confirmation"
+                        placeholder="Confirm Password">
+                    <span class="error" id="passwordConfirmationError">Passwords must match</span>
+                </div>
+                <button class="confirm-button" type="submit">Send</button>
+            </form>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -81,7 +78,7 @@ include("headerHomepage.php");
 
                 clearVisualState(password);
                 errorElement.textContent = '';
-                
+
                 if (value.length < minLength) {
                     showError(password, `Password must be at least ${minLength} characters`);
                     valid = false;

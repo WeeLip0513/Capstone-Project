@@ -35,8 +35,8 @@ include("headerHomepage.php");
         </div>
         <div class="login-container sign-up-container">
             <h1>Register As</h1>
-            <button class="log-button" onclick="location.href='register/passengerRegistration.php'">Passenger</button>
-            <button class="log-button" onclick="location.href='register/driverRegistration.php'">Driver</button>
+            <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
+            <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
         </div>
 
         <div class="overlay-container" id="overlay-Con">
