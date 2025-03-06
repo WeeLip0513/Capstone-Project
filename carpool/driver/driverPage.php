@@ -278,18 +278,15 @@ if (mysqli_num_rows($result) == 1) {
               <td colspan="6"></td>
             </tr>
             <tr>
-              <!-- <th></th> -->
               <th></th>
               <th>Day</th>
               <th>Time</th>
               <th>Pick-Up</th>
               <th>Drop-Off</th>
               <th>Slots</th>
-              <!-- <th></th> -->
             </tr>
           </thead>
           <tbody id="tableBody">
-            <!-- Centered Divider after Header -->
             <tr class="divider-row">
               <td colspan="6">
                 <div class="centered-line"></div>
@@ -299,13 +296,13 @@ if (mysqli_num_rows($result) == 1) {
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                  <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
-                  <td>{$row['day']}</td>
-                  <td>{$row['formatted_time']}</td>
-                  <td>{$row['pick_up_point']}</td>
-                  <td>{$row['drop_off_point']}</td>
-                  <td class='historySlots'>{$row['slots']}</td>
-                </tr>";
+                        <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
+                        <td>{$row['day']}</td>
+                        <td>{$row['formatted_time']}</td>
+                        <td>{$row['pick_up_point']}</td>
+                        <td>{$row['drop_off_point']}</td>
+                        <td class='historySlots'>{$row['slots']}</td>
+                    </tr>";
               }
             } else {
               echo "<tr><td colspan='6'>No rides found from the previous week</td></tr>";
@@ -317,16 +314,17 @@ if (mysqli_num_rows($result) == 1) {
               </td>
             </tr>
             <tr class="pageControl" height="15px">
-              <!-- insert the paganition here -->
+              <!-- insert the pagination here -->
             </tr>
-            <tr class="create-btn-row" style="display: none;">
+            <tr class="create-btn-row">
               <td colspan="6" style="text-align: center;">
-                <button class="addSelectBtn" onclick="showSelectedRidesConfirmation()">Create Selected Rides</button>
+                <button class="addSelectBtn" onclick="checkRideConflicts()">Create Selected Rides</button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+
       <div id="selectedRidesConfirmation" class="confirmation-modal" style="display: none;">
         <div class="modal-content">
           <h2>Confirm Selected Rides</h2>
@@ -335,6 +333,7 @@ if (mysqli_num_rows($result) == 1) {
           <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
         </div>
       </div>
+
       <div id="conflictRides" class="conflictRides" style="display: none;">
         <div class="conflictBtn" id="conflictBtn">
           <button class="replaceRideBtn" id="replaceRideBtn">Replace</button>
@@ -352,6 +351,8 @@ if (mysqli_num_rows($result) == 1) {
       </div>
     </div>
   </div>
+  <script src="../js/driver/addRide.js"></script>
+  <script src="../js/driver/addMultipleRides.js"></script>
 </body>
 
 </html>
