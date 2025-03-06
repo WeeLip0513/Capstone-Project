@@ -133,6 +133,9 @@ function showSelectedRidesConfirmation() {
     .catch(error => console.error("❌ Error checking ride conflicts:", error));
 }
 
+let conflicts = []; // Global conflict storage
+let newRidesList = [];
+
 function showConflictingRides(newRides, conflictData) {
   if (!conflictData || conflictData.length === 0) {
     console.error("❌ No conflict data received!");
@@ -140,6 +143,8 @@ function showConflictingRides(newRides, conflictData) {
   }
 
   conflicts = conflictData; // ✅ Store conflicts globally
+  newRidesList = newRides;  // ✅ Store new rides globally
+
   const conflictDiv = document.getElementById('conflictRides');
 
   let conflictHTML = `
@@ -158,28 +163,35 @@ function showConflictingRides(newRides, conflictData) {
           </thead>
           <tbody>`;
 
-  conflictData.forEach(ride => {
-    conflictHTML += `
-          <tr style="background-color: #ffcccc;">
-              <td></td> 
-              <td><strong>Existing Ride</strong></td>
-              <td>${ride.date}</td> 
-              <td>${ride.time}</td> 
-              <td>${ride.pick_up_point}</td>
-              <td>${ride.drop_off_point}</td>
-          </tr>`;
-  });
+  // ✅ Extract conflict ride IDs from PHP response
+  const conflictIds = conflictData.map(ride => ride.id); // This should be [53]
+  console.log("🚀 Extracted Conflict IDs:", conflictIds);
 
-  newRides.forEach(ride => {
+  // Add existing conflicting rides
+  // Display existing conflicting rides
+  conflictData.forEach(conflict => {
     conflictHTML += `
-          <tr style="background-color: #d4edda;">
-              <td><input type="checkbox" class="replaceCheckbox" value="${ride.ride_id}"></td>
-              <td><strong>New Ride</strong></td>
-              <td>${ride.date}</td>
-              <td>${ride.hour}:${ride.minute}</td>
-              <td>${ride.pickup}</td>
-              <td>${ride.dropoff}</td>
-          </tr>`;
+        <tr style="background-color: #ffcccc;">
+            <td></td> 
+            <td><strong>Existing Ride</strong></td>
+            <td>${conflict.date}</td> 
+            <td>${conflict.time}</td> 
+            <td>${conflict.pick_up_point}</td>
+            <td>${conflict.drop_off_point}</td>
+        </tr>`;
+
+    // Now add a matching new ride row for each conflict
+    newRides.forEach(ride => {
+      conflictHTML += `
+        <tr style="background-color: #d4edda;">
+            <td><input type="checkbox" class="replaceCheckbox" value="${conflict.conflict_id}" data-original-ride-id="${conflict.original_ride_id}">"${conflict.conflict_id}"</td>
+            <td><strong>New Ride</strong></td>
+            <td>${ride.date}</td>
+            <td>${ride.hour}:${ride.minute}</td>
+            <td>${ride.pickup}</td>
+            <td>${ride.dropoff}</td>
+        </tr>`;
+    });
   });
 
   conflictHTML += `</tbody></table>
@@ -193,57 +205,107 @@ function showConflictingRides(newRides, conflictData) {
   document.getElementById("historyContainer").style.display = "none";
 }
 
+// ✅ Ensure correct selection logic
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".replaceCheckbox").forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+      let rideId = parseInt(this.value);
+
+      if (this.checked) {
+        if (!selectedRides.includes(rideId)) {
+          selectedRides.push(rideId);
+        }
+      } else {
+        selectedRides = selectedRides.filter(id => id !== rideId);
+      }
+
+      console.log("Updated Selected Rides:", selectedRides);
+    });
+  });
+});
+
+
+// ✅ Auto-select the conflicting rides
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".replaceCheckbox").forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+      let rideId = parseInt(this.value);
+
+      if (this.checked) {
+        if (!selectedRides.includes(rideId)) {
+          selectedRides.push(rideId);
+        }
+      } else {
+        selectedRides = selectedRides.filter(id => id !== rideId);
+      }
+
+      console.log("Updated Selected Rides:", selectedRides);
+    });
+  });
+});
+
 function replaceSelectedRides() {
   let selectedNewRides = [];
   let replaceRideIds = [];
 
   console.log("🚀 replaceSelectedRides() triggered!");
-  console.log("✅ Stored conflicts:", conflicts); // Check global conflicts array
+  console.log("✅ Stored conflicts:", conflicts);
+  console.log("✅ Stored new rides:", newRidesList);
 
-  // ✅ Get all checked checkboxes for replacement
+  // ✅ Get all checked checkboxes
   document.querySelectorAll('.replaceCheckbox:checked').forEach(checkbox => {
-    const selectedRideId = checkbox.value; // Ride selected by user
+    const selectedConflictId = checkbox.value; // Get checked conflict ID
 
-    console.log("🟡 Checking for selected ride_id:", selectedRideId);
+    console.log("🟡 Checking for selected conflict_id:", selectedConflictId);
 
-    // Find conflicting ride from global conflicts array
-    const conflictingRide = conflicts.find(conflict => conflict.id == selectedRideId);
+    // ✅ Find the conflicting ride using the selected ID
+    const conflictingRide = conflicts.find(conflict => conflict.conflict_id == selectedConflictId);
 
     if (!conflictingRide) {
-      console.error("❌ No matching conflict found for ride_id:", selectedRideId);
+      console.error("❌ No matching conflict found for conflict_id:", selectedConflictId);
       return;
     }
 
     console.log("✅ Matching conflicting ride found:", conflictingRide);
 
-    // ✅ Find matching new ride from selectedRides
-    const newRide = selectedRides.find(r => r.ride_id == selectedRideId);
-    
+    // ✅ Find the new ride ID that corresponds to this conflict
+    const newRideId = conflictingRide.new_ride_id;
+
+    if (!newRideId) {
+      console.error("❌ No new ride ID found for conflict_id:", selectedConflictId);
+      return;
+    }
+
+    console.log("🆕 New Ride ID for conflict:", newRideId);
+
+    // ✅ Get the new ride details using `new_ride_id`
+    const newRide = newRidesList.find(r => r.ride_id == newRideId);
+
     if (newRide) {
-      newRide.ride_id = conflictingRide.id; // ✅ Keep the same ride_id
-      selectedNewRides.push(newRide);
+      // ✅ Add conflict ID (which will be replaced) and the new ride details
+      replaceRideIds.push(selectedConflictId);
+      selectedNewRides.push({
+        date: newRide.date,
+        time: `${newRide.hour}:${newRide.minute}`,
+        pickup: newRide.pickup,
+        dropoff: newRide.dropoff
+      });
+
+      console.log("✅ New ride selected for conflict:", newRide);
     } else {
-      console.error("❌ No matching new ride found for ride_id:", selectedRideId);
+      console.error("❌ No matching new ride details found for new_ride_id:", newRideId);
     }
   });
 
-  console.log("🔵 Selected New Rides:", selectedNewRides);
+  console.log("🔵 Selected Conflict IDs for Replacement:", replaceRideIds);
+  console.log("🆕 New Ride Details:", selectedNewRides);
 
-  if (selectedNewRides.length === 0) {
-    alert("No new rides selected for replacement!");
+  if (replaceRideIds.length === 0 || selectedNewRides.length === 0) {
+    alert("No rides selected for replacement!");
     return;
   }
 
-  if (conflicts.length === 0) {
-    alert("Error: No conflicting rides found.");
-    return;
-  }
-
-  replaceRideIds = conflicts.map(conflict => conflict.id); // ✅ Store conflicting ride IDs
-
-  console.log("Replacing ride IDs:", replaceRideIds);
-  console.log("With new ride data (same ride_id as conflicts):", selectedNewRides);
-
+  // ✅ Send selected conflict IDs and corresponding new ride details to PHP
   fetch('../php/driver/replaceSelectedRides.php', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -251,12 +313,17 @@ function replaceSelectedRides() {
   })
     .then(response => response.json())
     .then(data => {
-      alert("Selected conflicting rides replaced successfully!");
-      document.getElementById('conflictRides').style.display = "none";
+      if (data.success) {
+        alert("Selected conflicting rides replaced successfully!");
+        document.getElementById('conflictRides').style.display = "none";
+      } else {
+        alert("Error replacing rides: " + data.message);
+      }
     })
-    .catch(error => console.error("Error replacing rides:", error));
-  }
-  
+    .catch(error => console.error("❌ Error replacing rides:", error));
+}
+
+
 function cancelConflictCheck() {
   document.getElementById("conflictRides").style.display = "none";
   document.getElementById("addRideContainer").style.display = "flex";

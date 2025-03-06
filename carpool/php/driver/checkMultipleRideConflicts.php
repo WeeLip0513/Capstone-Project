@@ -21,7 +21,7 @@ $debugDates = []; // Store generated dates for debugging
 
 foreach ($rideIds as $rideId) {
     // ✅ Fetch ride details from DB
-    $rideSql = "SELECT date, time FROM ride WHERE id = ?";
+    $rideSql = "SELECT id, date, time, pick_up_point, drop_off_point FROM ride WHERE id = ?";
     $stmt = $conn->prepare($rideSql);
     $stmt->bind_param("s", $rideId);
     $stmt->execute();
@@ -46,16 +46,16 @@ foreach ($rideIds as $rideId) {
 
     // 🛠 Log generated date and time range
     $debugDates[] = [
-        "ride_id" => $rideId,
+        "original_ride_id" => $rideId, // The newly generated ride ID
         "original_date" => $rideDate,
         "original_time" => $rideTime,
         "generated_next_week_date" => $nextWeekDate,
         "time_range" => ["start" => $startTime, "end" => $endTime]
     ];
-    error_log("Ride ID: $rideId | Original Date: $rideDate | Time: $rideTime | Next Week Date: $nextWeekDate | Time Range: $startTime - $endTime");
+    error_log("Original Ride ID: $rideId | Original Date: $rideDate | Time: $rideTime | Next Week Date: $nextWeekDate | Time Range: $startTime - $endTime");
 
     // ✅ Check for conflicts within the time range
-    $conflictSql = "SELECT id, date, time, pick_up_point, drop_off_point 
+    $conflictSql = "SELECT id AS conflict_id, date, time, pick_up_point, drop_off_point 
                     FROM ride 
                     WHERE date = ? 
                     AND time BETWEEN ? AND ?";
@@ -66,14 +66,16 @@ foreach ($rideIds as $rideId) {
     $conflictResult = $stmt->get_result();
 
     while ($conflict = $conflictResult->fetch_assoc()) {
+        // ✅ Link the conflict with the original ride ID
+        $conflict['original_ride_id'] = $rideId; // Rename new_ride_id → original_ride_id
         $conflicts[] = $conflict;
     }
 }
 
 // ✅ Response including Conflicts and Debug Info
 $response = [
-    "conflicts" => $conflicts,
-    "debug_generated_dates" => $debugDates // Add generated date info to response
+    "conflicts" => $conflicts, // Includes both conflict_id and original_ride_id
+    "debug_generated_dates" => $debugDates // Debugging info
 ];
 
 echo json_encode($response, JSON_PRETTY_PRINT);

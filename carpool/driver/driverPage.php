@@ -318,7 +318,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr class="create-btn-row">
               <td colspan="6" style="text-align: center;">
-                <button class="addSelectBtn" onclick="checkRideConflicts()">Create Selected Rides</button>
+                <button class="addSelectBtn" onclick="showSelectedRidesConfirmation()">Create Selected Rides</button>
               </td>
             </tr>
           </tbody>
