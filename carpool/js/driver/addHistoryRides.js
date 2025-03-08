@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const selectedRidesDiv = document.getElementById("selectedRidesConfirmation");
   let conflictMap = {}; // Object to store ride conflicts
+  let rideConflicts = {};
 
   // Function to display selected rides for confirmation
   window.showSelectedRidesConfirmation = function () {
@@ -43,8 +44,15 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       const data = await response.json();
+
+      // Store the fetched data globally
+      rideConflicts = data;
+
       buildConflictMap(data); // Store conflict mapping
       displayRides(data); // Show ride selection table
+
+      console.log("Ride Conflicts Data:", rideConflicts); // Debugging output
+
     } catch (error) {
       console.error("Error fetching rides:", error);
     }
@@ -226,46 +234,46 @@ document.addEventListener("DOMContentLoaded", function () {
   function displayConfirmedRides(confirmRideIds) {
     // Helper function to get next week's date for a given weekday name
     function getNextWeekDate(weekdayName) {
-        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        let today = new Date();
-        let todayIndex = today.getDay(); // Get index (0 for Sunday, 1 for Monday, etc.)
-        let targetIndex = daysOfWeek.indexOf(weekdayName); // Find index of the given weekday
-        
-        if (targetIndex === -1) {
-            console.error("Invalid weekday:", weekdayName);
-            return null;
-        }
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let today = new Date();
+      let todayIndex = today.getDay(); // Get index (0 for Sunday, 1 for Monday, etc.)
+      let targetIndex = daysOfWeek.indexOf(weekdayName); // Find index of the given weekday
 
-        // Calculate days until next occurrence of the target day
-        let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
-        let nextDate = new Date();
-        nextDate.setDate(today.getDate() + daysUntilNext + 7); // Move to next week's same day
+      if (targetIndex === -1) {
+        console.error("Invalid weekday:", weekdayName);
+        return null;
+      }
 
-        return {
-            fullDate: nextDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
-            weekday: daysOfWeek[nextDate.getDay()] // Get the weekday name for next week's date
-        };
+      // Calculate days until next occurrence of the target day
+      let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
+      let nextDate = new Date();
+      nextDate.setDate(today.getDate() + daysUntilNext + 7); // Move to next week's same day
+
+      return {
+        fullDate: nextDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
+        weekday: daysOfWeek[nextDate.getDay()] // Get the weekday name for next week's date
+      };
     }
 
     // Store ride details before clearing
     let confirmedRides = confirmRideIds.map(id => {
-        let checkbox = document.querySelector(`#checkbox_${id}`);
-        if (checkbox) {
-            let row = checkbox.closest("tr");
-            if (row) {
-                let originalDay = row.cells[2].textContent.trim(); // Get day name (e.g., Monday)
-                let nextWeekDateInfo = getNextWeekDate(originalDay); // Convert to next week's date
+      let checkbox = document.querySelector(`#checkbox_${id}`);
+      if (checkbox) {
+        let row = checkbox.closest("tr");
+        if (row) {
+          let originalDay = row.cells[2].textContent.trim(); // Get day name (e.g., Monday)
+          let nextWeekDateInfo = getNextWeekDate(originalDay); // Convert to next week's date
 
-                return {
-                    day: nextWeekDateInfo.weekday, // Show weekday name instead of ride ID
-                    date: nextWeekDateInfo.fullDate, // Full date (YYYY-MM-DD)
-                    time: row.cells[3].textContent,
-                    pickup: row.cells[4].textContent,
-                    dropoff: row.cells[5].textContent
-                };
-            }
+          return {
+            day: nextWeekDateInfo.weekday, // Show weekday name instead of ride ID
+            date: nextWeekDateInfo.fullDate, // Full date (YYYY-MM-DD)
+            time: row.cells[3].textContent,
+            pickup: row.cells[4].textContent,
+            dropoff: row.cells[5].textContent
+          };
         }
-        return null;
+      }
+      return null;
     }).filter(ride => ride !== null); // Remove any null values
 
     // Clear previous data but keep selectedRidesDiv visible
@@ -292,15 +300,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Append ride rows
     confirmedRides.forEach(ride => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
+      let row = document.createElement("tr");
+      row.innerHTML = `
             <td>${ride.day}</td>
             <td>${ride.date}</td>
             <td>${ride.time}</td>
             <td>${ride.pickup}</td>
             <td>${ride.dropoff}</td>
         `;
-        tbody.appendChild(row);
+      tbody.appendChild(row);
     });
 
     // Add confirm and cancel buttons
@@ -311,15 +319,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let finalizeButton = document.createElement("button");
     finalizeButton.innerText = "Finalize Selection";
     finalizeButton.style.marginRight = "10px";
-    finalizeButton.addEventListener("click", function () {
-        alert("Rides confirmed!");
-        selectedRidesDiv.style.display = "none"; // Hide confirmation section
-    });
+    finalizeButton.id = "finalizeBtn";
+    finalizeButton.addEventListener("click", finalizeRides);
 
     let goBackButton = document.createElement("button");
     goBackButton.innerText = "Go Back";
     goBackButton.addEventListener("click", function () {
-        showSelectedRidesConfirmation(); // Redisplay selection screen
+      showSelectedRidesConfirmation(); // Redisplay selection screen
     });
 
     buttonContainer.appendChild(finalizeButton);
@@ -327,7 +333,81 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedRidesDiv.appendChild(buttonContainer);
 
     selectedRidesDiv.style.display = "block"; // Ensure it's visible
-}
+  }
+
+  async function finalizeRides() {
+    if (!rideConflicts || (!rideConflicts.original_rides.length && !rideConflicts.conflicts.length)) {
+      alert("No rides available for finalization.");
+      return;
+    }
+
+    // 🚀 Get the Confirmed Ride IDs (Make sure these come from user confirmation)
+    let confirmedIds = confirmRideIds; // Replace this with actual confirmed IDs from the system
+
+    // 🚀 Function to add 2 weeks to a date
+    function addTwoWeeks(dateStr) {
+      let date = new Date(dateStr);
+      date.setDate(date.getDate() + 14); // Add 14 days
+      return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    }
+
+    // 🚀 Filter Non-Conflict Rides: Add 2 weeks to the date
+    let nonConflictRides = rideConflicts.original_rides
+      .filter(ride => confirmedIds.includes(ride.original_ride_id))
+      .map(ride => ({
+        ride_id: ride.original_ride_id,
+        date: addTwoWeeks(ride.original_date), // Add 2 weeks here
+        time: ride.original_time,
+        pickup: ride.pick_up_point,
+        dropoff: ride.drop_off_point
+      }));
+
+    // 🚀 Filter Conflict Rides: Only keep rides that are in confirmedIds
+    // 🚀 Ensure conflictRides are correctly filtered based on confirmedIds
+    let conflictRides = rideConflicts.conflicts
+      .filter(ride => confirmedIds.includes(String(ride.conflict_id))) // Ensure ID comparison works
+      .map(ride => ({
+        ride_id: String(ride.conflict_id), // Ensure it's stored as a string
+        date: ride.date,
+        time: ride.time,
+        pickup: ride.pick_up_point,
+        dropoff: ride.drop_off_point
+      }));
+
+
+    console.log("Filtered Non-Conflict Rides:", nonConflictRides);
+    console.log("Filtered Conflict Rides:", conflictRides);
+
+    try {
+      if (nonConflictRides.length > 0) {
+        let response = await fetch("../php/driver/finalizeNonConflictedRides.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rides: nonConflictRides })
+        });
+
+        let result = await response.json();
+        console.log("Non-Conflict Rides Finalized:", result);
+      }
+
+      if (conflictRides.length > 0) {
+        let response = await fetch("../php/driver/finalizeConflictedRides.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rides: conflictRides })
+        });
+
+        let result = await response.json();
+        console.log("Conflict Rides Finalized:", result);
+      }
+
+      alert("Rides finalized successfully!");
+    } catch (error) {
+      console.error("Error finalizing rides:", error);
+      alert("An error occurred while finalizing rides.");
+    }
+  }
+
 
   document.querySelector(".addSelectBtn").addEventListener("click", showSelectedRidesConfirmation);
 });
