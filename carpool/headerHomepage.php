@@ -8,6 +8,7 @@ include("dbconn.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/headerHomepage.css">
+    <link rel="stylesheet" href="css/mobile/loginmobile.css">
     <link rel="icon" type="image/png" href="image/icon-logo.png">
 
     <!-- <title>headerHomepage</title> -->
@@ -19,7 +20,16 @@ include("dbconn.php");
     ?>
 
     <div class="navbar">
-        <div class="logo"><img src="image/logo.png" alt="logo"></div>
+        <div class="logo">
+            <a href="homepage.php">
+                <img src="image/logo.png" alt="logo">
+            </a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
         <ul class="navlinks">
             <li><a href="homepage.php" class="<?= ($currentPage == 'homepage.php') ? 'active' : '' ?>">Home</a></li>
             <li><a href="#" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About Us</a></li>
@@ -35,7 +45,39 @@ include("dbconn.php");
             <a href="loginpage.php?action=signup"><button class="signup">Sign Up</button></a>
         </div>
     </div>
+    <script>
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navlinks = document.querySelector('.navlinks');
+            const buttons = document.querySelector('.buttons');
+            hamburger.classList.toggle('active');
+            navlinks.classList.toggle('active');
+            buttons.classList.toggle('active');
+        }
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const hamburger = document.querySelector('.hamburger');
+            const navlinks = document.querySelector('.navlinks');
+            const buttons = document.querySelector('.buttons');
 
+            if (!hamburger.contains(event.target) &&
+                !navlinks.contains(event.target) &&
+                !buttons.contains(event.target)) {
+                hamburger.classList.remove('active');
+                navlinks.classList.remove('active');
+                buttons.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking nav items
+        document.querySelectorAll('.navlinks a').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.hamburger').classList.remove('active');
+                document.querySelector('.navlinks').classList.remove('active');
+                document.querySelector('.buttons').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 
 </html>
