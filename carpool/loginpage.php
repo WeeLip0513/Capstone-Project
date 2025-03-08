@@ -1,6 +1,8 @@
 <?php
 include("dbconn.php");
 include("headerHomepage.php");
+
+$showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ include("headerHomepage.php");
 </head>
 
 <body>
-    <div class="login-all-container" id="login-all-container">
+    <div class="login-all-container <?= $showSignup ? 'signup-right-active' : '' ?>" id="login-all-container">
         <div class="login-container sign-in-container">
             <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
                 <h1>Login</h1>
@@ -55,7 +57,19 @@ include("headerHomepage.php");
             <button id="overlayBtn"></button>
         </div>
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if we came from navbar signup
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'signup') {
+                // Trigger the sliding effect after short delay
+                setTimeout(() => {
+                    document.querySelector('.login-all-container').classList.add('signup-right-active');
+                }, 100);
+            }
+        });
+    </script>
+    
     <script>
         const loginallcontainer = document.getElementById('login-all-container')
         const overlayCon = document.getElementById('overlay-Con')
@@ -145,6 +159,10 @@ include("headerHomepage.php");
                     tpError.style.display = 'none';
                     tpLabel.style.background = 'green';
                     tpLabel.style.width = '100%';
+                } else {
+                    tpError.style.display = 'block';
+                    tpLabel.style.background = 'red';
+                    tpLabel.style.width = '100%';
                 }
             });
 
@@ -152,6 +170,10 @@ include("headerHomepage.php");
                 if (this.value.trim()) {
                     passwordError.style.display = 'none';
                     passwordLabel.style.background = 'green';
+                    passwordLabel.style.width = '100%';
+                } else {
+                    passwordError.style.display = 'block';
+                    passwordLabel.style.background = 'red';
                     passwordLabel.style.width = '100%';
                 }
             });
@@ -240,32 +262,6 @@ include("headerHomepage.php");
                     showFeedback(feedback, 'Connection error. Please try again.', 'red');
                 });
         });
-
-
-        // if (!validateEmail(email)) {
-        //     showFeedback(feedback, 'Please enter a valid email address', 'red');
-        //     return;
-        // }
-        // showFeedback(feedback, 'Checking email...', 'var(--grad-clr1)');
-
-        // setTimeout(() => {
-        //     if (!existEmails.includes(email)) {
-        //         showFeedback(feedback, "Email not found.", 'red');
-        //         return;
-        //     }
-
-        //     showFeedback(feedback, 'Reset link sent to your email!', 'green');
-        //     setTimeout(() => {
-        //         document.getElementById('passwordResetModal').style.display = 'none';
-        //         feedback.style.display = 'none';
-        //         this.reset();
-        //     }, 2000);
-        // }, 1500);
-
-
-
-
-
     </script>
 </body>
 

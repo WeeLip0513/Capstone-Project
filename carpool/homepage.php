@@ -1,6 +1,6 @@
 <?php
-    include ("dbconn.php");
-    include ("headerHomepage.php");
+include("dbconn.php");
+include("headerHomepage.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

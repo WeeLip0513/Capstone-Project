@@ -1,16 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-/* * {
-    border: 1px solid red; 
+/* *{
+    border: 2px solid red !important;
 } */
 
-.wrapper {
+body {
+    padding-top: 80px !important;
+}
+
+.regContainer {
     position: relative;
     min-height: 90vh;
     margin: 0 auto;
 }
 
-.reset {
+.pass-register {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,14 +23,15 @@
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 40px;
-    max-width: 450px;
-    width: 100%;
+    height: 60%;
+    max-width: 600px;
+    width: 100% !important;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px;
     width: 100%;
 }
 
@@ -37,14 +42,16 @@ h1 {
     font-size: 35px;
 }
 
-.panel {
+.input-field {
     position: relative;
     margin-bottom: 20px;
+    padding: 10px;
 }
 
 input {
     width: 100%;
     padding: 15px;
+    margin-top: 10px;
     border: 1.5px solid #ddd;
     border-radius: 6px;
     font-size: 16px;
@@ -78,7 +85,7 @@ input {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 15px;
+    padding: 15px 30px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
@@ -109,3 +116,39 @@ input {
     margin: 0 0 15px 0;
 }
 
+
+.step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.step.active {
+    display: block;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    margin-top: 20px;
+}
+
+.prev-btn {
+    background-color: #6c757d !important;
+}
+
+.prev-btn:hover {
+    background-color: #5a6268 !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

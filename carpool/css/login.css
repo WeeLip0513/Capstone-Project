@@ -6,6 +6,26 @@
     --grad-clr2: #243B55;
 }
 
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica;
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 80px !important; 
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* Set explicit height to match homepage */
+    z-index: 1000;
+}
+
 .login-all-container {
     position: absolute;
     top: 50%;
@@ -336,3 +356,4 @@ p {
     font-size: 14px;
     display: none;
 }
+
