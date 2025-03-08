@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/userHeader.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="stylesheet" href="../css/userHeader.css">
     <link rel="icon" type="image/png" href="../image/icon-logo.png">
 </head>
 <body>
@@ -12,7 +12,7 @@
             <img src="../image/logo.png" alt="logo">
         </div>
         <div class="logout-button">
-            <button onclick="location.href='../logout.php'">Log Out</button>        
+            <button onclick="location.href='../logout.php'">LOGOUT</button>        
         </div>
     </div>
 </body>

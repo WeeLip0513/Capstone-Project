@@ -1,0 +1,41 @@
+/* *{
+    border: 2px solid red;
+} */
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.search-form h2{
+    font-size: 15px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+.pickup, .dropoff, .date, .time {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-left: 0;
+}
+
+select, input {
+    width: 100%; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.time-container{
+    display: flex;
+    gap: 4px;
+}
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
