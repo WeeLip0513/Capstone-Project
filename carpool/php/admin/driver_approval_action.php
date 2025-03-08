@@ -24,14 +24,14 @@ if(isset($_POST['action']) && isset($_POST['driver_id'])) {
     mysqli_stmt_bind_param($stmt, "si", $status, $driver_id);
     
     if(mysqli_stmt_execute($stmt)) {
-        echo "<script>alert('$message'); window.location.href='../../adminDriverApproval.php';</script>";
+        echo "<script>alert('$message'); window.location.href='../../admin/adminDriverApproval.php';</script>";
     } else {
-        echo "<script>alert('Error updating driver status!'); window.location.href='../../adminDriverApproval.php';</script>";
+        echo "<script>alert('Error updating driver status!'); window.location.href='../../admin/adminDriverApproval.php';</script>";
     }
     
     mysqli_stmt_close($stmt);
 } else {
-    echo "<script>alert('Invalid request!'); window.location.href='../../adminDriverApproval.php';</script>";
+    echo "<script>alert('Invalid request!'); window.location.href='../../admin/adminDriverApproval.php';</script>";
 }
 
 mysqli_close($conn);

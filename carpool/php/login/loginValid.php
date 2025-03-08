@@ -29,11 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirect based on role
             $base_url = "http://" . $_SERVER['HTTP_HOST'] . "/Capstone-Project/carpool/";
             if ($user["role"] == "admin") {
-                header("Location: " . $base_url . "admin/homepage.php");
+                header("Location: " . $base_url . "admin/adminDashboard.php");
             } elseif ($user["role"] == "driver") {
                 header("Location: " . $base_url . "driver/driverPage.php");
             } else {
-                header("Location: " . $base_url . "passenger/driverRegistration.php");
+                header("Location: " . $base_url . "passenger/passengerPage.php");
             }
             exit();
         } else {

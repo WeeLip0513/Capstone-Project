@@ -95,7 +95,7 @@ if(isset($_GET['id'])){
                 </div>
             </div>
             <div class="approval-actions">
-                <form action="php/admin/driver_approval_action.php" method="post">
+                <form action="../php/admin/driver_approval_action.php" method="post">
                     <input type="hidden" name="driver_id" value="<?php echo $driver_id; ?>">
                     <button type="submit" name="action" value="approve" class="approve-btn">Approve Driver</button>
                     <button type="submit" name="action" value="reject" class="reject-btn">Reject Application</button>
