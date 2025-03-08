@@ -144,8 +144,10 @@ document.addEventListener("DOMContentLoaded", function () {
     attachCheckboxListeners(); // Ensure checkbox selection rules apply
   }
 
+  let confirmRideIds = []; // Global variable
+
   function confirmSelection() {
-    let confirmRideIds = [];
+    confirmRideIds = [];
     document.querySelectorAll(".cRideCheckbox:checked").forEach(checkbox => {
       confirmRideIds.push(checkbox.value);
     });
@@ -222,15 +224,41 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayConfirmedRides(confirmRideIds) {
+    // Helper function to get next week's date for a given weekday name
+    function getNextWeekDate(weekdayName) {
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let today = new Date();
+        let todayIndex = today.getDay(); // Get index (0 for Sunday, 1 for Monday, etc.)
+        let targetIndex = daysOfWeek.indexOf(weekdayName); // Find index of the given weekday
+        
+        if (targetIndex === -1) {
+            console.error("Invalid weekday:", weekdayName);
+            return null;
+        }
+
+        // Calculate days until next occurrence of the target day
+        let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
+        let nextDate = new Date();
+        nextDate.setDate(today.getDate() + daysUntilNext + 7); // Move to next week's same day
+
+        return {
+            fullDate: nextDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
+            weekday: daysOfWeek[nextDate.getDay()] // Get the weekday name for next week's date
+        };
+    }
+
     // Store ride details before clearing
     let confirmedRides = confirmRideIds.map(id => {
         let checkbox = document.querySelector(`#checkbox_${id}`);
         if (checkbox) {
             let row = checkbox.closest("tr");
             if (row) {
+                let originalDay = row.cells[2].textContent.trim(); // Get day name (e.g., Monday)
+                let nextWeekDateInfo = getNextWeekDate(originalDay); // Convert to next week's date
+
                 return {
-                    ride_id: row.cells[1].textContent,
-                    day: row.cells[2].textContent,
+                    day: nextWeekDateInfo.weekday, // Show weekday name instead of ride ID
+                    date: nextWeekDateInfo.fullDate, // Full date (YYYY-MM-DD)
                     time: row.cells[3].textContent,
                     pickup: row.cells[4].textContent,
                     dropoff: row.cells[5].textContent
@@ -240,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }).filter(ride => ride !== null); // Remove any null values
 
-    // Clear previous data
+    // Clear previous data but keep selectedRidesDiv visible
     selectedRidesDiv.innerHTML = "";
 
     // Create new table
@@ -250,8 +278,8 @@ document.addEventListener("DOMContentLoaded", function () {
     table.innerHTML = `
         <thead>
             <tr>
-                <th>Ride ID</th>
                 <th>Day</th>
+                <th>Date</th>
                 <th>Time</th>
                 <th>Pick-up</th>
                 <th>Drop-off</th>
@@ -266,8 +294,8 @@ document.addEventListener("DOMContentLoaded", function () {
     confirmedRides.forEach(ride => {
         let row = document.createElement("tr");
         row.innerHTML = `
-            <td>${ride.ride_id}</td>
             <td>${ride.day}</td>
+            <td>${ride.date}</td>
             <td>${ride.time}</td>
             <td>${ride.pickup}</td>
             <td>${ride.dropoff}</td>
@@ -275,10 +303,31 @@ document.addEventListener("DOMContentLoaded", function () {
         tbody.appendChild(row);
     });
 
-    selectedRidesDiv.style.display = "block";
+    // Add confirm and cancel buttons
+    let buttonContainer = document.createElement("div");
+    buttonContainer.style.marginTop = "15px";
+    buttonContainer.style.textAlign = "center";
+
+    let finalizeButton = document.createElement("button");
+    finalizeButton.innerText = "Finalize Selection";
+    finalizeButton.style.marginRight = "10px";
+    finalizeButton.addEventListener("click", function () {
+        alert("Rides confirmed!");
+        selectedRidesDiv.style.display = "none"; // Hide confirmation section
+    });
+
+    let goBackButton = document.createElement("button");
+    goBackButton.innerText = "Go Back";
+    goBackButton.addEventListener("click", function () {
+        showSelectedRidesConfirmation(); // Redisplay selection screen
+    });
+
+    buttonContainer.appendChild(finalizeButton);
+    buttonContainer.appendChild(goBackButton);
+    selectedRidesDiv.appendChild(buttonContainer);
+
+    selectedRidesDiv.style.display = "block"; // Ensure it's visible
 }
-
-
 
   document.querySelector(".addSelectBtn").addEventListener("click", showSelectedRidesConfirmation);
 });
