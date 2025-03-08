@@ -324,7 +324,6 @@ if (mysqli_num_rows($result) == 1) {
           </tbody>
         </table>
       </div>
-
       <div id="selectedRidesConfirmation" class="confirmation-modal" style="display: none;">
         <div class="modal-content">
           <h2>Confirm Selected Rides</h2>
@@ -333,7 +332,6 @@ if (mysqli_num_rows($result) == 1) {
           <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
         </div>
       </div>
-
       <div id="conflictRides" class="conflictRides" style="display: none;">
         <div class="conflictBtn" id="conflictBtn">
           <button class="replaceRideBtn" id="replaceRideBtn">Replace</button>
@@ -352,7 +350,7 @@ if (mysqli_num_rows($result) == 1) {
     </div>
   </div>
   <script src="../js/driver/addRide.js"></script>
-  <script src="../js/driver/addMultipleRides.js"></script>
+  <script src="../js/driver/addHistoryRides.js"></script>
 </body>
 
 </html>
