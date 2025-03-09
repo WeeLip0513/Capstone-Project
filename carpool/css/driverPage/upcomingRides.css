@@ -1,0 +1,91 @@
+.rideTableContainer {
+  width: 100%;
+}
+
+.rideTableContainer table {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 5;
+}
+
+/* Table Header */
+.rideTableContainer thead {
+  background-color: #2b83ff; /* Blue background */
+  color: white;
+  font-size: 24px;
+}
+
+.rideTableContainer th {
+  padding: 15px;
+}
+
+.rideTableContainer thead th:first-child {
+  border-top-left-radius: 15px; /* Rounded top-left corner */
+}
+
+.rideTableContainer thead th:last-child {
+  border-top-right-radius: 15px; /* Rounded top-right corner */
+}
+
+/* Table Body */
+.rideTableContainer tbody {
+  background-color: white;
+  color: #2b83ff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rideTableContainer td {
+  padding: 15px;
+}
+
+.rideTableContainer thead th {
+  border-bottom: 2px solid darkgrey; /* Adds a line below each row */
+}
+
+.rideTableContainer tbody tr:last-child {
+  border-bottom: none; /* Removes border from the last row */
+}
+
+/* Last row styling */
+.rideTableContainer tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 15px; /* Rounded bottom-left corner */
+}
+
+.rideTableContainer tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 15px; /* Rounded bottom-right corner */
+}
+
+/* Buttons */
+.startBtn,
+.cancelBtn {
+  color: white;
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.startBtn {
+  background-color: rgb(1, 185, 1);
+}
+
+.cancelBtn {
+  background-color: rgb(188, 0, 0);
+}
+
+.startBtn:hover {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5); /* Shadow towards the right */
+  background-color: rgb(0, 228, 0);
+}
+
+.cancelBtn:hover {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5); /* Shadow towards the right */
+  background-color: red;
+}
+

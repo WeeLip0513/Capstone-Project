@@ -79,11 +79,11 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
-  background-color: whitesmoke !important;
-  text-align: center !important;
-  color: #afafaf !important;
-  box-shadow: 0px 4px 10px rgba(1, 35, 109, 0.8) !important;
-  font-weight: normal !important;
+  background-color: whitesmoke;
+  text-align: center;
+  color: #afafaf;
+  box-shadow: 0px 4px 10px rgba(1, 35, 109, 0.8);
+  font-weight: normal;
   /* color: #00b52a; */
 }
 

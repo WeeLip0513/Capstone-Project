@@ -14,9 +14,9 @@ $result = mysqli_stmt_get_result($stmt);
 
 if (mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
-  echo "<pre>";
-  print_r($driver); // Debugging: Print driver details
-  echo "</pre>";
+  // echo "<pre>";
+  // print_r($driver); // Debugging: Print driver details
+  // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
   $frontLicensePath = str_replace("../../../", "../", $frontImgPath);
@@ -42,6 +42,8 @@ if (mysqli_num_rows($result) == 1) {
   <title>Driver</title>
   <link rel="stylesheet" href="../css/driverPage/driverPage.css" />
   <link rel="stylesheet" href="../css/driverPage/addRide.css">
+  <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
   <script src="../js/driver/driverPage.js" defer></script>
@@ -53,25 +55,45 @@ if (mysqli_num_rows($result) == 1) {
 </head>
 
 <body>
-  <div class="features">
-    <button id="recentActivities" class="featureBtn" data-content="activityContent">
-      Upcoming Rides
+<div class="features">
+    <button id="recentActivities" class="featureBtn active" data-content="activityContent">
+        Upcoming Rides
     </button>
     <button id="addRides" class="featureBtn" data-content="rideContent">
-      Add Rides
+        Add Rides
     </button>
     <button id="earnings" class="featureBtn" data-content="earningsContent">
-      Earnings
+        Earnings
     </button>
     <button id="history" class="featureBtn" data-content="historyContent">
-      Rides History
+        Rides History
     </button>
     <button id="profile" class="featureBtn" data-content="profileContent">
-      Profile
+        Profile
     </button>
-  </div>
+</div>
+
   <div class="contents">
-    <div class="activityContent">Upcoming Rides</div>
+    <div class="activityContent">
+      <div id="rideTableContainer" class="rideTableContainer">
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Pick Up Point</th>
+              <th>Drop Off Point</th>
+              <th>Passengers</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rideTableBody"></tbody>
+        </table>
+      </div>
+      <div class="warning" id="warning" style="display:none;">
+      </div>
+    </div>
     <div class="rideContent" style="display: none;">
       <div class="addRides" id="addRideContainer">
         <h1>Create Rides Now !</h1><br>
@@ -218,7 +240,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-              <button type="button" id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
+                <button type="button" id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
               </td>
             </tr>
           </table>
@@ -349,6 +371,7 @@ if (mysqli_num_rows($result) == 1) {
       </div>
     </div>
   </div>
+  <script src="../js/driver/upcomingRide.js" defer></script>
   <script src="../js/driver/addRide.js" defer></script>
   <script src="../js/driver/addHistoryRides.js" defer></script>
 </body>
