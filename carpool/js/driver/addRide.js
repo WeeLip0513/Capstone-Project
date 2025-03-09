@@ -159,13 +159,15 @@ function replaceRide() {
               document.getElementById('addRideForm').reset(); // Reset form if it has id="rideForm"
 
               // Manually clear dropdown selections if needed
-              document.getElementById('txtDate').value = "";
-              document.getElementById('hour').value = "";
-              document.getElementById('minute').value = "";
-              document.getElementById('pickup').selectedIndex = 0;
-              document.getElementById('dropoff').selectedIndex = 0;
-              document.getElementById('vehicle').selectedIndex = 0;
-              document.getElementById('seatNo').value = "";
+              document.querySelectorAll('.addRidesTable select').forEach(select => {
+                select.selectedIndex = -1; // Ensures no option is selected
+                select.style.border = "1px solid #ccc";
+                select.style.backgroundColor = "whitesmoke";
+                select.style.textAlign = "center";
+                select.style.color = "#afafaf";
+                select.style.boxShadow = "0px 4px 10px rgba(1, 35, 109, 0.8)";
+                select.style.fontWeight = "normal";
+              });
 
               document.querySelectorAll('#addRideForm input, #addRideForm select').forEach(field => {
                   field.style.border = "1px solid #ccc"; // Reset to default
@@ -181,18 +183,23 @@ function replaceRide() {
 
 document.getElementById('replaceRideBtn').addEventListener('click', replaceRide);
 
+function goBack() {
+    document.getElementById("conflictRides").style.display = "none";
+    document.getElementById("addRideContainer").style.display = "flex";
+    document.getElementById("historyContainer").style.display = "flex";
+}
+
 function validateAndCheckConflict() {
     if (!validateRideForm()) {
-        // alert("Please fill out all required fields correctly.");
         return;
     }
-  
+
     const date = document.getElementById('txtDate').value;
     const hour = document.getElementById('hour').value;
     const minute = document.getElementById('minute').value;
     const pickup = document.getElementById('pickup').value;
     const dropoff = document.getElementById('dropoff').value;
-  
+
     fetch('../php/driver/checkRideConflict.php', {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -200,24 +207,41 @@ function validateAndCheckConflict() {
     })
     .then(response => response.text())
     .then(text => {
-        console.log("Raw Response:", text);
+        console.log("🔍 Raw Response:", text);
         try {
             return JSON.parse(text);
         } catch (error) {
-            console.error("Invalid JSON response. Full response:", text);
+            console.error("❌ Invalid JSON response. Full response:", text);
             throw new Error("Server returned invalid JSON.");
         }
     })
     .then(conflicts => {
-        console.log("Parsed JSON:", conflicts);
+        console.log("✅ Parsed JSON:", conflicts);
         const conflictDiv = document.getElementById('conflictRides');
         const conflictBtn = document.getElementById('conflictBtn');
         const addRideContainer = document.getElementById('addRideContainer');
         const historyContainer = document.getElementById('historyContainer');
-  
-        if (conflicts.length > 0) {
+    
+
+        if (conflicts.length > 1) {
+            // More than one conflict detected, prevent the user from proceeding
+            conflictDiv.innerHTML = `
+                <h3 style="color: red;">⚠ Too Many Conflicting Rides</h3>
+                <p>You have created multiple rides that overlap at the same time. Please adjust your schedule before proceeding.</p>
+                <button id="goBackBtn" onclick="goBack()">
+                    Go Back
+                </button>
+            `;
+            conflictDiv.style.display = "block";
+            addRideContainer.style.display = "none";
+            historyContainer.style.display = "none";
+            return;
+        }
+        
+
+        if (conflicts.length === 1) {
             selectedRideId = conflicts[0].ride_id;
-  
+
             let conflictHTML = `
                 <h3>Conflicting Ride(s) Found</h3>
                 <table border="1">
@@ -237,24 +261,19 @@ function validateAndCheckConflict() {
                             <td>${hour}:${minute}</td>
                             <td>${pickup}</td>
                             <td>${dropoff}</td>
-                        </tr>`;
-  
-            conflicts.forEach(ride => {
-                conflictHTML += `
-                    <tr style="background-color: #ffcccc;">
-                        <td><strong>Conflict</strong></td>
-                        <td>${ride.ride_date}</td>
-                        <td>${ride.ride_time}</td>
-                        <td>${ride.pickup}</td>
-                        <td>${ride.dropoff}</td>
-                    </tr>`;
-            });
-  
-            conflictHTML += `</tbody></table>`;
-  
+                        </tr>
+                        <tr style="background-color: #ffcccc;">
+                            <td><strong>Conflict</strong></td>
+                            <td>${conflicts[0].ride_date}</td>
+                            <td>${conflicts[0].ride_time}</td>
+                            <td>${conflicts[0].pickup}</td>
+                            <td>${conflicts[0].dropoff}</td>
+                        </tr>
+                    </tbody>
+                </table>`;
+
             conflictDiv.innerHTML = conflictHTML;
             conflictDiv.appendChild(conflictBtn);
-  
             conflictDiv.style.display = "block";
             addRideContainer.style.display = "none";
             historyContainer.style.display = "none";
@@ -262,8 +281,9 @@ function validateAndCheckConflict() {
             showConfirmation();
         }
     })
-    .catch(error => console.error('Error:', error));
-  }
+    .catch(error => console.error('❌ Fetch Error:', error));
+}
+
   
 
 document.getElementById('keepBtn').addEventListener('click', function () {
@@ -275,13 +295,14 @@ document.getElementById('keepBtn').addEventListener('click', function () {
   // Reset form fields
   document.getElementById('rideForm').reset(); // Assuming your form has id="rideForm"
 
-  // If some fields are not inside a form, manually clear them:
-  document.getElementById('txtDate').value = "";
-  document.getElementById('hour').value = "";
-  document.getElementById('minute').value = "";
-  document.getElementById('pickup').selectedIndex = 0;
-  document.getElementById('dropoff').selectedIndex = 0;
-  document.getElementById('vehicle').selectedIndex = 0;
-  document.getElementById('seatNo').value = "";
+  document.querySelectorAll('.addRidesTable select').forEach(select => {
+    select.selectedIndex = -1; // Ensures no option is selected
+    select.style.border = "1px solid #ccc";
+    select.style.backgroundColor = "whitesmoke";
+    select.style.textAlign = "center";
+    select.style.color = "#afafaf";
+    select.style.boxShadow = "0px 4px 10px rgba(1, 35, 109, 0.8)";
+    select.style.fontWeight = "normal";
+  });
 });
 
