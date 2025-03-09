@@ -1,6 +1,8 @@
 <?php
+session_start();
 include("../dbconn.php");
 include("../userHeader.php")
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,6 +117,9 @@ include("../userHeader.php")
                         </div>
                     </div>
                 </div>
+                <div id="rideResults">
+                    <p></p>
+                </div>
             </div>
             
             <!-- Rides History Tab -->
@@ -135,5 +140,6 @@ include("../userHeader.php")
         </div>
     </div>
     <script src="../js/passenger/navbar.js"></script>
+    <script src="../js/passenger/fetchrides.js"></script>
 </body>
 </html>

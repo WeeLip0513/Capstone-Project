@@ -35,7 +35,54 @@ select, input {
     display: flex;
     gap: 4px;
 }
-.search-btn:hover {
+
+.search-form{
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
+    max-width: 1300px;
+}
+
+.rideResults{
+    margin-top: 10px;
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/*Display rides php container*/
+.ride-card {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    width: 90%;
+    max-width: 600px;
+    margin: 15px auto;
+    font-family: Arial, sans-serif;
+}
+
+.ride-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.book-ride {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.book-ride:hover {
     background-color: #0056b3;
+}
+
+.ride-info p {
+    margin: 5px 0;
 }
 
