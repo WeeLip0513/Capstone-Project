@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $query = "SELECT tpnumber, password, role FROM user WHERE tpnumber = ?";
+    $query = "SELECT id, tpnumber, password, role FROM user WHERE tpnumber = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $tpnumber);
     $stmt->execute();
@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user["password"])) {
             $_SESSION["tpnumber"] = $user["tpnumber"];
             $_SESSION["role"] = $user["role"];
+            $_SESSION["id"] = $user["id"];
 
             // Redirect based on role
             $base_url = "http://" . $_SERVER['HTTP_HOST'] . "/Capstone-Project/carpool/";

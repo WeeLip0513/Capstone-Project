@@ -1,7 +1,16 @@
 <?php
 session_start();
 include("../dbconn.php");
-include("../userHeader.php")
+include("../userHeader.php");
+
+if(isset($_SESSION['id'])) {
+    $userID = $_SESSION['id'];
+    echo "<h2 style='color:white;'>$userID</h2>";
+} else {
+    echo "<h2 style='color:red;'>No session ID found!</h2>";
+    // You could also print the entire session array for debugging
+    echo "<pre>"; print_r($_SESSION); echo "</pre>";
+}
 
 ?>
 <!DOCTYPE html>
