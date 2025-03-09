@@ -167,6 +167,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function cancelSelection() {
     selectedRidesDiv.style.display = "none";
+    document.getElementById("addRideContainer").style.display = "flex";
+    document.getElementById("historyContainer").style.display = "flex";
   }
 
   // Create a row for a ride entry
@@ -328,7 +330,8 @@ document.addEventListener("DOMContentLoaded", function () {
     goBackButton.innerText = "Go Back";
     goBackButton.addEventListener("click", function () {
       showSelectedRidesConfirmation();
-
+      document.getElementById("addRideContainer").style.display = "flex";
+      document.getElementById("historyContainer").style.display = "flex";
     });
 
     buttonContainer.appendChild(finalizeButton);
@@ -336,6 +339,8 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedRidesDiv.appendChild(buttonContainer);
 
     selectedRidesDiv.style.display = "block";
+    document.getElementById("addRideContainer").style.display = "none";
+    document.getElementById("historyContainer").style.display = "none";
   }
 
 

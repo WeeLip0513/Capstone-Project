@@ -39,6 +39,7 @@ try {
         // Extract day of the week
         $dateObj = new DateTime($ride["date"]);
         $day = $dateObj->format('l');
+        $day = strtolower($dateObj->format('l'));
 
         // Ensure slots are set
         $slots = isset($ride["slots"]) ? (int) $ride["slots"] : 0;
