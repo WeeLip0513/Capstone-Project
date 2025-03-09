@@ -2,13 +2,14 @@
 session_start();
 include("../dbconn.php");
 include("../userHeader.php");
+include("../php/passenger/profile.php");
+
 
 if(isset($_SESSION['id'])) {
     $userID = $_SESSION['id'];
     echo "<h2 style='color:white;'>$userID</h2>";
 } else {
     echo "<h2 style='color:red;'>No session ID found!</h2>";
-    // You could also print the entire session array for debugging
     echo "<pre>"; print_r($_SESSION); echo "</pre>";
 }
 
@@ -21,6 +22,7 @@ if(isset($_SESSION['id'])) {
     <title>Passenger Page</title>
     <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
+    <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
 </head>
 <body>
     <div class="passenger">
@@ -28,11 +30,11 @@ if(isset($_SESSION['id'])) {
             <div class="tabs">
                 <input type="radio" name="tabs" id="upcomingrides">
                 <label for="upcomingrides">Upcoming Rides</label>
-                <input type="radio" name="tabs" id="availablerides"checked>
+                <input type="radio" name="tabs" id="availablerides">
                 <label for="availablerides">Available rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
-                <input type="radio" name="tabs" id="tab4">
+                <input type="radio" name="tabs" id="tab4"checked>
                 <label for="tab4">My Profile</label>
                 <div class="glider"></div>
             </div>
@@ -141,9 +143,9 @@ if(isset($_SESSION['id'])) {
             
             <!-- Profile Tab -->
             <div class="content-section" id="content-tab4">
-                <h2>My Profile</h2>
                 <div class="profile-container">
-                    <p>Your profile information will appear here.</p>
+                    <?php displayProfileDetails($userID,$conn)?>
+                    
                 </div>
             </div>
         </div>
