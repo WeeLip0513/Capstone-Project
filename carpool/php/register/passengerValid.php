@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (mysqli_num_rows($userResult) > 0) {
-        echo "<script>alert('Error: You have already registered! Please proceed to login.'); window.location.href='../../login.php';</script>";
+        echo "<script>alert('Error: You have already registered! Please proceed to login.'); window.location.href='../../loginpage.php';</script>";
         exit();
     }
 

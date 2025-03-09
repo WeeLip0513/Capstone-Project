@@ -31,11 +31,13 @@ body {
     width: 150px;
     height: auto;
     align-items: left;
+    border: none;
 }
 
 .logo img {
     width: 150px;
     height: 45px;
+    border: none;
 
 }
 

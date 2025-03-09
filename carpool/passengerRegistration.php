@@ -11,6 +11,7 @@ include("headerHomepage.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger Registration</title>
     <link rel="stylesheet" href="css/passengerPage/passengerReg.css">
+    <link rel="stylesheet" href="css/mobile/regPassengermobile.css">
 </head>
 
 <body>
@@ -72,12 +73,12 @@ include("headerHomepage.php");
             let currentStep = 0;
 
             // Prevent Enter key from submitting the form unless on step 3
-            // form.addEventListener('keydown', function (e) {
-            //     if (e.key === 'Enter' && currentStep < steps.length - 1) {
-            //         e.preventDefault();
-            //         return false;
-            //     }
-            // });
+            form.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && currentStep < steps.length - 1) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
 
             //first step 
             showStep(currentStep);

@@ -13,11 +13,12 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login & Register</title>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/mobile/loginmobile.css">
 </head>
 
 <body>
     <div class="login-all-container <?= $showSignup ? 'signup-right-active' : '' ?>" id="login-all-container">
-        <div class="login-container sign-in-container">
+        <div class="login-container sign-in-container <?= !$showSignup ? 'active' : '' ?>">
             <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
                 <h1>Login</h1>
                 <div class="infield">
@@ -35,7 +36,7 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
                 <button class="log-button" id="loginBtn" type="submit">Login</button>
             </form>
         </div>
-        <div class="login-container sign-up-container">
+        <div class="login-container sign-up-container <?= $showSignup ? 'active' : '' ?>">
             <h1>Register As</h1>
             <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
             <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
@@ -69,7 +70,7 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
             }
         });
     </script>
-    
+
     <script>
         const loginallcontainer = document.getElementById('login-all-container')
         const overlayCon = document.getElementById('overlay-Con')
@@ -199,7 +200,137 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
         </div>
     </div>
 
+<<<<<<< Updated upstream
     <script src="js/login/forgotpassword.js">//show modal script</script>
+=======
+    <script>
+        // Show Modal
+        document.querySelector('.forgot').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('passwordResetModal').style.display = 'block';
+        });
+
+        // Close Modal
+        document.querySelector('.close-modal').addEventListener('click', function () {
+            document.getElementById('passwordResetModal').style.display = 'none';
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function showFeedback(element, message, color) {
+            element.textContent = message;
+            element.style.color = color;
+            element.style.display = 'block';
+        }
+
+        document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input');
+            const email = emailInput.value.trim();
+            const feedback = document.getElementById('resetFeedback');
+
+            // reset current message
+            feedback.style.display = 'none';
+
+            // call email check
+            if (!email || !validateEmail(email)) {
+                showFeedback(feedback, 'Please insert a valid email address', 'red');
+                emailInput.focus();
+                return;
+            }
+            showFeedback(feedback, 'Checking email...', 'var(--grad-clr1)');
+
+            fetch('http://localhost/Capstone-Project/carpool/php/login/token-sent.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'email=' + encodeURIComponent(email)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showFeedback(feedback, 'Reset link sent to your email!', 'green');
+                        setTimeout(() => {
+                            document.getElementById('passwordResetModal').style.display = 'none';
+                            this.reset();
+                        }, 3000);
+                    } else {
+                        showFeedback(feedback, data.message || 'Email not found in our system', 'red');
+                    }
+                })
+                .catch(() => {
+                    showFeedback(feedback, 'Connection error. Please try again.', 'red');
+                });
+        });
+    </script>
+    <script>
+        // Update your JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile toggle functionality
+            const addMobileNavigation = () => {
+                if (window.innerWidth <= 768) {
+                    // Create toggle links
+                    const toggleHtml = `
+                <div class="mobile-toggle">
+                    ${window.location.search.includes('signup') ?
+                            '<a id="showLogin">Already have an account? Login</a>' :
+                            '<a id="showSignup">Don\'t have an account? Sign Up</a>'}
+                </div>`;
+
+                    // Insert toggle links
+                    document.querySelector('.sign-in-container').insertAdjacentHTML('afterend', toggleHtml);
+                    document.querySelector('.sign-up-container').insertAdjacentHTML('afterend', toggleHtml);
+
+                    // Add event listeners
+                    document.querySelectorAll('#showSignup').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            window.history.replaceState({}, '', '?action=signup');
+                            document.querySelectorAll('.login-container').forEach(container => {
+                                container.classList.remove('active');
+                            });
+                            document.querySelector('.sign-up-container').classList.add('active');
+                            document.querySelectorAll('.mobile-toggle').forEach(t => t.remove());
+                            addMobileNavigation();
+                        });
+                    });
+
+                    document.querySelectorAll('#showLogin').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            window.history.replaceState({}, '', window.location.pathname);
+                            document.querySelectorAll('.login-container').forEach(container => {
+                                container.classList.remove('active');
+                            });
+                            document.querySelector('.sign-in-container').classList.add('active');
+                            document.querySelectorAll('.mobile-toggle').forEach(t => t.remove());
+                            addMobileNavigation();
+                        });
+                    });
+                }
+            };
+
+            // Initial setup
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'signup') {
+                document.querySelector('.sign-up-container').classList.add('active');
+                document.querySelector('.sign-in-container').classList.remove('active');
+            } else {
+                document.querySelector('.sign-in-container').classList.add('active');
+            }
+
+            addMobileNavigation();
+
+            // Remove overlay button functionality on mobile
+            if (window.innerWidth <= 768) {
+                const overlayBtn = document.getElementById('overlayBtn');
+                if (overlayBtn) overlayBtn.style.display = 'none';
+            }
+        });
+    </script>
+>>>>>>> Stashed changes
 </body>
 
 </html>

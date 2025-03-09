@@ -1,0 +1,120 @@
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 80px !important;
+    }
+
+    .regContainer {
+        min-height: 80vh !important;
+        padding: 20px;
+    }
+
+    .pass-register {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 40px auto;
+        padding: 30px;
+        height: auto;
+        min-height: 400px;
+        max-width: 500px;
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-bottom: 25px;
+    }
+
+    .input-field {
+        margin-bottom: 15px;
+        padding: 8px;
+    }
+
+    input {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 15px;
+    }
+
+    .confirm-button {
+        padding: 12px 20px;
+        font-size: 15px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding-top: 80px !important;
+    }
+    .regContainer {
+        min-height: 100vh !important;
+        padding: 15px;
+    }
+
+    .pass-register {
+        padding: 25px;
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        gap: 12px;
+    }
+
+    .input-field {
+        margin-bottom: 12px;
+        padding: 5px;
+    }
+
+    input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .error {
+        font-size: 0.85rem;
+        left: 5px;
+    }
+
+    .confirm-button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .button-group {
+        gap: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    body {
+        padding-top: 80px !important;
+    }
+    .pass-register {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .error {
+        font-size: 0.8rem;
+    }
+}

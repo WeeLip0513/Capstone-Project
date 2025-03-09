@@ -38,6 +38,7 @@ include("headerHomepage.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
     <link rel="stylesheet" href="css/resetpass.css">
+    <link rel="stylesheet" href="css/mobile/resetpassmobile.css">
 </head>
 
 <body>
