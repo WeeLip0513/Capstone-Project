@@ -4,26 +4,26 @@
     border: 2px solid red !important;
 } */
 
-body {
+/* body {
     padding-top: 80px !important;
-}
+} */
 
 .regContainer {
     position: relative;
-    min-height: 90vh;
+    min-height: 90vh  !important;
     margin: 0 auto;
 }
 
 .pass-register {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 40px;
-    height: 60%;
+    height: 500px;
     max-width: 600px;
     width: 100% !important;
 }
@@ -33,6 +33,7 @@ form {
     flex-direction: column;
     gap: 15px;
     width: 100%;
+    height: 100%;
 }
 
 h1 {
@@ -52,7 +53,7 @@ input {
     width: 100%;
     padding: 15px;
     margin-top: 10px;
-    border: 1.5px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 6px;
     font-size: 16px;
     outline: none;
@@ -70,9 +71,13 @@ input {
 }
 
 .error {
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    transform: translateY(100%);
     color: #dc3545;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
+    font-size: 1rem;
+    margin-top: 5px;
     display: none;
     white-space: pre-wrap;
 }
@@ -120,6 +125,9 @@ input {
 .step {
     display: none;
     animation: fadeIn 0.3s ease;
+    height: 100%;
+    width: 100%;
+    
 }
 
 .step.active {

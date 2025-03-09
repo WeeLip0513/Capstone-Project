@@ -145,34 +145,51 @@ include("headerHomepage.php");
                 input.classList.remove('error-state', 'success-state');
             }
 
-            // real-time validation
+            passwordConfirm.addEventListener('input', validatePasswordConfirm);
+
             password.addEventListener('input', function () {
-                const isPasswordValid = validatePassword();
-                // validate confirmation if password is valid
-                if (isPasswordValid && passwordConfirm.value.trim() !== '') {
+                validatePassword();
+                if (passwordConfirm.value !== '') {
                     validatePasswordConfirm();
                 }
-            });
+            })
 
-            passwordConfirm.addEventListener('input', function () {
-                if (password.value.trim() !== '') {
-                    validatePasswordConfirm();
-                }
-            });
-
-            // final validation on form submission
+            // Form submission handling
             form.addEventListener('submit', function (e) {
+                // Validate both fields on submission
                 const isPasswordValid = validatePassword();
                 const isConfirmValid = validatePasswordConfirm();
 
                 if (!isPasswordValid || !isConfirmValid) {
                     e.preventDefault();
-                    // display all errors
-                    document.querySelectorAll('.error').forEach(error => {
-                        error.style.display = 'block';
-                    });
                 }
             });
+            // // real-time validation
+            // passwordConfirm.addEventListener('input', function () {
+            //     const isPasswordValid = validatePassword();
+            //     // validate confirmation if password is valid
+            //     if (isPasswordValid && passwordConfirm.value.trim() !== '') {
+            //         validatePasswordConfirm();
+            //     }
+            // });
+
+            // password.addEventListener('input', function () {
+            //     if (password.value.trim() !== '') {
+            //         validatePassword();
+            //     }
+            // });
+
+            // // final validation on form submission
+            // form.addEventListener('submit', function (e) {
+
+            //     if (!isPasswordValid || !isConfirmValid) {
+            //         e.preventDefault();
+            //         // display all errors
+            //         document.querySelectorAll('.error').forEach(error => {
+            //             error.style.display = 'block';
+            //         });
+            //     }
+            // });
         });
     </script>
 
