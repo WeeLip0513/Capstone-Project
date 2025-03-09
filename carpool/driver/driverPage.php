@@ -218,7 +218,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <button type="button" id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
+                <button id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
               </td>
             </tr>
           </table>

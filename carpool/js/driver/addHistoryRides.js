@@ -232,41 +232,47 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayConfirmedRides(confirmRideIds) {
-    // Helper function to get next week's date for a given weekday name
     function getNextWeekDate(weekdayName) {
       const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       let today = new Date();
-      let todayIndex = today.getDay(); // Get index (0 for Sunday, 1 for Monday, etc.)
-      let targetIndex = daysOfWeek.indexOf(weekdayName); // Find index of the given weekday
+      let todayIndex = today.getDay();
+      let targetIndex = daysOfWeek.indexOf(weekdayName);
 
       if (targetIndex === -1) {
         console.error("Invalid weekday:", weekdayName);
         return null;
       }
 
-      // Calculate days until next occurrence of the target day
       let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
       let nextDate = new Date();
-      nextDate.setDate(today.getDate() + daysUntilNext + 7); // Move to next week's same day
+      nextDate.setDate(today.getDate() + daysUntilNext + 7);
 
       return {
-        fullDate: nextDate.toISOString().split("T")[0], // Format as YYYY-MM-DD
-        weekday: daysOfWeek[nextDate.getDay()] // Get the weekday name for next week's date
+        fullDate: nextDate.toISOString().split("T")[0],
+        weekday: daysOfWeek[nextDate.getDay()]
       };
     }
 
-    // Store ride details before clearing
+    let conflictMap = new Map();
+    rideConflicts.conflicts.forEach(conflict => {
+      conflictMap.set(String(conflict.conflict_id), conflict.date);
+      conflictMap.set(String(conflict.original_ride_id), conflict.date);
+    });
+
     let confirmedRides = confirmRideIds.map(id => {
       let checkbox = document.querySelector(`#checkbox_${id}`);
       if (checkbox) {
         let row = checkbox.closest("tr");
         if (row) {
-          let originalDay = row.cells[2].textContent.trim(); // Get day name (e.g., Monday)
-          let nextWeekDateInfo = getNextWeekDate(originalDay); // Convert to next week's date
+          let originalDay = row.cells[2].textContent.trim();
+          let nextWeekDateInfo = getNextWeekDate(originalDay);
+
+          let rideDate = conflictMap.has(String(id)) ? conflictMap.get(String(id)) : nextWeekDateInfo.fullDate;
+          let rideDay = conflictMap.has(String(id)) ? new Date(rideDate).toLocaleDateString('en-US', { weekday: 'long' }) : nextWeekDateInfo.weekday;
 
           return {
-            day: nextWeekDateInfo.weekday, // Show weekday name instead of ride ID
-            date: nextWeekDateInfo.fullDate, // Full date (YYYY-MM-DD)
+            day: rideDay,
+            date: rideDate,
             time: row.cells[3].textContent,
             pickup: row.cells[4].textContent,
             dropoff: row.cells[5].textContent
@@ -274,12 +280,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
       return null;
-    }).filter(ride => ride !== null); // Remove any null values
+    }).filter(ride => ride !== null);
 
-    // Clear previous data but keep selectedRidesDiv visible
     selectedRidesDiv.innerHTML = "";
 
-    // Create new table
     let table = document.createElement("table");
     table.border = "1";
     table.style.width = "100%";
@@ -298,7 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedRidesDiv.appendChild(table);
     let tbody = document.getElementById("confirmedRidesBody");
 
-    // Append ride rows
     confirmedRides.forEach(ride => {
       let row = document.createElement("tr");
       row.innerHTML = `
@@ -311,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
       tbody.appendChild(row);
     });
 
-    // Add confirm and cancel buttons
     let buttonContainer = document.createElement("div");
     buttonContainer.style.marginTop = "15px";
     buttonContainer.style.textAlign = "center";
@@ -319,84 +321,122 @@ document.addEventListener("DOMContentLoaded", function () {
     let finalizeButton = document.createElement("button");
     finalizeButton.innerText = "Finalize Selection";
     finalizeButton.style.marginRight = "10px";
-    finalizeButton.id = "finalizeBtn";
+    finalizeButton.className = "finalizeBtn";
     finalizeButton.addEventListener("click", finalizeRides);
 
     let goBackButton = document.createElement("button");
     goBackButton.innerText = "Go Back";
     goBackButton.addEventListener("click", function () {
-      showSelectedRidesConfirmation(); // Redisplay selection screen
+      showSelectedRidesConfirmation();
+
     });
 
     buttonContainer.appendChild(finalizeButton);
     buttonContainer.appendChild(goBackButton);
     selectedRidesDiv.appendChild(buttonContainer);
 
-    selectedRidesDiv.style.display = "block"; // Ensure it's visible
+    selectedRidesDiv.style.display = "block";
   }
 
+
   async function finalizeRides() {
-    if (!rideConflicts || (!rideConflicts.original_rides.length && !rideConflicts.conflicts.length)) {
+    if (!rideConflicts || (!rideConflicts.original_rides?.length && !rideConflicts.conflicts?.length)) {
       alert("No rides available for finalization.");
       return;
     }
 
-    // 🚀 Get the Confirmed Ride IDs (Make sure these come from user confirmation)
-    let confirmedIds = confirmRideIds; // Replace this with actual confirmed IDs from the system
-
-    // 🚀 Function to add 2 weeks to a date
-    function addTwoWeeks(dateStr) {
-      let date = new Date(dateStr);
-      date.setDate(date.getDate() + 14); // Add 14 days
-      return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    if (!confirmRideIds || confirmRideIds.length === 0) {
+      alert("No confirmed rides selected.");
+      return;
     }
 
-    // 🚀 Filter Non-Conflict Rides: Add 2 weeks to the date
-    let nonConflictRides = rideConflicts.original_rides
-      .filter(ride => confirmedIds.includes(ride.original_ride_id))
+    let confirmedIds = confirmRideIds.map(id => parseInt(id, 10));
+
+    function addTwoWeeks(dateStr) {
+      let date = new Date(dateStr);
+      date.setDate(date.getDate() + 14);
+      return date.toISOString().split("T")[0];
+    }
+
+    let conflictRideIds = (rideConflicts.conflicts || []).map(ride => parseInt(ride.original_ride_id, 10));
+
+    let nonConflictRides = (rideConflicts.original_rides || [])
+      .filter(ride => confirmedIds.includes(parseInt(ride.original_ride_id, 10)) && !conflictRideIds.includes(parseInt(ride.original_ride_id, 10)))
       .map(ride => ({
-        ride_id: ride.original_ride_id,
-        date: addTwoWeeks(ride.original_date), // Add 2 weeks here
+        ride_id: parseInt(ride.original_ride_id, 10),
+        date: addTwoWeeks(ride.original_date),
         time: ride.original_time,
         pickup: ride.pick_up_point,
-        dropoff: ride.drop_off_point
+        dropoff: ride.drop_off_point,
+        vehicle_id: parseInt(ride.vehicle_id, 10),
+        driver_id: parseInt(ride.driver_id, 10),
+        slots: parseInt(ride.slots, 10)
       }));
 
-    // 🚀 Filter Conflict Rides: Only keep rides that are in confirmedIds
-    // 🚀 Ensure conflictRides are correctly filtered based on confirmedIds
-    let conflictRides = rideConflicts.conflicts
-      .filter(ride => confirmedIds.includes(String(ride.conflict_id))) // Ensure ID comparison works
-      .map(ride => ({
-        ride_id: String(ride.conflict_id), // Ensure it's stored as a string
-        date: ride.date,
-        time: ride.time,
-        pickup: ride.pick_up_point,
-        dropoff: ride.drop_off_point
-      }));
+      let conflictRides = rideConflicts.conflicts
+      .filter(ride => 
+        confirmedIds.includes(parseInt(ride.conflict_id, 10)) || 
+        confirmedIds.includes(parseInt(ride.original_ride_id, 10))
+      )
+      .map(ride => {
+        // Find the original ride details using original_ride_id
+        let originalRide = rideConflicts.original_rides.find(r => 
+          parseInt(r.original_ride_id, 10) === parseInt(ride.original_ride_id, 10)
+        );
+    
+        // Function to check if a date is within the previous week (Sunday to Saturday)
+        function isFromPreviousWeek(dateStr) {
+          let rideDate = new Date(dateStr);
+          let today = new Date();
+    
+          // Get the start (Sunday) and end (Saturday) of the previous week
+          let lastSunday = new Date(today);
+          lastSunday.setDate(today.getDate() - today.getDay() - 7); // Move back to last week's Sunday
+          lastSunday.setHours(0, 0, 0, 0); // Reset time
+    
+          let lastSaturday = new Date(lastSunday);
+          lastSaturday.setDate(lastSunday.getDate() + 6); // Get last week's Saturday
+          lastSaturday.setHours(23, 59, 59, 999);
+    
+          return rideDate >= lastSunday && rideDate <= lastSaturday; // Check if the ride date is within last week
+        }
+    
+        return {
+          ride_id: parseInt(ride.conflict_id, 10), // Keep conflict ride_id the same
+          date: originalRide && isFromPreviousWeek(originalRide.original_date) 
+            ? addTwoWeeks(originalRide.original_date) 
+            : ride.date, // Only add two weeks if it's within last week
+          time: originalRide ? originalRide.original_time : ride.time,
+          pickup: originalRide ? originalRide.pick_up_point : ride.pick_up_point,
+          dropoff: originalRide ? originalRide.drop_off_point : ride.drop_off_point,
+          vehicle_id: originalRide ? parseInt(originalRide.vehicle_id, 10) : parseInt(ride.vehicle_id, 10),
+          driver_id: originalRide ? parseInt(originalRide.driver_id, 10) : parseInt(ride.driver_id, 10),
+          slots: originalRide ? parseInt(originalRide.slots, 10) : parseInt(ride.slots, 10)
+        };
+      });
+    
 
 
-    console.log("Filtered Non-Conflict Rides:", nonConflictRides);
-    console.log("Filtered Conflict Rides:", conflictRides);
+    console.log("Filtered Non-Conflict Rides:", JSON.stringify(nonConflictRides, null, 2));
+    console.log("Filtered Conflict Rides:", JSON.stringify(conflictRides, null, 2));
 
     try {
       if (nonConflictRides.length > 0) {
-        let response = await fetch("../php/driver/finalizeNonConflictedRides.php", {
+        let response = await fetch("../php/driver/addNonConflictRides.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ rides: nonConflictRides })
         });
-
         let result = await response.json();
         console.log("Non-Conflict Rides Finalized:", result);
       }
 
       if (conflictRides.length > 0) {
-        let response = await fetch("../php/driver/finalizeConflictedRides.php", {
+        let response = await fetch("../php/driver/replaceConflictedRides.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ rides: conflictRides })
         });
-
         let result = await response.json();
         console.log("Conflict Rides Finalized:", result);
       }
@@ -407,6 +447,8 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("An error occurred while finalizing rides.");
     }
   }
+
+
 
 
   document.querySelector(".addSelectBtn").addEventListener("click", showSelectedRidesConfirmation);
