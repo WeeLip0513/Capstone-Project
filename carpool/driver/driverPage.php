@@ -218,7 +218,7 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <tr>
               <td colspan="2" style="text-align: center">
-                <button id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
+              <button type="button" id="addRideBtn" onclick="validateAndCheckConflict()">Add Ride</button>
               </td>
             </tr>
           </table>
@@ -349,8 +349,8 @@ if (mysqli_num_rows($result) == 1) {
       </div>
     </div>
   </div>
-  <script src="../js/driver/addRide.js"></script>
-  <script src="../js/driver/addHistoryRides.js"></script>
+  <script src="../js/driver/addRide.js" defer></script>
+  <script src="../js/driver/addHistoryRides.js" defer></script>
 </body>
 
 </html>

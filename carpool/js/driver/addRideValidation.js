@@ -144,13 +144,4 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmationBox.style.display = "block";
     }
 
-    // ✅ Move this function inside DOMContentLoaded
-    function validateAndCheckConflict() {
-        if (validateRideForm()) {
-            checkForConflicts();
-        }
-    }
-
-    // ✅ Make it globally accessible
-    window.validateAndCheckConflict = validateAndCheckConflict;
 });

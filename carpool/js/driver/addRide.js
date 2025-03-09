@@ -181,89 +181,90 @@ function replaceRide() {
 
 document.getElementById('replaceRideBtn').addEventListener('click', replaceRide);
 
-function checkRideConflict() {
-  const date = document.getElementById('txtDate').value;
-  const hour = document.getElementById('hour').value;
-  const minute = document.getElementById('minute').value;
-  const pickup = document.getElementById('pickup').value;
-  const dropoff = document.getElementById('dropoff').value;
-
-  if (!date || !hour || !minute || !pickup || !dropoff) {
-      alert("Please select a date, time, and locations first.");
-      return;
+function validateAndCheckConflict() {
+    if (!validateRideForm()) {
+        // alert("Please fill out all required fields correctly.");
+        return;
+    }
+  
+    const date = document.getElementById('txtDate').value;
+    const hour = document.getElementById('hour').value;
+    const minute = document.getElementById('minute').value;
+    const pickup = document.getElementById('pickup').value;
+    const dropoff = document.getElementById('dropoff').value;
+  
+    fetch('../php/driver/checkRideConflict.php', {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `date=${date}&hour=${hour}&minute=${minute}`
+    })
+    .then(response => response.text())
+    .then(text => {
+        console.log("Raw Response:", text);
+        try {
+            return JSON.parse(text);
+        } catch (error) {
+            console.error("Invalid JSON response. Full response:", text);
+            throw new Error("Server returned invalid JSON.");
+        }
+    })
+    .then(conflicts => {
+        console.log("Parsed JSON:", conflicts);
+        const conflictDiv = document.getElementById('conflictRides');
+        const conflictBtn = document.getElementById('conflictBtn');
+        const addRideContainer = document.getElementById('addRideContainer');
+        const historyContainer = document.getElementById('historyContainer');
+  
+        if (conflicts.length > 0) {
+            selectedRideId = conflicts[0].ride_id;
+  
+            let conflictHTML = `
+                <h3>Conflicting Ride(s) Found</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Pickup</th>
+                            <th>Dropoff</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f2f2f2;">
+                            <td><strong>Your Ride</strong></td>
+                            <td>${date}</td>
+                            <td>${hour}:${minute}</td>
+                            <td>${pickup}</td>
+                            <td>${dropoff}</td>
+                        </tr>`;
+  
+            conflicts.forEach(ride => {
+                conflictHTML += `
+                    <tr style="background-color: #ffcccc;">
+                        <td><strong>Conflict</strong></td>
+                        <td>${ride.ride_date}</td>
+                        <td>${ride.ride_time}</td>
+                        <td>${ride.pickup}</td>
+                        <td>${ride.dropoff}</td>
+                    </tr>`;
+            });
+  
+            conflictHTML += `</tbody></table>`;
+  
+            conflictDiv.innerHTML = conflictHTML;
+            conflictDiv.appendChild(conflictBtn);
+  
+            conflictDiv.style.display = "block";
+            addRideContainer.style.display = "none";
+            historyContainer.style.display = "none";
+        } else {
+            showConfirmation();
+        }
+    })
+    .catch(error => console.error('Error:', error));
   }
-
-  fetch('../php/driver/checkRideConflict.php', {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `date=${date}&hour=${hour}&minute=${minute}`
-  })
-      .then(response => response.text())  // Read as plain text for debugging
-      .then(text => {
-          console.log("Raw Response:", text);
-          try {
-              return JSON.parse(text); // Try parsing JSON
-          } catch (error) {
-              console.error("Invalid JSON response. Full response:", text);
-              throw new Error("Server returned invalid JSON.");
-          }
-      })
-      .then(conflicts => {
-          console.log("Parsed JSON:", conflicts);
-          const conflictDiv = document.getElementById('conflictRides');
-          const conflictBtn = document.getElementById('conflictBtn');
-          const addRideContainer = document.getElementById('addRideContainer');
-          const historyContainer = document.getElementById('historyContainer');
-
-          if (conflicts.length > 0) {
-              selectedRideId = conflicts[0].ride_id; // Store ride_id globally
-
-              let conflictHTML = `
-          <h3>Conflicting Ride(s) Found</h3>
-          <table border="1">
-              <thead>
-                  <tr>
-                      <th>Type</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Pickup</th>
-                      <th>Dropoff</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr style="background-color: #f2f2f2;">
-                      <td><strong>Your Ride</strong></td>
-                      <td>${date}</td>
-                      <td>${hour}:${minute}</td>
-                      <td>${pickup}</td>
-                      <td>${dropoff}</td>
-                  </tr>`;
-
-              conflicts.forEach(ride => {
-                  conflictHTML += `
-                  <tr style="background-color: #ffcccc;">
-                      <td><strong>Conflict</strong></td>
-                      <td>${ride.ride_date}</td>
-                      <td>${ride.ride_time}</td>
-                      <td>${ride.pickup}</td>
-                      <td>${ride.dropoff}</td>
-                  </tr>`;
-              });
-
-              conflictHTML += `</tbody></table>`;
-
-              conflictDiv.innerHTML = conflictHTML;
-              conflictDiv.appendChild(conflictBtn); // Show buttons
-
-              conflictDiv.style.display = "block";
-              addRideContainer.style.display = "none";
-              historyContainer.style.display = "none";
-          } else {
-              showConfirmation();
-          }
-      })
-      .catch(error => console.error('Error:', error));
-}
+  
 
 document.getElementById('keepBtn').addEventListener('click', function () {
   // Hide conflict section
