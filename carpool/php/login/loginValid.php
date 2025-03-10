@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user["role"] == "admin") {
                 header("Location: " . $base_url . "admin/adminDashboard.php");
             } elseif ($user["role"] == "driver") {
-                header("Location: " . $base_url . "driver/driverPage.php");
+                header("Location: " . $base_url . "driverRegistration.php");
             } else {
-                header("Location: " . $base_url . "passenger/passengerPage.php");
+                header("Location: " . $base_url . "passengerRegistration.php");
             }
             exit();
         } else {

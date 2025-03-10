@@ -8,7 +8,7 @@ include("dbconn.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/headerHomepage.css">
-    <link rel="stylesheet" href="css/mobile/loginmobile.css">
+    <link rel="stylesheet" href="css/mobile/headermobile.css">
     <link rel="icon" type="image/png" href="image/icon-logo.png">
 
     <!-- <title>headerHomepage</title> -->
@@ -33,8 +33,8 @@ include("dbconn.php");
         <ul class="navlinks">
             <li><a href="homepage.php" class="<?= ($currentPage == 'homepage.php') ? 'active' : '' ?>">Home</a></li>
             <li><a href="#" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About Us</a></li>
-            <li><a href="passenger/passengerPage.php"
-                    class="<?= ($currentPage == 'passengerPage.php') ? 'active' : '' ?>">Passenger</a></li>
+            <li><a href="passengerRegistration.php"
+                    class="<?= ($currentPage == 'passengerRegistration.php') ? 'active' : '' ?>">Passenger</a></li>
             <li><a href="driverRegistration.php"
                     class="<?= ($currentPage == 'driverRegistration.php') ? 'active' : '' ?>">Driver</a></li>
             <li><a href="#" class="<?= ($currentPage == 'news.php') ? 'active' : '' ?>">News</a></li>

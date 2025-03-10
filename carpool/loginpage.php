@@ -13,11 +13,12 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login & Register</title>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/mobile/loginmobile.css">
 </head>
 
 <body>
     <div class="login-all-container <?= $showSignup ? 'signup-right-active' : '' ?>" id="login-all-container">
-        <div class="login-container sign-in-container">
+        <div class="login-container sign-in-container <?= !$showSignup ? 'active' : '' ?>">
             <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
                 <h1>Login</h1>
                 <div class="infield">
@@ -35,7 +36,7 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
                 <button class="log-button" id="loginBtn" type="submit">Login</button>
             </form>
         </div>
-        <div class="login-container sign-up-container">
+        <div class="login-container sign-up-container <?= $showSignup ? 'active' : '' ?>">
             <h1>Register As</h1>
             <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
             <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
@@ -69,7 +70,7 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
             }
         });
     </script>
-    
+
     <script>
         const loginallcontainer = document.getElementById('login-all-container')
         const overlayCon = document.getElementById('overlay-Con')
@@ -199,70 +200,8 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
         </div>
     </div>
 
-    <script>
-        // Show Modal
-        document.querySelector('.forgot').addEventListener('click', function (e) {
-            e.preventDefault();
-            document.getElementById('passwordResetModal').style.display = 'block';
-        });
+    <script src="js/login/forgotpassword.js">//show modal script</script>
 
-        // Close Modal
-        document.querySelector('.close-modal').addEventListener('click', function () {
-            document.getElementById('passwordResetModal').style.display = 'none';
-        });
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function showFeedback(element, message, color) {
-            element.textContent = message;
-            element.style.color = color;
-            element.style.display = 'block';
-        }
-
-        document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input');
-            const email = emailInput.value.trim();
-            const feedback = document.getElementById('resetFeedback');
-
-            // reset current message
-            feedback.style.display = 'none';
-
-            // call email check
-            if (!email || !validateEmail(email)) {
-                showFeedback(feedback, 'Please insert a valid email address', 'red');
-                emailInput.focus();
-                return;
-            }
-            showFeedback(feedback, 'Checking email...', 'var(--grad-clr1)');
-
-            fetch('http://localhost/Capstone-Project/carpool/php/login/token-sent.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'email=' + encodeURIComponent(email)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showFeedback(feedback, 'Reset link sent to your email!', 'green');
-                        setTimeout(() => {
-                            document.getElementById('passwordResetModal').style.display = 'none';
-                            this.reset();
-                        }, 3000);
-                    } else {
-                        showFeedback(feedback, data.message || 'Email not found in our system', 'red');
-                    }
-                })
-                .catch(() => {
-                    showFeedback(feedback, 'Connection error. Please try again.', 'red');
-                });
-        });
-    </script>
 </body>
 
 </html>

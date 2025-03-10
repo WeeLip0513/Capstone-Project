@@ -1,0 +1,92 @@
+@media screen and (max-width: 768px) {
+    body {
+        padding-top: 80px !important;
+    }
+
+    .wrapper {
+        min-height: 80vh;
+        padding: 20px;
+    }
+
+    .reset {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 40px auto;
+        padding: 30px;
+        max-width: 400px;
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-bottom: 25px;
+    }
+
+    .confirm-button {
+        padding: 14px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding-top: 80px !important;
+    }
+
+    .wrapper {
+        min-height: 100vh;
+        padding: 15px;
+    }
+
+    .reset {
+        padding: 25px;
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        gap: 20px;
+    }
+
+    .panel {
+        margin-bottom: 15px;
+    }
+
+    input {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .error {
+        font-size: 0.8rem;
+    }
+
+    .confirm-button {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    body {
+        padding-top: 80px !important;
+    }
+
+    .reset {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input {
+        padding: 10px;
+    }
+}

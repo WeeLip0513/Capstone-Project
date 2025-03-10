@@ -11,12 +11,13 @@ include("headerHomepage.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger Registration</title>
     <link rel="stylesheet" href="css/passengerPage/passengerReg.css">
+    <link rel="stylesheet" href="css/mobile/regPassengermobile.css">
 </head>
 
 <body>
     <div class="regContainer">
         <div class="pass-register">
-            <form method="post" action="/Capstone-Project/carpool/passenger/passengerValid.php">
+            <form method="post" action="/Capstone-Project/carpool/php/register/passengerValid.php">
                 <h1>Register as Passenger</h1>
 
                 <div class="step active" data-step="1">
@@ -36,11 +37,11 @@ include("headerHomepage.php");
                 <div class="step" data-step="2">
                     <div class="input-field">
                         <input type="text" id="tpnumber" name="tpnumber" placeholder="TP Number">
-                        <span class="error" id="tpError">TP Number is required</span>
+                        <span class="error" id="tpnumberError">TP Number is required</span>
                     </div>
                     <div class="input-field">
                         <input type="password" id="password" name="password" placeholder="Password">
-                        <span class="error" id="passwordError">Passwords is required</span>
+                        <span class="error" id="passwordError">Password is required</span>
                     </div>
                     <div class="button-group">
                         <button type="button" class="confirm-button prev-btn">Previous</button>
@@ -49,6 +50,10 @@ include("headerHomepage.php");
                 </div>
 
                 <div class="step" data-step="3">
+                    <div class="input-field">
+                        <input type="text" id="email" name="email" placeholder="Email">
+                        <span class="error" id="emailError">Email is required</span>
+                    </div>
                     <div class="input-field">
                         <input type="text" id="phoneNo" name="phoneNo" placeholder="Phone No.">
                         <span class="error" id="phoneNoError">Phone No is required</span>
@@ -63,14 +68,32 @@ include("headerHomepage.php");
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
             const steps = document.querySelectorAll('.step');
             let currentStep = 0;
+
+            // Prevent Enter key from submitting the form unless on step 3
+            form.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && currentStep < steps.length - 1) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
 
             //first step 
             showStep(currentStep);
 
+            form.addEventListener('input', function (e) {
+                const input = e.target;
+                const parentStep = input.closest('.step');
+                if (parentStep && parentStep.classList.contains('active')) {
+                    validateStep(currentStep);
+                }
+            });
+
             document.querySelectorAll('.next-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     if (validateStep(currentStep)) {
                         currentStep++;
                         showStep(currentStep);
@@ -80,6 +103,7 @@ include("headerHomepage.php");
 
             document.querySelectorAll('.prev-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     currentStep--;
                     showStep(currentStep);
                 });
@@ -93,68 +117,147 @@ include("headerHomepage.php");
 
             function validateStep(stepIndex) {
                 let isValid = true;
-                const currentStepInputs = steps[stepIndex].querySelectorAll('input');
 
-                currentStepInputs.forEach(input => {
-                    if (!input.checkValidity()) {
-                        input.classList.add('error-state');
-                        isValid = false;
-                    } else {
-                        input.classList.remove('error-state');
-                    }
+                const currentStepElement = steps[stepIndex];
+                currentStepElement.querySelectorAll('.error').forEach(error => {
+                    error.textContent = ''; // Clear error message
+                    error.style.display = 'none'; // Hide error element
                 });
 
+                switch (stepIndex + 1) {
+                    case 1:
+                        isValid = validateStep1();
+                        break;
+                    case 2:
+                        isValid = validateStep2();
+                        break;
+                    case 3:
+                        isValid = validateStep3();
+                        break;
+                }
                 return isValid;
             }
-        });
-    </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const firstName = document.getElementById('firstname');
-            const lastName= document.getElementById('lastname');
-            const tpNumber= document.getElementById('tpnumber');
-            const password= document.getElementById('lastname');
-            const phoneNo= document.getElementById('phoneNo');
-
-            // password validation 
-            const minLength = 8;
-            const requiresUppercase = true;
-            const requiresNumber = true;
-            const requiresSpecialChar = true;
-
-            function validatePassword() {
-                const value = password.value.trim();
+            function validateStep1() {
                 let valid = true;
-                const errorElement = document.getElementById('passwordError');
+                const firstName = document.getElementById('firstname');
+                const lastName = document.getElementById('lastname');
+                const nameFormat = /^[A-Za-z\s]+$/;
 
-                clearVisualState(password);
-                errorElement.textContent = '';
+                clearError(firstName);
+                clearError(lastName);
 
-                if (value.length < minLength) {
-                    showError(password, `Password must be at least ${minLength} characters`);
+                const firstNameValue = firstName.value.trim();
+                if (firstNameValue === '') {
+                    showError(firstName, 'First name is required');
                     valid = false;
-                }
-                if (requiresUppercase && !/[A-Z]/.test(value)) {
-                    showError(password, 'Password must contain at least one uppercase letter');
+                } else if (!nameFormat.test(firstNameValue)) {
+                    showError(firstName, 'Only letters and spaces allowed');
                     valid = false;
+                } else {
+                    showSuccess(firstName);
                 }
-                if (requiresNumber && !/[0-9]/.test(value)) {
-                    showError(password, 'Password must contain at least one number');
+                const lastNameValue = lastName.value.trim();
+                if (lastNameValue === '') {
+                    showError(lastName, 'Last name is required');
                     valid = false;
-                }
-                if (requiresSpecialChar && !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value)) {
-                    showError(password, 'Password must contain at least one special character');
+                } else if (!nameFormat.test(lastNameValue)) {
+                    showError(lastName, 'Only letters and spaces allowed');
                     valid = false;
+                } else {
+                    showSuccess(lastName);
                 }
-                if (valid && value.length > 0) {
-                    showSuccess(password);
-                }
-
                 return valid;
             }
 
+            function validateStep2() {
+                let valid = true;
+
+                const tpnumber = document.getElementById('tpnumber');
+                const tpFormat = /^TP\d{6}$/;
+                const tpValue = tpnumber.value.trim();
+
+                clearError(tpnumber);
+                if (tpValue === '') {
+                    showError(tpnumber, 'TP number is required');
+                    valid = false;
+                } else if (!tpFormat.test(tpValue)) {
+                    showError(tpnumber, 'Invalid TP number format (TP followed by 6 digits)');
+                    valid = false;
+                } else {
+                    showSuccess(tpnumber);
+                }
+
+                const password = document.getElementById('password');
+                const passwordValue = password.value.trim();
+                const minLength = 8;
+                const hasUpperCase = /[A-Z]/.test(passwordValue);
+                const hasNumber = /\d/.test(passwordValue);
+                const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(passwordValue);
+
+                clearError(password);
+                if (passwordValue === '') {
+                    showError(password, 'Password is required');
+                    valid = false;
+                } else if (passwordValue.length < minLength) {
+                    showError(password, `✖ Password must be at least ${minLength} characters`);
+                    valid = false;
+                } else if (!hasUpperCase) {
+                    showError(password, '✖ Password must contain at least one uppercase letter');
+                    valid = false;
+                } else if (!hasNumber) {
+                    showError(password, '✖ Password must contain at least one number');
+                    valid = false;
+                } else if (!hasSpecialChar) {
+                    showError(password, '✖ Password must contain at least one special character');
+                    valid = false;
+                } else {
+                    showSuccess(password);
+                }
+                return valid;
+            }
+
+            function validateStep3() {
+                let valid = true;
+                const phoneNo = document.getElementById('phoneNo');
+                const phoneFormat = /^(01[2-9]\d{7}|011\d{8})$/;
+
+                const phoneValue = phoneNo.value.trim();
+                if (phoneValue === '') {
+                    showError(phoneNo, 'Phone number is required');
+                    valid = false;
+                } else if (!phoneFormat.test(phoneValue)) {
+                    showError(phoneNo, 'Invalid phone number format');
+                    valid = false;
+                } else {
+                    showSuccess(phoneNo);
+                }
+
+                const email = document.getElementById('email');
+                const emailValue = email.value.trim();
+                const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                clearError(email);
+                if (emailValue === '') {
+                    showError(email, 'Email is required');
+                    valid = false;
+                } else if (!emailFormat.test(emailValue)) {
+                    showError(email, 'Invalid email format');
+                    valid = false;
+                } else {
+                    showSuccess(email);
+                }
+                return valid;
+            }
+
+            function clearError(input) {
+                const errorElement = document.getElementById(input.id + 'Error');
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                    errorElement.textContent = '';
+                }
+                input.classList.remove('error-state', 'success-state');
+            }
 
             function showError(input, message) {
                 const errorElement = document.getElementById(input.id + 'Error');
@@ -169,43 +272,9 @@ include("headerHomepage.php");
                 input.classList.remove('error-state');
                 document.getElementById(input.id + 'Error').style.display = 'none';
             }
-
-            function clearVisualState(input) {
-                input.classList.remove('error-state', 'success-state');
-            }
-
-            // real-time validation
-            password.addEventListener('input', function () {
-                const isPasswordValid = validatePassword();
-                // validate confirmation if password is valid
-                if (isPasswordValid && passwordConfirm.value.trim() !== '') {
-                    validatePasswordConfirm();
-                }
-            });
-
-            passwordConfirm.addEventListener('input', function () {
-                if (password.value.trim() !== '') {
-                    validatePasswordConfirm();
-                }
-            });
-
-            // final validation on form submission
-            form.addEventListener('submit', function (e) {
-                const isPasswordValid = validatePassword();
-                const isConfirmValid = validatePasswordConfirm();
-
-                if (!isPasswordValid || !isConfirmValid) {
-                    e.preventDefault();
-                    // display all errors
-                    document.querySelectorAll('.error').forEach(error => {
-                        error.style.display = 'block';
-                    });
-                }
-            });
         });
     </script>
 
-</body>
 </body>
 
 </html>
