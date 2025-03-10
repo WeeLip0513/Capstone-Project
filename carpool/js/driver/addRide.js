@@ -243,7 +243,7 @@ function validateAndCheckConflict() {
 
                 let conflictHTML = `
                 <h3>Conflicting Ride(s) Found</h3>
-                <table border="1">
+                <table>
                     <thead>
                         <tr>
                             <th>Type</th>

@@ -1,45 +1,61 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('.featureBtn'); // Updated selector
-    const contents = document.querySelectorAll('.contents > div');
+    const buttons = document.querySelectorAll(".featureBtn");
+    const contents = document.querySelectorAll(".contents > div");
+    const hamburger = document.getElementById("hamburger");
+    const featuresMenu = document.getElementById("featuresMenu");
 
+    // Function to show selected content
+    function showContent(button) {
+        const contentId = button.getAttribute("data-content");
+
+        // Hide all contents
+        contents.forEach(content => content.style.display = "none");
+
+        // Show the selected content
+        const selectedContent = document.querySelector("." + contentId);
+        if (selectedContent) selectedContent.style.display = "flex";
+
+        // Remove 'active' from all buttons
+        buttons.forEach(btn => btn.classList.remove("active"));
+
+        // Add 'active' class to the clicked button
+        button.classList.add("active");
+
+        // Hide menu on mobile after clicking a button
+        if (window.innerWidth <= 1200) {
+            featuresMenu.classList.remove("show-menu");
+            hamburger.classList.remove("open"); // Close hamburger animation
+        }
+    }
+
+    // Attach click events to buttons
     buttons.forEach(button => {
-        button.addEventListener('click', function () {
-            const contentId = this.getAttribute('data-content');
-
-            contents.forEach(content => content.style.display = 'none'); // Hide all contents
-
-            // Show the selected content
-            const selectedContent = document.querySelector('.' + contentId);
-            if (selectedContent) selectedContent.style.display = 'flex';
-
-            // Remove 'active' class from all buttons
-            buttons.forEach(btn => btn.classList.remove('active'));
-
-            // Add 'active' class to the clicked button
-            this.classList.add('active');
+        button.addEventListener("click", function () {
+            showContent(this);
         });
     });
 
-    // Show the first content by default
+    // Show first content by default
     if (buttons.length > 0 && contents.length > 0) {
-        buttons[0].classList.add('active');
-        contents[0].style.display = 'flex'; // Ensure the default content is visible
+        showContent(buttons[0]); // Ensures first button is selected initially
     }
+
+    // Toggle Menu for Mobile
+    hamburger.addEventListener("click", function () {
+        featuresMenu.classList.toggle("show-menu");
+        this.classList.toggle("open"); // Animate hamburger icon
+    });
 
     // Get form elements
     const txtDate = document.getElementById("txtDate");
     const txtDateError = document.getElementById("txtDateError");
-
     const hour = document.getElementById("hour");
     const minute = document.getElementById("minute");
     const timeError = document.getElementById("timeError");
-
     const pickup = document.getElementById("pickup");
     const pickupError = document.getElementById("pickupError");
-
     const dropoff = document.getElementById("dropoff");
     const dropoffError = document.getElementById("dropoffError");
-
     const vehicle = document.getElementById("vehicle");
     const vehicleError = document.getElementById("vehicleError");
 
@@ -64,11 +80,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validateLocations() {
-        const pickup = document.getElementById("pickup");
-        const dropoff = document.getElementById("dropoff");
-        const pickupError = document.getElementById("pickupError");
-        const dropoffError = document.getElementById("dropoffError");
-
         let isValid = true;
 
         // Check if pickup is selected
@@ -80,8 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             pickupError.textContent = "";
             pickup.style.border = "3px solid #009432";
-            pickup.style.color = "#2c2c2c";
-            pickup.style.fontWeight = "bold";
         }
 
         // Check if drop-off is selected
@@ -89,13 +98,10 @@ document.addEventListener('DOMContentLoaded', function () {
             dropoffError.textContent = "Please select a drop-off point.";
             dropoffError.style.color = "red";
             dropoff.style.border = "3px solid red";
-            dropoff.style.fontWeight = "bold";
             isValid = false;
         } else {
             dropoffError.textContent = "";
             dropoff.style.border = "3px solid #009432";
-            dropoff.style.color = "#2c2c2c";
-            dropoff.style.fontWeight = "bold";
         }
 
         // Check if both are selected and not the same
@@ -110,19 +116,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-
     // Date Validation (Ensures a date is selected)
     function validateDate() {
-        if (!txtDate.value.trim()) {
-            txtDateError.textContent = "Please select a date.";
-            txtDateError.style.color = "red";
-            txtDate.style.border = "3px solid red";
-        } else {
-            txtDateError.textContent = "";
-            txtDate.style.border = "3px solid #009432";
-            txtDate.style.color = "#2c2c2c";
-            txtDate.style.fontWeight = "bold";
-        }
+        validateField(txtDate, txtDateError, "Please select a date.");
     }
 
     // Attach real-time validation to fields
@@ -138,14 +134,13 @@ document.addEventListener('DOMContentLoaded', function () {
         let isValid = true;
 
         validateDate();
-        validateField(hour, timeError, "");
+        validateField(hour, timeError, "Please select a valid time.");
         validateField(minute, timeError, "Please select a valid time.");
         validateField(pickup, pickupError, "Please select a pick-up point.");
         validateField(dropoff, dropoffError, "Please select a drop-off point.");
         validateField(vehicle, vehicleError, "Please select a vehicle.");
         validateLocations();
 
-        // Check if there are any error messages still present
         document.querySelectorAll(".error").forEach((error) => {
             if (error.textContent !== "") {
                 isValid = false;
@@ -155,12 +150,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     };
 
-    const rowsPerPage = 7; // Show 7 rows per page
+    // Pagination Logic
+    const rowsPerPage = 7;
     const tableBody = document.getElementById("tableBody");
-    let rows = Array.from(tableBody.querySelectorAll("tr:not(.divider-row):not(.pageControl):not(.create-btn-row)")); // Exclude dividers & pagination row
-    const bottomDividerRow = tableBody.querySelectorAll(".divider-row")[1]; // Locate the last divider-row
-    const createButtonRow = document.querySelector(".create-btn-row"); // The row containing the button
-    const checkboxes = document.querySelectorAll(".rideCheckbox"); // Get all checkboxes
+    let rows = Array.from(tableBody.querySelectorAll("tr:not(.divider-row):not(.pageControl):not(.create-btn-row)"));
+    const bottomDividerRow = tableBody.querySelectorAll(".divider-row")[1];
+    const createButtonRow = document.querySelector(".create-btn-row");
+    const checkboxes = document.querySelectorAll(".rideCheckbox");
 
     let currentPage = 1;
     let totalPages = Math.ceil(rows.length / rowsPerPage);
@@ -169,30 +165,25 @@ document.addEventListener('DOMContentLoaded', function () {
         let start = (page - 1) * rowsPerPage;
         let end = start + rowsPerPage;
 
-        // Hide all rows first
         rows.forEach(row => (row.style.display = "none"));
 
-        // Get actual rows for the page
         let visibleRows = rows.slice(start, end);
         visibleRows.forEach(row => (row.style.display = "table-row"));
 
-        // Remove previously added empty rows
         document.querySelectorAll(".empty-row").forEach(row => row.remove());
 
-        // Fill with empty rows if needed
         let missingRows = rowsPerPage - visibleRows.length;
         for (let i = 0; i < missingRows; i++) {
             let emptyRow = document.createElement("tr");
-            emptyRow.classList.add("empty-row"); // Optional class for styling
-            let columnCount = 6; // Match your table column count
+            emptyRow.classList.add("empty-row");
+            let columnCount = 6;
 
             for (let j = 0; j < columnCount; j++) {
                 let emptyCell = document.createElement("td");
-                emptyCell.textContent = ""; // No content
+                emptyCell.textContent = "";
                 emptyRow.appendChild(emptyCell);
             }
 
-            // Insert empty row before the bottom divider-row
             tableBody.insertBefore(emptyRow, bottomDividerRow);
         }
 
@@ -209,43 +200,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updatePagination() {
         const paginationRow = document.querySelector(".pageControl");
-        paginationRow.innerHTML = ""; // Clear previous pagination
-
-        const paginationContainer = document.createElement("td");
-        paginationContainer.setAttribute("colspan", "6");
-        paginationContainer.style.textAlign = "center";
-
-        for (let i = 1; i <= totalPages; i++) {
-            const dot = document.createElement("span");
-            dot.classList.add("pagination-dot");
-            if (i === currentPage) dot.classList.add("active");
-
-            dot.textContent = "•"; // Dot character
-            dot.style.cursor = "pointer";
-            dot.style.fontSize = "24px";
-            dot.style.margin = "0 5px";
-            dot.style.color = i === currentPage ? "#007bff" : "#ccc";
-
-            dot.addEventListener("click", () => changePage(i));
-
-            paginationContainer.appendChild(dot);
+        paginationRow.innerHTML = "";
+    
+        if (totalPages > 1) { // Only show dots if more than one page
+            for (let i = 1; i <= totalPages; i++) {
+                const dot = document.createElement("span");
+                dot.classList.add("pagination-dot");
+                if (i === currentPage) dot.classList.add("active");
+    
+                dot.textContent = "•";
+                dot.style.cursor = "pointer";
+                dot.style.color = i === currentPage ? "#007bff" : "#ccc";
+    
+                dot.addEventListener("click", () => changePage(i));
+                paginationRow.appendChild(dot);
+            }
         }
-
-        paginationRow.appendChild(paginationContainer);
     }
+    
 
     function updateButtonVisibility() {
-        const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-        createButtonRow.style.display = anyChecked ? "table-row" : "none";
+        createButtonRow.style.display = Array.from(checkboxes).some(checkbox => checkbox.checked) ? "table-row" : "none";
     }
 
-    // Attach event listeners to checkboxes
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("change", updateButtonVisibility);
     });
 
     showPage(currentPage);
-
 });
-
-

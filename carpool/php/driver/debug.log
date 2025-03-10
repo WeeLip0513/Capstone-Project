@@ -70,3 +70,9 @@ Checking conflict for: Date=2025-03-11, Time=09:00:00
 Conflicts Found: [{"ride_id":100,"ride_date":"2025-03-11","ride_time":"08:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
 Checking conflict for: Date=2025-03-11, Time=07:15:00
 Conflicts Found: [{"ride_id":100,"ride_date":"2025-03-11","ride_time":"08:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
+Checking conflict for: Date=2025-03-11, Time=08:15:00
+Conflicts Found: [{"ride_id":100,"ride_date":"2025-03-11","ride_time":"08:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
+Checking conflict for: Date=2025-03-11, Time=08:10:00
+Conflicts Found: [{"ride_id":100,"ride_date":"2025-03-11","ride_time":"08:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
+Checking conflict for: Date=2025-03-11, Time=08:00:00
+Conflicts Found: [{"ride_id":100,"ride_date":"2025-03-11","ride_time":"08:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
