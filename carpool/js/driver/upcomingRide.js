@@ -28,7 +28,7 @@ function displayPage(page) {
   const tableContainer = document.getElementById('rideTableContainer');
   const tableBody = document.getElementById('rideTableBody');
   const paginationContainer = document.getElementById('pagination');
-  
+
   tableBody.innerHTML = "";
 
   if (ridesData.length === 0) {
@@ -42,12 +42,25 @@ function displayPage(page) {
   const endIndex = startIndex + rowsPerPage;
   const ridesToShow = ridesData.slice(startIndex, endIndex);
 
+  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+
   ridesToShow.forEach(ride => {
     const pickupFormatted = formatLocationName(ride.pick_up_point);
     const dropoffFormatted = formatLocationName(ride.drop_off_point);
     const passengerIcons = generatePassengerIcons(ride.slots, ride.slots - ride.slots_available);
 
     const row = document.createElement("tr");
+
+    // Check if the ride's date matches today
+    const isToday = ride.date === today;
+
+    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id})">Cancel</button>`;
+    if (isToday) {
+      actionButtons = `
+        <button class="startBtn" onclick="startRide(${ride.id})">Start</button>
+        ` + actionButtons; // Only add Start button if the ride is today
+    }
+
     row.innerHTML = `
       <td>${ride.day}</td>
       <td>${ride.date}</td>
@@ -55,10 +68,7 @@ function displayPage(page) {
       <td>${pickupFormatted}</td>
       <td>${dropoffFormatted}</td>
       <td>${passengerIcons}</td>
-      <td>
-          <button class="startBtn" onclick="startRide(${ride.id})">Start</button>
-          <button class="cancelBtn" onclick="showCancelWarning(${ride.id})">Cancel</button>
-      </td>
+      <td>${actionButtons}</td>
     `;
     tableBody.appendChild(row);
   });
@@ -72,6 +82,7 @@ function displayPage(page) {
 
   generatePagination();
 }
+
 
 // Generate Pagination with Dots Only
 function generatePagination() {
