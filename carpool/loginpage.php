@@ -41,7 +41,6 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
             <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
             <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
         </div>
-
         <div class="overlay-container" id="overlay-Con">
             <div class="overlay">
                 <div class="overlay-panel signup-left">
@@ -70,23 +69,32 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
             }
         });
     </script>
-
-    <script>
-        const loginallcontainer = document.getElementById('login-all-container')
-        const overlayCon = document.getElementById('overlay-Con')
-        const overlayBtn = document.getElementById('overlayBtn')
-
-        overlayBtn.addEventListener('click', () => {
-            loginallcontainer.classList.toggle('signup-right-active')
-
-            overlayBtn.classList.remove('btnScaled');
-            window.requestAnimationFrame(() => {
-                overlayBtn.classList.add('btnScaled');
-            })
-        })
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const overlayBtn = document.getElementById('overlayBtn');
+            const container = document.getElementById('login-all-container');
+            const signInBtn = document.getElementById('signInBtn');
+            const signUpBtn = document.getElementById('signUpBtn');
+
+            if (overlayBtn) {
+                overlayBtn.addEventListener('click', function () {
+                    container.classList.toggle('signup-right-active');
+                    overlayBtn.classList.toggle('btnScaled');
+                });
+            }
+
+            if (signInBtn) {
+                signInBtn.addEventListener('click', function () {
+                    container.classList.remove('signup-right-active');
+                });
+            }
+
+            if (signUpBtn) {
+                signUpBtn.addEventListener('click', function () {
+                    container.classList.add('signup-right-active');
+                });
+            }
+
             const form = document.getElementById('form');
             const tpInput = document.getElementById('tpnumber');
             const passwordInput = document.getElementById('password');

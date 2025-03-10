@@ -6,7 +6,7 @@
     --grad-clr2: #243B55;
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica;
@@ -15,6 +15,10 @@
 
 body {
     padding-top: 80px !important; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar {
@@ -22,21 +26,20 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 80px; /* Set explicit height to match homepage */
+    height: 80px;
     z-index: 1000;
 }
 
 .login-all-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 850px;
+    position: relative;
+    width: 90%;
+    max-width: 850px;
     height: 500px;
     background-color: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     border-radius: 13px;
     overflow: hidden;
+    margin: 20px auto;
 }
 
 .login-container {
@@ -44,7 +47,7 @@ body {
     width: 60%;
     height: 100%;
     padding: 0px 40px;
-    transition: all 0.6 ease-in-out;
+    transition: all 0.6s ease-in-out;
 }
 
 .sign-up-container {
@@ -147,11 +150,12 @@ a.forgot {
     padding: 12px 45px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .login-container button {
     margin-top: 17px;
-    transform: 80ms ease-in;
+    transition: 80ms ease-in;
 }
 
 .login-container button:hover {
@@ -181,7 +185,6 @@ a.forgot {
     border: 1px solid #FFFFFF;
     background: transparent;
     border-radius: 20px;
-
 }
 
 .overlay {
@@ -263,7 +266,6 @@ p {
 }
 
 @keyframes show {
-
     0%,
     50% {
         opacity: 0;
@@ -320,6 +322,7 @@ p {
     margin: 10px 0;
     padding: 12px 0;
 }
+
 /* Modal Styles */
 .modal {
     display: none;
@@ -336,7 +339,8 @@ p {
     background-color: #fff;
     margin: 15% auto;
     padding: 30px;
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     border-radius: 10px;
     position: relative;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
