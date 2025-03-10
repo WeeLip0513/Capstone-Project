@@ -85,11 +85,12 @@ if (mysqli_num_rows($result) == 1) {
               <th>Pick Up Point</th>
               <th>Drop Off Point</th>
               <th>Passengers</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="rideTableBody"></tbody>
         </table>
+        <div id="pagination" class="pagination"></div>
       </div>
       <div class="warning" id="warning" style="display:none;">
       </div>

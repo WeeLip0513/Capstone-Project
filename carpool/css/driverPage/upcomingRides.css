@@ -89,3 +89,31 @@
   background-color: red;
 }
 
+.pagination{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style for pagination dots */
+.pagination-dot {
+  background: transparent; /* Remove the background */
+  border: none;            /* Remove the border */
+  color: white;            /* Make the dots black */
+  font-size: 20px;         /* Adjust the size of the dot */
+  cursor: pointer;        /* Make the cursor a pointer to show it's clickable */
+  padding: 0 5px;          /* Add some spacing around the dot */
+  margin: 0 5px;           /* Space out the dots */
+}
+
+.pagination-dot:disabled {
+  color: #2b83ff;        /* Gray out the current page */
+  cursor: not-allowed;     /* Change cursor to indicate the button is disabled */
+}
+
+.pagination-dot:hover {
+  color: #006aff;             /* Optional: Change color when hovering */
+}
+
+
