@@ -25,11 +25,6 @@ include("dbconn.php");
                 <img src="image/logo.png" alt="logo">
             </a>
         </div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
         <ul class="navlinks">
             <li><a href="homepage.php" class="<?= ($currentPage == 'homepage.php') ? 'active' : '' ?>">Home</a></li>
             <li><a href="#" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About Us</a></li>
@@ -43,6 +38,11 @@ include("dbconn.php");
         <div class="buttons">
             <a href="loginpage.php"><button class="login">Login</button></a>
             <a href="loginpage.php?action=signup"><button class="signup">Sign Up</button></a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
     </div>
     <script>
