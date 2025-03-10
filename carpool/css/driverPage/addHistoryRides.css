@@ -1,0 +1,178 @@
+/* Base Styles (Already Provided) */
+.selectedRidesConfirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.selectedRidesConfirmation h2 {
+  color: #2b83ff;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.selectedRidesConfirmation p {
+  color: #3daeff;
+}
+
+.selectedRidesConfirmation table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.selectedRidesConfirmation td,
+.selectedRidesConfirmation th {
+  padding: 10px;
+  text-align: center;
+  border: none;
+}
+
+.selectedRidesConfirmation thead {
+  background-color: #2b83ff;
+  color: white;
+  font-size: 26px;
+}
+
+.selectedRidesConfirmation td {
+  font-size: 22px;
+}
+
+.selectedRidesConfirmation thead th:first-child {
+  border-top-left-radius: 15px;
+}
+
+.selectedRidesConfirmation thead th:last-child {
+  border-top-right-radius: 15px;
+}
+
+.selectedRidesConfirmation tr:last-child td:first-child {
+  border-bottom-left-radius: 15px;
+}
+
+.selectedRidesConfirmation tr:last-child td:last-child {
+  border-bottom-right-radius: 15px;
+}
+
+.confirmSelectionBtn,
+.cancelSelectionBtn,
+.finalizeBtn,
+.backBtn {
+  width: 150px;
+  height: 40px;
+  background-color: white;
+  color: #2b83ff;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.confirmSelectionBtn:hover,
+.cancelSelectionBtn:hover,
+.finalizeBtn:hover,
+.backBtn:hover {
+  background-color: #2b83ff;
+  color: white;
+}
+
+/* Media Queries for Responsive Design */
+
+/* For screens ≤ 1200px */
+@media (max-width: 1200px) {
+  .selectedRidesConfirmation h2 {
+    font-size: 32px;
+  }
+
+  .selectedRidesConfirmation thead {
+    font-size: 24px;
+  }
+
+  .selectedRidesConfirmation td {
+    font-size: 20px;
+  }
+
+  .confirmSelectionBtn,
+  .cancelSelectionBtn {
+    width: 140px;
+    height: 38px;
+    font-size: 16px;
+  }
+}
+
+/* For screens ≤ 992px */
+@media (max-width: 992px) {
+  .selectedRidesConfirmation h2 {
+    font-size: 28px;
+  }
+
+  .selectedRidesConfirmation thead {
+    font-size: 22px;
+  }
+
+  .selectedRidesConfirmation td {
+    font-size: 18px;
+  }
+
+  .confirmSelectionBtn,
+  .cancelSelectionBtn {
+    width: 130px;
+    height: 36px;
+    font-size: 15px;
+  }
+}
+
+/* For screens ≤ 768px */
+@media (max-width: 768px) {
+  .selectedRidesConfirmation h2 {
+    font-size: 24px;
+  }
+
+  .selectedRidesConfirmation thead {
+    font-size: 20px;
+  }
+
+  .selectedRidesConfirmation td {
+    font-size: 16px;
+    padding: 6px;
+  }
+
+  .confirmSelectionBtn,
+  .cancelSelectionBtn {
+    width: 120px;
+    height: 34px;
+    font-size: 14px;
+  }
+}
+
+/* For screens ≤ 480px */
+@media (max-width: 480px) {
+  .selectedRidesConfirmation h2 {
+    font-size: 22px;
+  }
+
+  .selectedRidesConfirmation thead {
+    font-size: 14px;
+  }
+
+  .selectedRidesConfirmation td {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .selectedRidesConfirmation p{
+    margin-bottom: 20px !important;
+    font-size: 14px;
+  }
+
+  .confirmSelectionBtn,
+  .cancelSelectionBtn {
+    width: 110px;
+    height: 32px;
+    font-size: 13px;
+  }
+}

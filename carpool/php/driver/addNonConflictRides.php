@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 require_once "../../dbconn.php"; // Ensure database connection is correct
-include("fareCalculatoe.php");
+include("fareCalculator.php");
 
 $response = ["success" => false, "message" => ""];
 

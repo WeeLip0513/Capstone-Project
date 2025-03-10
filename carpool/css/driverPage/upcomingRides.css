@@ -116,4 +116,91 @@
   color: #006aff;             /* Optional: Change color when hovering */
 }
 
+.warningContainer{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  border-radius: 15px;
+}
 
+.warning-content{
+  color: #2b83ff;
+}
+
+.warning-content h1{
+  color: red;
+}
+
+.confirm-btn,
+.cancel-btn{
+  width: 150px;
+  height: 40px;
+}
+
+/* Responsive Table Design */
+@media screen and (max-width: 1200px) {
+  .rideTableContainer table {
+    font-size: 16px;
+  }
+  .rideTableContainer th, .rideTableContainer td {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .rideTableContainer table {
+    font-size: 14px;
+  }
+  .rideTableContainer th, .rideTableContainer td {
+    padding: 10px;
+  }
+  .startBtn, .cancelBtn {
+    width: 70px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rideTableContainer {
+    overflow-x: auto; /* Allows horizontal scroll for small screens */
+  }
+  .rideTableContainer table {
+    width: 100%;
+    font-size: 12px;
+  }
+  .rideTableContainer th, .rideTableContainer td {
+    padding: 8px;
+  }
+  .startBtn, .cancelBtn {
+    width: 60px;
+    height: 26px;
+    font-size: 12px;
+  }
+  .pagination-dot {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .rideTableContainer table {
+    font-size: 10px;
+  }
+  .rideTableContainer th, .rideTableContainer td {
+    padding: 6px;
+  }
+  .startBtn, .cancelBtn {
+    width: 50px;
+    height: 24px;
+    font-size: 10px;
+  }
+  .pagination {
+    flex-wrap: wrap; /* Allows pagination dots to wrap on small screens */
+  }
+  .pagination-dot {
+    font-size: 14px;
+    margin: 2px;
+  }
+}
