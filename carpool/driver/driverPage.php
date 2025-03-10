@@ -55,23 +55,32 @@ if (mysqli_num_rows($result) == 1) {
 </head>
 
 <body>
-<div class="features">
+  <!-- Hamburger Icon -->
+  <button class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </button>
+
+  <!-- Features Menu -->
+  <div class="features" id="featuresMenu">
     <button id="recentActivities" class="featureBtn active" data-content="activityContent">
-        Upcoming Rides
+      Upcoming Rides
     </button>
     <button id="addRides" class="featureBtn" data-content="rideContent">
-        Add Rides
+      Add Rides
     </button>
     <button id="earnings" class="featureBtn" data-content="earningsContent">
-        Earnings
+      Earnings
     </button>
     <button id="history" class="featureBtn" data-content="historyContent">
-        Rides History
+      Rides History
     </button>
     <button id="profile" class="featureBtn" data-content="profileContent">
-        Profile
+      Profile
     </button>
-</div>
+  </div>
+
 
   <div class="contents">
     <div class="activityContent">
@@ -85,17 +94,18 @@ if (mysqli_num_rows($result) == 1) {
               <th>Pick Up Point</th>
               <th>Drop Off Point</th>
               <th>Passengers</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="rideTableBody"></tbody>
         </table>
+        <div id="pagination" class="pagination"></div>
       </div>
       <div class="warning" id="warning" style="display:none;">
       </div>
     </div>
     <div class="rideContent" style="display: none;">
-      <div class="addRides" id="addRideContainer">
+      <div class="addRides" id="addRideContainer" style="display: none;">
         <h1>Create Rides Now !</h1><br>
         <form id="addRideForm" method="POST" action="../php/driver/addRideProcess.php" novalidate>
           <table class="addRidesTable">
@@ -292,7 +302,7 @@ if (mysqli_num_rows($result) == 1) {
 
       $result = $conn->query($sql);
       ?>
-      <div class="historyTable" id="historyContainer">
+      <div class="historyTable" id="historyContainer" style="display: none;">
         <h1>Add Rides From Previous Activities</h1>
         <table class="rideHistory">
           <thead>
@@ -354,7 +364,35 @@ if (mysqli_num_rows($result) == 1) {
           <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
         </div>
       </div>
-      <div id="conflictRides" class="conflictRides" style="display: none;">
+      <div id="conflictRides" class="conflictRides" style="display: flex;">
+        <h3>Conflicting Ride Found</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Pickup</th>
+              <th>Dropoff</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background-color: #f2f2f2;">
+              <td><strong>New Ride</strong></td>
+              <td>${date}</td>
+              <td>${hour}:${minute}</td>
+              <td>${pickup}</td>
+              <td>${dropoff}</td>
+            </tr>
+            <tr style="background-color: #ffcccc;">
+              <td><strong>Existed Ride</strong></td>
+              <td>${conflicts[0].ride_date}</td>
+              <td>${conflicts[0].ride_time}</td>
+              <td>${conflicts[0].pickup}</td>
+              <td>${conflicts[0].dropoff}</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="conflictBtn" id="conflictBtn">
           <button class="replaceRideBtn" id="replaceRideBtn">Replace</button>
           <button class="keepBtn" id="keepBtn">Keep</button>
