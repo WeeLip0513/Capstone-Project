@@ -77,22 +77,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Function to format specific locations
+  function formatLocation(location) {
+    let locationMap = {
+      "apu": "APU",
+      "lrt_bukit_jalil": "LRT Bukit Jalil",
+      "pav_bukit_jalil": "Pavilion Bukit Jalil",
+      "sri_petaling": "Sri Petaling"
+    };
+    return locationMap[location.toLowerCase()] || location;
+  }
+
   // Display selected rides in a table with checkboxes
   function displayRides(data) {
     selectedRidesDiv.innerHTML = ""; // Clear previous content
 
+    // Add heading
+    let heading = document.createElement("h2");
+    heading.innerText = "Select Rides to Replace and Create";
+    heading.style.textAlign = "center";
+    heading.style.marginBottom = "5px";
+    selectedRidesDiv.appendChild(heading);
+
+    let description = document.createElement("p");
+    description.innerText = "* Rides Show in RED are CONFLICTED RIDES *"
+    description.style.textAlign = "center";
+    description.style.marginBottom = "15px";
+    selectedRidesDiv.appendChild(description);
+
     let table = document.createElement("table");
-    table.border = "1";
     table.style.width = "100%";
     table.innerHTML = `
           <thead>
               <tr>
-                  <th>Select</th>
-                  <th>Ride ID</th>
+                  <th></th>
                   <th>Day</th>
                   <th>Time</th>
-                  <th>Pick-up</th>
-                  <th>Drop-off</th>
+                  <th>Pick Up Point</th>
+                  <th>Drop Off Point</th>
               </tr>
           </thead>
           <tbody id="ridesTableBody"></tbody>
@@ -132,13 +154,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Confirm selection button
     let confirmButton = document.createElement("button");
-    confirmButton.innerText = "Confirm Selection";
+    confirmButton.innerText = "Confirm";
+    confirmButton.className = "confirmSelectionBtn"; // Added class
     confirmButton.style.marginRight = "10px";
     confirmButton.addEventListener("click", confirmSelection);
-
+    
     // Cancel selection button
     let cancelButton = document.createElement("button");
     cancelButton.innerText = "Cancel";
+    cancelButton.className = "cancelSelectionBtn"; // Added class
     cancelButton.addEventListener("click", cancelSelection);
 
     buttonContainer.appendChild(confirmButton);
@@ -150,20 +174,26 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("historyContainer").style.display = "none";
 
     attachCheckboxListeners(); // Ensure checkbox selection rules apply
-  }
+}
 
   let confirmRideIds = []; // Global variable
 
   function confirmSelection() {
     confirmRideIds = [];
     document.querySelectorAll(".cRideCheckbox:checked").forEach(checkbox => {
-      confirmRideIds.push(checkbox.value);
+        confirmRideIds.push(checkbox.value);
     });
+
+    if (confirmRideIds.length === 0) {
+        alert("Please select at least one ride before confirming.");
+        return;
+    }
+
     console.log("Confirmed Ride IDs:", confirmRideIds);
-    alert("Rides confirmed!");
-    // selectedRidesDiv.style.display = "none";
+    // alert("Rides confirmed!");
     displayConfirmedRides(confirmRideIds);
-  }
+}
+
 
   function cancelSelection() {
     selectedRidesDiv.style.display = "none";
@@ -178,23 +208,31 @@ document.addEventListener("DOMContentLoaded", function () {
     let rideDate = ride.original_date || ride.date;
     let rideTime = ride.original_time || ride.time;
     let dayOfWeek = getDayOfWeek(rideDate);
+    let formattedPickup = formatLocation(ride.pick_up_point);
+    let formattedDropoff = formatLocation(ride.drop_off_point);
 
-    if (isConflict) row.style.backgroundColor = "#ffcccc";
+    if (isConflict) {
+        row.style.setProperty("background-color", "#ffcccc", "important"); // Light red for conflicts
+        row.style.setProperty("color","red");
+    } else {
+        row.style.setProperty("background-color", "#ffffff", "important"); // Ensure non-conflict rides are white
+        row.style.setProperty("color","#2b83ff");
+    }
 
     row.innerHTML = `
-          <td>
-              <input type="checkbox" class="cRideCheckbox" id="checkbox_${rideId}" value="${rideId}" data-ride='${JSON.stringify(ride)}'>
-              <label for="checkbox_${rideId}">(${rideId})</label>
-          </td>
-          <td>${rideId}</td>
-          <td>${dayOfWeek}</td>
-          <td>${rideTime}</td>
-          <td>${ride.pick_up_point}</td>
-          <td>${ride.drop_off_point}</td>
-      `;
+        <td>
+            <input type="checkbox" class="cRideCheckbox" id="checkbox_${rideId}" value="${rideId}" data-ride='${JSON.stringify(ride)}'>
+            <label for="checkbox_${rideId}"></label>
+        </td>
+        <td>${dayOfWeek}</td>
+        <td>${rideTime}</td>
+        <td>${formattedPickup}</td>
+        <td>${formattedDropoff}</td>
+    `;
 
     return row;
-  }
+}
+
 
   // Attach event listeners to disable conflicting rides
   function attachCheckboxListeners() {
@@ -235,59 +273,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function displayConfirmedRides(confirmRideIds) {
     function getNextWeekDate(weekdayName) {
-      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      let today = new Date();
-      let todayIndex = today.getDay();
-      let targetIndex = daysOfWeek.indexOf(weekdayName);
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        let today = new Date();
+        let todayIndex = today.getDay();
+        let targetIndex = daysOfWeek.indexOf(weekdayName);
 
-      if (targetIndex === -1) {
-        console.error("Invalid weekday:", weekdayName);
-        return null;
-      }
+        if (targetIndex === -1) {
+            console.error("Invalid weekday:", weekdayName);
+            return null;
+        }
 
-      let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
-      let nextDate = new Date();
-      nextDate.setDate(today.getDate() + daysUntilNext + 7);
+        let daysUntilNext = (targetIndex - todayIndex + 7) % 7;
+        let nextDate = new Date();
+        nextDate.setDate(today.getDate() + daysUntilNext + 7);
 
-      return {
-        fullDate: nextDate.toISOString().split("T")[0],
-        weekday: daysOfWeek[nextDate.getDay()]
-      };
+        return {
+            fullDate: nextDate.toISOString().split("T")[0],
+            weekday: daysOfWeek[nextDate.getDay()]
+        };
     }
 
     let conflictMap = new Map();
     rideConflicts.conflicts.forEach(conflict => {
-      conflictMap.set(String(conflict.conflict_id), conflict.date);
-      conflictMap.set(String(conflict.original_ride_id), conflict.date);
+        conflictMap.set(String(conflict.conflict_id), conflict.date);
+        conflictMap.set(String(conflict.original_ride_id), conflict.date);
     });
 
     let confirmedRides = confirmRideIds.map(id => {
-      let checkbox = document.querySelector(`#checkbox_${id}`);
-      if (checkbox) {
-        let row = checkbox.closest("tr");
-        if (row) {
-          let originalDay = row.cells[2].textContent.trim();
-          let nextWeekDateInfo = getNextWeekDate(originalDay);
+        let checkbox = document.querySelector(`#checkbox_${id}`);
+        if (checkbox) {
+            let row = checkbox.closest("tr");
+            if (row) {
+                let originalDay = row.cells[1].textContent.trim();
+                let nextWeekDateInfo = getNextWeekDate(originalDay);
 
-          let rideDate = conflictMap.has(String(id)) ? conflictMap.get(String(id)) : nextWeekDateInfo.fullDate;
-          let rideDay = conflictMap.has(String(id)) ? new Date(rideDate).toLocaleDateString('en-US', { weekday: 'long' }) : nextWeekDateInfo.weekday;
+                let rideDate = conflictMap.has(String(id)) ? conflictMap.get(String(id)) : nextWeekDateInfo.fullDate;
+                let rideDay = conflictMap.has(String(id)) ? new Date(rideDate).toLocaleDateString('en-US', { weekday: 'long' }) : nextWeekDateInfo.weekday;
 
-          return {
-            day: rideDay,
-            date: rideDate,
-            time: row.cells[3].textContent,
-            pickup: row.cells[4].textContent,
-            dropoff: row.cells[5].textContent
-          };
+                return {
+                    day: rideDay,
+                    date: rideDate,
+                    time: row.cells[2].textContent,
+                    pickup: row.cells[3].textContent,
+                    dropoff: row.cells[4].textContent
+                };
+            }
         }
-      }
-      return null;
+        return null;
     }).filter(ride => ride !== null);
 
     selectedRidesDiv.innerHTML = "";
 
+    // Add Final Confirmation Heading
+    let heading = document.createElement("h2");
+    heading.innerText = "Final Confirmation";
+    heading.style.textAlign = "center";
+    heading.style.marginBottom = "10px";
+    selectedRidesDiv.appendChild(heading);
+
     let table = document.createElement("table");
-    table.border = "1";
     table.style.width = "100%";
     table.innerHTML = `
         <thead>
@@ -305,15 +349,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let tbody = document.getElementById("confirmedRidesBody");
 
     confirmedRides.forEach(ride => {
-      let row = document.createElement("tr");
-      row.innerHTML = `
+        let row = document.createElement("tr");
+        row.innerHTML = `
             <td>${ride.day}</td>
             <td>${ride.date}</td>
             <td>${ride.time}</td>
             <td>${ride.pickup}</td>
             <td>${ride.dropoff}</td>
         `;
-      tbody.appendChild(row);
+        row.style.setProperty("background-color","white");
+        row.style.setProperty("color","#2b83ff");
+        tbody.appendChild(row);
     });
 
     let buttonContainer = document.createElement("div");
@@ -321,17 +367,18 @@ document.addEventListener("DOMContentLoaded", function () {
     buttonContainer.style.textAlign = "center";
 
     let finalizeButton = document.createElement("button");
-    finalizeButton.innerText = "Finalize Selection";
+    finalizeButton.innerText = "Confirm";
     finalizeButton.style.marginRight = "10px";
     finalizeButton.className = "finalizeBtn";
     finalizeButton.addEventListener("click", finalizeRides);
 
     let goBackButton = document.createElement("button");
     goBackButton.innerText = "Go Back";
+    goBackButton.className = "backBtn";
     goBackButton.addEventListener("click", function () {
-      showSelectedRidesConfirmation();
-      document.getElementById("addRideContainer").style.display = "flex";
-      document.getElementById("historyContainer").style.display = "flex";
+        showSelectedRidesConfirmation();
+        document.getElementById("addRideContainer").style.display = "flex";
+        document.getElementById("historyContainer").style.display = "flex";
     });
 
     buttonContainer.appendChild(finalizeButton);
@@ -341,7 +388,8 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedRidesDiv.style.display = "block";
     document.getElementById("addRideContainer").style.display = "none";
     document.getElementById("historyContainer").style.display = "none";
-  }
+}
+
 
 
   async function finalizeRides() {
@@ -378,38 +426,38 @@ document.addEventListener("DOMContentLoaded", function () {
         slots: parseInt(ride.slots, 10)
       }));
 
-      let conflictRides = rideConflicts.conflicts
-      .filter(ride => 
-        confirmedIds.includes(parseInt(ride.conflict_id, 10)) || 
+    let conflictRides = rideConflicts.conflicts
+      .filter(ride =>
+        confirmedIds.includes(parseInt(ride.conflict_id, 10)) ||
         confirmedIds.includes(parseInt(ride.original_ride_id, 10))
       )
       .map(ride => {
         // Find the original ride details using original_ride_id
-        let originalRide = rideConflicts.original_rides.find(r => 
+        let originalRide = rideConflicts.original_rides.find(r =>
           parseInt(r.original_ride_id, 10) === parseInt(ride.original_ride_id, 10)
         );
-    
+
         // Function to check if a date is within the previous week (Sunday to Saturday)
         function isFromPreviousWeek(dateStr) {
           let rideDate = new Date(dateStr);
           let today = new Date();
-    
+
           // Get the start (Sunday) and end (Saturday) of the previous week
           let lastSunday = new Date(today);
           lastSunday.setDate(today.getDate() - today.getDay() - 7); // Move back to last week's Sunday
           lastSunday.setHours(0, 0, 0, 0); // Reset time
-    
+
           let lastSaturday = new Date(lastSunday);
           lastSaturday.setDate(lastSunday.getDate() + 6); // Get last week's Saturday
           lastSaturday.setHours(23, 59, 59, 999);
-    
+
           return rideDate >= lastSunday && rideDate <= lastSaturday; // Check if the ride date is within last week
         }
-    
+
         return {
           ride_id: parseInt(ride.conflict_id, 10), // Keep conflict ride_id the same
-          date: originalRide && isFromPreviousWeek(originalRide.original_date) 
-            ? addTwoWeeks(originalRide.original_date) 
+          date: originalRide && isFromPreviousWeek(originalRide.original_date)
+            ? addTwoWeeks(originalRide.original_date)
             : ride.date, // Only add two weeks if it's within last week
           time: originalRide ? originalRide.original_time : ride.time,
           pickup: originalRide ? originalRide.pick_up_point : ride.pick_up_point,
@@ -419,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
           slots: originalRide ? parseInt(originalRide.slots, 10) : parseInt(ride.slots, 10)
         };
       });
-    
+
 
 
     console.log("Filtered Non-Conflict Rides:", JSON.stringify(nonConflictRides, null, 2));
@@ -452,9 +500,6 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("An error occurred while finalizing rides.");
     }
   }
-
-
-
 
   document.querySelector(".addSelectBtn").addEventListener("click", showSelectedRidesConfirmation);
 });

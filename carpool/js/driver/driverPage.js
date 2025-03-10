@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             pickupError.textContent = "";
             pickup.style.border = "3px solid #009432";
+            pickup.style.color = "#2c2c2c";
+            pickup.style.fontWeight = "bold";
         }
 
         // Check if drop-off is selected
@@ -102,11 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             dropoffError.textContent = "";
             dropoff.style.border = "3px solid #009432";
+            dropoff.style.color = "#2c2c2c";
+            dropoff.style.fontWeight = "bold";
         }
 
         // Check if both are selected and not the same
         if (pickup.value && dropoff.value && pickup.value === dropoff.value) {
-            dropoffError.textContent = "Pickup and Drop-off cannot be the same.";
+            dropoffError.textContent = "Invalid Location";
             dropoffError.style.color = "red";
             pickup.style.border = "3px solid red";
             dropoff.style.border = "3px solid red";

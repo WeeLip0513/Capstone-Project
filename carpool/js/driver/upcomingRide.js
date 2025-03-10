@@ -196,8 +196,8 @@ function formatLocationName(location) {
   };
 
   return specialCases[location] || location
-    .replace(/_/g, " ")  
-    .replace(/\b\w/g, char => char.toUpperCase()); 
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, char => char.toUpperCase());
 }
 
 function generatePassengerIcons(totalSlots, occupiedSlots) {
@@ -211,24 +211,26 @@ function generatePassengerIcons(totalSlots, occupiedSlots) {
 }
 
 function showCancelWarning(rideId) {
-  const warningDiv = document.getElementById('warning');
+  const warningDiv = document.getElementById('warningContainer');
   const tableContainer = document.getElementById('rideTableContainer');
 
   warningDiv.innerHTML = `
-    <div class="warning-content">
-      <p>⚠ <strong>Are you sure you want to cancel this ride?</strong></p>
-      <p>Your earnings will be deducted by 20% if you cancel more than or equal to three times.</p>
-      <button class="confirm-btn" onclick="cancelRide(${rideId})">Confirm</button>
-      <button class="cancel-btn" onclick="hideWarning()">Cancel</button>
-    </div>
+  <div class="warning-content">
+  <h1>⚠ Warning ⚠</h1>
+  <p>If you cancel more than or equal to <span style="color: red; font-weight: bold;">three times</span><br>Your earnings will be deducted by <span style="color: red; font-weight: bold;">20%</span></p>
+  <p><strong>Are you sure you want to <span style="color: red; font-weight: bold;">cancel</span> this ride?</strong></p>
+  <button class="confirm-btn" onclick="cancelRide(${rideId})">Confirm</button>
+  <button class="cancel-btn" onclick="hideWarning()">Cancel</button>
+</div>
+
   `;
 
-  warningDiv.style.display = "block";
+  warningDiv.style.display = "flex";
   tableContainer.style.display = "none";
 }
 
 function hideWarning() {
-  document.getElementById('warning').style.display = "none";
+  document.getElementById('warningContainer').style.display = "none";
   document.getElementById('rideTableContainer').style.display = "block";
 }
 
@@ -240,16 +242,16 @@ function cancelRide(rideId) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `ride_id=${rideId}`
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data.status === "success") {
-      alert("✅ Ride canceled successfully.");
-      fetchUpcomingRides();
-    } else {
-      alert("❌ Failed to cancel ride: " + data.message);
-    }
-  })
-  .catch(error => console.error('❌ Error canceling ride:', error));
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        alert("✅ Ride canceled successfully.");
+        fetchUpcomingRides();
+      } else {
+        alert("❌ Failed to cancel ride: " + data.message);
+      }
+    })
+    .catch(error => console.error('❌ Error canceling ride:', error));
 }
 
 function startRide(rideId) {

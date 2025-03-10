@@ -43,6 +43,7 @@ if (mysqli_num_rows($result) == 1) {
   <link rel="stylesheet" href="../css/driverPage/driverPage.css" />
   <link rel="stylesheet" href="../css/driverPage/addRide.css">
   <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
+  <link rel="stylesheet" href="../css/driverPage/addHistoryRides.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -55,7 +56,7 @@ if (mysqli_num_rows($result) == 1) {
 </head>
 
 <body>
-  <!-- Hamburger Icon -->
+  <!-- Hamburger Icon (Outside Features Menu) -->
   <button class="hamburger" id="hamburger">
     <div></div>
     <div></div>
@@ -81,7 +82,6 @@ if (mysqli_num_rows($result) == 1) {
     </button>
   </div>
 
-
   <div class="contents">
     <div class="activityContent">
       <div id="rideTableContainer" class="rideTableContainer">
@@ -101,11 +101,11 @@ if (mysqli_num_rows($result) == 1) {
         </table>
         <div id="pagination" class="pagination"></div>
       </div>
-      <div class="warning" id="warning" style="display:none;">
+      <div class="warningContainer" id="warningContainer" style="display:none;">
       </div>
     </div>
     <div class="rideContent" style="display: none;">
-      <div class="addRides" id="addRideContainer" style="display: none;">
+      <div class="addRides" id="addRideContainer" style="display: flex;">
         <h1>Create Rides Now !</h1><br>
         <form id="addRideForm" method="POST" action="../php/driver/addRideProcess.php" novalidate>
           <table class="addRidesTable">
@@ -302,7 +302,7 @@ if (mysqli_num_rows($result) == 1) {
 
       $result = $conn->query($sql);
       ?>
-      <div class="historyTable" id="historyContainer" style="display: none;">
+      <div class="historyTable" id="historyContainer" style="display: flex;">
         <h1>Add Rides From Previous Activities</h1>
         <table class="rideHistory">
           <thead>
@@ -326,15 +326,32 @@ if (mysqli_num_rows($result) == 1) {
             </tr>
             <?php
             if ($result->num_rows > 0) {
+              // Define custom formatting for specific locations
+              $customLocations = [
+                "apu" => "APU",
+                "lrt_bukit_jalil" => "LRT Bukit Jalil",
+                "sri_petaling" => "Sri Petaling",
+                "pav_bukit_jalil" => "Pavilion Bukit Jalil"
+              ];
+
               while ($row = $result->fetch_assoc()) {
+                // Format pick-up and drop-off points
+                $pickUp = isset($customLocations[$row['pick_up_point']]) ?
+                  $customLocations[$row['pick_up_point']] :
+                  ucwords(str_replace('_', ' ', strtolower(trim($row['pick_up_point']))));
+
+                $dropOff = isset($customLocations[$row['drop_off_point']]) ?
+                  $customLocations[$row['drop_off_point']] :
+                  ucwords(str_replace('_', ' ', strtolower(trim($row['drop_off_point']))));
+
                 echo "<tr>
-                        <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
-                        <td>{$row['day']}</td>
-                        <td>{$row['formatted_time']}</td>
-                        <td>{$row['pick_up_point']}</td>
-                        <td>{$row['drop_off_point']}</td>
-                        <td class='historySlots'>{$row['slots']}</td>
-                    </tr>";
+              <td><input type='checkbox' class='rideCheckbox' value='{$row['id']}' data-ride='" . json_encode($row) . "'></td>
+              <td>{$row['day']}</td>
+              <td>{$row['formatted_time']}</td>
+              <td>{$pickUp}</td>
+              <td>{$dropOff}</td>
+              <td class='historySlots'>{$row['slots']}</td>
+          </tr>";
               }
             } else {
               echo "<tr><td colspan='6'>No rides found from the previous week</td></tr>";
@@ -356,43 +373,9 @@ if (mysqli_num_rows($result) == 1) {
           </tbody>
         </table>
       </div>
-      <div id="selectedRidesConfirmation" class="confirmation-modal" style="display: none;">
-        <div class="modal-content">
-          <h2>Confirm Selected Rides</h2>
-          <div id="selectedRideDetails"></div>
-          <button onclick="addSelectedRides()">Confirm</button>
-          <button onclick="hideSelectedRidesConfirmation()">Cancel</button>
-        </div>
+      <div id="selectedRidesConfirmation" class="selectedRidesConfirmation" style="display: none;">
       </div>
-      <div id="conflictRides" class="conflictRides" style="display: flex;">
-        <h3>Conflicting Ride Found</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Pickup</th>
-              <th>Dropoff</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="background-color: #f2f2f2;">
-              <td><strong>New Ride</strong></td>
-              <td>${date}</td>
-              <td>${hour}:${minute}</td>
-              <td>${pickup}</td>
-              <td>${dropoff}</td>
-            </tr>
-            <tr style="background-color: #ffcccc;">
-              <td><strong>Existed Ride</strong></td>
-              <td>${conflicts[0].ride_date}</td>
-              <td>${conflicts[0].ride_time}</td>
-              <td>${conflicts[0].pickup}</td>
-              <td>${conflicts[0].dropoff}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="conflictRides" class="conflictRides" style="display: none;">
         <div class="conflictBtn" id="conflictBtn">
           <button class="replaceRideBtn" id="replaceRideBtn">Replace</button>
           <button class="keepBtn" id="keepBtn">Keep</button>

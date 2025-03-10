@@ -10,7 +10,7 @@
   width: 100%;
   /* Make sure it takes full width */
   height: 100%;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
 .addRides {
@@ -28,6 +28,7 @@
   box-shadow: 0px 4px 10px rgb(98, 98, 98);
   padding: 30px;
   position: relative;
+  margin-left: 40px;
 }
 
 .addRides h1 {
@@ -53,7 +54,7 @@
 }
 
 .addRidesTable td:first-child {
-  width: 40%;
+  width: 45%;
 }
 
 .addRidesTable td:last-child {
@@ -112,11 +113,12 @@
 .error {
   color: red;
   font-size: 12px;
+  font-weight: bold;
   position: absolute;
   width: 100%;
   text-align: left;
   left: 15px;
-  bottom: -7px;
+  bottom: -10px;
 }
 
 .error-border {
@@ -165,7 +167,7 @@
 .historyTable {
   flex: 2;
   /* Takes half the space of addRides */
-  width: 800px;
+  width: 100%;
   /* Prevent excessive stretching */
   display: flex;
   flex-direction: column;
@@ -428,23 +430,16 @@
 }
 
 .conflictRides {
-  position: absolute;  /* Ensure it follows top & left */
-  top: 40%;
-  left: 50%; 
-  transform: translate(-50%, -30%); /* Center properly */
-  
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center;
+  align-items: center; /* Horizontally center */
+  justify-content: center; /* Optional: Vertically center if needed */
   width: 100%;
-  color: #2b83ff;
   text-align: center;
-  border: none;
 }
 
 .conflictRides table {
-  width: 80%;
+  width: 100%; /* Adjust width as needed */
   border: none;
   border-collapse: collapse;
   text-align: center;
@@ -453,6 +448,7 @@
 .conflictRides h3{
   font-size: 36px;
   margin-bottom: 15px;
+  color: white;
 }
 
 .conflictRides td{
@@ -513,4 +509,109 @@
   background-color: #2b83ff;
   color: white;
 
+}
+
+/* Default styles for larger screens remain unchanged */
+
+/* For screens 1200px and below */
+@media (max-width: 1200px) {
+  .rideContent {
+      flex-direction: column;
+      align-items: center;
+  }
+  .addRidesTable td:first-child {
+    width: 30%;
+    text-align: center;
+  }
+  .addRides, .historyTable {
+      width: 80%;
+      margin-left: 0;
+  }
+  .addRides h1, .historyTable h1 {
+      font-size: 30px;
+  }
+  .rideHistory th, .rideHistory td {
+      font-size: 16px;
+  }
+}
+
+/* For screens 992px and below */
+@media (max-width: 992px) {
+  .addRides h1, .historyTable h1 {
+      font-size: 28px;
+  }
+  .rideHistory th, .rideHistory td {
+      font-size: 15px;
+  }
+  .addRidesTable td h2 {
+      font-size: 18px;
+  }
+  .addRidesTable input, .addRidesTable select {
+      font-size: 13px;
+  }
+}
+
+/* For screens 768px and below */
+@media (max-width: 768px) {
+  .addRides, .historyTable {
+      width: 100%; /* Ensure full width */
+      padding: 20px;
+  }
+  .historyTable {
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  .rideHistory {
+      width: 100%; /* Ensure the table fits within the container */
+      max-width: 100%; /* Prevent stretching */
+      overflow-x: auto; /* Allow scrolling within the table if necessary */
+  }
+  .addRides h1, .historyTable h1 {
+      font-size: 24px;
+  }
+  .rideHistory th, .rideHistory td {
+      font-size: 14px;
+  }
+  .addRidesTable td h2 {
+      font-size: 16px;
+  }
+  .addRidesTable input, .addRidesTable select {
+      font-size: 12px;
+  }
+}
+
+
+/* For screens 480px and below */
+@media (max-width: 480px) {
+  .addRides, .historyTable {
+      padding: 15px;
+  }
+  .addRides h1, .historyTable h1 {
+      font-size: 22px;
+  }
+  .rideHistory {
+      width: 100%;
+      padding: 10px;
+  }
+  .rideHistory th, .rideHistory td {
+      font-size: 12px;
+      padding: 5px;
+  }
+  .addRidesTable td h2 {
+      font-size: 14px;
+  }
+  .addRidesTable input, .addRidesTable select {
+      font-size: 11px;
+  }
+  .confirmation {
+      width: 90%;
+      left: 5%;
+      padding: 15px;
+  }
+  .confirmation h2 {
+      font-size: 30px;
+  }
+  .rideDetails table {
+      width: 100%;
+      border-spacing: 20px 10px;
+  }
 }

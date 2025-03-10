@@ -199,6 +199,14 @@ function validateAndCheckConflict() {
     const pickup = document.getElementById('pickup').value;
     const dropoff = document.getElementById('dropoff').value;
 
+    // Mapping object for formatted location names
+    const locationMap = {
+        "apu": "APU",
+        "lrt_bukit_jalil": "LRT Bukit Jalil",
+        "sri_petaling": "Sri Petaling",
+        "pav_bukit_jalil": "Pavilion Bukit Jalil"
+    };
+
     fetch('../php/driver/checkRideConflict.php', {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -221,9 +229,11 @@ function validateAndCheckConflict() {
             const addRideContainer = document.getElementById('addRideContainer');
             const historyContainer = document.getElementById('historyContainer');
 
+            // Format locations using the mapping object
+            const formattedPickup = locationMap[pickup] || pickup;
+            const formattedDropoff = locationMap[dropoff] || dropoff;
 
             if (conflicts.length > 1) {
-                // More than one conflict detected, prevent the user from proceeding
                 conflictDiv.innerHTML = `
                 <h3 style="color: red;">⚠ Too Many Conflicting Rides</h3>
                 <p>You have created multiple rides that overlap at the same time. Please adjust your schedule before proceeding.</p>
@@ -237,12 +247,11 @@ function validateAndCheckConflict() {
                 return;
             }
 
-
             if (conflicts.length === 1) {
                 selectedRideId = conflicts[0].ride_id;
 
                 let conflictHTML = `
-                <h3>Conflicting Ride(s) Found</h3>
+                <h3>Conflicting Ride Found</h3>
                 <table>
                     <thead>
                         <tr>
@@ -255,18 +264,18 @@ function validateAndCheckConflict() {
                     </thead>
                     <tbody>
                         <tr style="background-color: #f2f2f2;">
-                            <td><strong>Your Ride</strong></td>
+                            <td><strong>New Ride</strong></td>
                             <td>${date}</td>
                             <td>${hour}:${minute}</td>
-                            <td>${pickup}</td>
-                            <td>${dropoff}</td>
+                            <td>${formattedPickup}</td>
+                            <td>${formattedDropoff}</td>
                         </tr>
                         <tr style="background-color: #ffcccc;">
                             <td><strong>Conflict</strong></td>
                             <td>${conflicts[0].ride_date}</td>
                             <td>${conflicts[0].ride_time}</td>
-                            <td>${conflicts[0].pickup}</td>
-                            <td>${conflicts[0].dropoff}</td>
+                            <td>${locationMap[conflicts[0].pickup] || conflicts[0].pickup}</td>
+                            <td>${locationMap[conflicts[0].dropoff] || conflicts[0].dropoff}</td>
                         </tr>
                     </tbody>
                 </table>`;
