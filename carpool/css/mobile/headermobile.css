@@ -1,34 +1,67 @@
-@media (max-width:1200px) {
-    .navlinks {
-        margin-left: 2rem;
-        gap: 1.5rem;
+@media screen and (max-width: 1366px) {
+    .navlinks { 
+        margin-left: 3rem;
+        gap: 2.5rem;
+    }
+    
+    .navlinks a {
+        font-size: 1rem;
+    }
+    
+    .login, .signup {
+        padding: 0.7rem 1.7rem;
     }
 }
 
-@media (max-width:992px) {
+@media screen and (max-width: 1200px) { 
+    .navlinks { 
+        margin-left: 2rem;
+        gap: 1.8rem;
+    }
+    
+    .login, .signup {
+        padding: 0.7rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
     .navbar {
         padding: 1rem 2rem;
     }
 
     .navlinks {
-        margin-left: 1rem;
-        gap: 1rem;
+        margin-left: 1.5rem;
+        gap: 1.2rem;
+    }
+    
+    .navlinks a {
+        font-size: 0.95rem;
+    }
+    
+    .login, .signup {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
+    
+    .logo img {
+        width: 130px;
+        height: auto;
     }
 }
 
-@media (max-width:768px) {
+@media screen and (max-width: 820px) {
     .navbar {
         padding: 1rem;
-        flex-wrap: wrap;
+        justify-content: space-between;
     }
-
+    
     .hamburger {
         display: flex;
         flex-direction: column;
         gap: 5px;
         cursor: pointer;
-        order: 1;
         z-index: 1001;
+        order: 3;
     }
 
     .hamburger .bar {
@@ -36,6 +69,20 @@
         height: 3px;
         background: #333;
         transition: 0.3s;
+    }
+    
+    .logo {
+        order: 1;
+    }
+    
+    .logo img {
+        width: 120px;
+        height: auto;
+    }
+    
+    .buttons {
+        order: 2;
+        display: none;
     }
 
     .navlinks {
@@ -45,19 +92,23 @@
         width: 100%;
         height: calc(100vh - 70px);
         margin: 0;
-        gap: 3rem;
-        padding: 1rem;
+        gap: 2rem;
+        padding: 2rem 1rem;
         flex-direction: column;
         background: white;
         transition: 0.3s;
         z-index: 999;
     }
 
-    .navlinks li{
+    .navlinks li {
         display: block;
         width: 100%;
         padding: 8px 0;
         text-align: center;
+    }
+    
+    .navlinks a {
+        font-size: 1.1rem;
     }
 
     .navlinks.active {
@@ -69,7 +120,7 @@
         bottom: -100%;
         left: 0;
         width: 100%;
-        padding: 2rem;
+        padding: 1.5rem;
         background: white;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         transition: 0.3s;
@@ -77,24 +128,25 @@
         gap: 1rem;
         margin: 0;
         z-index: 1000;
+        display: flex;
     }
 
     .buttons.active {
         bottom: 0;
     }
 
-    .login,
+    /* .login,
     .signup {
-        width: 100%;
+        width: 45%;
+        text-align: center;
+        padding: 0.8rem 1rem;
         margin: 0;
+    } */
+    
+    .signup {
+        margin-left: 1rem;
     }
 
-    .logo img {
-        width: 120px;
-        height: auto;
-    }
-
-    /* Animate hamburger to X */
     .hamburger.active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
@@ -108,7 +160,7 @@
     }
 }
 
-@media (max-width:480px) {
+@media screen and (max-width: 480px) {
     .logo img {
         width: 100px;
     }
@@ -116,5 +168,6 @@
     .navlinks {
         top: 60px;
         height: calc(100vh - 60px);
+        padding-top: 1.5rem;
     }
 }
