@@ -159,8 +159,7 @@ function replaceRide() {
               document.getElementById('addRideForm').reset(); // Reset form if it has id="rideForm"
 
               // Manually clear dropdown selections if needed
-              document.querySelectorAll('.addRidesTable select').forEach(select => {
-                select.selectedIndex = -1; // Ensures no option is selected
+              document.querySelectorAll('.addRidesTable select, .addRidesTable input').forEach(select => {
                 select.style.border = "1px solid #ccc";
                 select.style.backgroundColor = "whitesmoke";
                 select.style.textAlign = "center";
