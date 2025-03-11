@@ -54,7 +54,7 @@ function displayPage(page) {
     // Check if the ride's date matches today
     const isToday = ride.date === today;
 
-    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id})">Cancel</button>`;
+    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id}, ${ride.slots - ride.slots_available})">Cancel</button>`;
     if (isToday) {
       actionButtons = `
         <button class="startBtn" onclick="startRide(${ride.id})">Start</button>
@@ -210,37 +210,75 @@ function generatePassengerIcons(totalSlots, occupiedSlots) {
   return icons;
 }
 
-function showCancelWarning(rideId) {
+function showCancelWarning(rideId, passengerCount) {
   const warningDiv = document.getElementById('warningContainer');
   const tableContainer = document.getElementById('rideTableContainer');
 
-  warningDiv.innerHTML = `
-  <div class="warning-content">
-  <h1>⚠ Warning ⚠</h1>
-  <p>If you cancel more than or equal to <span style="color: red; font-weight: bold;">three times</span><br>Your earnings will be deducted by <span style="color: red; font-weight: bold;">20%</span></p>
-  <p><strong>Are you sure you want to <span style="color: red; font-weight: bold;">cancel</span> this ride?</strong></p>
-  <button class="confirm-btn" onclick="cancelRide(${rideId})">Confirm</button>
-  <button class="cancel-btn" onclick="hideWarning()">Cancel</button>
-</div>
+  let warningContent = `
+    <h1>⚠ Warning ⚠</h1>
+    <p>If you cancel more than or equal to <span style="color: red; font-weight: bold;">THREE TIMES</span><br>
+    Your earnings will be deducted by <span style="color: red; font-weight: bold;">20%</span></p>
+    <p><strong>Are you sure you want to <span style="color: red; font-weight: bold;">CANCEL</span> this ride?</strong></p>
+  `;
 
+  let confirmFunction = `cancelWithPenalty(${rideId})`;
+
+  // If there are no passengers, show a simpler warning and change the function
+  if (passengerCount === 0) {
+    warningContent = `
+      <h1>⚠ Warning ⚠</h1>
+      <p><strong>Are you sure you want to <span style="color: red; font-weight: bold;">CANCEL</span> this ride?</strong></p>
+    `;
+    confirmFunction = `cancelWithoutPenalty(${rideId})`;
+  }
+
+  warningDiv.innerHTML = `
+    <div class="warning-content">
+      ${warningContent}
+      <button class="confirm-btn" onclick="${confirmFunction}">Confirm</button>
+      <button class="back-btn" onclick="hideWarning()">Back</button>
+    </div>
   `;
 
   warningDiv.style.display = "flex";
   tableContainer.style.display = "none";
 }
 
+
 function hideWarning() {
   document.getElementById('warningContainer').style.display = "none";
   document.getElementById('rideTableContainer').style.display = "block";
 }
 
-function cancelRide(rideId) {
+function cancelWithPenalty(rideId) {
+  console.log("Canceling: ",rideId);
   hideWarning();
 
-  fetch('cancelRide.php', {
+  fetch('../php/driver/cancelRideWithPenalty.php', {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `ride_id=${rideId}`
+    body: `ride_id=${rideId}&penalty=true`
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        alert("✅ Ride canceled successfully. Penalty applied.");
+        fetchUpcomingRides();
+      } else {
+        alert("❌ Failed to cancel ride: " + data.message);
+      }
+    })
+    .catch(error => console.error('❌ Error canceling ride:', error));
+}
+
+function cancelWithoutPenalty(rideId) {
+  console.log("Caceling without penalty: ",rideId)
+  hideWarning();
+
+  fetch('../php/driver/cancelRide.php', {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `ride_id=${rideId}&penalty=false`
   })
     .then(response => response.json())
     .then(data => {
@@ -254,6 +292,20 @@ function cancelRide(rideId) {
     .catch(error => console.error('❌ Error canceling ride:', error));
 }
 
+
 function startRide(rideId) {
-  alert("🚗 Starting ride ID: " + rideId);
+  fetch('../php/driver/startRide.php', {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `ride_id=${rideId}`
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status === "success") {
+          window.location.href = `ridePage.php?ride_id=${rideId}`; // Redirect to ride page
+      } else {
+          alert("❌ Failed to start ride: " + data.message);
+      }
+  })
+  .catch(error => console.error('❌ Error starting ride:', error));
 }

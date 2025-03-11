@@ -1,0 +1,93 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  gap: 10px;
+  /* justify-content: center; */
+  /* align-items: center; */
+  margin-top: 80px;
+}
+
+.header{
+  font-size: 58px;
+  font-weight: bold;
+  color: #2b83ff;
+  margin-top:40px;
+}
+
+/* Map Styling */
+#map {
+  flex: 1.3;
+  width: 100%;
+  height: 50vh;
+  /* Full-screen height */
+  z-index: -1;
+  /* Puts the map behind other content */
+  border: 3px solid white;
+  border-radius: 15px;
+}
+
+.rideDetails {
+  flex: 1;
+  justify-content: center;
+  text-align: center;
+  margin-left: 80px;
+}
+
+.rideDetails h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+  color: #2b83ff;
+}
+
+.rideDetails p {
+  text-align: left;
+  margin-top: 15px;
+  font-size: 32px;
+  color: white;
+}
+
+.rideDetails button {
+  color: #2b83ff;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  margin-top: 40px;
+  width: 80%;
+  height: 50px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.progress-container {
+  width: 80%;
+  height: 60px;
+  margin-top: 50px;
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.progress-bar {
+  background-color: #2b83ff;
+  height: 10px;
+  width: 30%;
+}
+
+.progress{
+  font-size: 26px;
+  font-weight: bold;
+  color: #2b83ff;
+}
+
+
+
