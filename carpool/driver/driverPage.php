@@ -84,6 +84,9 @@ if (mysqli_num_rows($result) == 1) {
 
   <div class="contents">
     <div class="activityContent">
+      <div class="upcomingHeader">
+        Start Your Ride !
+      </div>
       <div id="rideTableContainer" class="rideTableContainer">
         <table>
           <thead>

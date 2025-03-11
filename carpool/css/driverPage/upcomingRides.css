@@ -1,3 +1,17 @@
+.activityContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.upcomingHeader{
+  font-size: 42px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+}
+
 .rideTableContainer {
   width: 100%;
 }
@@ -121,28 +135,66 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  width: 100%;
+  width: 60%;
   border-radius: 15px;
+  margin-top: 80px;
+  /* box-shadow: 0px 4px 10px rgb(255,255,255,0.5); */
 }
 
-.warning-content{
-  color: #2b83ff;
+.warning-content {
+  color: black;
+  padding: 20px;
 }
 
-.warning-content h1{
+.warning-content h1 {
   color: red;
+  margin-bottom: 15px; /* Adds spacing below the heading */
+}
+
+.warning-content p {
+  margin-bottom: 10px; /* Adds spacing below each paragraph */
+}
+
+.warning-content button {
+  margin-top: 15px; /* Adds spacing above the buttons */
+  margin-right: 10px; /* Adds spacing between buttons */
 }
 
 .confirm-btn,
-.cancel-btn{
+.back-btn{
   width: 150px;
   height: 40px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 15px;
+  font-weight: bold;
+  box-shadow: 0px 4px 10px rgb(0,0,0,0.5);
+}
+
+.confirm-btn{
+  background-color: rgb(196, 1, 1);
+  color: white;
+}
+
+.confirm-btn:hover{
+  background-color: red;
+  color: white;
+}
+
+.back-btn{
+  background-color: white;
+  color:#2b83ff;
+}
+
+.back-btn:hover{
+  background-color: #2b83ff;
+  color: white;
 }
 
 /* Responsive Table Design */
 @media screen and (max-width: 1200px) {
   .rideTableContainer table {
-    font-size: 16px;
+    font-size: 16px !important;
   }
   .rideTableContainer th, .rideTableContainer td {
     padding: 12px;
@@ -151,15 +203,15 @@
 
 @media screen and (max-width: 992px) {
   .rideTableContainer table {
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .rideTableContainer th, .rideTableContainer td {
     padding: 10px;
   }
   .startBtn, .cancelBtn {
-    width: 70px;
-    height: 28px;
-    font-size: 14px;
+    width: 70px !important;
+    height: 28px !important;
+    font-size: 14px !important;
   }
 }
 
@@ -169,38 +221,38 @@
   }
   .rideTableContainer table {
     width: 100%;
-    font-size: 12px;
+    font-size: 12px !important;
   }
   .rideTableContainer th, .rideTableContainer td {
     padding: 8px;
   }
   .startBtn, .cancelBtn {
-    width: 60px;
-    height: 26px;
-    font-size: 12px;
+    width: 60px !important;
+    height: 26px !important;
+    font-size: 12px !important;
   }
   .pagination-dot {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
 
 @media screen and (max-width: 480px) {
   .rideTableContainer table {
-    font-size: 10px;
+    font-size: 10px !important;
   }
   .rideTableContainer th, .rideTableContainer td {
     padding: 6px;
   }
   .startBtn, .cancelBtn {
-    width: 50px;
-    height: 24px;
-    font-size: 10px;
+    width: 50px !important;
+    height: 24px !important;
+    font-size: 10px !important;
   }
   .pagination {
     flex-wrap: wrap; /* Allows pagination dots to wrap on small screens */
   }
   .pagination-dot {
-    font-size: 14px;
+    font-size: 14px !important;
     margin: 2px;
   }
 }
