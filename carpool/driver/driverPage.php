@@ -3,6 +3,9 @@ session_start();
 include("../dbconn.php");
 include("../userHeader.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
 
@@ -27,10 +30,91 @@ if (mysqli_num_rows($result) == 1) {
 
   $driverID = $driver['id'];
   $_SESSION['driverID'] = $driverID;
-  echo $_SESSION['driverID'];
+  // echo $_SESSION['driverID'];
 } else {
   echo "No driver record found!";
 }
+
+// Set Malaysia Timezone
+date_default_timezone_set('Asia/Kuala_Lumpur');
+
+// Get today's date and the start of next week (next Sunday)
+$today = date('Y-m-d');
+$startOfNextWeek = date('Y-m-d', strtotime('next sunday'));
+$currentTime = date('H:i'); // Current time in 24-hour format
+
+// Cancel rides that are 30+ minutes past their time
+$update_sql = "UPDATE ride 
+               SET status = 'canceled' 
+               WHERE driver_id = ? 
+               AND status = 'upcoming' 
+               AND TIMESTAMPDIFF(MINUTE, CONCAT(date, ' ', time), NOW()) > 30";
+
+$update_stmt = $conn->prepare($update_sql);
+$update_stmt->bind_param("i", $_SESSION['driverID']);
+$update_stmt->execute();
+
+// Get the number of affected rows (canceled rides count)
+$canceled_rides = $update_stmt->affected_rows;
+
+$update_stmt->close();
+
+// Step 2: Get the current cancel count and status
+$check_sql = "SELECT cancel_count, status FROM driver WHERE id = ?";
+$check_stmt = $conn->prepare($check_sql);
+$check_stmt->bind_param("i", $driverID);
+$check_stmt->execute();
+$result = $check_stmt->get_result();
+$driver = $result->fetch_assoc();
+$check_stmt->close();
+
+if ($canceled_rides > 0) {
+  // Step 3: Increment cancel_count
+  $update_driver_sql = "UPDATE driver 
+                          SET cancel_count = cancel_count + ? 
+                          WHERE id = ?";
+
+  $update_driver_stmt = $conn->prepare($update_driver_sql);
+  $update_driver_stmt->bind_param("ii", $canceled_rides, $driverID);
+  $update_driver_stmt->execute();
+  $update_driver_stmt->close();
+
+  // Step 4: Apply penalty only if cancel_count was previously less than 3
+  if ($driver && $driver['cancel_count'] < 3) {
+    // Now check the updated count
+    $check_sql = "SELECT cancel_count FROM driver WHERE id = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("i", $driverID);
+    $check_stmt->execute();
+    $result = $check_stmt->get_result();
+    $updated_driver = $result->fetch_assoc();
+    $check_stmt->close();
+
+    if ($updated_driver && $updated_driver['cancel_count'] >= 3) {
+      // Step 5: Restrict the driver and set penalty_end_date
+      $penalty_end_date = date('Y-m-d', strtotime('+1 month'));
+      $restrict_sql = "UPDATE driver 
+                             SET status = 'restricted', penalty_end_date = ? 
+                             WHERE id = ?";
+
+      $restrict_stmt = $conn->prepare($restrict_sql);
+      $restrict_stmt->bind_param("si", $penalty_end_date, $driverID);
+      $restrict_stmt->execute();
+      $restrict_stmt->close();
+
+      echo "<script>
+            alert('⚠️ WARNING: Your status has been changed to RESTRICTED due to too many RIDE CANCELLATIONS!');
+        </script>";
+
+    }
+  }
+}
+
+// Output response
+// echo json_encode([
+//   "canceled_rides" => $canceled_rides,
+//   "current_time" => $currentTime
+// ]);
 ?>
 
 <!DOCTYPE html>

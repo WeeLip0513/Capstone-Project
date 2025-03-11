@@ -294,5 +294,18 @@ function cancelWithoutPenalty(rideId) {
 
 
 function startRide(rideId) {
-  alert("🚗 Starting ride ID: " + rideId);
+  fetch('../php/driver/startRide.php', {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `ride_id=${rideId}`
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status === "success") {
+          window.location.href = `ridePage.php?ride_id=${rideId}`; // Redirect to ride page
+      } else {
+          alert("❌ Failed to start ride: " + data.message);
+      }
+  })
+  .catch(error => console.error('❌ Error starting ride:', error));
 }

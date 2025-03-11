@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route from Current Location to Destination</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGINGrQ2OWAupvgvS8ZbzO8QtbT8jbFek&libraries=places"></script>
+    <style>
+        #map {
+            height: 100vh; /* Full screen map */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let directionsService;
+        let directionsRenderer;
+        
+        function initMap() {
+            // Initialize map
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: { lat: 3.139, lng: 101.6869 } // Default to Kuala Lumpur
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            // Get user's current location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const currentLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        // Set a destination (change this to your dynamic PHP destination)
+                        const destination = { lat: 3.1578, lng: 101.711 }; // Example: KLCC
+
+                        // Draw route
+                        calculateAndDisplayRoute(currentLocation, destination);
+                    },
+                    () => alert("Geolocation failed. Enable location access.")
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        function calculateAndDisplayRoute(start, end) {
+            directionsService.route(
+                {
+                    origin: start,
+                    destination: end,
+                    travelMode: google.maps.TravelMode.DRIVING
+                },
+                (response, status) => {
+                    if (status === "OK") {
+                        directionsRenderer.setDirections(response);
+                    } else {
+                        alert("Directions request failed due to " + status);
+                    }
+                }
+            );
+        }
+    </script>
+
+    <script>
+        window.onload = initMap;
+    </script>
+
+</body>
+</html>
