@@ -11,10 +11,10 @@
         <title>News</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <style>
- /* Ensure the slider takes full width */
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica;
     background-color: black;
     color: white;
 }
@@ -22,7 +22,7 @@ body {
 .swiper-container {
     width: 100%;
     height: 750px;
-    margin: 40px auto 0; /* Adds 50px margin from the top */
+    margin: 50px auto 0; /* Adds 50px margin from the top */
     overflow: hidden;
     position: relative; /* Ensures elements inside stay positioned properly */
 }
@@ -63,15 +63,22 @@ body {
 /*2*/
 
 .tablink {
-  background-color: #555;
-  color: white;
+  background-color: black;
+  color: white; 
   float: left;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  font-size: 17px;
+  font-size: 35px;
   width: 50%;
+  font-weight: bold;
+}
+
+.tablink.active {
+    border: 2px solid black;
+    border-radius: 20px; /* Rounded corners for the active tab */
+    color: #2b64ff;
 }
 
 .tablink:hover {
@@ -84,14 +91,15 @@ body {
 
 /* Style the tab content */
 .tabcontent {
+  background-color: white;
   color: white;
   display: none;
   padding: 50px;
   text-align: center;
 }
 
-#Driver {background-color:#410055;}
-#Passenger {background-color:#410055;}
+#Driver {background-color:white;}
+#Passenger {background-color:white;}
 
 /* Box container to align items */
 .box-container {
@@ -103,15 +111,15 @@ body {
 
 /* Box styles */
 .box {
-    width: 60%;
-    background-color: white;
+    width: 80%;
+    background-color: black;
     border: 2px solid black;
     display: flex;
     flex-direction: coloum;
-    align-items: center;
+    align-items: flex-start;
     font-size: 18px;
     font-weight: bold;
-    color: black;
+    color: #ffc107;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -120,18 +128,52 @@ body {
 
 /* Image styling */
 .box img {
-    width: 500px; /* Make images responsive */
-    height: 500px; /* Adjust image height */
+    width: 30%;   /* Adjust the percentage as needed */
+    height: auto;
     object-fit: cover; /* Ensures images fit nicely */
-    border-radius: 5px;
-    margin-right: 10px;
+    border-radius: 10px;
+    margin: 20px;
 }
 
 .text-content {
-    flex: 1; /* Allow text to take remaining space */
     font-size: 16px;
-    text-align: left;
+    text-align: left;   
+    flex-direction: column;
 }
+
+.New {
+    width: 100%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    justify-content: center;
+    aligh-items: center;
+}
+
+.New span {
+    color: white;
+    display: inline;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 22px;
+    transform: rotate(360deg);
+    animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(360deg) scale (0);
+    }
+    50%{
+        transform: rotate(0deg) scale(1);
+    }
+    100% {
+        transform: rotate(360deg) scale(0);
+    }
+}
+
+
 
 </style>
 </head>
@@ -154,39 +196,50 @@ body {
     </div>
 
 
+    <div class="New">
+        <span>N</span>
+        <span>E</span>
+        <span>W</span>
+        <span>S</span>
+    </div>
+
+
     <div class="tab-container">
-        <button class="tablink" onclick="openCity('Driver', this, '#410055')" id="defaultOpen">Driver</button>
-        <button class="tablink" onclick="openCity('Passenger', this, '#410055')">Passenger</button>
+        <button class="tablink" onclick="openCity('Driver', this, 'white')" id="defaultOpen">Driver</button>
+        <button class="tablink" onclick="openCity('Passenger', this, 'white')">Passenger</button>
 
         <div id="Driver" class="tabcontent">
             <div class="box-container">
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Driver 1">
+                    <img src="image/homepage/driver2.jpg" alt="Driver 1">
                     <div class="text-content">
+                        <br><br>
                         <h1>Driver Goods 1</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Driver 2">
+                    <img src="image/homepage/driver2.jpg" alt="Driver 2">
                     <div class="text-content">
-                    <h1>Driver Goods 2</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br>
+                        <h1>Driver Goods 2</h1>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Driver 3">
+                    <img src="image/homepage/driver2.jpg" alt="Driver 3">
                     <div class="text-content">
-                    <h1>Driver Goods 3</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br>
+                        <h1>Driver Goods 3</h1>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
@@ -200,31 +253,34 @@ body {
 
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Passenger 1">
+                    <img src="image/homepage/driver1.jpg" alt="Passenger 1">
                     <div class="text-content">
-                    <h1>Passenger Goods 1</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br>
+                        <h1>Passenger Goods 1</h1>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Passenger 2">
+                    <img src="image/homepage/driver1.jpg" alt="Passenger 2">
                     <div class="text-content">
-                    <h1>Passenger Goods 2</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br>
+                        <h1>Passenger Goods 2</h1>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Passenger 3">
+                    <img src="image/homepage/driver1.jpg" alt="Passenger 3">
                     <div class="text-content">
-                    <h1>Passenger Goods 3</h1>
-                        <br><br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, accusamus? In, necessitatibus quibusdam? Accusamus quaerat corrupti corporis consequuntur cumque nisi.</p>
+                        <br><br>
+                        <h1>Passenger Goods 3</h1>
+                        <br><br><br><br><br>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
@@ -271,15 +327,39 @@ body {
             tablinks = document.getElementsByClassName("tablink");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].style.backgroundColor = ""; // Remove previous color
+                tablinks[i].classList.remove("active");
             }
 
             // Show the selected tab content
             document.getElementById(cityName).style.display = "block";
             elmnt.style.backgroundColor = color;
 
+            // Add active class to the clicked tab
+            elmnt.classList.add("active");
+
             }
+
             // Get the element with id="defaultOpen" and click on it
             document.getElementById("defaultOpen").click();
+
+            
+            function openTab(evt, tabName) {
+                // Remove 'active' class from all tabs
+                var tablinks = document.getElementsByClassName("tablink");
+                for (var i = 0; i < tablinks.length; i++) {
+                    tablinks[i].classList.remove("active");
+                }
+
+                // Add 'active' class to the clicked tab
+                evt.currentTarget.classList.add("active");
+
+                // Show the related tab content (optional logic)
+                var tabcontent = document.getElementsByClassName("tabcontent");
+                for (var i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                document.getElementById(tabName).style.display = "block";
+            }
 </script>
 
 </body>
