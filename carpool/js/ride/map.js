@@ -9,8 +9,6 @@ window.initMap = function () {
   });
 
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
-    center: { lat: pickUp.lat, lng: pickUp.lng }, // Center map at pickup location
     disableDefaultUI: true,
     mapId: "25e7edf70620c555"
   });
@@ -21,9 +19,18 @@ window.initMap = function () {
   addMarker(pickUp, "http://maps.google.com/mapfiles/ms/icons/green-dot.png");
   addMarker(dropOff, "http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
 
+  // Adjust map bounds to fit both points
+  let bounds = new google.maps.LatLngBounds();
+  bounds.extend(new google.maps.LatLng(pickUp.lat, pickUp.lng));
+  bounds.extend(new google.maps.LatLng(dropOff.lat, dropOff.lng));
+
+  // Set the bounds on the map
+  map.fitBounds(bounds);
+
   // Draw route
   calculateRoute(pickUp, dropOff);
 };
+
 
 // Function to add markers
 function addMarker(location, iconUrl) {
@@ -115,7 +122,7 @@ function displayRideDetails() {
     <div class="btnContainer">
     <button class="reachPickUp show" id="reachPickUp" onclick="updateStatus('reachPickUp')">Arrived Pick Up</button>
     <button class="start" id="start" onclick="updateStatus('start')">Start Ride</button>
-    <button class="arrived" id="arrived" onclick="updateStatus('arrived')">Complete</button>    
+    <button class="arrived" id="arrived" onclick="handleArrivedClick()">Complete</button>
     </div>`;
 
   // Wait for DOM update before attaching event listeners
@@ -241,7 +248,7 @@ setTimeout(() => {
 
   document.getElementById("arrived").addEventListener("click", function () {
     showProgress(3); // Move to "Ride Completed"
-    alert("Ride Completed Successfully!");
+    // alert("Ride Completed Successfully!");
   });
 }, 0);
 
@@ -253,7 +260,6 @@ window.onload = function () {
   document.getElementById("reachPickUp").style.opacity = "1";
   document.getElementById("reachPickUp").style.visibility = "visible";
 };
-
 
 function updateStatus(buttonID) {
   let status;
@@ -285,3 +291,94 @@ function updateStatus(buttonID) {
       console.error("Error updating status:", error);
     });
 }
+
+function handleArrivedClick() {
+  updateStatus('arrived'); // First, update the status
+  setTimeout(completeRide, 500); // Then, complete the ride
+}
+
+function completeRide() {
+  fetch('../php/ride/rideComplete.php', {
+      method: 'POST'
+  })
+  .then(response => response.json()) // Expecting a JSON response
+  .then(data => {
+      if (data.success) {
+          document.getElementById("rideDetails").style.display = "none";
+          document.getElementById("map").style.display = "none";
+          
+          console.log("Ride completed successfully!");
+
+          // Show completion message container
+          const messageContainer = document.getElementById("completeMessage");
+          messageContainer.style.display = "flex";
+          messageContainer.style.flexDirection = "column";
+          messageContainer.style.alignItems = "center";
+          messageContainer.style.justifyContent = "center";
+          messageContainer.style.marginTop = "20px";
+
+          // Static checkmark icon
+          const iconDiv = document.getElementById("icon");
+          iconDiv.innerHTML = `
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="150" height="150">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#4CAF50" stroke-width="8"/>
+              <path fill="none" stroke="#4CAF50" stroke-width="8" d="M30 50l15 15 30-30"/>
+            </svg>           
+          `;
+
+          // Show earnings message
+          const earningsDiv = document.createElement("div");
+          earningsDiv.style.padding = "15px";
+          earningsDiv.style.backgroundColor = "#f8f9fa";
+          earningsDiv.style.border = "2px solid #ddd";
+          earningsDiv.style.borderRadius = "10px";
+          earningsDiv.style.marginTop = "15px";
+          earningsDiv.style.textAlign = "center";
+
+          const message = document.createElement("p");
+          message.textContent = `🎉 You earned RM${data.driver_revenue} from this ride!`;
+          message.style.fontWeight = "bold";
+          message.style.fontSize = "22px";
+          message.style.color = "#333";
+
+          earningsDiv.appendChild(message);
+          messageContainer.appendChild(earningsDiv);
+
+          // Create Back to Dashboard button
+          const backButton = document.createElement("button");
+          backButton.textContent = "Back to Dashboard";
+          backButton.style.marginTop = "20px";
+          backButton.style.padding = "12px 20px";
+          backButton.style.fontSize = "16px";
+          backButton.style.color = "#fff";
+          backButton.style.backgroundColor = "#007bff";
+          backButton.style.border = "none";
+          backButton.style.borderRadius = "5px";
+          backButton.style.cursor = "pointer";
+          backButton.style.transition = "0.3s";
+
+          backButton.addEventListener("mouseover", () => {
+              backButton.style.backgroundColor = "#0056b3";
+          });
+          backButton.addEventListener("mouseout", () => {
+              backButton.style.backgroundColor = "#007bff";
+          });
+
+          backButton.onclick = () => {
+              window.location.href = "../driver/driverPage.php";
+          };
+
+          messageContainer.appendChild(backButton);
+
+      } else {
+          console.error("Error:", data.error);
+          alert("Error completing ride.");
+      }
+  })
+  .catch(error => console.error("Request failed:", error));
+}
+
+
+
+
+
