@@ -93,11 +93,11 @@ function validateField(field, value) {
 
     const validationRules = {
         firstname: {
-            pattern: /^[a-zA-Z\s-]{5,20}$/, //allows letters, spaces between 2-20 characters
+            pattern: /^[a-zA-Z\s-]{2,20}$/, //allows letters, spaces between 2-20 characters
             message: "First name must contain letters, spaces, and hyphens."
         },
         lastname: {
-            pattern: /^[a-zA-Z\s-]{5,20}$/, //allows letters, spaces between 2-20 characters
+            pattern: /^[a-zA-Z\s-]{2,20}$/, //allows letters, spaces between 2-20 characters
             message: "Last name must contain letters, spaces, and hyphens."
         },
         email: {
@@ -105,7 +105,7 @@ function validateField(field, value) {
             message: "Please enter a valid email address."
         },
         phone_no: {
-            pattern: /^\+?[\d\s-(){}.]{13,}$/, //allows minimum 10 digits
+            pattern: /^\+?[\d\s-(){}.]{10,}$/, //allows minimum 10 digits
             message: "Please enter a valid phone number (minimum 10 digits)."
         }
     };

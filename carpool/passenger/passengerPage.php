@@ -26,6 +26,11 @@ $passenger = getProfileDetails($userID,$conn);
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
 </head>
 <body>
+    <div class="passenger-mobile-nav">
+        <div class="passenger-hamburger">
+        </div>
+    </div>
+
     <div class="passenger">
         <div class="navigation-user">
             <div class="tabs">
@@ -224,6 +229,7 @@ $passenger = getProfileDetails($userID,$conn);
     <script src="../js/passenger/navbar.js"></script>
     <script src="../js/passenger/fetchrides.js"></script>
     <script src="../js/passenger/editProfileModal.js"></script>
+    <script src="../js/passenger/hamburger.js"></script>
     <!-- Edit Profile Modal -->
 </body>
 </html>
