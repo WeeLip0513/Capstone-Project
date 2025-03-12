@@ -12,7 +12,7 @@ if(isset($_SESSION['id'])) {
     echo "<h2 style='color:red;'>No session ID found!</h2>";
     echo "<pre>"; print_r($_SESSION); echo "</pre>";
 }
-
+$passenger = getProfileDetails($userID,$conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +20,17 @@ if(isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
 </head>
 <body>
+    <div class="passenger-mobile-nav">
+        <div class="passenger-hamburger">
+        </div>
+    </div>
+
     <div class="passenger">
         <div class="navigation-user">
             <div class="tabs">
@@ -142,15 +148,88 @@ if(isset($_SESSION['id'])) {
             </div>
             
             <!-- Profile Tab -->
+            <?php if ($passenger): ?>
             <div class="content-section" id="content-tab4">
                 <div class="profile-container">
-                    <?php displayProfileDetails($userID,$conn)?>
-                    
+                <div class="profile-card">
+                    <h2>My Profile</h2>
+                    <div class="profiledetails">
+                        <div class="profilerow">
+                            <div class="profiledetail">
+                                <h3>First Name:</h3>
+                                <div class="show-profile-detail">
+                                    <p id="firstname"><?php echo $passenger['firstname']; ?></p>
+                                    <i class="fas fa-edit edit-icon" onclick="openEditProfileModal('firstname', '<?php echo $passenger['firstname']; ?>')"></i>
+                                </div>
+                            </div>
+                            <div class="profiledetail">
+                                <h3>Last Name:</h3>
+                                <div class="show-profile-detail">
+                                    <p id="lastname"><?php echo $passenger['lastname']; ?></p>
+                                    <i class="fas fa-edit edit-icon" onclick="openEditProfileModal('lastname', '<?php echo $passenger['lastname']; ?>')"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profilerow">
+                            <div class="profiledetail">
+                                <h3>Phone:</h3>
+                                <div class="show-profile-detail">
+                                    <p id="phone_no"><?php echo $passenger['phone_no']; ?></p>
+                                    <i class="fas fa-edit edit-icon" onclick="openEditProfileModal('phone_no', '<?php echo $passenger['phone_no']; ?>')"></i>
+                                </div>
+                            </div>
+                            <div class="profiledetail">
+                                <h3>Email:</h3>
+                                <div class="show-profile-detail">
+                                    <p id="email"><?php echo $passenger['email']; ?></p>
+                                    <i class="fas fa-edit edit-icon" onclick="openEditProfileModal('email', '<?php echo $passenger['email']; ?>')"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profilerow">
+                            <div class="profiledetail">
+                                <h3>Registered Date:</h3>
+                                <div class="show-profile-detail">
+                                    <p><?php echo $passenger['registration_date']; ?></p>  
+                                </div>  
+                            </div>
+                            <div class="profiledetail">
+                                <h3>Reset Password:</h3>
+                                <a href="#"><button class="forgot">Reset Password</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <p>No passenger record found!</p>
+            <?php endif; ?>                 
+                </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="editProfileForm">
+                <input type="hidden" id="editFieldName" name="fieldName">
+                <label id="editLabel"></label>
+                <div class="form-group">
+                    <input type="text" id="editFieldValue" name="fieldValue" required>
+                    <span id="errorMessage" class="error-message"></span>
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
     <script src="../js/passenger/navbar.js"></script>
     <script src="../js/passenger/fetchrides.js"></script>
+    <script src="../js/passenger/editProfileModal.js"></script>
+    <script src="../js/passenger/hamburger.js"></script>
+    <!-- Edit Profile Modal -->
 </body>
 </html>

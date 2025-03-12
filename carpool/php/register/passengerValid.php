@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $checkUserSQL = "SELECT * FROM user WHERE tpnumber = '$tpNumber'";
     $userResult = mysqli_query($conn, $checkUserSQL);
 
-    if (mysqli_num_rows($apuResult) !== 0) {
-        echo "<script>alert('Error: TP Number have exist in APU records!'); window.history.back();</script>";
+    if (mysqli_num_rows($apuResult) == 0) {
+        echo "<script>alert('Error: TP Number does not exist in APU records!'); window.history.back();</script>";
         exit();
     }
 
