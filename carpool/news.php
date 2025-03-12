@@ -22,7 +22,7 @@ body {
 .swiper-container {
     width: 100%;
     height: 750px;
-    margin: 50px auto 0; /* Adds 50px margin from the top */
+    margin: 100px auto 0; /* Adds 50px margin from the top */
     overflow: hidden;
     position: relative; /* Ensures elements inside stay positioned properly */
 }
@@ -44,13 +44,20 @@ body {
     border-radius: 10px;
 }
 
-/* Navigation button styles */
 .swiper-button-next,
 .swiper-button-prev {
-    color: white;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 50%;
+    width: 50px;  
+    height: 50px;
+}
+
+.swiper-button-next {
+    right: 40px;
+    font-weight: bold;
+}
+
+.swiper-button-prev {
+    left: 40px;
+    font-weight: bold;
 }
 
 /* Dot (pagination) styles */
@@ -66,18 +73,17 @@ body {
   background-color: black;
   color: white; 
   float: left;
-  border: none;
+  border: 2px solid transparent;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
   font-size: 35px;
   width: 50%;
   font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .tablink.active {
-    border: 2px solid black;
-    border-radius: 20px; /* Rounded corners for the active tab */
     color: #2b64ff;
 }
 
@@ -86,7 +92,7 @@ body {
 }
 
 .tab-container {
-    margin-top: 50px; /* Adjust the value as needed */
+  margin-top: 50px; /* Adjust the value as needed */
 }
 
 /* Style the tab content */
@@ -111,7 +117,7 @@ body {
 
 /* Box styles */
 .box {
-    width: 80%;
+    width: 90%;
     background-color: black;
     border: 2px solid black;
     display: flex;
@@ -139,40 +145,57 @@ body {
     font-size: 16px;
     text-align: left;   
     flex-direction: column;
+    margin-left: 30px;
+    margin-right: 60px;
 }
 
 .New {
-    width: 100%;
-    height: 100vh;
-    background: black;
     display: flex;
     justify-content: center;
-    aligh-items: center;
+    align-items: center;
+    height: 125vh; 
+    width: 100%; 
 }
 
-.New span {
+.letter {
+    display: inline-block;
+    font-size: 6rem;
     color: white;
-    display: inline;
-    text-decoration: underline;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-size: 22px;
-    transform: rotate(360deg);
-    animation: animate 4s linear infinite;
+    animation: bounce 1s ease-in-out infinite;
+    transform-origin: bottom;
 }
 
-@keyframes animate {
-    0% {
-        transform: rotate(360deg) scale (0);
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: translateY(0px);
     }
-    50%{
-        transform: rotate(0deg) scale(1);
+    30% {
+        transform: translateY(-30px);
     }
-    100% {
-        transform: rotate(360deg) scale(0);
+    60% {
+        transform: translateY(10px);
     }
 }
 
+.letter:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.letter:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.letter:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.letter:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.letter:nth-child(5) {
+    animation-delay: 0.5s;
+}
 
 
 </style>
@@ -193,14 +216,16 @@ body {
   
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
+
     </div>
 
 
     <div class="New">
-        <span>N</span>
-        <span>E</span>
-        <span>W</span>
-        <span>S</span>
+        <span class="letter">N</span>
+        <span class="letter">E</span>
+        <span class="letter">W</span>
+        <span class="letter">S</span>
+        <span class="letter">!</span>
     </div>
 
 
@@ -216,20 +241,20 @@ body {
                     <div class="text-content">
                         <br><br>
                         <h1>Driver Goods 1</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Driver 2">
                     <div class="text-content">
                         <br><br>
                         <h1>Driver Goods 2</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
+                    <img src="image/homepage/driver2.jpg" alt="Driver 2">
                 </div>
 
 
@@ -238,7 +263,7 @@ body {
                     <div class="text-content">
                         <br><br>
                         <h1>Driver Goods 3</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
@@ -257,20 +282,20 @@ body {
                     <div class="text-content">
                         <br><br>
                         <h1>Passenger Goods 1</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Passenger 2">
                     <div class="text-content">
                         <br><br>
                         <h1>Passenger Goods 2</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
+                    <img src="image/homepage/driver1.jpg" alt="Passenger 2">
                 </div>
 
 
@@ -279,7 +304,7 @@ body {
                     <div class="text-content">
                         <br><br>
                         <h1>Passenger Goods 3</h1>
-                        <br><br><br><br><br>
+                        <br><br><br><br>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                     </div>
                 </div>
