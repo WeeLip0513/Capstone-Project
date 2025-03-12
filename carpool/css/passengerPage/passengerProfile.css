@@ -193,3 +193,103 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
+@media screen and (max-width: 1220px) {
+    .profile-container {
+        padding: 10px;
+        margin-bottom: 50px;
+        max-width: 1170px;
+    }
+
+    .profile-card h2 {
+        font-size: 26px;
+    }
+
+    .profiledetails p {
+        font-size: 18px;
+    }
+
+    .profiledetail {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 992px) {
+    .profile-container {
+        padding: 10px;
+        margin-bottom: 50px;
+        max-width: 850px;
+    }
+
+    .profile-card h2 {
+        font-size: 24px;
+    }
+
+    .profiledetails p {
+        font-size: 14px;
+    }
+
+    .profilerow {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profiledetail {
+        width: 100%;
+    }
+}
+
+/* For screens smaller than 768px (e.g., large phones) */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        padding: 10px;
+        max-width: 700px;
+        margin-bottom: 50px;
+    }
+
+    .profile-card h2 {
+        font-size: 22px;
+    }
+
+    .profiledetails p {
+        font-size: 14px;
+    }
+
+    .show-profile-detail {
+        align-items: flex-start;
+    }
+
+    .edit-icon {
+        margin-top: 10px;
+    }
+}
+
+/* For screens smaller than 480px (e.g., small phones) */
+@media screen and (max-width: 480px) {
+    .profile-container {
+        padding: 5px;
+        max-width: 400px;
+    }
+
+    .profile-card h2 {
+        font-size: 20px;
+    }
+
+    .profiledetails p {
+        font-size: 12px;
+    }
+
+    .profilerow {
+        gap: 5px;
+    }
+
+    .show-profile-detail {
+        padding: 10px;
+    }
+
+    .modal-content {
+        width: 40%;
+        padding: 10px;
+        margin-left: 50px;
+        margin-top: 80px;
+    }
+}
+
