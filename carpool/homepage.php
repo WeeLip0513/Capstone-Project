@@ -22,29 +22,33 @@ include("headerHomepage.php");
                 <h1>Travel Smart, Save Together</h1>
                 <p>Connect with students going your way - Save money, reduce traffic and make new friends!</p>
                 <div class="search-card">
-                    <form class="search-form" action="../loginpage.php" method="POST">
-                        <div class="input-ride">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <select id="pickup" class="card-holder" required>
-                                <option value="" disabled selected>Select pickup point</option>
-                                <option value="APU">APU</option>
-                                <option value="LRT Bukit Jalil">LRT Bukit Jalil</option>
-                                <option value="Pavilion Bukit Jalil">Pavilion Bukit Jalil</option>
-                                <option value="Sri Petaling">Sri Petaling</option>
-                            </select>
-                            <span id="pickup-error" style="color: red; font-size: 12px; display: none;">Pickup and
+                    <div class="search-selection">
+                        <div class="input-wrapper">
+                            <div class="input-ride">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <select id="pickup" class="card-holder" required>
+                                    <option value="" disabled selected>Select pickup point</option>
+                                    <option value="APU">APU</option>
+                                    <option value="LRT Bukit Jalil">LRT Bukit Jalil</option>
+                                    <option value="Pavilion Bukit Jalil">Pavilion Bukit Jalil</option>
+                                    <option value="Sri Petaling">Sri Petaling</option>
+                                </select>
+                            </div>
+                            <span id="pickup-error" class="error-message">Pickup and
                                 drop-off points cannot be the same!</span>
                         </div>
-                        <div class="input-ride">
-                            <i class="fas fa-flag-checkered"></i>
-                            <select id="dropoff" class="card-holder" required>
-                                <option value="" disabled selected>Select drop-off point</option>
-                                <option value="APU">APU</option>
-                                <option value="LRT Bukit Jalil">LRT Bukit Jalil</option>
-                                <option value="Pavilion Bukit Jalil">Pavilion Bukit Jalil</option>
-                                <option value="Sri Petaling">Sri Petaling</option>
-                            </select>
-                            <span id="dropoff-error" style="color: red; font-size: 12px; display: none;">Pickup and
+                        <div class="input-wrapper">
+                            <div class="input-ride">
+                                <i class="fas fa-flag-checkered"></i>
+                                <select id="dropoff" class="card-holder" required>
+                                    <option value="" disabled selected>Select drop-off point</option>
+                                    <option value="APU">APU</option>
+                                    <option value="LRT Bukit Jalil">LRT Bukit Jalil</option>
+                                    <option value="Pavilion Bukit Jalil">Pavilion Bukit Jalil</option>
+                                    <option value="Sri Petaling">Sri Petaling</option>
+                                </select>
+                            </div>
+                            <span id="dropoff-error" class="error-message">Pickup and
                                 drop-off points cannot be the same!</span>
                         </div>
                         <div class="input-ride">
@@ -55,8 +59,8 @@ include("headerHomepage.php");
                             <i class="fas fa-clock"></i>
                             <input class="card-holder" type="time" required>
                         </div>
-                    </form>
-                    <button class="btn-login" type="submit">Search Rides</button>
+                    </div>
+                    <button class="btn-login">Search Rides</button>
                 </div>
             </div>
         </div>
