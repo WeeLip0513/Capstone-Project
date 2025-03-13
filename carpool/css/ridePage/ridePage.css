@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+
+/* *{
+  border: 1px red solid;
+} */
+
 body {
   display: flex;
   flex-direction: column;
@@ -10,84 +16,264 @@ body {
   display: flex;
   flex-direction: row;
   width: 90%;
-  gap: 10px;
-  /* justify-content: center; */
-  /* align-items: center; */
-  margin-top: 80px;
+  gap: 20px; /* Adds space between map and ride details */
+  margin-top: 40px;
+  align-items: center; /* Prevents unwanted stretching */
+  justify-content: center;
 }
 
 .header{
   font-size: 58px;
   font-weight: bold;
   color: #2b83ff;
-  margin-top:40px;
+  font-family: "Exo 2", sans-serif !important;
 }
 
-/* Map Styling */
 #map {
-  flex: 1.3;
+  flex: 1.5; /* Map gets more space */
   width: 100%;
-  height: 50vh;
-  /* Full-screen height */
-  z-index: -1;
-  /* Puts the map behind other content */
+  height: 60vh; /* Increase height if necessary */
+  min-width: 60%; /* Ensures it doesn’t get too small */
+  /* flex-grow: 1.5; */
   border: 3px solid white;
   border-radius: 15px;
 }
 
 .rideDetails {
-  flex: 1;
+  flex: 1; /* Ride details take less space */
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
-  margin-left: 80px;
+  align-items: center;
+  min-width: 35%; /* Prevents it from shrinking too much */
 }
 
-.rideDetails h2 {
-  font-size: 48px;
-  margin-bottom: 10px;
+.rideDetails h2{
+  font-size: 46px;
   color: #2b83ff;
+  margin-bottom: 20px;
+  margin-top: 30px;
 }
 
-.rideDetails p {
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 50px;
+  margin-block-end: 40px;
+}
+
+th, td {
+  border: none;
+  padding: 15px;
   text-align: left;
-  margin-top: 15px;
-  font-size: 32px;
+  font-size: 24px;
   color: white;
 }
 
-.rideDetails button {
+th {
+  background-color: #2b83ff;
+  color: white;
+  font-weight: normal;
+  text-align: left;
+}
+
+td {
+  background-color: rgba(255, 255, 255, 0.2); /* Light transparent effect */
+}
+
+/* Centering Table Inside rideDetails */
+.rideDetails table {
+  margin: 0 auto;
+  width: 90%;
+  border-radius: 10px;
+  overflow: hidden; /* Ensures border-radius works properly */
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center; /* Ensures buttons stay centered */
+  align-items: center;
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+.reachPickUp,
+.start,
+.arrived {
+  width: 350px; /* Ensures all buttons have the same width */
+  height: 50px;
+  font-weight: bold;
+  font-size: 22px;
   color: #2b83ff;
   background-color: white;
   border: none;
   border-radius: 15px;
-  margin-top: 40px;
-  width: 80%;
-  height: 50px;
-  font-size: 22px;
-  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Keep buttons in place even when hidden */
+.reachPickUp {
+  visibility: visible; /* Ensure it's always visible at first */
+}
+
+.start, .arrived {
+  opacity: 0; /* Makes it invisible */
+  visibility: hidden; /* Ensures it’s not interactive */
+  position: absolute; /* Prevents it from affecting layout */
+}
+
+.start.show, .arrived.show {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+
+.reachPickUp.show{
+  visibility: visible; /* Show the button */
+  display: inline-block; /* Keep size unchanged */
 }
 
 .progress-container {
-  width: 80%;
-  height: 60px;
-  margin-top: 50px;
-  background-color: white;
-  text-align: center;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20px auto;
+  position: relative;
 }
 
-.progress-bar {
-  background-color: #2b83ff;
-  height: 10px;
-  width: 30%;
-}
-
-.progress{
-  font-size: 26px;
+.status{
+  color: white;
   font-weight: bold;
-  color: #2b83ff;
+  font-size: 26px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
+.progress {
+  width: 25%;
+  text-align: center;
+  height: 85px;
+  display: flex;  /* Use flexbox */
+  flex-direction: column;  /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
+.progressLine {
+  background-color: grey;
+  height: 10px;
+  width: 80%; /* Ensures it spans the full width */
+  border-radius: 5px;
+}
 
+.completionMessage{
+  color: white;
+  text-align: center;
+}
+
+@keyframes draw-circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* For screens 1200px and below */
+@media screen and (max-width: 1200px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+    width: 85%; /* Reduce overall width */
+  }
+
+  #map, .rideDetails {
+    min-width: 100%;
+    width: 100%;
+    min-height: 55vh; /* Reduce height slightly */
+  }
+
+  .progress-container {
+    width: 90%; /* Reduce size */
+  }
+
+  .progress {
+    width: 22%; /* Make progress indicators smaller */
+  }
+
+  .status{
+    font-size: 22px;
+  }
+
+  .progressLine{
+    height: 2px !important;
+  }
+}
+
+/* For screens 992px and below */
+@media screen and (max-width: 992px) {
+  .content {
+    width: 80%;
+  }
+
+  .progress {
+    width: 25%;
+  }
+
+  .status{
+    font-size: 18px;
+  }
+}
+
+/* For screens 768px and below */
+@media screen and (max-width: 768px) {
+  .content {
+    width: 75%;
+    gap: 15px; /* Reduce spacing */
+  }
+
+  #map {
+    height: 45vh;
+    min-height: 280px;
+  }
+
+  .progress {
+    width: 30%;
+  }
+
+  .status{
+    font-size: 14px;
+  }
+}
+
+/* For screens 480px and below */
+@media screen and (max-width: 480px) {
+  .content {
+    width: 90%;
+    gap: 10px;
+  }
+
+  #map {
+    height: 40vh;
+    min-height: 250px;
+  }
+
+  .progress {
+    width: 35%;
+  }
+
+  .status{
+    font-size: 12px;
+  }
+}
