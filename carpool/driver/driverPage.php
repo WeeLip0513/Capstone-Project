@@ -6,7 +6,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 11;
+$_SESSION['id'] = 12;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -110,11 +110,29 @@ if ($canceled_rides > 0) {
   }
 }
 
-// Output response
-// echo json_encode([
-//   "canceled_rides" => $canceled_rides,
-//   "current_time" => $currentTime
-// ]);
+$earning_sql = "SELECT driver_revenue, ride_completion_date FROM driver_transaction WHERE driver_id = ?
+                AND status = 'active'";
+$earning_stmt = $conn->prepare($earning_sql);
+$earning_stmt->bind_param("i", $_SESSION['driverID']);
+$earning_stmt->execute();
+
+$result = $earning_stmt->get_result();
+
+// Process Data: Group earnings by date
+$earnings_data = [];
+while ($row = $result->fetch_assoc()) {
+  $date = $row['ride_completion_date'];
+  $revenue = $row['driver_revenue'];
+
+  if (!isset($earnings_data[$date])) {
+    $earnings_data[$date] = 0;
+  }
+  $earnings_data[$date] += $revenue;
+}
+
+// Convert to JSON for Chart.js
+$dates = json_encode(array_keys($earnings_data));
+$revenues = json_encode(array_values($earnings_data));
 ?>
 
 <!DOCTYPE html>
@@ -128,6 +146,7 @@ if ($canceled_rides > 0) {
   <link rel="stylesheet" href="../css/driverPage/addRide.css">
   <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
   <link rel="stylesheet" href="../css/driverPage/addHistoryRides.css">
+  <link rel="stylesheet" href="../css/driverPage/earning.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -137,6 +156,8 @@ if ($canceled_rides > 0) {
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/driver/chart.js" defer></script> <!-- External JavaScript -->
 </head>
 
 <body>
@@ -469,7 +490,19 @@ if ($canceled_rides > 0) {
         </div>
       </div>
     </div>
-    <div class="earningsContent" style="display: none">earning</div>
+    <div class="earningsContent" id="earningsContent" style="display: none">
+      <!-- Chart Container -->
+      <div id="chartContainer">
+        <canvas id="earningsChart"></canvas>
+      </div>
+      <!-- Earnings Details -->
+      <div id="earningDetails">
+        <h3>Earnings Summary</h3>
+        <p id="dateRange"></p>
+        <h2 id="totalEarnings">$0.00</h2>
+        <button id="withdrawBtn">Withdraw</button>
+      </div>
+    </div>
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">
