@@ -1,41 +1,11 @@
 <?php
 session_start(); // Start session if not already started
 include("../../dbconn.php"); // Include database connection
+include("fareCalculator.php");
 
-function calculateFare($pickup, $dropoff, $time)
-{
-    // Define base fares for routes
-    $fares = [
-        "lrt_bukit_jalil-apu" => 4,
-        "apu-lrt_bukit_jalil" => 4,
-        "apu-pav_bukit_jalil" => 7,
-        "pav_bukit_jalil-apu" => 7,
-        "apu-sri_petaling" => 7,
-        "sri_petaling-apu" => 7,
-        "pav_bukit_jalil-sri_petaling" => 7,
-        "sri_petaling-pav_bukit_jalil" => 7,
-    ];
-
-    // Format input to match keys
-    $routeKey = strtolower("$pickup-$dropoff");
-
-    // Check if the route exists in fares array
-    if (!isset($fares[$routeKey])) {
-        return "Invalid route selected.";
-    }
-
-    // Get base fare
-    $fare = $fares[$routeKey];
-
-    // Convert time to hours and check if it's peak hour (18:00 - 20:00)
-    $hour = (int) date("H", strtotime($time));
-
-    if ($hour >= 18 && $hour < 20) {
-        $fare *= 1.2; // Increase by 20% during peak hours
-    }
-
-    return $fare;
-}
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form values

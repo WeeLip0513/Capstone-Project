@@ -235,11 +235,11 @@ function validateAndCheckConflict() {
 
             if (conflicts.length > 1) {
                 conflictDiv.innerHTML = `
-                <h3 style="color: red;">⚠ Too Many Conflicting Rides</h3>
-                <p>You have created multiple rides that overlap at the same time. Please adjust your schedule before proceeding.</p>
-                <button id="goBackBtn" onclick="goBack()">
-                    Go Back
-                </button>
+                <div class="conflict-message">
+                <h3>Too Many Conflicting Rides</h3>
+                <p>You have created multiple rides that overlap at the same time. <br>Please adjust your schedule before proceeding.</p>
+                <button id="goBackBtn" onclick="goBack()">Go Back</button>
+            </div>
             `;
                 conflictDiv.style.display = "block";
                 addRideContainer.style.display = "none";
