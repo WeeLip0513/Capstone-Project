@@ -6,7 +6,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 12;
+$_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -22,8 +22,8 @@ if (mysqli_num_rows($result) == 1) {
   // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
-  $frontLicensePath = str_replace("../../../", "../", $frontImgPath);
-  $backLicensePath = str_replace("../../../", "../", $backImgPath);
+  $frontLicensePath = str_replace("../../", "../", $frontImgPath);
+  $backLicensePath = str_replace("../../", "../", $backImgPath);
 
   // echo $frontLicensePath;
   // echo $backLicensePath;
@@ -490,19 +490,30 @@ $revenues = json_encode(array_values($earnings_data));
         </div>
       </div>
     </div>
+    <!-- Earnings Content Wrapper -->
     <div class="earningsContent" id="earningsContent" style="display: none">
-      <!-- Chart Container -->
-      <div id="chartContainer">
-        <canvas id="earningsChart"></canvas>
+
+      <!-- Header (Now Separate from Content) -->
+      <div class="header" id="header">Drive More, Earn More</div>
+
+      <!-- Flex Container for Chart & Earnings Summary -->
+      <div class="earningsBody">
+        <!-- Chart Container -->
+        <div id="chartContainer">
+          <canvas id="earningsChart"></canvas>
+        </div>
+
+        <!-- Earnings Details -->
+        <div id="earningDetails">
+          <h3>Earnings</h3>
+          <p id="dateRange"></p>
+          <h2 id="totalEarnings">$0.00</h2>
+          <button id="withdrawBtn">Withdraw</button>
+        </div>
       </div>
-      <!-- Earnings Details -->
-      <div id="earningDetails">
-        <h3>Earnings Summary</h3>
-        <p id="dateRange"></p>
-        <h2 id="totalEarnings">$0.00</h2>
-        <button id="withdrawBtn">Withdraw</button>
-      </div>
+
     </div>
+
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">

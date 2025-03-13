@@ -1,9 +1,36 @@
-.earningsContent{
+/* Earnings Content: Acts as a Wrapper */
+.earningsContent {
+  display: flex;
+  flex-direction: column; /* Header on top, content below */
+  align-items: center;
+  width: 100%;
+  /* padding-top: 20px; */
+}
+
+/* Header: Fixed on Top */
+.header {
+  position: sticky;
+  top: 0;
+  /* background: white; */
+  padding: 15px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  color: white;
+}
+
+/* Earnings Body: Chart & Details in a Row */
+.earningsBody {
   display: flex;
   gap: 20px;
-  height: 100%;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Prevents stretching */
+  padding-top: 40px;
 }
 
 #chartContainer {
@@ -13,12 +40,12 @@
 #earningDetails {
   flex: 1;
   width: 100%;
-  background: #2a2a2a;
+  background: #2b83ff;
   /* padding: 20px; */
   border-radius: 10px;
   text-align: center;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;  /* Centers vertically */
@@ -26,25 +53,26 @@
 }
 
 #earningDetails h3{
-  font-size: 40px;
-  color: #2b83ff;
-  padding-top: 60px;
+  font-size: 46px;
+  color: white;
+  padding-top: 30px;
 }
 
 #earningDetails p{
-  font-size: 28px;
+  font-size: 22px;
   margin-top: 20px;
   color: white;
 }
 
 #totalEarnings{
   font-size: 36px;
-  color: #2b83ff;
+  color: rgb(58, 255, 84);
   margin-top: 20px;
 }
 
 #withdrawBtn {
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 10px 20px;
   border: none;
   background: white;
