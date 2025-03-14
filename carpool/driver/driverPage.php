@@ -22,6 +22,8 @@ if (mysqli_num_rows($result) == 1) {
   // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
+  $current_status = $driver['status'];
+  $current_penalty_end = $driver['penalty_end_date'];
   $frontLicensePath = str_replace("../../", "../", $frontImgPath);
   $backLicensePath = str_replace("../../", "../", $backImgPath);
 
@@ -167,6 +169,23 @@ while ($row = $result->fetch_assoc()) {
   }
   $earnings_data[$date] += $revenue;
 }
+
+// Check if today is the penalty end date
+if ($current_status === 'restricted' && $current_penalty_end === $today) {
+  // Reset cancel count and remove restriction
+  $reset_sql = "UPDATE driver 
+                SET cancel_count = 0, penalty_end_date = NULL, status = 'approved' 
+                WHERE id = ?";
+  $reset_stmt = $conn->prepare($reset_sql);
+  $reset_stmt->bind_param("i", $driverID);
+  $reset_stmt->execute();
+  $reset_stmt->close();
+
+  echo "<script>
+        alert('✅ Your restriction has been lifted. You can now accept rides again.');
+  </script>";
+}
+
 
 // Convert to JSON for Chart.js
 $dates = json_encode(array_keys($earnings_data));

@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
           data: {
               labels: dates,
               datasets: [{
-                  label: "Daily Earnings ($)",
+                  label: "Daily Earnings (RM)",
                   data: revenues,
                   borderColor: "#2b83ff",
                   // backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   y: {
                       title: {
                           display: true,
-                          text: "Earnings ($)",
+                          text: "Earnings (RM)",
                       },
                       beginAtZero: true
                   }
@@ -129,4 +129,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Trigger change event on page load to fetch initial data
   monthSelect.dispatchEvent(new Event("change"));
+
+  document.getElementById("withdrawBtn").addEventListener("click", function () {
+    const balance = availableBalance.textContent.replace("Balance: RM", "").trim(); // Extract the balance amount
+    window.location.href = `withdrawPage.php?balance=${encodeURIComponent(balance)}`;
+});
+
 });
