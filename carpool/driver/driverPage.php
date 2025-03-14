@@ -22,8 +22,8 @@ if (mysqli_num_rows($result) == 1) {
   // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
-  $frontLicensePath = str_replace("../../../", "../", $frontImgPath);
-  $backLicensePath = str_replace("../../../", "../", $backImgPath);
+  $frontLicensePath = str_replace("../../", "../", $frontImgPath);
+  $backLicensePath = str_replace("../../", "../", $backImgPath);
 
   // echo $frontLicensePath;
   // echo $backLicensePath;
@@ -38,26 +38,38 @@ if (mysqli_num_rows($result) == 1) {
 // Set Malaysia Timezone
 date_default_timezone_set('Asia/Kuala_Lumpur');
 
-// Get today's date and the start of next week (next Sunday)
+// Get today's date and current time
 $today = date('Y-m-d');
-$startOfNextWeek = date('Y-m-d', strtotime('next sunday'));
-$currentTime = date('H:i'); // Current time in 24-hour format
+$currentTime = date('H:i'); // 24-hour format
 
-// Cancel rides that are 30+ minutes past their time
+// Cancel rides that are:
+// 1️⃣ 30+ minutes past their scheduled time on the same day
+// 2️⃣ Scheduled for a past date (before today)
 $update_sql = "UPDATE ride 
                SET status = 'canceled' 
                WHERE driver_id = ? 
                AND status = 'upcoming' 
-               AND TIMESTAMPDIFF(MINUTE, CONCAT(date, ' ', time), NOW()) > 30";
+               AND (
+                   TIMESTAMPDIFF(MINUTE, CONCAT(date, ' ', time), NOW()) > 30
+                   OR date < ?
+               )";
 
 $update_stmt = $conn->prepare($update_sql);
-$update_stmt->bind_param("i", $_SESSION['driverID']);
+$update_stmt->bind_param("is", $_SESSION['driverID'], $today);
 $update_stmt->execute();
 
 // Get the number of affected rows (canceled rides count)
 $canceled_rides = $update_stmt->affected_rows;
 
 $update_stmt->close();
+
+// Send an alert if rides were canceled
+if ($canceled_rides > 0) {
+  echo "<script>
+        alert('🚫 $canceled_rides upcoming ride(s) have been canceled due to exceeding time limits or being outdated.');
+    </script>";
+}
+
 
 // Step 2: Get the current cancel count and status
 $check_sql = "SELECT cancel_count, status FROM driver WHERE id = ?";
@@ -69,52 +81,96 @@ $driver = $result->fetch_assoc();
 $check_stmt->close();
 
 if ($canceled_rides > 0) {
-  // Step 3: Increment cancel_count
-  $update_driver_sql = "UPDATE driver 
-                          SET cancel_count = cancel_count + ? 
-                          WHERE id = ?";
+  // Step 1: Fetch ride IDs that were canceled
+  $ride_ids = [];
+  $ride_sql = "SELECT id FROM ride WHERE driver_id = ? AND status = 'canceled'";
+  $ride_stmt = $conn->prepare($ride_sql);
+  $ride_stmt->bind_param("i", $driverID);
+  $ride_stmt->execute();
+  $ride_result = $ride_stmt->get_result();
 
-  $update_driver_stmt = $conn->prepare($update_driver_sql);
-  $update_driver_stmt->bind_param("ii", $canceled_rides, $driverID);
-  $update_driver_stmt->execute();
-  $update_driver_stmt->close();
+  while ($ride = $ride_result->fetch_assoc()) {
+    $ride_ids[] = $ride['id'];
+  }
 
-  // Step 4: Apply penalty only if cancel_count was previously less than 3
-  if ($driver && $driver['cancel_count'] < 3) {
-    // Now check the updated count
-    $check_sql = "SELECT cancel_count FROM driver WHERE id = ?";
-    $check_stmt = $conn->prepare($check_sql);
-    $check_stmt->bind_param("i", $driverID);
-    $check_stmt->execute();
-    $result = $check_stmt->get_result();
-    $updated_driver = $result->fetch_assoc();
-    $check_stmt->close();
+  $ride_stmt->close();
 
-    if ($updated_driver && $updated_driver['cancel_count'] >= 3) {
-      // Step 5: Restrict the driver and set penalty_end_date
-      $penalty_end_date = date('Y-m-d', strtotime('+1 month'));
-      $restrict_sql = "UPDATE driver 
-                             SET status = 'restricted', penalty_end_date = ? 
-                             WHERE id = ?";
+  // Step 2: Get current cancel_count and status before updating
+  $check_sql = "SELECT cancel_count, status, penalty_end_date FROM driver WHERE id = ?";
+  $check_stmt = $conn->prepare($check_sql);
+  $check_stmt->bind_param("i", $driverID);
+  $check_stmt->execute();
+  $result = $check_stmt->get_result();
+  $driver = $result->fetch_assoc();
+  $check_stmt->close();
 
-      $restrict_stmt = $conn->prepare($restrict_sql);
-      $restrict_stmt->bind_param("si", $penalty_end_date, $driverID);
-      $restrict_stmt->execute();
-      $restrict_stmt->close();
+  $current_cancel_count = $driver['cancel_count'] ?? 0;
+  $current_status = $driver['status'] ?? 'active';
+  $current_penalty_end = $driver['penalty_end_date'] ?? null;
 
-      echo "<script>
-            alert('⚠️ WARNING: Your status has been changed to RESTRICTED due to too many RIDE CANCELLATIONS!');
-        </script>";
+  // Step 3: Increment cancel_count only if the driver is not already restricted
+  if ($current_status !== 'restricted') {
+    $new_cancel_count = $current_cancel_count + $canceled_rides;
 
-    }
+    $update_driver_sql = "UPDATE driver 
+                            SET cancel_count = ? 
+                            WHERE id = ?";
+    $update_driver_stmt = $conn->prepare($update_driver_sql);
+    $update_driver_stmt->bind_param("ii", $new_cancel_count, $driverID);
+    $update_driver_stmt->execute();
+    $update_driver_stmt->close();
+  } else {
+    // If the driver is already restricted, keep cancel count unchanged
+    $new_cancel_count = $current_cancel_count;
+  }
+
+  // Step 4: Alert Message with Ride IDs and Updated Cancel Count
+  echo "<script>
+      alert('⚠️ Canceled Rides: " . implode(', ', $ride_ids) . "\\nYour Cancel Count: $new_cancel_count');
+  </script>";
+
+  // Step 5: Apply restriction if cancel_count reaches 3, but do not update penalty_end_date if already restricted
+  if ($new_cancel_count >= 3 && $current_status !== 'restricted') {
+    $penalty_end_date = date('Y-m-d', strtotime('+1 month'));
+
+    $restrict_sql = "UPDATE driver 
+                       SET status = 'restricted', penalty_end_date = ? 
+                       WHERE id = ?";
+    $restrict_stmt = $conn->prepare($restrict_sql);
+    $restrict_stmt->bind_param("si", $penalty_end_date, $driverID);
+    $restrict_stmt->execute();
+    $restrict_stmt->close();
+
+    echo "<script>
+          alert('🚫 WARNING: You are now RESTRICTED due to excessive ride cancellations!\\nPenalty End Date: $penalty_end_date');
+      </script>";
   }
 }
 
-// Output response
-// echo json_encode([
-//   "canceled_rides" => $canceled_rides,
-//   "current_time" => $currentTime
-// ]);
+
+$earning_sql = "SELECT driver_revenue, ride_completion_date FROM driver_transaction WHERE driver_id = ?
+                AND status = 'active'";
+$earning_stmt = $conn->prepare($earning_sql);
+$earning_stmt->bind_param("i", $_SESSION['driverID']);
+$earning_stmt->execute();
+
+$result = $earning_stmt->get_result();
+
+// Process Data: Group earnings by date
+$earnings_data = [];
+while ($row = $result->fetch_assoc()) {
+  $date = $row['ride_completion_date'];
+  $revenue = $row['driver_revenue'];
+
+  if (!isset($earnings_data[$date])) {
+    $earnings_data[$date] = 0;
+  }
+  $earnings_data[$date] += $revenue;
+}
+
+// Convert to JSON for Chart.js
+$dates = json_encode(array_keys($earnings_data));
+$revenues = json_encode(array_values($earnings_data));
 ?>
 
 <!DOCTYPE html>
@@ -128,6 +184,7 @@ if ($canceled_rides > 0) {
   <link rel="stylesheet" href="../css/driverPage/addRide.css">
   <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
   <link rel="stylesheet" href="../css/driverPage/addHistoryRides.css">
+  <link rel="stylesheet" href="../css/driverPage/earning.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -137,6 +194,8 @@ if ($canceled_rides > 0) {
   <link
     href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/driver/chart.js" defer></script> <!-- External JavaScript -->
 </head>
 
 <body>
@@ -469,7 +528,39 @@ if ($canceled_rides > 0) {
         </div>
       </div>
     </div>
-    <div class="earningsContent" style="display: none">earning</div>
+    <!-- Earnings Content Wrapper -->
+    <div class="earningsContent" id="earningsContent" style="display: none">
+      <div class="header" id="header">Drive More, Earn More</div>
+      <div class="monthSelection" id="monthSelection">
+        <select name="month" id="month">
+          <option value="jan">January</option>
+          <option value="feb">February</option>
+          <option value="mar">March</option>
+          <option value="apr">April</option>
+          <option value="may">May</option>
+          <option value="jun">June</option>
+          <option value="jul">July</option>
+          <option value="aug">August</option>
+          <option value="sep">September</option>
+          <option value="oct">October</option>
+          <option value="nov">November</option>
+          <option value="dec">December</option>
+        </select>
+      </div>
+      <div class="earningsBody">
+        <div id="chartContainer">
+          <canvas id="earningsChart"></canvas>
+        </div>
+        <div id="earningDetails">
+          <h3>Earnings</h3>
+          <p id="dateRange"></p>
+          <h2 id="totalEarnings">$0.00</h2>
+          <button id="withdrawBtn">Withdraw</button>
+        </div>
+      </div>
+    </div>
+
+
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">

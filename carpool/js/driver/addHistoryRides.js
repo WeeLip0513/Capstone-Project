@@ -495,6 +495,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       alert("Rides finalized successfully!");
+      location.reload();
     } catch (error) {
       console.error("Error finalizing rides:", error);
       alert("An error occurred while finalizing rides.");
