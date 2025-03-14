@@ -6,7 +6,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 11;
+$_SESSION['id'] = 9;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";

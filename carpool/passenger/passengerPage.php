@@ -26,9 +26,18 @@ $passenger = getProfileDetails($userID,$conn);
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
 </head>
 <body>
-    <div class="passenger-mobile-nav">
-        <div class="passenger-hamburger">
-        </div>
+    <button class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </button>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <button class="featureBtn" data-content="content-upcomingrides">Upcoming Rides</button>
+        <button class="featureBtn" data-content="content-availablerides">Available Rides</button>
+        <button class="featureBtn" data-content="content-tab3">Rides History</button>
+        <button class="featureBtn" data-content="content-tab4">My Profile</button>
     </div>
 
     <div class="passenger">
@@ -36,11 +45,11 @@ $passenger = getProfileDetails($userID,$conn);
             <div class="tabs">
                 <input type="radio" name="tabs" id="upcomingrides">
                 <label for="upcomingrides">Upcoming Rides</label>
-                <input type="radio" name="tabs" id="availablerides">
+                <input type="radio" name="tabs" id="availablerides"checked>
                 <label for="availablerides">Available rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
-                <input type="radio" name="tabs" id="tab4"checked>
+                <input type="radio" name="tabs" id="tab4">
                 <label for="tab4">My Profile</label>
                 <div class="glider"></div>
             </div>
