@@ -65,7 +65,7 @@ $update_stmt->close();
 
 // Send an alert if rides were canceled
 if ($canceled_rides > 0) {
-    echo "<script>
+  echo "<script>
         alert('🚫 $canceled_rides upcoming ride(s) have been canceled due to exceeding time limits or being outdated.');
     </script>";
 }
@@ -88,13 +88,13 @@ if ($canceled_rides > 0) {
   $ride_stmt->bind_param("i", $driverID);
   $ride_stmt->execute();
   $ride_result = $ride_stmt->get_result();
-  
+
   while ($ride = $ride_result->fetch_assoc()) {
-      $ride_ids[] = $ride['id'];
+    $ride_ids[] = $ride['id'];
   }
-  
+
   $ride_stmt->close();
-  
+
   // Step 2: Get current cancel_count and status before updating
   $check_sql = "SELECT cancel_count, status, penalty_end_date FROM driver WHERE id = ?";
   $check_stmt = $conn->prepare($check_sql);
@@ -110,18 +110,18 @@ if ($canceled_rides > 0) {
 
   // Step 3: Increment cancel_count only if the driver is not already restricted
   if ($current_status !== 'restricted') {
-      $new_cancel_count = $current_cancel_count + $canceled_rides;
-      
-      $update_driver_sql = "UPDATE driver 
+    $new_cancel_count = $current_cancel_count + $canceled_rides;
+
+    $update_driver_sql = "UPDATE driver 
                             SET cancel_count = ? 
                             WHERE id = ?";
-      $update_driver_stmt = $conn->prepare($update_driver_sql);
-      $update_driver_stmt->bind_param("ii", $new_cancel_count, $driverID);
-      $update_driver_stmt->execute();
-      $update_driver_stmt->close();
+    $update_driver_stmt = $conn->prepare($update_driver_sql);
+    $update_driver_stmt->bind_param("ii", $new_cancel_count, $driverID);
+    $update_driver_stmt->execute();
+    $update_driver_stmt->close();
   } else {
-      // If the driver is already restricted, keep cancel count unchanged
-      $new_cancel_count = $current_cancel_count;
+    // If the driver is already restricted, keep cancel count unchanged
+    $new_cancel_count = $current_cancel_count;
   }
 
   // Step 4: Alert Message with Ride IDs and Updated Cancel Count
@@ -131,17 +131,17 @@ if ($canceled_rides > 0) {
 
   // Step 5: Apply restriction if cancel_count reaches 3, but do not update penalty_end_date if already restricted
   if ($new_cancel_count >= 3 && $current_status !== 'restricted') {
-      $penalty_end_date = date('Y-m-d', strtotime('+1 month'));
+    $penalty_end_date = date('Y-m-d', strtotime('+1 month'));
 
-      $restrict_sql = "UPDATE driver 
+    $restrict_sql = "UPDATE driver 
                        SET status = 'restricted', penalty_end_date = ? 
                        WHERE id = ?";
-      $restrict_stmt = $conn->prepare($restrict_sql);
-      $restrict_stmt->bind_param("si", $penalty_end_date, $driverID);
-      $restrict_stmt->execute();
-      $restrict_stmt->close();
+    $restrict_stmt = $conn->prepare($restrict_sql);
+    $restrict_stmt->bind_param("si", $penalty_end_date, $driverID);
+    $restrict_stmt->execute();
+    $restrict_stmt->close();
 
-      echo "<script>
+    echo "<script>
           alert('🚫 WARNING: You are now RESTRICTED due to excessive ride cancellations!\\nPenalty End Date: $penalty_end_date');
       </script>";
   }
@@ -530,18 +530,27 @@ $revenues = json_encode(array_values($earnings_data));
     </div>
     <!-- Earnings Content Wrapper -->
     <div class="earningsContent" id="earningsContent" style="display: none">
-
-      <!-- Header (Now Separate from Content) -->
       <div class="header" id="header">Drive More, Earn More</div>
-
-      <!-- Flex Container for Chart & Earnings Summary -->
+      <div class="monthSelection" id="monthSelection">
+        <select name="month" id="month">
+          <option value="jan">January</option>
+          <option value="feb">February</option>
+          <option value="mar">March</option>
+          <option value="apr">April</option>
+          <option value="may">May</option>
+          <option value="jun">June</option>
+          <option value="jul">July</option>
+          <option value="aug">August</option>
+          <option value="sep">September</option>
+          <option value="oct">October</option>
+          <option value="nov">November</option>
+          <option value="dec">December</option>
+        </select>
+      </div>
       <div class="earningsBody">
-        <!-- Chart Container -->
         <div id="chartContainer">
           <canvas id="earningsChart"></canvas>
         </div>
-
-        <!-- Earnings Details -->
         <div id="earningDetails">
           <h3>Earnings</h3>
           <p id="dateRange"></p>
@@ -549,8 +558,8 @@ $revenues = json_encode(array_values($earnings_data));
           <button id="withdrawBtn">Withdraw</button>
         </div>
       </div>
-
     </div>
+
 
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile

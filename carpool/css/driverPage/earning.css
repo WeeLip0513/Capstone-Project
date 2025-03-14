@@ -22,6 +22,16 @@
   color: white;
 }
 
+#month{
+  width: 400px;
+  height: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #2b83ff;
+  border-radius: 15px;
+}
+
 /* Earnings Body: Chart & Details in a Row */
 .earningsBody {
   display: flex;
@@ -35,6 +45,7 @@
 
 #chartContainer {
   flex: 2;
+  min-height: 500px;
 }
 
 #earningDetails {
@@ -53,24 +64,31 @@
 }
 
 #earningDetails h3{
-  font-size: 46px;
+  font-size: 42px;
   color: white;
-  padding-top: 30px;
+  padding-top: 20px;
+}
+
+#earningDetails h1{
+  font-size: 36px;
+  color: rgb(0, 207, 28);
 }
 
 #earningDetails p{
-  font-size: 22px;
+  font-size: 32px;
   margin-top: 20px;
   color: white;
 }
 
 #totalEarnings{
   font-size: 36px;
-  color: rgb(58, 255, 84);
+  color: white;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 #withdrawBtn {
+  text-align: center !important;
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 10px 20px;
@@ -86,6 +104,5 @@
 }
 
 #withdrawBtn:hover {
-  background: #2b83ff;
-  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }

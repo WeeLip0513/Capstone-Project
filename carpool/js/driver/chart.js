@@ -1,74 +1,132 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('../php/driver/earnings.php')
-    .then(response => response.json())
-    .then(data => {
-      const earningsContent = document.getElementById("earningsContent");
-      const earningsChartContainer = document.getElementById("chartContainer");
-      const summaryContainer = document.getElementById("earningDetails");
+  const monthSelect = document.getElementById("month");
+  const dateRangeDisplay = document.getElementById("dateRange");
+  const totalEarnings = document.getElementById("totalEarnings");
+  const availableBalance = document.createElement("h1"); // Element for available balance
+  totalEarnings.insertAdjacentElement("afterend", availableBalance); // Insert below total earnings
+  const chartContainer = document.getElementById("chartContainer");
+  const ctx = document.getElementById("earningsChart").getContext("2d");
 
-      if (data.error) {
-        earningsContent.innerHTML = `<div class="no-rides"><h2 style="text-align: center; color: red;">${data.error}</h2></div>`;
-        earningsChartContainer.style.display = "none";
-        summaryContainer.style.display = "none";
-        return;
-      }
+  let earningsChart; // Store the chart instance
 
-      if (data.error || !data.dates || data.dates.length === 0) {
-        earningsChartContainer.style.display = "none";
-        summaryContainer.style.display = "none";
-        const messageDiv = document.createElement("div");
-        messageDiv.id = "noRidesMessage";
-        messageDiv.innerHTML = `<h2 style="text-align: center; color: red;">${data.error || "No Completed Rides Found"}</h2>`;
-        earningsContent.appendChild(messageDiv);
-        return;
-      }
+  // Function to get start and end dates based on month
+  function getStartEndDate(month) {
+      const year = new Date().getFullYear();
+      const months = {
+          jan: { start: `${year}-01-01`, end: `${year}-01-31` },
+          feb: { start: `${year}-02-01`, end: `${year}-02-${isLeapYear(year) ? "29" : "28"}` },
+          mar: { start: `${year}-03-01`, end: `${year}-03-31` },
+          apr: { start: `${year}-04-01`, end: `${year}-04-30` },
+          may: { start: `${year}-05-01`, end: `${year}-05-31` },
+          jun: { start: `${year}-06-01`, end: `${year}-06-30` },
+          jul: { start: `${year}-07-01`, end: `${year}-07-31` },
+          aug: { start: `${year}-08-01`, end: `${year}-08-31` },
+          sep: { start: `${year}-09-01`, end: `${year}-09-30` },
+          oct: { start: `${year}-10-01`, end: `${year}-10-31` },
+          nov: { start: `${year}-11-01`, end: `${year}-11-30` },
+          dec: { start: `${year}-12-01`, end: `${year}-12-31` }
+      };
+      return months[month] || {};
+  }
 
-      // Show the chart and summary if there is data
-      earningsChartContainer.style.display = "block";
-      summaryContainer.style.display = "block";
+  // Function to check leap year
+  function isLeapYear(year) {
+      return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
 
-      let totalEarnings = data.revenues.reduce((sum, value) => sum + value, 0);
-
-      document.getElementById("dateRange").innerHTML = `From <br><b>${data.earliest_date}</b> <br>to <br><b>${data.latest_date}</b>`;
-      document.getElementById("totalEarnings").innerText = `RM${totalEarnings.toFixed(2)}`;
-
-      var ctx = document.getElementById('earningsChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: data.dates,
-          datasets: [{
-            label: 'Total Earnings (RM)',
-            data: data.revenues,
-            backgroundColor: '#2b83ff',
-            borderColor: 'white',
-            borderRadius: 10,
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true },
-            x: {
-              title: {
-                display: true,
-                text: `Earnings from ${data.earliest_date} to ${data.latest_date}`
-              }
-            }
+  // Function to fetch earnings and update chart
+  function fetchEarnings(startDate, endDate) {
+      fetch("../php/driver/earnings.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `start_date=${startDate}&end_date=${endDate}`,
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (!data.total_earnings || parseFloat(data.total_earnings) === 0) {
+              totalEarnings.textContent = "No Completed Rides Available";
+              availableBalance.textContent = "";
+              chartContainer.style.display = "none"; // Hide the chart
+              document.getElementById("withdrawBtn").style.display = "none";
+          } else {
+              totalEarnings.textContent = `Total: RM${data.total_earnings}`;
+              availableBalance.textContent = `Balance: RM${data.available_balance || "0.00"}`;
+              chartContainer.style.display = "block"; // Show the chart
+              document.getElementById("withdrawBtn").style.display = "block";
+              document.getElementById("withdrawBtn").style.textAlign = "center";
+              updateChart(data.dates, data.revenues);
           }
-        }
-      });
+      })
+      .catch(error => console.error("Error fetching earnings:", error));
+  }
 
-      document.getElementById("withdrawBtn").addEventListener("click", function () {
-        alert(`Withdraw Request: RM${totalEarnings.toFixed(2)}`);
+  // Function to create or update chart
+  function updateChart(dates, revenues) {
+      if (earningsChart) {
+          earningsChart.destroy(); // Destroy existing chart before updating
+      }
+
+      earningsChart = new Chart(ctx, {
+          type: "line",
+          data: {
+              labels: dates,
+              datasets: [{
+                  label: "Daily Earnings ($)",
+                  data: revenues,
+                  borderColor: "#2b83ff",
+                  // backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  borderWidth: 2,
+                  pointRadius: 5,
+                  pointHoverRadius: 7,
+                  fill: true,
+                  tension: 0.3 // Smooth the line
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                  x: {
+                      title: {
+                          display: true,
+                          text: "Date",
+                      },
+                      ticks: {
+                          autoSkip: true,
+                          maxTicksLimit: 10
+                      }
+                  },
+                  y: {
+                      title: {
+                          display: true,
+                          text: "Earnings ($)",
+                      },
+                      beginAtZero: true
+                  }
+              },
+              plugins: {
+                  legend: {
+                      display: true,
+                      position: "top"
+                  }
+              }
+          }
       });
-    })
-    .catch(error => {
-      console.error("Error loading data:", error);
-      document.getElementById("earningsContent").innerHTML =
-        `<div class="no-rides"><h2 style="text-align: center; color: red;">Failed to load data</h2></div>`;
-      document.getElementById("earningsChart").parentNode.style.display = "none";
-      document.getElementById("earningsSummary").style.display = "none";
-    });
+  }
+
+  // Event listener for month selection
+  monthSelect.addEventListener("change", function () {
+      const selectedMonth = this.value;
+      const { start, end } = getStartEndDate(selectedMonth);
+
+      if (start && end) {
+          dateRangeDisplay.innerHTML = `From<br><b>${start}</b> <br>To<br> <b>${end}</b>`;
+          fetchEarnings(start, end);
+      }
+  });
+
+  // Trigger change event on page load to fetch initial data
+  monthSelect.dispatchEvent(new Event("change"));
 });
