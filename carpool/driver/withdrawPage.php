@@ -2,7 +2,9 @@
 session_start();
 include("../rideHeader.php");
 
-$balance = $_GET['balance'];
+// $balance = $_GET['balance'];
+$balance = 123;
+$month = $_GET['month'];
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +19,9 @@ $balance = $_GET['balance'];
 <body>
   <div class="container">
     <h2 class="center">Withdraw Request</h2>
-    <form id="withdrawForm" action="process_withdrawal.php" method="POST" novalidate>
+    <form id="withdrawForm" action="withdraw.php" method="POST" novalidate>
+      <input type="hidden" name="month" value="<?php echo htmlspecialchars($month); ?>">
+
       <table>
         <tr>
           <td><label for="bank">Select Bank:</label></td>
@@ -54,7 +58,7 @@ $balance = $_GET['balance'];
         <tr>
           <td><label for="withdrawAmount">Withdraw Amount:</label></td>
           <td>
-            <input class="balance" type="number" name="withdrawAmount" id="withdrawAmount" value="<?php echo $balance?>" readonly required>
+            <input class="balance" type="number" name="withdrawAmount" id="withdrawAmount" value="<?php echo $balance ?>" readonly required>
             <span id="amountError" class="error"></span>
           </td>
         </tr>

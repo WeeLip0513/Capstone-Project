@@ -1,0 +1,7 @@
+month=&bank=Maybank&accountName=ngweelip&accountNumber=1234567895&withdrawAmount=139.00
+month=&bank=CIMB+Bank&accountName=ngweelip&accountNumber=1234567895&withdrawAmount=139.00
+
+month=&bank=Maybank&accountName=ngweelip&accountNumber=1234567895&withdrawAmount=123
+{"bank":"Public Bank","accountName":"ngweelip","accountNumber":"1234567895","withdrawAmount":123,"month":""}
+{"bank":"Public Bank","accountName":"ngweelip","accountNumber":"1234567895","withdrawAmount":123,"month":""}
+{"bank":"Public Bank","accountName":"ngweelip","accountNumber":"1234567895","withdrawAmount":123,"month":""}

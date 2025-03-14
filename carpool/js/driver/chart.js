@@ -1,20 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   const monthSelect = document.getElementById("month");
-  const dateRangeDisplay = document.getElementById("dateRange");
+  const dateRangeDisplay = document.getElementById("dateRangeDisplay");
   const totalEarnings = document.getElementById("totalEarnings");
-  const availableBalance = document.createElement("h1"); // Element for available balance
-  totalEarnings.insertAdjacentElement("afterend", availableBalance); // Insert below total earnings
+  const withdrawBtn = document.getElementById("withdrawBtn");
+  const availableBalance = document.createElement("h1"); // Balance display
   const chartContainer = document.getElementById("chartContainer");
   const ctx = document.getElementById("earningsChart").getContext("2d");
 
   let earningsChart; // Store the chart instance
+  let selectedMonth = ""; // Variable to store selected month
+  let latestBalance = 0; // Store latest earnings balance
 
-  // Function to get start and end dates based on month
-  function getStartEndDate(month) {
+  // Function to get start and end dates based on selected month
+  function getMonthRange(month) {
       const year = new Date().getFullYear();
       const months = {
           jan: { start: `${year}-01-01`, end: `${year}-01-31` },
-          feb: { start: `${year}-02-01`, end: `${year}-02-${isLeapYear(year) ? "29" : "28"}` },
+          feb: { start: `${year}-02-01`, end: `${year}-02-28` },
           mar: { start: `${year}-03-01`, end: `${year}-03-31` },
           apr: { start: `${year}-04-01`, end: `${year}-04-30` },
           may: { start: `${year}-05-01`, end: `${year}-05-31` },
@@ -29,43 +31,61 @@ document.addEventListener("DOMContentLoaded", function () {
       return months[month] || {};
   }
 
-  // Function to check leap year
-  function isLeapYear(year) {
-      return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  }
-
   // Function to fetch earnings and update chart
-  function fetchEarnings(startDate, endDate) {
-      fetch("../php/driver/earnings.php", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `start_date=${startDate}&end_date=${endDate}`,
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (!data.total_earnings || parseFloat(data.total_earnings) === 0) {
-              totalEarnings.textContent = "No Completed Rides Available";
-              availableBalance.textContent = "";
-              chartContainer.style.display = "none"; // Hide the chart
-              document.getElementById("withdrawBtn").style.display = "none";
-          } else {
-              totalEarnings.textContent = `Total: RM${data.total_earnings}`;
-              availableBalance.textContent = `Balance: RM${data.available_balance || "0.00"}`;
-              chartContainer.style.display = "block"; // Show the chart
-              document.getElementById("withdrawBtn").style.display = "block";
-              document.getElementById("withdrawBtn").style.textAlign = "center";
-              updateChart(data.dates, data.revenues);
-          }
-      })
-      .catch(error => console.error("Error fetching earnings:", error));
+  function fetchEarnings(month) {
+      const { start, end } = getMonthRange(month);
+
+      if (start && end) {
+          dateRangeDisplay.innerHTML = `From<br><b>${start}</b> <br>To<br> <b>${end}</b>`;
+
+          fetch("../php/driverPage/process_earnings.php", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: `month=${encodeURIComponent(month)}`,
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (!data.total_earnings || parseFloat(data.total_earnings) === 0) {
+                  totalEarnings.textContent = "No Completed Rides Available";
+                  availableBalance.textContent = "";
+                  chartContainer.style.display = "none";
+                  withdrawBtn.style.display = "none";
+              } else {
+                  totalEarnings.textContent = `Total: RM${data.total_earnings}`;
+                  availableBalance.textContent = `Balance: RM${data.available_balance || "0"}`;
+                  withdrawBtn.style.display = "block";
+                  withdrawBtn.style.textAlign = "center";
+                  updateChart(data.dates, data.revenues);
+              }
+          })
+          .catch(error => {
+              console.error("Error fetching earnings:", error);
+          });
+      }
   }
 
-  // Function to create or update chart
+  // Event listener for month selection
+  monthSelect.addEventListener("change", function () {
+      const selectedMonth = monthSelect.value;
+      fetchEarnings(selectedMonth);
+  });
+
+  // Event listener for withdraw button
+  withdrawBtn.addEventListener("click", function () {
+      const selectedMonth = monthSelect.value;
+      const balance = availableBalance.textContent.replace("Balance: RM", "").trim();
+      const url = `withdrawPage.php?balance=${encodeURIComponent(balance)}&month=${encodeURIComponent(selectedMonth)}`;
+      window.location.href = url;
+  });
+
+  // Initialize with the default selected month
+  monthSelect.dispatchEvent(new Event("change"));
+
   function updateChart(dates, revenues) {
       if (earningsChart) {
-          earningsChart.destroy(); // Destroy existing chart before updating
+          earningsChart.destroy(); // Destroy previous chart
       }
 
       earningsChart = new Chart(ctx, {
@@ -76,63 +96,31 @@ document.addEventListener("DOMContentLoaded", function () {
                   label: "Daily Earnings (RM)",
                   data: revenues,
                   borderColor: "#2b83ff",
-                  // backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  backgroundColor: "rgba(75, 192, 192, 0.2)",
                   borderWidth: 2,
-                  pointRadius: 5,
-                  pointHoverRadius: 7,
                   fill: true,
-                  tension: 0.3 // Smooth the line
+                  tension: 0.3
               }]
           },
           options: {
               responsive: true,
-              maintainAspectRatio: false,
               scales: {
                   x: {
-                      title: {
-                          display: true,
-                          text: "Date",
-                      },
-                      ticks: {
-                          autoSkip: true,
-                          maxTicksLimit: 10
-                      }
+                      title: { display: true, text: "Date" },
+                      ticks: { autoSkip: true, maxTicksLimit: 10 }
                   },
                   y: {
-                      title: {
-                          display: true,
-                          text: "Earnings (RM)",
-                      },
-                      beginAtZero: true
+                      title: { display: true, text: "Earnings (RM)" }
                   }
               },
               plugins: {
-                  legend: {
-                      display: true,
-                      position: "top"
-                  }
+                  legend: { display: true, position: "top" }
               }
           }
       });
   }
 
-  // Event listener for month selection
-  monthSelect.addEventListener("change", function () {
-      const selectedMonth = this.value;
-      const { start, end } = getStartEndDate(selectedMonth);
-
-      if (start && end) {
-          dateRangeDisplay.innerHTML = `From<br><b>${start}</b> <br>To<br> <b>${end}</b>`;
-          fetchEarnings(start, end);
-      }
-  });
-
-  // Trigger change event on page load to fetch initial data
+  // Fetch earnings for the initially selected month
   monthSelect.dispatchEvent(new Event("change"));
-
-  document.getElementById("withdrawBtn").addEventListener("click", function () {
-    const balance = availableBalance.textContent.replace("Balance: RM", "").trim(); // Extract the balance amount
-    window.location.href = `withdrawPage.php?balance=${encodeURIComponent(balance)}`;
 });
 
-});
