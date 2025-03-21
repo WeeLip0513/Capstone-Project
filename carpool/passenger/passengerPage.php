@@ -72,11 +72,11 @@ $passenger = getProfileDetails($userID,$conn);
                             <h2>Pickup Point</h2>
                             <div class="pickup-selection">
                                 <select name="pickup" id="pickup" required>
-                                    <option value="">Select Pick-Up Point</option>
-                                    <option value="apu">APU</option>
+                                    <!-- <option value="">Select Pick-Up Point</option> -->
+                                    <!-- <option value="apu">APU</option> -->
                                     <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
-                                    <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
-                                    <option value="sri_petaling">Sri Petaling</option>
+                                    <!-- <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
+                                    <option value="sri_petaling">Sri Petaling</option> -->
                                 </select>
                                 <span class="error" id="pickupError"></span>
                             </div>
@@ -85,11 +85,11 @@ $passenger = getProfileDetails($userID,$conn);
                             <h2>Drop-off Point</h2>
                             <div class="dropoff-selection">
                                 <select name="dropoff" id="dropoff" required>
-                                    <option value="">Select Drop-Off Point</option>
-                                    <option value="apu">APU</option>
-                                    <option value="lrt_bukit_jalil">LRT Bukit Jalil</option>
+                                    <!-- <option value="">Select Drop-Off Point</option> -->
+                                    <!-- <option value="apu">APU</option>
+                                    <option value="lrt_bukit_jalil">LRT Bukit Jalil</option> -->
                                     <option value="pav_bukit_jalil">Pavilion Bukit Jalil</option>
-                                    <option value="sri_petaling">Sri Petaling</option>
+                                    <!-- <option value="sri_petaling">Sri Petaling</option> -->
                                 </select>
                                 <span class="error" id="dropoffError"></span>
                             </div>
@@ -105,12 +105,12 @@ $passenger = getProfileDetails($userID,$conn);
                             <h2>Time</h2>
                             <div class="time-container">
                                 <select name="hour" id="hour" required>
-                                    <option value="">HH</option>
+                                    <!-- <option value="">HH</option>
                                     <option value="06">06</option>
                                     <option value="07">07</option>
-                                    <option value="08">08</option>
+                                    <option value="08">08</option> -->
                                     <option value="09">09</option>
-                                    <option value="10">10</option>
+                                    <!-- <option value="10">10</option>
                                     <option value="11">11</option>
                                     <option value="12">12</option>
                                     <option value="13">13</option>
@@ -121,12 +121,12 @@ $passenger = getProfileDetails($userID,$conn);
                                     <option value="18">18</option>
                                     <option value="19">19</option>
                                     <option value="20">20</option>
-                                    <option value="21">21</option>
+                                    <option value="21">21</option> -->
                                 </select>
                                 <select name="minute" id="minute" required>
-                                    <option value="">MM</option>
+                                    <!-- <option value="">MM</option> -->
                                     <option value="00">00</option>
-                                    <option value="05">05</option>
+                                    <!-- <option value="05">05</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
                                     <option value="20">20</option>
@@ -136,7 +136,7 @@ $passenger = getProfileDetails($userID,$conn);
                                     <option value="40">40</option>
                                     <option value="45">45</option>
                                     <option value="50">50</option>
-                                    <option value="55">55</option>
+                                    <option value="55">55</option> -->
                                 </select>
                             </div>
                                 <span class="error" id="timeError"></span>
