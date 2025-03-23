@@ -3,6 +3,7 @@
     border-radius: 10px;
     padding: 20px;
     margin: 0 auto;
+    margin-bottom: 10rem;
 }
 
 .profile-card h2 {
@@ -82,8 +83,6 @@
     color: #1a5db4;
 }
 
-/* Modal Styles */
-/* Modal Styles */
 /* Modal Styles */
 .modal {
     position: fixed;
@@ -270,7 +269,7 @@
     }
 
     .profile-card h2 {
-        font-size: 20px;
+        font-size: 23px;
     }
 
     .profiledetails p {

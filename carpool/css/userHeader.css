@@ -21,7 +21,7 @@ body {
 }
 
 .logo {
-    margin-left: 20px;
+    margin-left: 80px;
     width: 150px;
     height: 45px;
 }
@@ -31,8 +31,10 @@ body {
     height: 45px;
 }
 
+.logout-button{
+    margin-right: 80px;
+}
 .logout-button button {
-    margin-right: 20px;
     padding: 0.5rem 1.2rem;
     border-radius: 5px;
     cursor: pointer;

@@ -51,3 +51,12 @@ document.addEventListener("DOMContentLoaded", function () {
     hour.addEventListener("change", fetchRides);
     minute.addEventListener("change", fetchRides);
 });
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     let dateInput = document.getElementById("date");
+//     // Get today's date
+//     let today = new Date();
+//     today.setDate(today.getDate() + 1);
+//     let minDate = today.toISOString().split("T")[0];  // Format the date as YYYY-MM-DD
+//     dateInput.setAttribute("min", minDate); // Set the min attribute of the date input field
+// });

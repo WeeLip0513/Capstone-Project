@@ -1,201 +1,246 @@
+<?php
+session_start();
+include("headerHomepage.php");
+
+$conn = mysqli_connect("localhost", "root", "", "carpool");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+   
+
+    $tpnumber = mysqli_real_escape_string($conn, $_POST['tp_number']);
+    $feedback = mysqli_real_escape_string($conn, $_POST['feedback']);
+
+    $checkUserQuery = "SELECT * FROM user WHERE tpnumber = '$tpnumber'";
+    $result = mysqli_query($conn, $checkUserQuery);
+    echo "<script>alert('TP Number: " . $tpnumber . $checkUserQuery. "');</script>";
+
+    // Debugging step: check for SQL errors first
+    if (!$result) {
+        die("SQL Error: " . mysqli_error($conn));
+    }
+
+    // Check if user exists
+    if (mysqli_num_rows($result) > 0) {
+        // tpnumber matches, insert feedback
+        $insertFeedbackQuery = "INSERT INTO feedback (tp_number, feedback_message) VALUES ('$tpnumber', '$feedback')";
+
+        if (mysqli_query($conn, $insertFeedbackQuery)) {
+            echo "<script>alert('Feedback submitted successfully!'); window.location.href='support.php';</script>";
+        } else {
+            die("Error inserting feedback: " . mysqli_error($conn));
+        }
+    }else {
+            // tpnumber doesn't match, redirect to login
+           
+            header("Location: loginpage.php");
+            exit;
+        }
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            box-sizing: border-box;
-        }
+    <title>Support Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/feedback.css">
+    <script src="scripts.js" defer></script>
 
-        body {
-            background: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            position: fixed;
-            top: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 1rem 4rem;
-            background: #410055;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .logo {
-            font-size: 1.7rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
-
-        .navlinks {
-            list-style: none;
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .navlinks li a {
-            text-decoration: none;
-            color: white;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .navlinks li a:hover {
-            color: #ffc107;
-        }
-
-        /* Contact Page Styles */
-        .container {
-            margin-top: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 80%;
-            max-width: 1000px;
-            padding: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            color: white;
-        }
-
-        .header {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .content {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .contact-info {
-            padding-left: 100px;
-        }
-
-        .contact-info p {
-            font-size: 1.3rem;
-            margin: 10px 0;
-            color: #d1d1d1;
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            border-radius: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .contact-info p:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .icon-circle {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-        }
-
-        .icon-circle i {
-            color: #00aaff;
-            font-size: 1.5rem;
-        }
-
-        .contact-form {
-            width: 50%;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-form h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-bottom: 2px solid #ddd;
-            outline: none;
-            font-size: 1rem;
-            background-color: #f9f9f9;
-        }
-
-        .contact-form button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #00aaff;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-    </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">APshare</div>
-        <ul class="navlinks">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Support Us</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </div>
-
     <div class="container">
-        <div class="header">Contact Us</div>
-        <div class="content">
-            <div class="contact-info">
-                <p><div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>Address: XXXXXXXXX</p>
-                <p><div class="icon-circle"><i class="fas fa-phone"></i></div>Phone: 507-XXX-XXXX</p>
-                <p><div class="icon-circle"><i class="fas fa-envelope"></i></div>Email: example@domain.com</p>
+        <!-- Page Description Section -->
+        <section class="page-description">
+            <h2><span>D</span><span>r</span><span>i</span><span>v</span><span>e</span><span>T</span><span>o</span><span>g</span><span>e</span><span>t</span><span>h</span><span>e</span><span>r</span><span>,</span>
+                <span>T</span><span>h</span><span>r</span><span>i</span><span>v</span><span>e</span><span>T</span><span>o</span><span>g</span><span>e</span><span>t</span><span>h</span><span>e</span><span>r</span>
+            </h2>
+                <!-- Paragraph 1 -->
+                <p class="page-description">
+                <strong class="small-header">Welcome to the APU Carpool Support Page!</strong>
+                We're here to assist you with any questions or issues while using our carpooling platform. 
+                Our support team is ready to help with booking rides,<br> managing profiles, and ensuring your safety during carpooling.
+                
+                <strong class="small-header">We Value Your Feedback</strong>
+                We value your feedback as it helps us enhance the platform for the Asia Pacific University community. 
+                Whether you have suggestions for new features,<br> need help with an issue, or want to share your thoughts, 
+                this is the place to do it!
+
+                <strong class="small-header">Explore Our FAQ</strong>
+                Explore our FAQ section for quick answers or use the feedback form to reach out directly. 
+                We're dedicated to providing prompt and <br>helpful support to make your carpooling experience smooth and enjoyable. 
+                Our goal is to create a seamless experience for all users, <br>promoting safety and convenience. 
+                Join us in building a strong and connected campus community through carpooling!
+                
+                <strong class="small-header">Thank You for Choosing APU Carpool</strong>
+                Together, we can make campus transportation more convenient, sustainable, and community-focused!
+                </p>
+            </section>
+            <section class="feedback">
+            <div class="feedback-box">
+                <!-- Left side: Feedback Form -->
+                <div class="form-container">
+                <form action="support.php" method="POST">
+                    <h2>Feedback</h2>
+
+                    <!-- Container for all input fields -->
+                    <div class="input-container">
+
+                        <!-- TP Number -->
+                        <div class="form-group">
+                        <label for="tp_number">TP Number:</label>
+                        <input 
+                            type="text" 
+                            id="tp_number" 
+                            name="tp_number" 
+                            placeholder="TP123456" 
+                            required 
+                            pattern="^TP\d{6}$"
+                        >
+                        </div>
+
+                        <!-- Feedback Message -->
+                        <div class="form-group">
+                        <label for="feedback">Feedback:</label>
+                        <textarea 
+                            id="feedback" 
+                            name="feedback" 
+                            placeholder="Write your feedback here......." 
+                            required
+                        ></textarea>
+                        </div>
+
+                    </div> <!-- End of .input-container -->
+
+                    <!-- Container for the submit button -->
+                    <div class="feedbackbutton-container">
+                        <button type="submit" class="feedback-button">Submit</button>
+                    </div>
+
+                    </form>
+
+                </div>
+                <!-- Right side: Image -->
+                <div class="image-container">
+                <img src="image/homepage/feedback.png" alt="Feedback Image">
+                </div>
             </div>
-            <div class="contact-form">
-                <h2>Send Message</h2>
-                <form>
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea placeholder="Type your Message..." rows="4" required></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+        </section>
+         <!-- FAQ Section -->
+        <section id="faq-section">
+        <div class="faq-container">
+            <h1>Frequently Asked Questions</h1>
+            
+            <!-- FAQ #1 -->
+            <details>
+            <summary>
+                What is the APU Carpool System?
+                <!-- Inline SVG arrow -->
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>The APU Carpool System connects students, faculty, and staff to share rides to and from campus, reducing travel costs and environmental impact.</p>
+            </details>
+
+            <!-- FAQ #2 -->
+            <details>
+            <summary>
+                How does APU Carpool work?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>Users register with their APU credentials, indicate whether they can offer a ride or need one, and then match based on routes and schedules.</p>
+            </details>
+
+            <!-- FAQ #3 -->
+            <details>
+            <summary>
+                Who can join the APU Carpool System?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>All current APU students, faculty, and staff with valid APU ID are eligible to use the carpool system.</p>
+            </details>
+
+            <!-- FAQ #4 -->
+            <details>
+            <summary>
+                Is there a fee to use the system?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>The platform is free to use. Any cost-sharing for fuel or parking is arranged directly between drivers and riders.</p>
+            </details>
+
+            <!-- FAQ #5 -->
+            <details>
+            <summary>
+                How do I become a driver?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>Select the "Driver" option during registration, provide your vehicle details, and post your available seats along with your travel schedule.</p>
+            </details>
+
+            <!-- FAQ #6 -->
+            <details>
+            <summary>
+                Can I schedule rides for specific times?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>Yes, drivers post their departure times and routes, and riders can request a trip that fits their schedule.</p>
+            </details>
+
+            <!-- FAQ #7 -->
+            <details>
+            <summary>
+                How is safety ensured in the carpool?
+                <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                </svg>
+            </summary>
+            <p>All users are verified with APU credentials, and feedback/rating systems help monitor user reliability. Follow campus safety guidelines at all times.</p>
+            </details>
         </div>
+        </section>
     </div>
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e){
+            e.preventDefault(); // prevents page reload
+
+            let formData = new FormData(this);
+
+            fetch('support.php', {  // adjust the path to your PHP script
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);  // Display the alert message from PHP
+                document.getElementById('feedbackForm').reset(); // Reset form after submission (optional)
+            })
+            .catch(error => {
+                alert('An error occurred: ' + error);
+            });
+        });
+</script>
 </body>
 </html>

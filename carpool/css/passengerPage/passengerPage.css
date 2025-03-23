@@ -1,13 +1,15 @@
+/* Basic styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Noto Sans", sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .passenger {
-    max-width: 1220px;
+    max-width: 1320px;
     margin: 0 auto;
+    position: relative; /* Add this for proper positioning */
 }
 
 .navigation-user {
@@ -17,14 +19,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(186, 186, 186);
+    color: white;
 }
 
 .tabs {
-    background: rgb(69, 69, 69);
+    background: #1E1E1E;
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
     border-radius: 0.56rem;
-    padding: 8px;
+    padding: 13px;
     display: flex;
     position: relative;
     align-items: center;
@@ -38,32 +40,32 @@ input[type="radio"] {
 label {
     display: block;
     height: 20px;
-    width: 300px;
-    font-size: 18px;
+    width: 320px;
+    font-size: 19px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     z-index: 2;
     font-weight: bold;
-    margin-top: 2.5px;
 }
 
 .glider {
     position: absolute;
-    padding: 7px;
+    padding: 10px;
     background: #2b83ff;
-    width: 300px;
-    height: 40px;
+    width: 320px;
+    height: 48px;
     border-radius: 0.56rem;
     transition: ease .3s;
 }
 
+/* Content sections */
 .content-section {
     display: none;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .content-section.active {
@@ -75,29 +77,170 @@ input[type="radio"]:checked+label {
     color: white;
 }
 
-label[for="upcomingrides"]:hover,
-label[for="availablerides"]:hover,
-label[for="tab3"]:hover,
+label[for="upcomingrides"]:hover, 
+label[for="availablerides"]:hover, 
+label[for="tab3"]:hover, 
 label[for="tab4"]:hover {
     color: #2b83ff;
 }
 
 #upcomingrides:checked ~ .glider {
-    transform: translateX(-455px);
+    transform: translateX(-480px);
+    width: 350px;
 }
 
 #availablerides:checked ~ .glider {
-    transform: translateX(-150px);
+    transform: translateX(-160px);
 }
 
 #tab3:checked ~ .glider {
-    transform: translateX(150px);
+    transform: translateX(160px);
 }
 
 #tab4:checked ~ .glider {
-    transform: translateX(455px);
+    transform: translateX(480px);
+    width: 350px;
 }
 
-.tab-content{
+.tab-content {
     color: white;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin: 20px 0 10px 20px;
+}
+
+.hamburger div {
+    width: 35px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Hamburger animation */
+.hamburger.open div:nth-child(1) {
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.hamburger.open div:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open div:nth-child(3) {
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* Mobile Navigation */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(45, 45, 45);
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu.show {
+    display: flex;
+}
+
+.mobile-menu .featureBtn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
+}
+
+.mobile-menu .featureBtn:last-child {
+    border-bottom: none;
+}
+
+.mobile-menu .featureBtn:hover {
+    background-color: rgba(43, 131, 255, 0.2);
+    color: #2b83ff;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 1200px) {
+    .navigation-user {
+        display: none;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .tab-content {
+        margin-top: 20px;
+    }
+    
+    label {
+        width: 250px;
+        font-size: 18px;
+    }
+    
+    .glider {
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .passenger {
+        max-width: 95%;
+    }
+    
+    .content-section {
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-menu .featureBtn {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    /* Adjust form layouts and other content for smaller screens */
+    .profilerow {
+        flex-direction: column;
+    }
+    
+    .search-form .row {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hamburger {
+        margin-left: 10px;
+    }
+    
+    .mobile-menu .featureBtn {
+        font-size: 14px;
+        padding: 10px;
+    }
+    
+    /* Further adjustments for very small screens */
+    .profile-card h2,
+    .content-section h2 {
+        font-size: 22px;
+    }
 }
