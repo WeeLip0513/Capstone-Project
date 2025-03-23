@@ -265,7 +265,6 @@ $passenger = getProfileDetails($userID, $conn);
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Add this cart icon to your page header/navigation -->
