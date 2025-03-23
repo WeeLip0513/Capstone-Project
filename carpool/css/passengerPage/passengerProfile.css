@@ -106,10 +106,10 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #1E1E1E;
     margin: 5% auto;
     padding: 15px;
-    border: 1px solid #888;
+    border: 1px solid #333;
     width: 80%;
     max-width: 500px;
     border-radius: 10px;
@@ -153,7 +153,7 @@
 }
 
 .modal-content label{
-    color: blue;
+    color: #2b83ff;
    margin-top: 10px;
    margin-bottom: 15px;
    text-align: left;
@@ -165,9 +165,9 @@
     width: 100%;
     padding: 7px;
     box-sizing: border-box;
-    font-weight: bold;
-    border: 2px solid #ccc; /* Default border */
+    border: 2px solid #333; /* Default border */
     outline: none;
+    background-color: #262627;
 }
 #form-group input:focus {
     border-color: var(--light-orange);

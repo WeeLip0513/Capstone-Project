@@ -25,7 +25,7 @@ include("adminsidebar.php");
             <div class="first-row-item">
 
             </div>
-            <div class="first-row-item">
+            <div class="second-row-item">
 
             </div>
         </div>
