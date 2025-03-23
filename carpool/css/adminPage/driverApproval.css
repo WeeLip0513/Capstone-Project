@@ -6,7 +6,7 @@
 
 .driver-list-title h2{
     font-size: 25px;
-    color: white;
+    color: #2b83ff;
     margin-bottom: 10px;
 }
 
@@ -14,7 +14,7 @@
     color: rgb(101, 103, 103);
 }
 .table-container{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 table{
@@ -22,33 +22,32 @@ table{
     color: white;
     border-collapse: collapse;
     text-align: left;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 th{
     font-size: 18px;
     text-align: center;
-    background-color: #f2f2f2;
-    color: #333;
-    font-weight: 600;
+    background-color:  #1E1E1E;
+    color: #A0A0A0;
+    font-weight: bold;
     padding: 12px 15px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid #333333;
 }
 
 td{
     padding: 12px 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #333333;
     vertical-align: middle;
     text-align: center;
-}
-
-table tr:hover {
-    background-color: #7c7c7c;
+    background-color: #252525;
 }
 
 table a {
     display: inline-block;
     padding: 6px 12px;
-    background-color: #2b64ff;
+    background-color: #2b83ff;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -57,14 +56,17 @@ table a {
 }
 
 table a:hover {
-    background-color: #1a4cd1;
-    box-shadow: 0 4px 8px rgba(43, 100, 255, 0.3);
+    background-color: #1a6dd9;
 }
 
 @media screen and (max-width: 768px) {
     .driver.table {
         display: block;
         overflow-x: auto;
+    }
+
+    .table a{
+        padding: 3px 6px;
     }
     
     .driver-list-container {
