@@ -10,7 +10,10 @@ include("headerHomepage.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/homePage/homepage.css">
+    <link rel="stylesheet" href="css/homePage/whychooseApool.css">
+    <link rel="stylesheet" href="css/homePage/howitworks.css">
+    <link rel="stylesheet" href="css/homePage/featuresSlider.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
@@ -81,8 +84,8 @@ include("headerHomepage.php");
                 </p>
             </div>
         </div>
-        <section class="features-section">
-            <div class="section-title">
+        <section class=" section features-section">
+            <div class="features-title">
                 <h2>Why Choose APool ?</h2>
                 <p>Introducing the new convenient and affordable commuting solutions for students</p>
             </div>
@@ -119,7 +122,7 @@ include("headerHomepage.php");
                 </div>
             </div>
         </section>
-        <section class="how-it-works">
+        <section class="section how-it-works">
             <h2>How It Works</h2>
             <div class="steps-container">
                 <div class="step">
@@ -147,15 +150,15 @@ include("headerHomepage.php");
                 </div>
             </div>
         </section>
-        <div class="second-section">
+        <section class="section second-section">
             <div class="driver-features-slider">
                 <div class="driver-content-container">
                     <h5>Driver Features</h5>
                     <h2>Create your ride and start earning!</h2>
                     <div class="driver-list-style">
                         <ul>Create your own ride</ul>
-                        <ul>Create your own ride</ul>
-                        <ul>Create your own ride</ul>
+                        <ul>Set your own schedule</ul>
+                        <ul>Earn money flexibly</ul>
                     </div>
                 </div>
                 <div class="slider">
@@ -206,19 +209,37 @@ include("headerHomepage.php");
                 </div>
                 <div class="driver-content-container">
                     <h5>Passenger Features</h5>
-                    <h2>Create your ride and start earning!</h2>
+                    <h2>Find rides that match your need!</h2>
                     <div class="driver-list-style">
-                        <ul>Create your own ride</ul>
-                        <ul>Create your own ride</ul>
-                        <ul>Create your own ride</ul>
+                        <ul>Search for rides easily</ul>
+                        <ul>Choose preferred drivers</ul>
+                        <ul>Travel comfortably</ul>
                     </div>
                 </div>
             </div>
+        </section>
+        <div class="wave-container">
+            <div class="wave" id="wave1" style="--i:1;"></div>
+            <div class="wave" id="wave2" style="--i:2;"></div>
+            <div class="wave" id="wave3" style="--i:3;"></div>
+            <div class="wave" id="wave4" style="--i:4;"></div>
         </div>
-        <div class="wave" id="wave1" style="--i:1;"></div>
-        <div class="wave" id="wave2" style="--i:2;"></div>
-        <div class="wave" id="wave3" style="--i:3;"></div>
-        <div class="wave" id="wave4" style="--i:4;"></div>
+
+        <script>
+            let wave1 = document.getElementById('wave1');
+            let wave2 = document.getElementById('wave2');
+            let wave3 = document.getElementById('wave3');
+            let wave4 = document.getElementById('wave4');
+
+            window.addEventListener('scroll', function () {
+                let value = window.scrollY;
+
+                wave1.style.backgroundPositionX = 400 + value * 4 + 'px';
+                wave2.style.backgroundPositionX = 300 + value * -4 + 'px';
+                wave3.style.backgroundPositionX = 200 + value * 2 + 'px';
+                wave4.style.backgroundPositionX = 100 + value * -2 + 'px';
+            })
+        </script>
         <section class="roles-section">
             <div class="section-title">
                 <h2>Choose Your Role</h2>
@@ -402,28 +423,6 @@ include("headerHomepage.php");
                                 </svg>
                             </button>
                         </div>
-                        <!-- <div class="benefit-card">
-                            <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                            </div>
-                            <h2>Time</h2>
-                            <h3>optimization.</h3>
-                            <p>Fewer vehicles on the road means less congestion. Use commute time productively for work or
-                                relaxation.</p>
-                            <button class="expand-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                            </button>
-                        </div> -->
                     </div>
                 </div>
 
@@ -514,28 +513,14 @@ include("headerHomepage.php");
                 </div>
             </div>
         </section>
-
-
-        <script>
-            let wave1 = document.getElementById('wave1');
-            let wave2 = document.getElementById('wave2');
-            let wave3 = document.getElementById('wave3');
-            let wave4 = document.getElementById('wave4');
-
-            windows.addEventListener('scroll', function () {
-                let value = window.scrollY;
-
-                wave1.style.backgroundPositionX = 400 + value * 4 + 'px';
-                wave2.style.backgroundPositionX = 300 + value * -4 + 'px';
-                wave3.style.backgroundPositionX = 200 + value * 2 + 'px';
-                wave4.style.backgroundPositionX = 100 + value * -2 + 'px';
-            })
-        </script>
         <script src="js/homepage/searchForm.js"></script>
         <script src="js/homepage/howitworks.js"></script>
         <script src="js/homepage/features.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="js/homepage/swiper.js"></script>
+        <script>
+
+        </script>
     </div>
 </body>
 
