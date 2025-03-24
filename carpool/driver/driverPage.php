@@ -6,7 +6,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 9;
+$_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -22,6 +22,8 @@ if (mysqli_num_rows($result) == 1) {
   // echo "</pre>";
   $frontImgPath = $driver['license_photo_front'];
   $backImgPath = $driver['license_photo_back'];
+  $current_status = $driver['status'];
+  $current_penalty_end = $driver['penalty_end_date'];
   $frontLicensePath = str_replace("../../", "../", $frontImgPath);
   $backLicensePath = str_replace("../../", "../", $backImgPath);
 
@@ -168,6 +170,23 @@ while ($row = $result->fetch_assoc()) {
   $earnings_data[$date] += $revenue;
 }
 
+// Check if today is the penalty end date
+if ($current_status === 'restricted' && ($current_penalty_end === $today || $current_penalty_end < $today)) {
+  // Reset cancel count and remove restriction
+  $reset_sql = "UPDATE driver 
+                SET cancel_count = 0, penalty_end_date = NULL, status = 'approved' 
+                WHERE id = ?";
+  $reset_stmt = $conn->prepare($reset_sql);
+  $reset_stmt->bind_param("i", $driverID);
+  $reset_stmt->execute();
+  $reset_stmt->close();
+
+  echo "<script>
+        alert('✅ Your restriction has been lifted. You can now accept rides again.');
+  </script>";
+}
+
+
 // Convert to JSON for Chart.js
 $dates = json_encode(array_keys($earnings_data));
 $revenues = json_encode(array_values($earnings_data));
@@ -195,7 +214,8 @@ $revenues = json_encode(array_values($earnings_data));
     href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../js/driver/chart.js" defer></script> <!-- External JavaScript -->
+  <script src="../js/driver/chart.js" defer></script>
+  <script src="../js/driver/withdrawHistory.js" defer></script>
 </head>
 
 <body>
@@ -218,7 +238,7 @@ $revenues = json_encode(array_values($earnings_data));
       Earnings
     </button>
     <button id="history" class="featureBtn" data-content="historyContent">
-      Rides History
+      Withdraw History
     </button>
     <button id="profile" class="featureBtn" data-content="profileContent">
       Profile
@@ -554,14 +574,35 @@ $revenues = json_encode(array_values($earnings_data));
         <div id="earningDetails">
           <h3>Earnings</h3>
           <p id="dateRange"></p>
-          <h2 id="totalEarnings">$0.00</h2>
+          <h2 id="totalEarnings">RM0.00</h2>
+          <h2 id="availableBalance">RM0.00</h2>
           <button id="withdrawBtn">Withdraw</button>
         </div>
       </div>
     </div>
+    <div id="historyContent" class="historyContent" style="display: none">history
+      <div id="historyContainer" class="historyContainer">
+        <div class="historyMonth" id="historyMonth">
+          <select name="hisMonth" id="hisMonth">
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+            <option value="mar">March</option>
+            <option value="apr">April</option>
+            <option value="may">May</option>
+            <option value="jun">June</option>
+            <option value="jul">July</option>
+            <option value="aug">August</option>
+            <option value="sep">September</option>
+            <option value="oct">October</option>
+            <option value="nov">November</option>
+            <option value="dec">December</option>
+          </select>
+        </div>
+        <div class="withdrawHistory" id="withdrawHistory">
 
-
-    <div class="historyContent" style="display: none">history</div>
+        </div>
+      </div>
+    </div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">
         <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
