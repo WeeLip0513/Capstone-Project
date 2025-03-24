@@ -9,6 +9,7 @@ $month = $_GET['month'];
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +17,12 @@ $month = $_GET['month'];
   <link rel="stylesheet" href="../css/driverPage/withdraw.css">
   <script src="../js/driver/withdrawValidation.js" defer></script>
 </head>
+
 <body>
-  <div class="container">
+  <div class="withdrawContainer">
     <h2 class="center">Withdraw Request</h2>
     <form id="withdrawForm" action="withdraw.php" method="POST" novalidate>
       <input type="hidden" name="month" value="<?php echo htmlspecialchars($month); ?>">
-
       <table>
         <tr>
           <td><label for="bank">Select Bank:</label></td>
@@ -51,24 +52,30 @@ $month = $_GET['month'];
         <tr>
           <td><label for="accountNumber">Account Number:</label></td>
           <td>
-            <input type="text" name="accountNumber" id="accountNumber" pattern="\d{10,16}" title="Enter a valid account number (10-16 digits)" required>
+            <input type="text" name="accountNumber" id="accountNumber" pattern="\d{10,16}"
+              title="Enter a valid account number (10-16 digits)" required>
             <span id="accountError" class="error"></span>
           </td>
         </tr>
         <tr>
-          <td><label for="withdrawAmount">Withdraw Amount:</label></td>
+          <td><label for="withdrawAmount">Withdraw Amount(RM):</label></td>
           <td>
-            <input class="balance" type="number" name="withdrawAmount" id="withdrawAmount" value="<?php echo $balance ?>" readonly required>
+            <input class="balance" type="number" name="withdrawAmount" id="withdrawAmount"
+              value="<?php echo $balance ?>" readonly required>
             <span id="amountError" class="error"></span>
           </td>
         </tr>
         <tr>
           <td colspan="2" class="center">
-            <button type="submit" id="submitBtn">Withdraw</button>
+            <div class="buttonWrap">
+              <button id="backBtn">Back</button>
+              <button type="submit" id="submitBtn">Withdraw</button>
+            </div>
           </td>
         </tr>
       </table>
     </form>
   </div>
 </body>
+
 </html>

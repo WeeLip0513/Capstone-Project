@@ -6,7 +6,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 9;
+$_SESSION['id'] = 11;
 $userID = $_SESSION['id'];
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -171,7 +171,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Check if today is the penalty end date
-if ($current_status === 'restricted' && $current_penalty_end === $today) {
+if ($current_status === 'restricted' && ($current_penalty_end === $today || $current_penalty_end < $today)) {
   // Reset cancel count and remove restriction
   $reset_sql = "UPDATE driver 
                 SET cancel_count = 0, penalty_end_date = NULL, status = 'approved' 
@@ -573,13 +573,12 @@ $revenues = json_encode(array_values($earnings_data));
         <div id="earningDetails">
           <h3>Earnings</h3>
           <p id="dateRange"></p>
-          <h2 id="totalEarnings">$0.00</h2>
+          <h2 id="totalEarnings">RM0.00</h2>
+          <h2 id="availableBalance">RM0.00</h2>
           <button id="withdrawBtn">Withdraw</button>
         </div>
       </div>
     </div>
-
-
     <div class="historyContent" style="display: none">history</div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">

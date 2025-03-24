@@ -9,12 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const nameError = document.getElementById("nameError");
   const accountError = document.getElementById("accountError");
   const bankError = document.getElementById("bankError");
+  const backBtn = document.getElementById("backBtn");
 
+  // Function to validate fields
   function validateField(field, errorElement, condition, message) {
-      if (errorElement) {
-          errorElement.textContent = condition ? "" : message;
+      if (!condition) {
+          errorElement.textContent = message;
+          return false;
+      } else {
+          errorElement.textContent = "";
+          return true;
       }
-      return condition;
   }
 
   function validateForm() {
@@ -23,11 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const nameValid = /^[a-zA-Z\s]+$/.test(accountName.value.trim());
       const accountValid = /^[0-9]{10,16}$/.test(accountNumber.value.trim());
 
-      isValid &= validateField(bank, bankError, bank.value !== "", "Please select a bank.");
-      isValid &= validateField(accountName, nameError, accountName.value.trim() !== "", "Account name is required.");
-      isValid &= validateField(accountName, nameError, nameValid, "Name can only contain letters and spaces.");
-      isValid &= validateField(accountNumber, accountError, accountNumber.value.trim() !== "", "Account number is required.");
-      isValid &= validateField(accountNumber, accountError, accountValid, "Enter a valid account number (10-16 digits).");
+      isValid = validateField(bank, bankError, bank.value !== "", "Please select a bank.") && isValid;
+      isValid = validateField(accountName, nameError, accountName.value.trim() !== "", "Account name is required.") && isValid;
+      isValid = validateField(accountName, nameError, nameValid, "Name can only contain letters and spaces.") && isValid;
+      isValid = validateField(accountNumber, accountError, accountNumber.value.trim() !== "", "Account number is required.") && isValid;
+      isValid = validateField(accountNumber, accountError, accountValid, "Enter a valid account number (10-16 digits).") && isValid;
 
       return isValid;
   }
@@ -55,21 +60,39 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           body: JSON.stringify(formData),
       })
-      .then(response => response.json()) 
+      .then(response => {
+          console.log("Raw Response:", response);
+          return response.json();
+      })
       .then(data => {
           console.log("Response received:", data); // Debugging: Log response
           if (data.success) {
               alert("Withdrawal request submitted successfully!");
               form.reset();
+              window.location.href = "successPage.php"; // Redirect if needed
           } else {
               alert("Error: " + data.message);
           }
-          submitButton.disabled = false;
       })
       .catch(error => {
           console.error("Error:", error);
           alert("An error occurred. Please try again.");
+      })
+      .finally(() => {
           submitButton.disabled = false;
       });
   });
+
+  backBtn.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default button behavior
+    window.history.back(); // Go back to the previous page
+
+    // Refresh the page after going back
+    setTimeout(() => {
+        location.reload();
+    }, 500); // Delay to ensure the page loads first before refreshing
+});
+
+
+
 });
