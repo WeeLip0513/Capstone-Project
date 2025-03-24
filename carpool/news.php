@@ -9,18 +9,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>News</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
         <link rel="stylesheet" href="css/news.css">
-   
-</head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    </head>
 <body>
 
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="image/news/whitebg.jpeg" alt="Slide 1"></div>
-            <div class="swiper-slide"><img src="image/news/whitebg.jpeg" alt="Slide 2"></div>
-            <div class="swiper-slide"><img src="image/news/whitebg.jpeg" alt="Slide 3"></div>
-            <div class="swiper-slide"><img src="image/news/whitebg.jpeg" alt="Slide 4"></div>
+            <div class="swiper-slide"><img src="image/news/safety.jpg" alt="Slide 1"></div>
+            <div class="swiper-slide"><img src="image/news/promotion.jpg" alt="Slide 2"></div>
+            <div class="swiper-slide"><img src="image/news/bonus.jpg" alt="Slide 3"></div>
+            <div class="swiper-slide"><img src="image/news/serviceUpdate.jpg" alt="Slide 4"></div>
         </div>
 
  
@@ -52,13 +51,12 @@
             <div class="box-container">
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Driver 1">
+                    <img src="image/news/bonus.jpg" alt="Driver 1">
                     <div class="text-content">
                         <br><br>
                         <h1>Earnings & Incentives</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Stay informed and maximize your income with our dedicated Earnings & Incentives news section. Here, you’ll receive detailed updates on bonus programs, seasonal promotions, and any adjustments to our payment systems. We provide actionable insights and tips to help you make the most out of every ride. Whether it’s a flash bonus for peak hours or special rewards during high-demand periods, our comprehensive coverage ensures you never miss an opportunity to boost your earnings. We’re committed to supporting your financial success by keeping you up-to-date on all the latest incentive programs and payment enhancements available.</p>
                         </div>
                 </div>
 
@@ -66,23 +64,21 @@
                 <div class="box">
                     <div class="text-content">
                         <br><br>
-                        <h1>Driver Goods 2</h1>
+                        <h1>Safety & Maintenance Tips</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Your safety on the road is our top priority, and this section is devoted to empowering you with the best practices for secure driving. Our Safety & Maintenance Tips provide in-depth guidance on routine vehicle upkeep, proactive maintenance checks, and essential safe driving techniques. We cover everything from seasonal safety advice to emergency procedures and innovative methods to keep your car in top condition. By following our expert recommendations, you can minimize risks, prevent unexpected breakdowns, and ensure that every journey is as safe as possible. Our goal is to equip you with the knowledge needed to drive confidently and securely.</p>
                     </div>
-                    <img src="image/homepage/driver2.jpg" alt="Driver 2">
+                    <img src="image/news/safety.jpg" alt="Driver 2">
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver2.jpg" alt="Driver 3">
+                    <img src="image/news/new.jpg" alt="Driver 3">
                     <div class="text-content">
                         <br><br>
-                        <h1>Driver Goods 3</h1>
+                        <h1>Technology & App Updates</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Experience the cutting edge of driver support with our Technology & App Updates news section. Here, we share comprehensive insights on the latest improvements to our mobile application, new features, and technology integrations designed to simplify your driving experience. Stay informed about enhanced navigation tools, performance upgrades, and user-friendly interface changes that make managing your rides effortless. We also offer tips and tutorials on how to leverage these updates for better efficiency and productivity on the road. Our commitment is to ensure that you have access to state-of-the-art technology that supports your success and makes every drive smoother.</p>
                     </div>
                 </div>
 
@@ -96,13 +92,12 @@
 
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Passenger 1">
+                    <img src="image/news/serviceUpdate.jpg" alt="Passenger 1">
                     <div class="text-content">
                         <br><br>
-                        <h1>Passenger Goods 1</h1>
+                        <h1>Service Updates</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Keep passengers in the loop with the latest service updates. In this section, we provide comprehensive information about new routes, adjusted schedules, and any changes to service areas that directly impact your daily commute. We understand how important reliability and convenience are for your travel plans. Our timely updates ensure you’re aware of any modifications or improvements in the network, helping you plan your journeys with confidence. Whether it’s added stops, extended service hours, or seasonal adjustments, you can trust that our service updates will keep you informed and ready for a smooth ride.</p>
                     </div>
                 </div>
 
@@ -110,23 +105,21 @@
                 <div class="box">
                     <div class="text-content">
                         <br><br>
-                        <h1>Passenger Goods 2</h1>
+                        <h1>Promotions & Discounts</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Everyone loves a great deal, and our Promotions & Discounts section is designed to help you save on your travels. Here, you’ll find detailed announcements on exclusive discount codes, limited-time offers, and special deals tailored for our passengers. We regularly feature seasonal promotions and partnership offers that make your ride not only affordable but also more enjoyable. Our goal is to add value to your journey by keeping you informed about every opportunity to benefit from cost-saving incentives. Stay tuned to never miss out on the savings that can enhance your overall travel experience.</p>
                     </div>
-                    <img src="image/homepage/driver1.jpg" alt="Passenger 2">
+                    <img src="image/news/promotion.jpg" alt="Passenger 2">
                 </div>
 
 
                 <div class="box">
-                    <img src="image/homepage/driver1.jpg" alt="Passenger 3">
+                    <img src="image/news/safety.jpg" alt="Passenger 3">
                     <div class="text-content">
                         <br><br>
-                        <h1>Passenger Goods 3</h1>
+                        <h1>Safety Information</h1>
                         <br><br>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
-                        </p>
+                        <p>Your safety is our utmost priority. In our Safety Information section, we share in-depth updates on the measures we’ve implemented to ensure a secure ride experience for every passenger. Learn about our rigorous driver background checks, the latest safety protocols, and real-time alerts on any service concerns. We provide practical tips for staying safe during your journey, along with updates on technological enhancements designed to monitor and improve security. This commitment to transparency and continuous improvement helps build trust, ensuring that each ride is as safe and comfortable as possible.</p>
                     </div>
                 </div>
 

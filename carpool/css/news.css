@@ -13,7 +13,6 @@ body {
   position: relative; /* Ensures elements inside stay positioned properly */
 }
 
-/* Make sure dots stay inside the slider */
 .swiper-pagination {
   width: 100%;
   text-align: center;
@@ -46,26 +45,29 @@ body {
   font-weight: bold;
 }
 
-/* Dot (pagination) styles */
-.swiper-pagination-bullet {
-  background: white;
+.swiper-pagination .swiper-pagination-bullet {
+  background: rgb(0, 0, 0) !important;/* Inactive bullet color */
   width: 12px;
   height: 12px;
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background: #2b64ff !important;
 }
 
 /*2*/
 
 .tablink {
-background-color: transparent;
-color:rgb(153, 164, 193); 
-outline: none;
-cursor: pointer;
-padding: 14px 16px;
-font-size: 50px;
-font-weight: bold;
-transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-border: none;
-position: relative;
+  background-color: transparent;
+  color:rgb(153, 164, 193); 
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 50px;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  border: none;
+  position: relative;
 }
 
 .tablink.active {
@@ -73,14 +75,14 @@ position: relative;
 }
 
 .tablink.active::after {
-content: "";
-position: absolute;
-left: 50%;               /* Start at the center */
-transform: translateX(-50%); /* Move back by 50% to center it */
-bottom: 0;              /* Position at the bottom edge of the button */
-width: 100%;             /* Underline width: adjust as needed (e.g., 50%, 100%, etc.) */
-height: 3px;            /* Thickness of the underline */
-background-color: #2b64ff;
+  content: "";
+  position: absolute;
+  left: 50%;               /* Start at the center */
+  transform: translateX(-50%); /* Move back by 50% to center it */
+  bottom: 0;              /* Position at the bottom edge of the button */
+  width: 100%;             /* Underline width: adjust as needed (e.g., 50%, 100%, etc.) */
+  height: 3px;            /* Thickness of the underline */
+  background-color: #2b64ff;
 }
 
 /* Hover effect only on non-active tabs */
@@ -93,11 +95,11 @@ margin-top: 50px; /* Adjust the value as needed */
 }
 
 .tablinks-container {
-display: inline-block;
-margin-left: 150px;           
-border-bottom: 1px solid #555; /* Optional bottom border */
-padding-bottom: 10px;      /* Spacing under the buttons */
-width: 1600px;
+  display: inline-block;
+  margin-left: 150px;           
+  border-bottom: 1px solid #555; /* Optional bottom border */
+  padding-bottom: 10px;      /* Spacing under the buttons */
+  width: 1600px;
 }
 
 .tablink + .tablink {
@@ -106,11 +108,11 @@ margin-left: 30px;
 
 /* Style the tab content */
 .tabcontent {
-background-color: black;
-color: white;
-display: none;
-padding: 50px;
-text-align: center;
+  background-color: black;
+  color: white;
+  display: none;
+  padding: 50px;
+  text-align: center;
 }
 
 #Driver {background-color:black;}
@@ -158,10 +160,10 @@ text-align: center;
 
 /* Image styling */
 .box img {
-  width: 30%;   /* Adjust the percentage as needed */
-  height: auto;
-  object-fit: cover; /* Ensures images fit nicely */
-  
+  width: 400px;   
+  height: 300px;
+  object-fit: cover; 
+  border-radius: 5px;
 }
 
 .text-content {

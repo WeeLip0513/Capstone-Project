@@ -70,6 +70,7 @@ session_start();
       background: #fff;
       flex: 1 1 250px;
       max-width: 350px;
+      height: 200px;
       padding: 25px;
       text-align: center;
       border-radius: 8px;
@@ -79,6 +80,7 @@ session_start();
     .feature-box h3 {
       font-size: 1.5rem;
       margin-bottom: 15px;
+      margin-top: 30px;
     }
 
     .feature-box p {
