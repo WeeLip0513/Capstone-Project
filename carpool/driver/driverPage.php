@@ -214,7 +214,8 @@ $revenues = json_encode(array_values($earnings_data));
     href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Edu+VIC+WA+NT+Beginner:wght@400..700&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../js/driver/chart.js" defer></script> <!-- External JavaScript -->
+  <script src="../js/driver/chart.js" defer></script>
+  <script src="../js/driver/withdrawHistory.js" defer></script>
 </head>
 
 <body>
@@ -237,7 +238,7 @@ $revenues = json_encode(array_values($earnings_data));
       Earnings
     </button>
     <button id="history" class="featureBtn" data-content="historyContent">
-      Rides History
+      Withdraw History
     </button>
     <button id="profile" class="featureBtn" data-content="profileContent">
       Profile
@@ -579,7 +580,29 @@ $revenues = json_encode(array_values($earnings_data));
         </div>
       </div>
     </div>
-    <div class="historyContent" style="display: none">history</div>
+    <div id="historyContent" class="historyContent" style="display: none">history
+      <div id="historyContainer" class="historyContainer">
+        <div class="historyMonth" id="historyMonth">
+          <select name="hisMonth" id="hisMonth">
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+            <option value="mar">March</option>
+            <option value="apr">April</option>
+            <option value="may">May</option>
+            <option value="jun">June</option>
+            <option value="jul">July</option>
+            <option value="aug">August</option>
+            <option value="sep">September</option>
+            <option value="oct">October</option>
+            <option value="nov">November</option>
+            <option value="dec">December</option>
+          </select>
+        </div>
+        <div class="withdrawHistory" id="withdrawHistory">
+
+        </div>
+      </div>
+    </div>
     <div class="profileContent" style="display: none">Profile
       <div class="licenseImg">
         <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
