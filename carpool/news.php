@@ -55,7 +55,7 @@
                     <img src="image/homepage/driver2.jpg" alt="Driver 1">
                     <div class="text-content">
                         <br><br>
-                        <h1>Driver Goods 1</h1>
+                        <h1>Earnings & Incentives</h1>
                         <br><br>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo inventore vero corporis sequi quis temporibus iusto voluptatem vel vitae veniam, est saepe, magnam soluta quos provident corrupti? Culpa esse incidunt eligendi optio dignissimos perspiciatis? Ipsum quam ea maiores quasi ratione quis doloremque saepe illo, quod veritatis placeat possimus cum officiis facere recusandae tenetur a et ullam unde vitae! Error nobis eligendi fuga delectus est, aliquam eos accusantium hic accusamus, perferendis nesciunt cupiditate laudantium necessitatibus voluptates dolor modi, possimus itaque optio dignissimos in odit! Rem ipsum officiis atque cum optio exercitationem itaque veritatis inventore voluptatum, obcaecati incidunt ut assumenda rerum quidem.
                         </p>

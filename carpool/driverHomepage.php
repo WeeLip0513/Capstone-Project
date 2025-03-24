@@ -1,190 +1,125 @@
 <?php
-include ("dbconn.php");
-include ("headerHomepage.php");
+include("dbconn.php");
+include("headerHomepage.php");
 
 session_start();
-// Example: Check if the driver is logged in
-// if (!isset($_SESSION['driver_id'])) {
-//     header("Location: loginpage.php");
-//     exit;
-// }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Driver Home Page - Carpool System</title>
+  <title>Driver Page</title>
   <style>
-    /* Basic CSS for layout and styling */
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f4;
+      background: #f9fafc; /* Light background */
+      color: #333;
     }
-    header {
+
+    .hero {
+      background:rgb(0, 0, 0);
+      color: white;
+      text-align: center;
+      padding: 150px 20px;
+      margin-top: 70px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      line-height: 1.5;
+      color: white;
+    }
+
+    .hero .driverButton {
       background: #0073e6;
       color: #fff;
-      padding: 150px;
-      text-align: center;
-      margin-top: 80px;
-    }
-    nav {
-      background: #005bb5;
-      overflow: hidden;
-    }
-    nav a {
-      float: left;
-      display: block;
-      color: #fff;
-      text-align: center;
-      padding: 14px 20px;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
       text-decoration: none;
     }
-    nav a:hover {
-      background: #003f7f;
+
+    .hero .driverButton:hover {
+      background: #005bb5;
     }
-    .container {
-      padding: 20px;
+
+    /***** FEATURES SECTION *****/
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 100px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      margin-top: 100px;
     }
-    .section {
-      display: none;
+
+    .feature-box {
       background: #fff;
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+      flex: 1 1 250px;
+      max-width: 350px;
+      padding: 25px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
     }
-    .active {
-      display: block;
-    }
-    .form-group {
+
+    .feature-box h3 {
+      font-size: 1.5rem;
       margin-bottom: 15px;
     }
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-    }
-    button {
-      background: #0073e6;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #005bb5;
+
+    .feature-box p {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Welcome, Driver!</h1>
-  </header>
 
-  <nav>
-    <a href="#" onclick="showSection('driverDetails')">Driver Details</a>
-    <a href="#" onclick="showSection('withdrawEarnings')">Withdraw Earnings</a>
-    <a href="#" onclick="showSection('createRide')">Create Ride</a>
-    <a href="#" onclick="showSection('addVehicle')">Add Vehicle</a>
-    <a href="#" onclick="showSection('recoverPassword')">Recover Password</a>
-  </nav>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Drive with APool</h1>
+    <p>
+      Join our community of drivers and earn money on your own schedule.
+      Manage your rides, track your earnings, and grow your driving business.
+    </p>
+    <br><br><br>
+    <a class="driverButton" href="driverRegistration.php">Become a Driver</a>
+  </section>
 
-  <div class="container">
-    <!-- Driver Details Section -->
-    <div id="driverDetails" class="section active">
-      <h2>Driver Details</h2>
-      <?php
-      // Example PHP code to fetch driver details from a database.
-      // This is a placeholder - replace with your actual database code.
-      $driverName = "John Doe"; // Replace with query result.
-      $driverEmail = "johndoe@example.com"; // Replace with query result.
-      ?>
-      <p><strong>Name:</strong> <?php echo htmlspecialchars($driverName); ?></p>
-      <p><strong>Email:</strong> <?php echo htmlspecialchars($driverEmail); ?></p>
-      <!-- More details can be added here -->
+  <!-- FEATURES SECTION -->
+  <section class="features">
+    <div class="feature-box">
+      <h3>Flexible Schedule</h3>
+      <p>Drive whenever you want. You’re your own boss with complete flexibility.</p>
     </div>
-
-    <!-- Withdraw Earnings Section -->
-    <div id="withdrawEarnings" class="section">
-      <h2>Withdraw Earnings</h2>
-      <form action="withdraw.php" method="post">
-        <div class="form-group">
-          <label for="amount">Amount to Withdraw:</label>
-          <input type="number" id="amount" name="amount" required>
-        </div>
-        <button type="submit">Withdraw</button>
-      </form>
+    <div class="feature-box">
+      <h3>Competitive Earnings</h3>
+      <p>Earn competitive rates with bonuses during peak hours and busy seasons.</p>
     </div>
-
-    <!-- Create Ride Section -->
-    <div id="createRide" class="section">
-      <h2>Create Ride</h2>
-      <form action="create_ride.php" method="post">
-        <div class="form-group">
-          <label for="origin">Origin:</label>
-          <input type="text" id="origin" name="origin" required>
-        </div>
-        <div class="form-group">
-          <label for="destination">Destination:</label>
-          <input type="text" id="destination" name="destination" required>
-        </div>
-        <div class="form-group">
-          <label for="date">Date & Time:</label>
-          <input type="datetime-local" id="date" name="date" required>
-        </div>
-        <button type="submit">Create Ride</button>
-      </form>
+    <div class="feature-box">
+      <h3>Easy Management</h3>
+      <p>Our driver portal makes it easy to manage rides, earnings, and vehicle details.</p>
     </div>
+  </section>
 
-    <!-- Add Vehicle Section -->
-    <div id="addVehicle" class="section">
-      <h2>Add Vehicle</h2>
-      <form action="add_vehicle.php" method="post">
-        <div class="form-group">
-          <label for="make">Make:</label>
-          <input type="text" id="make" name="make" required>
-        </div>
-        <div class="form-group">
-          <label for="model">Model:</label>
-          <input type="text" id="model" name="model" required>
-        </div>
-        <div class="form-group">
-          <label for="year">Year:</label>
-          <input type="number" id="year" name="year" required>
-        </div>
-        <button type="submit">Add Vehicle</button>
-      </form>
-    </div>
-
-    <!-- Recover Password Section -->
-    <div id="recoverPassword" class="section">
-      <h2>Recover Password</h2>
-      <form action="recover_password.php" method="post">
-        <div class="form-group">
-          <label for="email">Enter Your Email:</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <button type="submit">Recover Password</button>
-      </form>
-    </div>
-  </div>
-
+  
   <script>
-    // JavaScript to switch between sections
-    function showSection(sectionId) {
-      var sections = document.getElementsByClassName('section');
-      for (var i = 0; i < sections.length; i++) {
-        sections[i].classList.remove('active');
-      }
-      document.getElementById(sectionId).classList.add('active');
-    }
+   
   </script>
 </body>
 </html>
