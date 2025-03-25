@@ -1,0 +1,257 @@
+/* How It Works Section */
+.how-it-works {
+    padding: 130px 0;
+    height: 90vh;
+    background: black;
+    text-align: center;
+    position: relative;
+    color: #fff;
+    scroll-snap-align: start;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    color: #2b83ff;
+    margin-bottom: 60px;
+    font-weight: 700;
+}
+
+/* card steps */
+.steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.step {
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 3;
+    color: #212529;
+}
+
+.step:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    margin: 15px 0;
+}
+
+.step p {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Step icon using ::before */
+.step::before {
+    content: "";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e9f5ff;
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #2b83ff;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.step:hover::before {
+    background: #2b83ff;
+    color: #fff;
+}
+
+.step:nth-child(1)::before {
+    content: "\f002";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.step:nth-child(2)::before {
+    content: "\f4fc";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.step:nth-child(3)::before {
+    content: "\f1b9";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+/* progress bar*/
+.progress-container {
+    position: relative;
+    height: 60px;
+    max-width: 1000px;
+    margin: -40px auto 40px;
+    z-index: 5;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 30px;
+    left: 15%;
+    width: 70%;
+    height: 8px;
+    background: #e9e9e9;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #2b83ff;
+    transition: width 0.8s ease;
+}
+
+.progress-markers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15%;
+}
+
+.marker {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 3px solid #2b83ff;
+    border-radius: 50%;
+    top: 24px;
+    z-index: 2;
+}
+
+.marker:first-child {
+    margin-left: -10px;
+}
+
+.marker:last-child {
+    margin-right: -10px;
+}
+
+/* progress car */
+.progress-car {
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 40px;
+    height: 25px;
+    background: transparent;
+    transition: left 0.8s cubic-bezier(0.36, 0, 0.66, -0.56);
+    z-index: 10;
+    font-size: 40px;
+}
+
+.progress-car::before {
+    content: "🚗";
+    transform: rotateY(180deg);
+    display: inline-block;
+}
+
+/* Wwind effect */
+.progress-car::after {
+    content: "";
+    position: absolute;
+    left: -50px;
+    top: 80%;
+    width: 50px;
+    height: 10px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+@keyframes wind {
+    0% {
+        transform: translateX(0) translateY(-50%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(100px) translateY(-50%);
+        opacity: 0;
+    }
+}
+
+.progress-car.wind::after {
+    animation: wind 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+    .how-it-works {
+        padding: 80px 20px;
+        height: auto; /* Let height adjust based on content */
+    }
+    .how-it-works h2 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+    .steps-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 10px;
+        margin-bottom: 60px;
+    }
+    .step {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 15px;
+    }
+    .step h3 {
+        font-size: 1.3rem;
+    }
+    .step p {
+        font-size: 0.95rem;
+    }
+    .progress-container {
+        height: 50px;
+        margin: -30px auto 30px;
+        max-width: 90%;
+    }
+    .progress-bar {
+        top: 25px;
+        left: 10%;
+        width: 80%;
+        height: 6px;
+    }
+    .progress-markers {
+        padding: 0 10%;
+    }
+    .marker {
+        width: 16px;
+        height: 16px;
+        top: 20px;
+    }
+    .progress-car {
+        top: -2px;
+        left: 10%;
+        width: 30px;
+        height: 20px;
+        font-size: 30px;
+    }
+}

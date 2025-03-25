@@ -29,7 +29,7 @@
 .rideTableContainer thead {
   background-color: #2b83ff; /* Blue background */
   color: white;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .rideTableContainer th {
@@ -46,10 +46,10 @@
 
 /* Table Body */
 .rideTableContainer tbody {
-  background-color: white;
-  color: #2b83ff;
-  font-size: 18px;
-  font-weight: bold;
+  background-color: #1e1e1e;
+  color: white;
+  font-size: 16px;
+  /* font-weight: bold; */
 }
 
 .rideTableContainer td {
@@ -77,8 +77,10 @@
 .startBtn,
 .cancelBtn {
   color: white;
-  width: 80px;
-  height: 30px;
+  /* width: 80px; */
+  /* height: 30px; */
+  padding: 5px 10px;
+  min-width: 80px;
   border: none;
   border-radius: 10px;
   margin: 5px;

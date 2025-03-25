@@ -1,6 +1,6 @@
 <?php
-error_reporting(0); // Suppress warnings and errors
-session_start(); // Start the session
+error_reporting(0); 
+session_start();
 include(__DIR__ . '/../../dbconn.php'); // Use absolute path
 
 if (!isset($_SESSION['id'])) {
@@ -12,14 +12,13 @@ $userID = $_SESSION['id'];
 $fieldName = $_POST['fieldName'];
 $fieldValue = $_POST['fieldValue'];
 
-// Validate the field name
+// Validate field name
 $allowedFields = ['firstname', 'lastname', 'phone_no', 'email'];
 if (!in_array($fieldName, $allowedFields)) {
     echo json_encode(['success' => false, 'message' => 'Invalid field name']);
     exit;
 }
 
-// Prepare the SQL query based on the field name
 if ($fieldName === 'email') {
     // Update email in the user table
     $sql = "UPDATE user SET email = ? WHERE id = ?";

@@ -1,0 +1,116 @@
+/* Earnings Content: Acts as a Wrapper */
+.earningsContent {
+  display: flex;
+  flex-direction: column; /* Header on top, content below */
+  align-items: center;
+  width: 100%;
+  /* padding-top: 20px; */
+}
+
+/* Header: Fixed on Top */
+.header {
+  position: sticky;
+  top: 0;
+  /* background: white; */
+  padding: 15px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  color: white;
+}
+
+#month{
+  width: 400px;
+  height: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #2b83ff;
+  border-radius: 15px;
+}
+
+/* Earnings Body: Chart & Details in a Row */
+.earningsBody {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Prevents stretching */
+  padding-top: 40px;
+}
+
+#chartContainer {
+  flex: 2;
+  min-height: 500px;
+}
+
+#earningDetails {
+  flex: 1;
+  width: 100%;
+  background: #1e1e1e;
+  /* padding: 20px; */
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Centers vertically */
+  align-items: center;      /* Centers horizontally */
+}
+
+#earningDetails h3{
+  font-size: 36px;
+  color: white;
+  padding-top: 20px;
+}
+
+#earningDetails h1{
+  font-size: 32px;
+  color: rgb(0, 207, 28);
+}
+
+#earningDetails p{
+  font-size: 22px;
+  margin-top: 20px;
+  color: #a0a0a0;
+}
+
+#totalEarnings{
+  font-size: 32px;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#availableBalance{
+  font-size: 32px;
+  color: rgb(37, 196, 37);
+}
+
+#withdrawBtn {
+  text-align: center !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px 10px;
+  border: none;
+  background: #2b83ff;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 220px;
+  transition: all 0.2s;
+  /* height: 50px; */
+}
+
+#withdrawBtn:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  background-color: #1a6dd9;
+}

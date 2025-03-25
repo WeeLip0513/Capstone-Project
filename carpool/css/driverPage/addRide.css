@@ -511,6 +511,40 @@
 
 }
 
+/* Styling for the conflict message */
+.conflict-message h3 {
+  color: #2b83ff;
+  font-size: 42px; /* Adjust size as needed */
+  text-align: center;
+}
+
+.conflict-message p {
+  color: white;
+  font-size: 20px; /* Adjust size as needed */
+  text-align: center;
+}
+
+#goBackBtn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #2b83ff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#goBackBtn:hover {
+  background-color: white;
+  color: #2b83ff;
+  /* border: 2px solid #2b83ff; */
+}
+
+
 /* Default styles for larger screens remain unchanged */
 
 /* For screens 1200px and below */

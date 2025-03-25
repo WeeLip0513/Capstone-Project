@@ -4,15 +4,19 @@
 .row {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
+    gap: 20px;
 }
 
-.search-form h2{
-    font-size: 15px;
-    margin-bottom: 8px;
-    margin-top: 8px;
+.search-form h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
-.pickup, .dropoff, .date, .time {
+
+.pickup,
+.dropoff,
+.date,
+.time {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -24,65 +28,399 @@ label {
     margin-left: 0;
 }
 
-select, input {
-    width: 100%; 
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.time-container{
-    display: flex;
-    gap: 4px;
-}
-
-.search-form{
-    background-color: #1e1e1e;
-    padding: 10px;
+select,
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333333;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);   
-    max-width: 1300px;
+    background-color: #2C2C2C;
+    color: white;
+    font-size: 14px;
 }
 
-.rideResults{
-    margin-top: 10px;
+.time-container {
+    display: flex;
+    gap: 13px;
+}
+
+.search-form {
     background-color: #1e1e1e;
-    color: white;
+    padding: 10px 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rideResults {
+    margin-top: 100px;
+    background-color: #1e1e1e;
 }
 
 /*Display rides php container*/
+.ride-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
 .ride-card {
+    max-width: 730px;
+    /* Keep max-width if needed */
     border: 2px solid black;
-    border-radius: 15px;
-    padding: 15px;
-    width: 90%;
-    max-width: 600px;
-    margin: 15px auto;
-    font-family: Arial, sans-serif;
+    border-radius: 16px;
+    background-color: #1E1E1E;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+
+.ride-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
 
 .ride-header {
+    background-color: #252525;
+    display: flex;
+    color: white;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333333;
+}
+
+.ride-title {
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.ride-title i {
+    color: #2b83ff;
+}
+
+.ride-content {
+    padding: 20px;
+}
+
+.ride-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.detail-icon {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(43, 131, 255, 0.15);
+    color: #2b83ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.detail-text h4 {
+    font-size: 14px;
+    color: #A0A0A0;
+    margin-bottom: 4px;
+}
+
+.detail-text p {
+    font-weight: 500;
+    color: #F8F9FA;
+}
+
+.ride-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 16px 20px;
+    border-top: 1px solid #333333;
+    background-color: #252525;
+}
+
+.passenger-container {
+    display: flex;
+    align-items: center;
+}
+
+.passenger-icons {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 2px solid #252525;
+    background-color: lightgray;
+    margin-left: -8px;
+    /* Adjust overlap */
 }
 
 .book-ride {
-    background-color: #007bff;
+    background-color: #2b83ff;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
 }
 
 .book-ride:hover {
+    background-color: #1a6dd9;
+}
+
+.status-tag {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    z-index: 1010;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Cart icon fixed positioning at the bottom right */
+.cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.cart-icon:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.cart-icon i {
+    font-size: 24px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4d4d;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: #007bff;
+    margin-right: 16px;
+}
+
+.remove-item {
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.book-ride.in-cart {
+    background-color: #28a745;
+}
+.book-ride.booked {
+    background-color: #28a745;
+}
+
+.empty-cart-message {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+}
+
+
+/* Cart modal styles */
+.cart-modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.card-wrap{
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    width: 45%;
+    height: 55%;
+    min-height: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* .modal-body{
+    margin-bottom: 250px !important;
+} */
+
+.cart-content{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    min-height: 100%;
+}
+
+.modal-header{
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: black;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+/* Cart items styles */
+.cart-items-container {
+    max-height: 350px;
+    overflow-y: auto;
+    /* margin-bottom: 50px !important; */
+    padding-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.cart-item-details h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+}
+
+.cart-item-details p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+
+/* Cart footer */
+.cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.cart-total-label {
+    font-weight: bold;
+}
+
+.cart-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.checkout-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
     background-color: #0056b3;
 }
 
-.ride-info p {
-    margin: 5px 0;
+.checkout-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
