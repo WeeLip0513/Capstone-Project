@@ -11,18 +11,22 @@ session_start();
   <meta charset="UTF-8">
   <title>Driver Page</title>
   <style>
+    /* *{
+    border: 2px solid red;
+    } */
+
     body {
       font-family: Arial, sans-serif;
-      background: #f9fafc; /* Light background */
+      background: #0B0D14; /* Light background */
       color: #333;
     }
 
     .hero {
-      background:rgb(0, 0, 0);
       color: white;
       text-align: center;
       padding: 150px 20px;
       margin-top: 70px;
+      height: 680px;
     }
 
     .hero h1 {
@@ -64,17 +68,26 @@ session_start();
       margin: 40px auto;
       padding: 0 20px;
       margin-top: 100px;
+
     }
 
     .feature-box {
-      background: #fff;
+      background: #0B0D14;
+      color: white;
       flex: 1 1 250px;
-      max-width: 350px;
-      height: 200px;
+      max-width: 300px;
+      height: 250px;
       padding: 25px;
       text-align: center;
       border-radius: 8px;
       box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+      text-align: justify;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
     .feature-box h3 {
@@ -86,7 +99,71 @@ session_start();
     .feature-box p {
       font-size: 1rem;
       line-height: 1.4;
-      color: #555;
+      max-width: 250px;
+    }
+
+    /* ========== DRIVER FEATURES SECTION ========== */
+    .driver-features {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .driver-features h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #fff;
+    }
+
+    /* ========== FEATURE GRID ========== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      justify-items: center; /* Centers items in each column */
+    }
+
+    /* ========== FEATURE CARD ========== */
+    .feature-card {
+      background-color: #141824;  /* Slightly lighter than the background */
+      padding: 30px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 450px;           /* Controls the max width of each card */
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      margin-bottom: 20px;
+    }
+
+    /* Adjust icon size or use a font icon / SVG if preferred */
+    .feature-icon img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #ccc; /* Subtle contrast for paragraph text */
+      text-align: justify;
     }
   </style>
 </head>
@@ -101,6 +178,49 @@ session_start();
     </p>
     <br><br><br>
     <a class="driverButton" href="driverRegistration.php">Become a Driver</a>
+  </section>
+
+  <section class="driver-features">
+    <h2>What You Can Do as a Driver</h2>
+    <div class="feature-grid">
+      
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/car2.png" alt="Manage Vehicles Icon">
+        </div>
+        <h3>Manage Vehicles</h3>
+        <p>Add multiple vehicles to your profile and choose which one to use for each ride.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/address.png" alt="Create Rides Icon">
+        </div>
+        <h3>Create Rides</h3>
+        <p>Set up one-time or recurring rides with your preferred routes, times, and pricing.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/money.png" alt="Track Earnings Icon">
+        </div>
+        <h3>Track Earnings</h3>
+        <p>Monitor your income and withdraw your earnings directly to your bank account.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/profile.png" alt="Manage Profile Icon">
+        </div>
+        <h3>Manage Profile</h3>
+        <p>Keep your driver details up to date and maintain your driver verification status.</p>
+      </div>
+
+    </div>
   </section>
 
   <!-- FEATURES SECTION -->
@@ -119,9 +239,5 @@ session_start();
     </div>
   </section>
 
-  
-  <script>
-   
-  </script>
 </body>
 </html>
