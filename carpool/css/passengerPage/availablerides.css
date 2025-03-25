@@ -275,6 +275,11 @@ input {
     font-size: 1.1rem;
 }
 
+.book-ride {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
 .book-ride.in-cart {
     background-color: #28a745;
 }
