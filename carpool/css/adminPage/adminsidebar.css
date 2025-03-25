@@ -2,19 +2,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     /* border: 3px solid red; */
 }
 
 body {
     min-height: 100vh;
-    background: rgb(18, 18, 18);
+    background: black;
     background-size: cover;
     background-position: center;
 }
 
 .admin-sidebar {
-    background: #2b64ff;
+    background: #1E1E1E;
     width: 220px;
     height: 100vh;
     position: fixed;
@@ -25,12 +25,10 @@ body {
     transition-property: left;
 }
 
+
 header img {
-    width: 100px;
-    margin: 15px;
-    margin-left: 60px;
-    border-radius: 50%;
-    border: 3px solid #b4b8b9;
+    width: 130px;
+    margin: 35px 38px 20px;
 }
 
 .close-btn {
@@ -45,11 +43,12 @@ header img {
 
 header h1 {
     text-align: center;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 20px;
-    padding-bottom: 13px;
+    padding-bottom: 5px;
     font-family: sans-serif;
     color: #fff;
+    margin-right: 10px;
 }
 
 .menu {
@@ -63,12 +62,23 @@ header h1 {
 }
 
 .menu .item a {
-    color: #fff;
+    color: white;
     font-size: 15px;
     text-decoration: none;
     display: block;
     padding: 5px 20px;
     line-height: 60px;
+    transition: background-color 0.3s;
+}
+
+.menu .item a:hover{
+    color: #2b64ff;
+    font-weight: bold;
+}
+.menu .item a.active{
+    background-color: #2b64ff;
+    color: white;
+    font-weight: bold;
 }
 
 .item i {
@@ -119,6 +129,7 @@ header h1 {
     
     .menu-btn {
         display: block; /* Show hamburger menu on mobile */
+        margin-top: 0px;
     }
     
     .close-btn {

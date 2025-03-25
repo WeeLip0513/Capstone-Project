@@ -1,0 +1,129 @@
+/* features*/
+.features-section {
+    padding: 100px 0;
+    height: 90vh;
+    background: black;
+}
+
+.features-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.features-title h2 {
+    font-size: 2.5rem;
+    color: #2b83ff !important;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.features-title p {
+    font-size: 1.1rem;
+    color: white !important;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.feature-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 350px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.feature-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.feature-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.feature-card:hover .feature-img img {
+    transform: scale(1.1);
+}
+
+.feature-content {
+    padding: 25px;
+}
+
+.feature-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #212529;
+}
+
+.feature-content p {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #e9f5ff;
+    margin-bottom: 20px;
+}
+
+.feature-icon i {
+    font-size: 28px;
+    color: #2b83ff;
+}
+
+@media (max-width: 768px) {
+    .features-section {
+        padding: 50px 0;
+        height: auto; /* Auto height on mobile */
+    }
+    .features-title h2 {
+        font-size: 2rem;
+    }
+    .features-title p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    .feature-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 10px;
+    }
+    .feature-card {
+        width: 100%;
+        max-width: 90%;
+        margin: 0 auto;
+    }
+    .feature-img {
+        height: 180px;
+    }
+    .feature-content {
+        padding: 15px;
+    }
+}

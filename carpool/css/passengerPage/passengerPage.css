@@ -3,11 +3,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Noto Sans", sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .passenger {
-    max-width: 1450px;
+    max-width: 1320px;
     margin: 0 auto;
     position: relative; /* Add this for proper positioning */
 }
@@ -19,11 +19,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgb(186, 186, 186);
+    color: white;
 }
 
 .tabs {
-    background: rgb(69, 69, 69);
+    background: #1E1E1E;
     box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
     border-radius: 0.56rem;
     padding: 13px;
@@ -40,8 +40,8 @@ input[type="radio"] {
 label {
     display: block;
     height: 20px;
-    width: 355px;
-    font-size: 22px;
+    width: 320px;
+    font-size: 19px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +54,7 @@ label {
     position: absolute;
     padding: 10px;
     background: #2b83ff;
-    width: 355px;
+    width: 320px;
     height: 48px;
     border-radius: 0.56rem;
     transition: ease .3s;
@@ -65,7 +65,7 @@ label {
     display: none;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .content-section.active {
@@ -85,19 +85,21 @@ label[for="tab4"]:hover {
 }
 
 #upcomingrides:checked ~ .glider {
-    transform: translateX(-531px);
+    transform: translateX(-480px);
+    width: 350px;
 }
 
 #availablerides:checked ~ .glider {
-    transform: translateX(-180px);
+    transform: translateX(-160px);
 }
 
 #tab3:checked ~ .glider {
-    transform: translateX(180px);
+    transform: translateX(160px);
 }
 
 #tab4:checked ~ .glider {
-    transform: translateX(531px);
+    transform: translateX(480px);
+    width: 350px;
 }
 
 .tab-content {

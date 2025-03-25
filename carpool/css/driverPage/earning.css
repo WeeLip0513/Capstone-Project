@@ -51,58 +51,66 @@
 #earningDetails {
   flex: 1;
   width: 100%;
-  background: #2b83ff;
+  background: #1e1e1e;
   /* padding: 20px; */
   border-radius: 10px;
   text-align: center;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 100%;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;  /* Centers vertically */
+  justify-content: center;  /* Centers vertically */
   align-items: center;      /* Centers horizontally */
 }
 
 #earningDetails h3{
-  font-size: 42px;
+  font-size: 36px;
   color: white;
   padding-top: 20px;
 }
 
 #earningDetails h1{
-  font-size: 36px;
+  font-size: 32px;
   color: rgb(0, 207, 28);
 }
 
 #earningDetails p{
-  font-size: 32px;
+  font-size: 22px;
   margin-top: 20px;
-  color: white;
+  color: #a0a0a0;
 }
 
 #totalEarnings{
-  font-size: 36px;
+  font-size: 32px;
   color: white;
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+#availableBalance{
+  font-size: 32px;
+  color: rgb(37, 196, 37);
 }
 
 #withdrawBtn {
   text-align: center !important;
   margin-top: 20px;
   margin-bottom: 20px;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border: none;
-  background: white;
-  color: #2b83ff;
+  background: #2b83ff;
+  color: white;
   font-size: 22px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 15px;
-  width: 300px;
-  height: 50px;
+  border-radius: 10px;
+  width: 220px;
+  transition: all 0.2s;
+  /* height: 50px; */
 }
 
 #withdrawBtn:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  background-color: #1a6dd9;
 }

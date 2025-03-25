@@ -10,6 +10,15 @@
     <link rel="icon" type="image/png" href="../image/icon-logo.png">
 </head>
 <body>
+    <?php
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    // Define all report pages
+    $reportPages = ['userReport.php', 'summaryReport.php', 'earningsReport.php', 'popularRoutesReport.php'];
+
+    // Check if the current page is in the report pages list
+    $isReportActive = in_array($currentPage, $reportPages);
+    ?>
+
     <div class="menu-btn">
         <i class="fas fa-bars"></i>
     </div>
@@ -19,24 +28,25 @@
             <div class="close-btn">
                 <i class="fas fa-times"></i>
             </div>
-            <img src="../image/admin/logo.jpg" alt="logo">
+            <img src="../image/logo.png" alt="logo">
             <h1>Welcome Admin</h1>
         </header>
         <div class="menu">
-            <div class="item"><a href="adminDashboard.php">Dashboard</a></div>
-            <div class="item"><a href="adminDriverApproval.php">Driver Approvals</a></div>
+            <div class="item"><a href="adminDashboard.php" class=" <?= ($currentPage == 'adminDashboard.php') ? 'active' : '' ?>">Dashboard</a></div>
+            <div class="item"><a href="adminDriverApproval.php" class=" <?= ($currentPage == 'adminDriverApproval.php'|| $currentPage == 'adminViewDriver.php') ? 'active' : '' ?>">Driver Approvals</a></div>
             <div class="item">
-                <a class="sub-btn">Reports
+                <a class="sub-btn<?= $isReportActive ? 'active' : '' ?>">Reports
                     <i class="fas fa-angle-right dropdown"></i>
                 </a>
-                <div class="sub-menu">
-                    <a href="" class="sub-item">Summary Report</a>
-                    <a href="" class="sub-item">Earnings Report</a>
-                    <a href="" class="sub-item">Popular Routes Report</a>
+                <div class="sub-menu" <?= $isReportActive ? 'style="display: block;"' : '' ?>>
+                    <a href="summaryReport.php" class="sub-item <?= ($currentPage == 'summaryReport.php') ? 'active' : '' ?>">Summary Report</a>
+                    <a href="userReport.php" class="sub-item <?= ($currentPage == 'userReport.php') ? 'active' : '' ?>">User Report</a>
+                    <a href="earningsReport.php" class="sub-item <?= ($currentPage == 'earningsReport.php') ? 'active' : '' ?>">Earnings Report</a>
+                    <a href="popularRoutesReport.php" class="sub-item <?= ($currentPage == 'popularRoutesReport.php') ? 'active' : '' ?>">Popular Routes Report</a>
                 </div>
             </div>
             <div class="item"><a href="">Feedbacks</a></div>
-            <div class="item"><a href="logout.php">Log Out</a></div>
+            <div class="item"><a href="../logout.php">Log Out</a></div>
         </div>
     </div>
     
