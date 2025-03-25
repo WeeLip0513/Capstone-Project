@@ -204,6 +204,7 @@ $revenues = json_encode(array_values($earnings_data));
   <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
   <link rel="stylesheet" href="../css/driverPage/addHistoryRides.css">
   <link rel="stylesheet" href="../css/driverPage/earning.css">
+  <link rel="stylesheet" href="../css/driverPage/withdrawHistory.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -580,7 +581,8 @@ $revenues = json_encode(array_values($earnings_data));
         </div>
       </div>
     </div>
-    <div id="historyContent" class="historyContent" style="display: none">history
+    <div id="historyContent" class="historyContent" style="display: none">
+      <h1>Withdraw History</h1>
       <div id="historyContainer" class="historyContainer">
         <div class="historyMonth" id="historyMonth">
           <select name="hisMonth" id="hisMonth">

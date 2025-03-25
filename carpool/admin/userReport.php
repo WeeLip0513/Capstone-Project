@@ -15,16 +15,16 @@ include("adminsidebar.php");
 <body>
     <div class="user-report-container">
         <h2>USER REPORT</h2>
-        <h3>Select to display the growth of new users.</h3>
+        <h3>Observe the growth of new users.</h3>
         <div class="user-report-form">
             <h4>Select Year & Month: </h4>
             <div class="user-report-selection">
                 <select name = "year" id="yearSelect" required>
                     <option value="">Year</option>
                     <option value="2025">2025</option>
-                    <option value="2025">2024</option>
-                    <option value="2025">2023</option>
-                    <option value="2025">2022</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
                 </select>
 
                 <select name = "month" id="monthSelect" required>
@@ -46,6 +46,7 @@ include("adminsidebar.php");
             </div>
         </div>
         <div class="chart-container">
+            <div id="userReportSummary" class="chart-summary"></div>
             <canvas id="userGrowthChart"></canvas>
         </div>
     </div>
@@ -83,6 +84,17 @@ include("adminsidebar.php");
                                 "July", "August", "September", "October", "November", "December"];
             const monthName = monthNames[month - 1];
             
+            // Calculate totals
+            const totalPassengers = data.passengers.reduce((sum, value) => sum + value, 0);
+            const totalDrivers = data.drivers.reduce((sum, value) => sum + value, 0);
+            const totalUsers = totalPassengers + totalDrivers;
+
+            // Update description text
+            const summaryText = `In ${monthName} ${year}, there are a total of ${totalUsers} new users. 
+                                There are ${totalDrivers} drivers and ${totalPassengers} passengers.`;
+            
+            document.getElementById('userReportSummary').textContent = summaryText;
+            
             // Create the chart
             chart = new Chart(ctx, {
                 type: 'line',
@@ -95,7 +107,9 @@ include("adminsidebar.php");
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 2,
-                            tension: 0.1
+                            tension: 0.4,
+                            borderJoinStyle: 'round',
+                            borderCapStyle: 'round'
                         },
                         {
                             label: 'Drivers',
@@ -103,7 +117,9 @@ include("adminsidebar.php");
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 2,
-                            tension: 0.1
+                            tension: 0.4,
+                            borderJoinStyle: 'round',
+                            borderCapStyle: 'round'
                         }
                     ]
                 },
@@ -114,7 +130,8 @@ include("adminsidebar.php");
                             display: true,
                             text: `New User Registrations - ${monthName} ${year}`,
                             font: {
-                                size: 18
+                                size: 20,
+                                color: '#A0A0A0'
                             }
                         },
                         legend: {
@@ -132,7 +149,8 @@ include("adminsidebar.php");
                                 display: true,
                                 text: 'Number of New Users',
                                 font: {
-                                    weight: 'bold'
+                                    weight: 'bold',
+                                    size: 16
                                 }
                             },
                             ticks: {
@@ -148,8 +166,8 @@ include("adminsidebar.php");
                                 display: true,
                                 text: 'Day of Month',
                                 font: {
-                                    weight: 'bold'
-
+                                    weight: 'bold',
+                                    size: 16
                                 }
                             }
                         }
