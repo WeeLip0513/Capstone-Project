@@ -48,7 +48,7 @@ include("headerHomepage.php");
     }
 
     .left h1 {
-        font-size:65px;
+        font-size:60px;
         margin-top: 40px;
         font-weight: bold;
         margin-bottom: 20px;
@@ -60,7 +60,6 @@ include("headerHomepage.php");
         font-size: 26px;
         color: #6e6e6e;
         line-height: 1.6;
-        font-weight: 600;
         margin-bottom: 30px;
     }
 

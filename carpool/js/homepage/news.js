@@ -1,19 +1,67 @@
-let slideIndex = 0;
-showSlides();
+var swiper = new Swiper('.swiper-container', {
+  slidesPerView: 1.5, // Show part of previous & next slides
+  spaceBetween: 20, // Spacing between slides
+  centeredSlides: true, // Center active slide
+  watchSlidesProgress: true, // Helps Swiper track slides correctly
+  loop: true, // Enable infinite scrolling
+  autoplay: {
+      delay: 3000, // Auto-slide every 3 seconds
+      disableOnInteraction: false, // Continue autoplay after user interaction
+  },
+  pagination: {
+      el: ".swiper-pagination",
+      clickable: true, // Allow clicking on dots
+  },
+  navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+  },
+});
 
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
+//2
+function openCity(cityName,elmnt,color) {
+  var i, tabcontent, tablinks;
+
+   // Hide all tab content
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
   }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
+
+   // Reset background color for all tab links
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.backgroundColor = ""; // Remove previous color
+      tablinks[i].classList.remove("active");
   }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 2000); // Change image every 2 seconds
-}
+
+  // Show the selected tab content
+  document.getElementById(cityName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+
+  // Add active class to the clicked tab
+  elmnt.classList.add("active");
+
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  document.getElementById("defaultOpen").click();
+
+  
+function openTab(evt, tabName) {
+    // Remove 'active' class from all tabs
+    var tablinks = document.getElementsByClassName("tablink");
+    for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+       }
+
+    // Add 'active' class to the clicked tab
+    evt.currentTarget.classList.add("active");
+
+    // Show the related tab content (optional logic)
+    var tabcontent = document.getElementsByClassName("tabcontent");
+        for (var i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        }
+        document.getElementById(tabName).style.display = "block";
+    }   
