@@ -3,11 +3,14 @@ session_start();
 include("../dbconn.php");
 include("../userHeader.php");
 
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 11;
+$_SESSION['id'] = 11; // Ensure this session variable exists
 $userID = $_SESSION['id'];
+
+$driver = []; // Initialize to avoid "undefined variable" errors
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
 $stmt = mysqli_prepare($conn, $query);
@@ -15,26 +18,51 @@ mysqli_stmt_bind_param($stmt, "i", $userID);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-if (mysqli_num_rows($result) == 1) {
+if ($result && mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
-  // echo "<pre>";
-  // print_r($driver); // Debugging: Print driver details
-  // echo "</pre>";
-  $frontImgPath = $driver['license_photo_front'];
-  $backImgPath = $driver['license_photo_back'];
-  $current_status = $driver['status'];
-  $current_penalty_end = $driver['penalty_end_date'];
-  $frontLicensePath = str_replace("../../", "../", $frontImgPath);
-  $backLicensePath = str_replace("../../", "../", $backImgPath);
 
-  // echo $frontLicensePath;
-  // echo $backLicensePath;
+  // Debugging: Print driver array
+  echo "<pre>";
+  print_r($driver);
+  echo "</pre>";
 
-  $driverID = $driver['id'];
+  // Assign values to individual variables safely
+  $firstname = isset($driver['firstname']) ? $driver['firstname'] : "N/A";
+  $lastname = isset($driver['lastname']) ? $driver['lastname'] : "N/A";
+  $phone_no = isset($driver['phone_no']) ? $driver['phone_no'] : "N/A";
+  $email = isset($driver['email']) ? $driver['email'] : "N/A";
+  $license_no = isset($driver['license_no']) ? $driver['license_no'] : "N/A";
+  $license_exp = isset($driver['license_expiry_date']) ? $driver['license_expiry_date'] : "N/A";
+  $registration_date = isset($driver['registration_date']) ? $driver['registration_date'] : "N/A";
+  $current_status = isset($driver['status']) ? $driver['status'] : "Unknown";
+  $rating = isset($driver['rating']) ? $driver['rating'] : "N/A";
+  $cancel_count = isset($driver['cancel_count']) ? $driver['cancel_count'] : "0";
+  $penalty_end_date = isset($driver['penalty_end_date']) ? $driver['penalty_end_date'] : "N/A";
+
+  // License images
+  $license_photo_front = isset($driver['license_photo_front']) ? str_replace("../../", "../", $driver['license_photo_front']) : "";
+  $license_photo_back = isset($driver['license_photo_back']) ? str_replace("../../", "../", $driver['license_photo_back']) : "";
+
+  // Driver ID
+  $driverID = isset($driver['id']) ? $driver['id'] : 0;
+
+  // Store in session
   $_SESSION['driverID'] = $driverID;
-  // echo $_SESSION['driverID'];
 } else {
-  echo "No driver record found!";
+  echo "<p style='color:red;'>No driver record found!</p>";
+
+  // Assign default values to avoid errors in the HTML
+  $firstname = "N/A";
+  $lastname = "N/A";
+  $phone_no = "N/A";
+  $email = "N/A";
+  $registration_date = "N/A";
+  $status = "Unknown";
+  $rating = "N/A";
+  $cancel_count = "0";
+  $penalty_end_date = "N/A";
+  $license_photo_front = "";
+  $license_photo_back = "";
 }
 
 // Set Malaysia Timezone
@@ -108,7 +136,7 @@ if ($canceled_rides > 0) {
 
   $current_cancel_count = $driver['cancel_count'] ?? 0;
   $current_status = $driver['status'] ?? 'active';
-  $current_penalty_end = $driver['penalty_end_date'] ?? null;
+  $penalty_end_date = $driver['penalty_end_date'] ?? null;
 
   // Step 3: Increment cancel_count only if the driver is not already restricted
   if ($current_status !== 'restricted') {
@@ -171,7 +199,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Check if today is the penalty end date
-if ($current_status === 'restricted' && ($current_penalty_end === $today || $current_penalty_end < $today)) {
+if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalty_end_date < $today)) {
   // Reset cancel count and remove restriction
   $reset_sql = "UPDATE driver 
                 SET cancel_count = 0, penalty_end_date = NULL, status = 'approved' 
@@ -204,6 +232,8 @@ $revenues = json_encode(array_values($earnings_data));
   <link rel="stylesheet" href="../css/driverPage/upcomingRides.css">
   <link rel="stylesheet" href="../css/driverPage/addHistoryRides.css">
   <link rel="stylesheet" href="../css/driverPage/earning.css">
+  <link rel="stylesheet" href="../css/driverPage/withdrawHistory.css">
+  <link rel="stylesheet" href="../css/driverPage/driverProfile.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -216,6 +246,7 @@ $revenues = json_encode(array_values($earnings_data));
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/driver/chart.js" defer></script>
   <script src="../js/driver/withdrawHistory.js" defer></script>
+  <script src="../js/driver/editProfile.js" defer></script>
 </head>
 
 <body>
@@ -580,7 +611,8 @@ $revenues = json_encode(array_values($earnings_data));
         </div>
       </div>
     </div>
-    <div id="historyContent" class="historyContent" style="display: none">history
+    <div id="historyContent" class="historyContent" style="display: none">
+      <h1>Withdraw History</h1>
       <div id="historyContainer" class="historyContainer">
         <div class="historyMonth" id="historyMonth">
           <select name="hisMonth" id="hisMonth">
@@ -603,17 +635,124 @@ $revenues = json_encode(array_values($earnings_data));
         </div>
       </div>
     </div>
-    <div class="profileContent" style="display: none">Profile
-      <div class="licenseImg">
-        <img src="<?php echo htmlspecialchars($frontLicensePath); ?>" alt="license photo_front" width="30%"
-          height="40%">
-        <img src="<?php echo htmlspecialchars($backLicensePath); ?>" alt="license photo_back" width="30%" height="40%">
+    <div class="profileContent" style="display: none">
+      <div class="profile-container">
+        <div class="profile-card">
+          <h2>My Profile</h2>
+          <div class="profiledetails">
+            <!-- Name Row -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>First Name:</h3>
+                <div class="show-profile-detail">
+                  <p id="firstname"><?php echo $firstname; ?></p>
+                  <i class="fas fa-edit edit-icon"
+                    onclick="openEditProfileModal('firstname', '<?php echo $firstname; ?>')"></i>
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>Last Name:</h3>
+                <div class="show-profile-detail">
+                  <p id="lastname"><?php echo $lastname; ?></p>
+                  <i class="fas fa-edit edit-icon"
+                    onclick="openEditProfileModal('lastname', '<?php echo $lastname; ?>')"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Row -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>Phone:</h3>
+                <div class="show-profile-detail">
+                  <p id="phone_no"><?php echo $phone_no; ?></p>
+                  <i class="fas fa-edit edit-icon"
+                    onclick="openEditProfileModal('phone_no', '<?php echo $phone_no; ?>')"></i>
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>Email:</h3>
+                <div class="show-profile-detail">
+                  <p id="email"><?php echo $email; ?></p>
+                  <i class="fas fa-edit edit-icon" onclick="openEditProfileModal('email', '<?php echo $email; ?>')"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration & Password Reset Row -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>Registered Date:</h3>
+                <div class="show-profile-detail">
+                  <p><?php echo $registration_date; ?></p>
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>Reset Password:</h3>
+                <div class="show-profile-detail">
+                  <p>**********</p>
+                  <a href="#" class="resetPassword"><button class="forgot">Reset Password</button></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Row: License Number -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>License Number:</h3>
+                <div class="show-profile-detail">
+                  <p><?php echo $license_no; ?></p>
+                  <a href="#" class="updateLicense"><button class="forgot">Update License</button></a>
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>License Expiry Date:</h3>
+                <div class="show-profile-detail">
+                  <p><?php echo $license_exp; ?></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Row: License Images -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>License Photo (Front):</h3>
+                <div class="show-profile-detail">
+                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front" width="100%" height="60%">
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>License Photo (Back):</h3>
+                <div class="show-profile-detail">
+                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Back" width="100%" height="60%">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profile Modal -->
+      <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form id="editProfileForm">
+            <input type="hidden" id="editFieldName" name="fieldName">
+            <label id="editLabel"></label>
+            <div class="form-group">
+              <input type="text" id="editFieldValue" name="fieldValue" required>
+              <span id="errorMessage" class="error-message"></span>
+            </div>
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="../js/driver/upcomingRide.js" defer></script>
-  <script src="../js/driver/addRide.js" defer></script>
-  <script src="../js/driver/addHistoryRides.js" defer></script>
+
+    <script src="../js/driver/upcomingRide.js" defer></script>
+    <script src="../js/driver/addRide.js" defer></script>
+    <script src="../js/driver/addHistoryRides.js" defer></script>
 </body>
 
 </html>

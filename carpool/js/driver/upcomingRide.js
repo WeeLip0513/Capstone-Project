@@ -204,7 +204,7 @@ function generatePassengerIcons(totalSlots, occupiedSlots) {
   let icons = "";
 
   for (let i = 0; i < totalSlots; i++) {
-    icons += `<i class="fa fa-user" style="color: ${i < occupiedSlots ? 'black' : 'lightgray'};"></i> `;
+    icons += `<i class="fa fa-user" style="color: ${i < occupiedSlots ? '#2b83ff' : 'lightgray'};"></i> `;
   }
 
   return icons;
@@ -294,6 +294,50 @@ function cancelWithoutPenalty(rideId) {
 
 
 function startRide(rideId) {
+  const ride = ridesData.find(r => r.id === rideId);
+  if (!ride) {
+    alert("❌ Ride not found.");
+    return;
+  }
+
+  console.log("🚗 Ride Object:", ride);  // Log entire ride object for debugging
+
+  if (!ride.time || !ride.time.includes(":")) {
+    console.error("❌ Invalid ride time format:", ride.time);
+    alert("❌ Ride time is not in the correct format.");
+    return;
+  }
+
+  // Check if the ride time is in 12-hour format and convert it to 24-hour format
+  let [rideHour, rideMinute] = ride.time.split(":").map(num => parseInt(num, 10));
+  
+  // Handle if hour is a single digit, assuming it's in 12-hour format and AM
+  if (rideHour < 10) {
+    rideHour += 12;  // Convert single digit hour (e.g., 1 -> 13)
+  }
+
+  if (isNaN(rideHour) || isNaN(rideMinute)) {
+    console.error("❌ Failed to parse ride time:", ride.time);
+    alert("❌ Could not understand ride time.");
+    return;
+  }
+
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  const rideTimeInMinutes = rideHour * 60 + rideMinute;
+  const currentTimeInMinutes = currentHour * 60 + currentMinute;
+
+  // console.log(`🕒 Current Time: ${currentHour}:${currentMinute} (${currentTimeInMinutes} minutes)`);
+  // console.log(`🚗 Ride Time: ${rideHour}:${rideMinute} (${rideTimeInMinutes} minutes)`);
+  // console.log(`⌛ Time Difference: ${rideTimeInMinutes - currentTimeInMinutes} minutes`);
+
+  if (currentTimeInMinutes < rideTimeInMinutes - 30) {
+    alert("⏳ You can only start the ride within 30 minutes of the scheduled time.");
+    return;
+  }
+
   fetch('../php/driver/startRide.php', {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -302,10 +346,15 @@ function startRide(rideId) {
   .then(response => response.json())
   .then(data => {
       if (data.status === "success") {
-          window.location.href = `ridePage.php?ride_id=${rideId}`; // Redirect to ride page
+          window.location.href = `ridePage.php?ride_id=${rideId}`;
       } else {
           alert("❌ Failed to start ride: " + data.message);
       }
   })
   .catch(error => console.error('❌ Error starting ride:', error));
 }
+
+
+
+
+

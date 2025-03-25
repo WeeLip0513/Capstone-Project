@@ -1,0 +1,325 @@
+.profileContent{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-container {
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-bottom: 10rem;
+  text-align: left;
+}
+
+.profile-card h2 {
+  color: #2b83ff; /* Changed from #333 to white to match your dark theme */
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.profiledetails {
+  margin-top: 20px;
+}
+
+.profiledetails h3{
+  color: white;
+}
+
+.profiledetails p {
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 3px 3px;
+  background-color: #242323;
+  color: white;
+  flex-grow: 1;
+  margin: 5px 2px;
+}
+
+.resetPassword {
+  padding: 0px 12px;
+  /* margin: 5px; */
+}
+
+.profiledetails h3 strong {
+  min-width: 150px;
+  color:#2b83ff;
+}
+
+.profilerow{
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.profiledetail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.show-profile-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #242323;
+  border-radius: 10px;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.forgot {
+  background-color: #2b83ff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.forgot:hover {
+  background-color: #1d5cad;
+}
+
+.updateLicense{
+  background-color: #2b83ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  padding: 0px 12px;
+  margin: 5px;
+}
+
+.updateLicense:hover{
+  background-color: #1d5cad;
+}
+
+.edit-icon {
+  color: #2b83ff;
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s;
+  width: 25px;
+}
+
+.edit-icon:hover {
+  color: #1a5db4;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+  visibility: hidden; /* Hidden by default */
+  opacity: 0; /* Fully transparent by default */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
+  padding-top: 110px;
+  border-radius: 10px;
+}
+
+.modal.show {
+  visibility: visible; /* Make the modal visible */
+  opacity: 1; /* Fully opaque */
+}
+
+.modal-content {
+  background-color: #1E1E1E;
+  margin: 5% auto;
+  padding: 15px;
+  border: 1px solid #333;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  transform: translateY(-100%); /* Start off-screen at the top */
+  transition: transform 0.3s ease-in-out; /* Smooth slide-in transition */
+}
+
+.modal.show .modal-content {
+  transform: translateY(0); /* Slide into the center of the screen */
+}
+
+/* Close Button Styles */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  float: right;
+  height: 30px;
+}
+
+.close:hover,
+.close:focus {
+  color: #2b83ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Error Message Styles */
+.error-message {
+  color: red; /* Red color for error messages */
+  font-size: 12px; /* Smaller font size */
+  margin-top: 5px; /* Add some spacing above the error message */
+  visibility: hidden; /* Hidden by default */
+  opacity: 0; /* Start fully transparent */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+}
+
+.error-message.show {
+  visibility: visible; /* Make the element visible */
+  opacity: 1; /* Fully opaque */
+}
+
+.modal-content label{
+  color: #2b83ff;
+ margin-top: 10px;
+ margin-bottom: 15px;
+ text-align: left;
+ display: block;
+ font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 7px;
+  box-sizing: border-box;
+  border: 2px solid #333; /* Default border */
+  outline: none;
+  background-color: #262627;
+  color: white;
+}
+
+#form-group input:focus {
+  border-color: var(--light-orange);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+}
+
+.modal-content button{
+  margin-top: 16px;
+  border-radius: 5px;
+  background-color: #2b83ff;
+  padding: 8px 12px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.modal-content button:hover {
+  background-color: rgb(25, 75, 149);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+/* 
+@media screen and (max-width: 1220px) {
+  .profile-container {
+      padding: 10px;
+      margin-bottom: 50px;
+      max-width: 1170px;
+  }
+
+  .profile-card h2 {
+      font-size: 26px;
+  }
+
+  .profiledetails p {
+      font-size: 18px;
+  }
+
+  .profiledetail {
+      width: 100%;
+  }
+}
+@media screen and (max-width: 992px) {
+  .profile-container {
+      padding: 10px;
+      margin-bottom: 50px;
+      max-width: 850px;
+  }
+
+  .profile-card h2 {
+      font-size: 24px;
+  }
+
+  .profiledetails p {
+      font-size: 14px;
+  }
+
+  .profilerow {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .profiledetail {
+      width: 100%;
+  }
+}
+
+/* For screens smaller than 768px (e.g., large phones) */
+/* @media screen and (max-width: 768px) {
+  .profile-container {
+      padding: 10px;
+      max-width: 700px;
+      margin-bottom: 50px;
+  }
+
+  .profile-card h2 {
+      font-size: 22px;
+  }
+
+  .profiledetails p {
+      font-size: 14px;
+  }
+
+  .show-profile-detail {
+      align-items: flex-start;
+  }
+
+  .edit-icon {
+      margin-top: 10px;
+  }
+} */
+
+/* For screens smaller than 480px (e.g., small phones) */
+/* @media screen and (max-width: 480px) {
+  .profile-container {
+      padding: 5px;
+      max-width: 400px;
+  }
+
+  .profile-card h2 {
+      font-size: 23px;
+  }
+
+  .profiledetails p {
+      font-size: 12px;
+  }
+
+  .profilerow {
+      gap: 5px;
+  }
+
+  .show-profile-detail {
+      padding: 10px;
+  }
+
+  .modal-content {
+      width: 40%;
+      padding: 10px;
+      margin-left: 50px;
+      margin-top: 80px;
+  }
+}  */
+
+

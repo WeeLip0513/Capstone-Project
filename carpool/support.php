@@ -51,7 +51,6 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Page</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
@@ -86,8 +85,8 @@ mysqli_close($conn);
                 <strong class="small-header">Thank You for Choosing APU Carpool</strong>
                 Together, we can make campus transportation more convenient, sustainable, and community-focused!
                 </p>
-            </section>
-            <section class="feedback">
+        </section>
+        <section class="feedback">
             <div class="feedback-box">
                 <!-- Left side: Feedback Form -->
                 <div class="form-container">
