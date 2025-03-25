@@ -262,7 +262,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
                         </div>
                         <div class='detail-text'>
                             <h4>Price</h4>
-                            <p>RM " . $row['price'] . "</p>
+                            <p class='price-value'>RM " . $row['price'] . "</p>
                         </div>
                     </div>
                 </div>

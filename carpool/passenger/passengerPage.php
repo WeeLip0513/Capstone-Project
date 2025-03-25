@@ -30,6 +30,7 @@ $passenger = getProfileDetails($userID, $conn);
     <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
+    <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
