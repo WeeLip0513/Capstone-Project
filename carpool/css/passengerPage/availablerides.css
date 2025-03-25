@@ -1,6 +1,6 @@
-*{
+/* *{
     border: 2px solid red;
-}
+} */
 .row {
     display: flex;
     justify-content: space-between;
@@ -276,6 +276,9 @@ input {
 }
 
 .book-ride.in-cart {
+    background-color: #28a745;
+}
+.book-ride.booked {
     background-color: #28a745;
 }
 

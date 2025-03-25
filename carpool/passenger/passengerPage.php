@@ -269,7 +269,7 @@ $passenger = getProfileDetails($userID, $conn);
 
     <!-- Add this cart icon to your page header/navigation -->
     <div id="cart-icon" class="cart-icon">
-        <i class="fas fa-shopping-cart"></i>
+        <i class="fa-solid fa-car"></i>
         <span id="cart-count" class="cart-count">0</span>
     </div>
 
@@ -398,17 +398,17 @@ $passenger = getProfileDetails($userID, $conn);
                 let html = '';
                 items.forEach(item => {
                     html += `
-        <div class="cart-item" data-ride-id="${item.id}">
-            <div class="cart-item-details">
-                <h4>${getLocationName(item.pick_up_point)} to ${getLocationName(item.drop_off_point)}</h4>
-                <p>${item.date} at ${item.time}</p>
-                <p>${item.brand} ${item.model} • ${item.firstname} ${item.lastname}</p>
-            </div>
-            <div class="cart-item-price">RM ${item.price}</div>
-            <div class="remove-item" data-ride-id="${item.id}">
-                <i class="fas fa-trash"></i>
-            </div>
-        </div>`;
+                    <div class="cart-item" data-ride-id="${item.id}">
+                        <div class="cart-item-details">
+                            <h4>${getLocationName(item.pick_up_point)} to ${getLocationName(item.drop_off_point)}</h4>
+                            <p>${item.date} at ${item.time}</p>
+                            <p>${item.brand} ${item.model} • ${item.firstname} ${item.lastname}</p>
+                        </div>
+                        <div class="cart-item-price">RM ${item.price}</div>
+                        <div class="remove-item" data-ride-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>`;
                 });
 
                 cartItemsContainer.innerHTML = html;
@@ -472,7 +472,7 @@ $passenger = getProfileDetails($userID, $conn);
             }
 
             function proceedToPayment() {
-                fetch('../php/passenger/payment.php', {
+                fetch('http://localhost/Capstone-Project/carpool/php/passenger/displayrides.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -492,6 +492,54 @@ $passenger = getProfileDetails($userID, $conn);
                         showNotification('An error occurred. Please try again.');
                     });
             }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentStatus = urlParams.get('payment');
+
+            if (paymentStatus === 'success') {
+                showNotification('Payment successful! Your ride has been booked.');
+
+                // Update all "In Cart" buttons to "Booked" for items that were in the cart
+                document.querySelectorAll('.book-ride.in-cart').forEach(button => {
+                    button.textContent = 'Booked';
+                    button.classList.remove('in-cart');
+                    button.classList.add('booked');
+                    button.disabled = true;
+                });
+
+                // Clear URL parameter to prevent showing the notification on page refresh
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (paymentStatus === 'error') {
+                showNotification('Payment was not completed. Please try again.');
+
+                // Clear URL parameter to prevent showing the notification on page refresh
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
+            // Add this function to check if a ride is already booked by the passenger
+            function checkBookedRides() {
+                fetch('http://localhost/Capstone-Project/carpool/php/passenger/displayrides.php')
+                    .then(response => response.json())
+                    console.log('Response from checkBookedRides:', data);
+                    .then(data => {
+                        if (data.success) {
+                            data.bookedRides.forEach(rideId => {
+                                const bookButton = document.querySelector(`.book-ride[data-ride-id="${rideId}"]`);
+                                if (bookButton) {
+                                    bookButton.textContent = 'Booked';
+                                    bookButton.classList.add('booked');
+                                    bookButton.disabled = true;
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking booked rides:', error);
+                    });
+            }
+
+            // Call this function when the page loads
+            checkBookedRides();
 
             function updateCartCount(count) {
                 if (cartCount) {

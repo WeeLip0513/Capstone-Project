@@ -9,13 +9,26 @@ if (!isset($_SESSION['driverID'])) {
 }
 
 $driverID = $_SESSION['driverID'];
-$startDate = isset($_POST['start_date']) ? $_POST['start_date'] : null;
-$endDate = isset($_POST['end_date']) ? $_POST['end_date'] : null;
+$month = isset($_GET['month']) ? $_GET['month'] : null;
 
-if (!$startDate || !$endDate) {
-    echo json_encode(["error" => "Invalid date range."]);
+if (!$month) {
+    echo json_encode(["error" => "Invalid month selection."]);
     exit;
 }
+
+$monthMap = [
+    "jan" => "01", "feb" => "02", "mar" => "03", "apr" => "04", "may" => "05", "jun" => "06",
+    "jul" => "07", "aug" => "08", "sep" => "09", "oct" => "10", "nov" => "11", "dec" => "12"
+];
+
+if (!isset($monthMap[$month])) {
+    echo json_encode(["error" => "Invalid month selection."]);
+    exit;
+}
+
+$year = date("Y");
+$startDate = "$year-{$monthMap[$month]}-01";
+$endDate = date("Y-m-t", strtotime($startDate));
 
 // Fetch total earnings
 $earning_sql = "SELECT SUM(driver_revenue) AS total_earnings FROM driver_transaction 
@@ -63,12 +76,15 @@ while ($row = $chart_result->fetch_assoc()) {
 $chart_stmt->close();
 
 $data = [
-    "total_earnings" => number_format((float)$total_earnings, 2, '.', ''),
-    "withdrawn_amount" => number_format((float)$withdrawn_amount, 2, '.', ''),
-    "available_balance" => number_format((float)$available_balance, 2, '.', ''),
-    "dates" => $dates,
-    "revenues" => $revenues,
+  "total" => (float)$total_earnings,
+  "withdrawn" => (float)$withdrawn_amount,
+  "balance" => (float)$available_balance,
+  "range" => date("d-m-Y", strtotime($startDate)) . " <br> ~ <br> " . date("d-m-Y", strtotime($endDate)), 
+  "earnings" => array_map(function($date, $revenue) {
+      return ["date" => $date, "amount" => $revenue];
+  }, $dates, $revenues)
 ];
+
 
 header('Content-Type: application/json');
 echo json_encode($data);
