@@ -1,21 +1,21 @@
 /* *{
     border: 1px solid red;
 } */
-.earnings-report-container{
+.popularRoutes-report-container{
     margin-left: 16rem;
     margin-top: 30px;
     margin-right: 2.5rem;
 }
-.earnings-report-container h2{
+.popularRoutes-report-container h2{
     color: #2b83ff;
     font-size: 25px;
 }
-.earnings-report-container h3{
+.popularRoutes-report-container h3{
     margin-top: 5px;
     color: rgb(101, 103, 103);
 }
 
-.earnings-report-form{
+.popularRoutes-report-form{
     width: 100%;
     margin-top: 20px;
     color: white;
@@ -25,7 +25,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-.earnings-report-selection{
+.popularRoutes-report-selection{
     margin-top: 15px;
     display: flex;
     column-gap: 15px;
@@ -60,8 +60,20 @@ button:hover {
 
 .chart-container {
     margin-top: 20px;
-    height: 600px; /* Adjust as needed */
+    margin-bottom: 30px;
     width: 100%;
-    margin-bottom: 20px;
 }
 
+#userReportSummary{
+    color: white;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .user-report-container {
+        width: 100%;
+        margin-left: 5rem;
+    }
+}

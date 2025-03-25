@@ -59,9 +59,16 @@ button:hover {
 }
 
 .chart-container {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 30px;
     width: 100%;
+}
+
+#userReportSummary{
+    color: white;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {
