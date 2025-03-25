@@ -9,6 +9,11 @@ h1{
   font-size: 36px;
 }
 
+.historyMonth{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #hisMonth {
   background-color: white;
   color: #007bff;
@@ -70,8 +75,8 @@ div+div {
   display: flex;
   justify-content: center;
   /* width: 30%; */
-  margin-top: 15px;
-  gap: 10px;
+  /* margin-top: 15px; */
+  /* gap: 10px; */
 }
 
 div+div button {

@@ -50,7 +50,7 @@ include("headerHomepage.php");
     .left h1 {
         font-size:65px;
         margin-top: 40px;
-        font-weight: 500;
+        font-weight: bold;
         margin-bottom: 20px;
         color: white;
         font-weight: bold;

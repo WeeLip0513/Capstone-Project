@@ -329,9 +329,9 @@ function startRide(rideId) {
   const rideTimeInMinutes = rideHour * 60 + rideMinute;
   const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
-  console.log(`🕒 Current Time: ${currentHour}:${currentMinute} (${currentTimeInMinutes} minutes)`);
-  console.log(`🚗 Ride Time: ${rideHour}:${rideMinute} (${rideTimeInMinutes} minutes)`);
-  console.log(`⌛ Time Difference: ${rideTimeInMinutes - currentTimeInMinutes} minutes`);
+  // console.log(`🕒 Current Time: ${currentHour}:${currentMinute} (${currentTimeInMinutes} minutes)`);
+  // console.log(`🚗 Ride Time: ${rideHour}:${rideMinute} (${rideTimeInMinutes} minutes)`);
+  // console.log(`⌛ Time Difference: ${rideTimeInMinutes - currentTimeInMinutes} minutes`);
 
   if (currentTimeInMinutes < rideTimeInMinutes - 30) {
     alert("⏳ You can only start the ride within 30 minutes of the scheduled time.");
