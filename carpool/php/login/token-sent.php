@@ -6,15 +6,45 @@ $conn = require $_SERVER['DOCUMENT_ROOT'] . '/Capstone-Project/carpool/dbconn.ph
 
 $response = ['success' => false, 'message' => ''];
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+$email = "";
+
 try {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        // $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
-        if (!$email) {
-            $response['message'] = 'Please enter a valid email address';
-            echo json_encode($response);
-            exit();
+        // if (!$email) {
+        //     $response['message'] = 'Please enter a valid email address';
+        //     echo json_encode($response);
+        //     exit();
+        // }
+        if (isset($_SESSION['id'])) {
+            $userID = intval($_SESSION['id']);
+            $stmt = $conn->prepare("SELECT email FROM user WHERE id = ? LIMIT 1");
+            $stmt->bind_param("i", $userID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows === 1) {
+                $row = $result->fetch_assoc();
+                $email = $row['email'];
+            } else {
+                $response['message'] = 'User email not found';
+                echo json_encode($response);
+                exit();
+            }
+        } else {
+            // Otherwise, use the posted email (with validation)
+            $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+            if (!$email) {
+                $response['message'] = 'Please enter a valid email address';
+                echo json_encode($response);
+                exit();
+            }
         }
+
         // validate email
         $stmt = $conn->prepare("SELECT id FROM user WHERE email = ? LIMIT 1");
         $stmt->bind_param("s", $email);

@@ -28,12 +28,12 @@ include("dbconn.php");
         <ul class="navlinks">
             <li><a href="homepage.php" class="<?= ($currentPage == 'homepage.php') ? 'active' : '' ?>">Home</a></li>
             <li><a href="#" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About Us</a></li>
-            <li><a href="passengerRegistration.php"
-                    class="<?= ($currentPage == 'passengerRegistration.php') ? 'active' : '' ?>">Passenger</a></li>
-            <li><a href="driverRegistration.php"
-                    class="<?= ($currentPage == 'driverRegistration.php') ? 'active' : '' ?>">Driver</a></li>
-            <li><a href="#" class="<?= ($currentPage == 'news.php') ? 'active' : '' ?>">News</a></li>
-            <li><a href="#" class="<?= ($currentPage == 'support.php') ? 'active' : '' ?>">Support</a></li>
+            <li><a href="passengerHomePage.php"
+                    class="<?= ($currentPage == 'passengerHomePage.php') ? 'active' : '' ?>">Passenger</a></li>
+            <li><a href="driverHomepage.php"
+                    class="<?= ($currentPage == 'driverHomepage.php') ? 'active' : '' ?>">Driver</a></li>
+            <li><a href="news.php" class="<?= ($currentPage == 'news.php') ? 'active' : '' ?>">News</a></li>
+            <li><a href="support.php" class="<?= ($currentPage == 'support.php') ? 'active' : '' ?>">Support</a></li>
         </ul>
         <div class="buttons">
             <a href="loginpage.php"><button class="login">Login</button></a>
