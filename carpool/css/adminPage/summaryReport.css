@@ -1,6 +1,6 @@
-/* *{
+*{
     border: 1px solid red;
-} */
+}
 .summary-report-container{
     margin-left: 16rem;
     margin-top: 30px;
@@ -23,6 +23,7 @@
     padding: 12px 20px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px;
 }
 
 .summary-report-selection{
@@ -61,7 +62,12 @@ button:hover {
 .chart-container {
     margin-top: 20px;
     margin-bottom: 30px;
-    width: 100%;
+}
+
+canvas#summaryReportChart {
+    width: 100% !important; /* Ensures responsiveness */
+    height: auto !important; /* Maintains aspect ratio */
+    max-height: 400px; /* Restricts excessive height */
 }
 
 .summary-description{

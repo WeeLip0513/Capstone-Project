@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_query($conn, $insertPassengerSQL)) {
             $passenger_id = mysqli_insert_id($conn);
-            echo "<script>alert('Passenger Registered!'); window.location.href = '/Capstone-Project/carpool/loginpage.php'</script>";
+            echo "<script>alert('Passenger Registered!'); window.location.href = '../../loginpage.php'</script>";
         } else {
             echo "<script>alert('Error inserting passenger: " . mysqli_error($conn) . "'); window.history.back();</script>";
         }

@@ -10,7 +10,7 @@ include("adminsidebar.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary Report</title>
     <link rel="stylesheet" href="../css/adminPage/summaryReport.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="summary-report-container">
@@ -19,7 +19,7 @@ include("adminsidebar.php");
         <div class="summary-report-form">
             <h4>Select Year & Month: </h4>
             <div class="summary-report-selection">
-                <select name = "year" id="yearSelect" required>
+                <select name="year" id="yearSelect" required>
                     <option value="">Year</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
@@ -27,7 +27,7 @@ include("adminsidebar.php");
                     <option value="2022">2022</option>
                 </select>
 
-                <select name = "month" id="monthSelect" required>
+                <select name="month" id="monthSelect" required>
                     <option value="">Month</option>
                     <option value="1">January</option>
                     <option value="2">February</option>
@@ -42,17 +42,150 @@ include("adminsidebar.php");
                     <option value="11">November</option>
                     <option value="12">December</option>
                 </select>
-                <button onclick="loadChart(document.getElementById('yearSelect').value, document.getElementById('monthSelect').value)">Load Data</button>
+                <button onclick="loadChart()">Load Data</button>
             </div>
         </div>
         <div class="chart-container">
-            <div id="sumaryReport"></div>
             <canvas id="summaryReportChart"></canvas>
         </div>
         <div class="summary-description">
-            <h3>Description : </h3>
+            <h3>Description:</h3>
             <div id="summaryDes"></div>
         </div>
     </div>
+
+    <script>
+        let chart = null;
+
+        async function fetchCarpoolSummary(year, month) {
+            try {
+                const routesResponse = await fetch(`../php/admin/generatePopularRoutes.php?year=${year}&month=${month}`);
+                const routes = await routesResponse.json();
+
+                const earningsResponse = await fetch(`../php/admin/generateEarningsReport.php?year=${year}`);
+                const earnings = await earningsResponse.json();
+
+                const usersResponse = await fetch(`../php/admin/generateUserReport.php?year=${year}&month=${month}`);
+                const users = await usersResponse.json();
+
+                const monthEarnings = earnings.find(e => e.month == month);
+
+                return {
+                    newDrivers: users.drivers.reduce((a, b) => a + b, 0),
+                    newPassengers: users.passengers.reduce((a, b) => a + b, 0),
+                    driverRevenue: monthEarnings ? monthEarnings.total_driver_revenue : 0,
+                    appRevenue: monthEarnings ? monthEarnings.total_app_revenue : 0,
+                    mostPopularRoute: routes.length > 0 ? routes[0] : null  
+                };
+            } catch (error) {
+                console.error('Error fetching carpool summary:', error);
+                return null;
+            }
+        }
+
+        function createCarpoolSummaryPieChart(summaryData, year, month) {
+            const labels = ['New Drivers', 'New Passengers', 'Driver Revenue (RM)', 'App Revenue (RM)'];
+            const data = [
+                summaryData.newDrivers,
+                summaryData.newPassengers,
+                summaryData.driverRevenue,
+                summaryData.appRevenue
+            ];
+            const backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'];
+
+            if (summaryData.mostPopularRoute) {
+                labels.push(`Most Popular Route: ${summaryData.mostPopularRoute.route}`);
+                data.push(summaryData.mostPopularRoute.count);
+                backgroundColors.push('#9966FF');
+            }
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            const ctx = document.getElementById('summaryReportChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Allows resizing
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Carpool Summary - ${month}/${year}`,
+                            font: {
+                                size: 20,
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function generateCarpoolSummary(year, month) {
+            if (!year || !month) {
+                alert("Please select both year and month.");
+                return;
+            }
+
+            const summaryData = await fetchCarpoolSummary(year, month);
+            
+            if (summaryData) {
+                createCarpoolSummaryPieChart(summaryData, year, month);
+                displaySummaryDetails(summaryData);
+            } else {
+                console.error('Failed to fetch carpool summary data');
+            }
+        }
+
+        function displaySummaryDetails(summaryData) {
+            document.getElementById('summaryDes').innerHTML = `
+                <p>New Drivers: ${summaryData.newDrivers}</p>
+                <p>New Passengers: ${summaryData.newPassengers}</p>
+                <p>Driver Revenue: RM${summaryData.driverRevenue}</p>
+                <p>App Revenue: RM${summaryData.appRevenue}</p>
+                ${summaryData.mostPopularRoute ? `<p>Most Popular Route: ${summaryData.mostPopularRoute.route} (${summaryData.mostPopularRoute.count} trips)</p>` : ''}
+            `;
+        }
+
+        function loadChart() {
+            const year = document.getElementById('yearSelect').value;
+            const month = document.getElementById('monthSelect').value;
+            generateCarpoolSummary(year, month);
+        }
+
+        function autoLoadCurrentMonthChart() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+
+            document.getElementById('yearSelect').value = currentYear;
+            document.getElementById('monthSelect').value = currentMonth;
+
+            generateCarpoolSummary(currentYear, currentMonth);
+        }
+
+        document.addEventListener('DOMContentLoaded', autoLoadCurrentMonthChart);
+    </script>
+
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: auto;
+        }
+        #summaryReportChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
 </body>
 </html>
