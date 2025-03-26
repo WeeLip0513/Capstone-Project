@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const resetButton = document.getElementById('resetProfilePassword');
     const modal = document.getElementById('passwordResetModal');
-    const closeModal = document.querySelector('.close-modal');
     const modalMessage = document.getElementById('modal-message');
 
     // When the reset password button is clicked, show the modal and process the request.
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 modalMessage.textContent = 'Reset link sent to your email!';
                 setTimeout(() => {
                     modal.style.display = 'none';
-                    // Optionally, redirect or perform additional actions
                 }, 3000);
             } else {
                 modalMessage.textContent = data.message || 'Error occurred';

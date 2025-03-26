@@ -92,13 +92,15 @@
 }
 
 .forgot {
-  background-color: #2b83ff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease;
+    background-color: #2b83ff;
+    color: white;
+    border: none;
+    width: 25%;
+    padding: 13px 8px;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
 .forgot:hover {

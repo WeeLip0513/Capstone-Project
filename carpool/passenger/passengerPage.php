@@ -18,6 +18,8 @@ $passenger = getProfileDetails($userID, $conn);
 
 // $_SESSION['passenger_id'] = $userID;
 
+// $driver_id = isset($_SESSION['driver_id']) ? intval($_SESSION['driver_id']) : intval($_SESSION['id']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +33,7 @@ $passenger = getProfileDetails($userID, $conn);
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
+    <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -91,7 +94,7 @@ $passenger = getProfileDetails($userID, $conn);
                             </div>
                         </div>
                         <div class="dropoff">
-                            <h2>Drop-off Point</h2>th
+                            <h2>Drop-off Point</h2>
                             <div class="dropoff-selection">
                                 <select name="dropoff" id="dropoff" required>
                                     <option value="">Select Drop-Off Point</option>
@@ -219,7 +222,10 @@ $passenger = getProfileDetails($userID, $conn);
                                     </div>
                                     <div class="profiledetail">
                                         <h3>Reset Password:</h3>
-                                        <button id="resetProfilePassword" class="forgot">Reset Password</button>
+                                        <div class="show-profile-detail">
+                                            <p>**********</p>
+                                            <button id="resetProfilePassword" class="forgot">Reset Password</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -232,9 +238,9 @@ $passenger = getProfileDetails($userID, $conn);
         </div>
     </div>
 
-    <div id="passwordResetModal" class="resetpassmodal">
+    <div id="passwordResetModal" class="resetpassmodal"  style="display: none;">
         <div class="resetpassmodal-content">
-            <span class="close-modal">&times;</span>
+            <!-- <span class="close-modal">&times;</span> -->
             <p id="modal-message">Processing<span class="dots">
                     <span class="dot">.</span>
                     <span class="dot">.</span>
@@ -243,6 +249,21 @@ $passenger = getProfileDetails($userID, $conn);
             </p>
         </div>
     </div>
+
+    <!-- <div id="ratingModal" class="rate-modal">
+      <div class="rate-modal-content rating-content">
+        <span class="close-rating">&times;</span>
+        <h3>Please rate your driver</h3>
+        <div class="star-rating">
+            <span data-value="1" class="star">&#9733;</span>
+            <span data-value="2" class="star">&#9733;</span>
+            <span data-value="3" class="star">&#9733;</span>
+            <span data-value="4" class="star">&#9733;</span>
+            <span data-value="5" class="star">&#9733;</span>
+        </div>
+        <button id="submitRating">Submit Rating</button>
+      </div>
+    </div> -->
 
     <div id="editProfileModal" class="modal">
         <div class="modal-content">
@@ -295,6 +316,9 @@ $passenger = getProfileDetails($userID, $conn);
     <script src="../js/passenger/hamburger.js"></script>
     <script src="../js/passenger/cartandpayment.js"></script>
     <script src="../js/passenger/resetpassmodal.js"></script>
+    <script>
+        var driverId = <?php echo $driver_id; ?>;
+    </script>
     <script>
         // Output the cart count from PHP so your external JS can use it
         var initialCartCount = <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>;

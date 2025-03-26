@@ -242,6 +242,7 @@ $revenues = json_encode(array_values($earnings_data));
   <link rel="stylesheet" href="../css/driverPage/earning.css">
   <link rel="stylesheet" href="../css/driverPage/withdrawHistory.css">
   <link rel="stylesheet" href="../css/driverPage/driverProfile.css">
+  <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -699,7 +700,7 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>Reset Password:</h3>
                 <div class="show-profile-detail">
                   <p>**********</p>
-                  <a href="#" class="resetPassword"><button class="forgot">Reset Password</button></a>
+                  <button id="resetProfilePassword" class="forgot">Reset Password</button>
                 </div>
               </div>
             </div>
@@ -710,7 +711,8 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>License Number:</h3>
                 <div class="show-profile-detail">
                   <p><?php echo $license_no; ?></p>
-                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()" class="forgot">Update
+                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()"
+                      class="license-forgot">Update
                       License</button></a>
                 </div>
               </div>
@@ -762,6 +764,17 @@ $revenues = json_encode(array_values($earnings_data));
 
           </div>
 
+          <div id="passwordResetModal" class="resetpassmodal" style="display: none;">
+            <div class="resetpassmodal-content">
+              <p id="modal-message">Processing<span class="dots">
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
           <!-- Edit Profile Modal -->
           <div id="editProfileModal" class="modal">
             <div class="modal-content">
@@ -807,8 +820,6 @@ $revenues = json_encode(array_values($earnings_data));
             </div>
           </div>
         </div>
-
-
 
         <script src="../js/driver/upcomingRide.js" defer></script>
         <script src="../js/driver/addRide.js" defer></script>
