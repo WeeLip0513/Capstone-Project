@@ -59,7 +59,7 @@ function getLocationName($location)
     return $locationMapping[$location] ?? ucwords(str_replace("_", " ", $location));
 }
 
-// cart and payment function
+// cart function
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'add_to_cart') {
         $ride_id = $_POST['ride_id'];
@@ -69,15 +69,15 @@ if (isset($_POST['action'])) {
             $_SESSION['cart'][] = $ride_id;
 
             // Update ride status to pending in database
-            $sql = "UPDATE ride SET status = 'pending' WHERE id = ?";
-            $stmt = mysqli_prepare($conn, $sql);
-            if (!$stmt) {
-                die(json_encode(['success' => false, 'message' => 'Prepare failed: ' . mysqli_error($conn)]));
-            }
-            mysqli_stmt_bind_param($stmt, "i", $ride_id);
-            if (!mysqli_stmt_execute($stmt)) {
-                die(json_encode(['success' => false, 'message' => 'Execute failed: ' . mysqli_stmt_error($stmt)]));
-            }
+            // $sql = "UPDATE ride SET status = 'pending' WHERE id = ?";
+            // $stmt = mysqli_prepare($conn, $sql);
+            // if (!$stmt) {
+            //     die(json_encode(['success' => false, 'message' => 'Prepare failed: ' . mysqli_error($conn)]));
+            // }
+            // mysqli_stmt_bind_param($stmt, "i", $ride_id);
+            // if (!mysqli_stmt_execute($stmt)) {
+            //     die(json_encode(['success' => false, 'message' => 'Execute failed: ' . mysqli_stmt_error($stmt)]));
+            // }
 
             echo json_encode(['success' => true, 'message' => 'Ride added to cart', 'cart_count' => count($_SESSION['cart'])]);
         } else {
@@ -127,10 +127,10 @@ if (isset($_POST['action'])) {
             $_SESSION['cart'] = array_values($_SESSION['cart']); // Reindex array
 
             // Update ride status back to upcoming
-            $sql = "UPDATE ride SET status = 'upcoming' WHERE id = ?";
-            $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "i", $ride_id);
-            mysqli_stmt_execute($stmt);
+            // $sql = "UPDATE ride SET status = 'upcoming' WHERE id = ?";
+            // $stmt = mysqli_prepare($conn, $sql);
+            // mysqli_stmt_bind_param($stmt, "i", $ride_id);
+            // mysqli_stmt_execute($stmt);
 
             echo json_encode(['success' => true, 'message' => 'Ride removed from cart', 'cart_count' => count($_SESSION['cart'])]);
         } else {
@@ -141,11 +141,17 @@ if (isset($_POST['action'])) {
 }
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
-    $pickup = $_POST['pickup'];
-    $dropoff = $_POST['dropoff'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get filter values if provided; default to empty strings
+    $pickup  = $_POST['pickup']  ?? "";
+    $dropoff = $_POST['dropoff'] ?? "";
+    $date    = $_POST['date']    ?? "";
+    $time    = $_POST['time']    ?? "";
+
+    if ($pickup !== "" && $dropoff !== "" && $pickup === $dropoff) {
+        echo "<p style='color:red;'>Pickup point and drop-off point cannot be the same.</p>";
+        exit;
+    }
 
     $sql = "SELECT 
                 r.id, r.pick_up_point, r.drop_off_point, r.date, r.time, r.slots_available, r.slots, r.price,
@@ -154,14 +160,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
             FROM ride r
             JOIN driver d ON r.driver_id = d.id
             JOIN vehicle v ON r.vehicle_id = v.id
-            WHERE r.pick_up_point = ? 
-            AND r.drop_off_point = ? 
-            AND r.date = ? 
-            AND r.time = ? 
-            AND (r.status = 'upcoming' OR r.status = 'pending')";
+            WHERE r.status = 'upcoming'";
+
+    $params = [];
+    $types = '';
+
+    if ($pickup !== "") {
+        $sql .= " AND r.pick_up_point = ?";
+        $params[] = $pickup;
+        $types .= 's';
+    }
+    if ($dropoff !== "") {
+        $sql .= " AND r.drop_off_point = ?";
+        $params[] = $dropoff;
+        $types .= 's';
+    }
+    // ** COMMENT IT**
+    if ($date !== "") {
+        $sql .= " AND r.date = ?";
+        $params[] = $date;
+        $types .= 's';
+    }
+     // ** REMEMBER UNCOMMENT IN PRESENTATION**
+    // if ($date === "") {
+    //     $today = date('Y-m-d');
+    //     $sql .= " AND r.date >= ?";
+    //     $params[] = $today;
+    //     $types .= 's';
+    // } else {
+    //     $sql .= " AND r.date = ?";
+    //     $params[] = $date;
+    //     $types .= 's';
+    // }
+    if ($time !== "") {
+        $sql .= " AND r.time = ?";
+        $params[] = $time;
+        $types .= 's';
+    }
 
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ssss", $pickup, $dropoff, $date, $time);
+    if ($params) {
+        // splat operator (...) to unpack the parameters
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
+    }
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -172,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
         $totalSlots = $row['slots'];
         $slotsAvailable = $row['slots_available'];
 
-        if ($slotsAvailable == 0) {
+        if ($slotsAvailable == 0){
             continue;
         }
 
@@ -190,19 +231,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
             $statusTextColor = "#10B981";
         }
 
-        // Convert the ride ID to string for comparison.
         $currentRideID = (string) $row['id'];
-        // Ensure the booked rides array is also strings.
         $booked_rides_str = array_map('strval', $booked_rides);
         $booked = in_array($currentRideID, $booked_rides_str);
 
         if ($booked) {
-            // If the ride is booked, set button to "Booked" and disable clicking.
             $buttonText = "Booked";
             $buttonClass = "book-ride booked";
             $disabled = "disabled";
         } else {
-            // Otherwise, check if it is in the cart.
             $cart_items_str = array_map('strval', $_SESSION['cart']);
             $inCart = in_array($currentRideID, $cart_items_str);
             $buttonText = $inCart ? "In Cart" : "Add To Ride";
@@ -284,14 +321,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['pickup'])) {
 function generatePassengerIcons($totalSlots, $occupiedSlots)
 {
     $icons = "<div class='passenger-container'>";
-
     for ($i = 0; $i < $totalSlots; $i++) {
         $color = ($i < $occupiedSlots) ? '#007bff' : 'lightgray';
         $icons .= "<div class='passenger-icons' style='background-color: $color;'>
                     <i class='fa fa-user'></i>
                     </div>";
     }
-
     $icons .= "<p style='margin-left:8px;'>$occupiedSlots / $totalSlots </p></div>";
     return $icons;
 }

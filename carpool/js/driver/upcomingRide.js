@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let currentPage = 1;
-const rowsPerPage = 7;
+const rowsPerPage = 10;
 let ridesData = [];
 
 function fetchUpcomingRides() {

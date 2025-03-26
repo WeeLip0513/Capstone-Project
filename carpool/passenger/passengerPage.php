@@ -34,6 +34,7 @@ $passenger = getProfileDetails($userID, $conn);
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
+    <link rel="stylesheet" href="../css/passengerPage/ridehistory.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -163,8 +164,8 @@ $passenger = getProfileDetails($userID, $conn);
             <!-- Rides History Tab -->
             <div class="content-section" id="content-tab3">
                 <h2>Your Ride History</h2>
-                <div class="history-container">
-                    <p>You haven't taken any rides yet.</p>
+                <div class="history-container" id="ridesContainer">
+                    <div class="loading">Loading rides...</div>
                 </div>
             </div>
 
@@ -238,7 +239,7 @@ $passenger = getProfileDetails($userID, $conn);
         </div>
     </div>
 
-    <div id="passwordResetModal" class="resetpassmodal"  style="display: none !important;">
+    <div id="passwordResetModal" class="resetpassmodal" style="display: none !important;">
         <div class="resetpassmodal-content">
             <!-- <span class="close-modal">&times;</span> -->
             <p id="modal-message">Processing<span class="dots">
@@ -316,6 +317,8 @@ $passenger = getProfileDetails($userID, $conn);
     <script src="../js/passenger/hamburger.js"></script>
     <script src="../js/passenger/cartandpayment.js"></script>
     <script src="../js/passenger/resetpassmodal.js"></script>
+    <script src="../js/passenger/ridehistory.js"></script>
+    <script src="../js/passenger/searchFormValid.js"></script>
     <script>
         var driverId = <?php echo $driver_id; ?>;
     </script>
@@ -335,6 +338,8 @@ $passenger = getProfileDetails($userID, $conn);
             return locationMapping[location] || location.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
     </script>
+
+
     <!-- Edit Profile Modal -->
 </body>
 

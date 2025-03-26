@@ -114,7 +114,7 @@ echo($_SESSION["driverID"]);
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGINGrQ2OWAupvgvS8ZbzO8QtbT8jbFek&callback=initMap&libraries=marker&map_ids=25e7edf70620c555"
     async defer></script>
 
-  <script src="../js/ride/progress.js"></script>
+  <!-- <script src="../js/ride/progress.js"></script> -->
 </body>
 
 </html>
