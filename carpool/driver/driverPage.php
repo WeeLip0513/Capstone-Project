@@ -10,6 +10,14 @@ ini_set('display_errors', 1);
 $_SESSION['id'] = 11; // Ensure this session variable exists
 $userID = $_SESSION['id'];
 
+$query = "SELECT email FROM user WHERE id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $userID);
+mysqli_stmt_execute($stmt);
+mysqli_stmt_bind_result($stmt, $email);
+mysqli_stmt_fetch($stmt);
+mysqli_stmt_close($stmt);
+
 $driver = []; // Initialize to avoid "undefined variable" errors
 
 $query = "SELECT * FROM driver WHERE user_id = ?";
@@ -22,15 +30,15 @@ if ($result && mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
 
   // Debugging: Print driver array
-  echo "<pre>";
-  print_r($driver);
-  echo "</pre>";
+  // echo "<pre>";
+  // print_r($driver);
+  // echo "</pre>";
 
   // Assign values to individual variables safely
   $firstname = isset($driver['firstname']) ? $driver['firstname'] : "N/A";
   $lastname = isset($driver['lastname']) ? $driver['lastname'] : "N/A";
   $phone_no = isset($driver['phone_no']) ? $driver['phone_no'] : "N/A";
-  $email = isset($driver['email']) ? $driver['email'] : "N/A";
+  // $email = isset($driver['email']) ? $driver['email'] : "N/A";
   $license_no = isset($driver['license_no']) ? $driver['license_no'] : "N/A";
   $license_exp = isset($driver['license_expiry_date']) ? $driver['license_expiry_date'] : "N/A";
   $registration_date = isset($driver['registration_date']) ? $driver['registration_date'] : "N/A";
@@ -702,7 +710,8 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>License Number:</h3>
                 <div class="show-profile-detail">
                   <p><?php echo $license_no; ?></p>
-                  <a href="#" class="updateLicense"><button class="forgot">Update License</button></a>
+                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()" class="forgot">Update
+                      License</button></a>
                 </div>
               </div>
               <div class="profiledetail">
@@ -717,17 +726,18 @@ $revenues = json_encode(array_values($earnings_data));
             <div class="profilerow">
               <div class="profiledetail">
                 <h3>License Photo (Front):</h3>
-                <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front" width="100%" height="60%">
+                <div class="show-license-photo">
+                <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front">
                 </div>
               </div>
               <div class="profiledetail">
                 <h3>License Photo (Back):</h3>
-                <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Back" width="100%" height="60%">
+                <div class="show-license-photo">
+                <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Front">
                 </div>
               </div>
             </div>
+
 
           </div>
         </div>
@@ -748,7 +758,38 @@ $revenues = json_encode(array_values($earnings_data));
           </form>
         </div>
       </div>
+
+      <div class="modal" id="editLicenseModal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <form id="editLicenseForm">
+            <div class="form-group">
+              <label for="newLicenseNo">New License Number:</label>
+              <input type="text" id="newLicenseNo" name="license_no" required>
+              <span id="licenseErrorMessage" class="error-message"></span>
+            </div>
+            <div class="form-group">
+              <label for="newLicenseExp">New License Expiry Date:</label>
+              <input type="date" id="newLicenseExp" name="license_exp" required>
+              <span id="expDateErrorMessage" class="error-message"></span>
+            </div>
+            <div class="form-group">
+              <label for="newLicensePhotoFront">Upload License Photo (Front):</label>
+              <input type="file" id="newLicensePhotoFront" name="license_photo_front" accept="image/*" required>
+              <span id="photoErrorMessage" class="error-message"></span>
+            </div>
+            <div class="form-group">
+              <label for="newLicensePhotoBack">Upload License Photo (Back):</label>
+              <input type="file" id="newLicensePhotoBack" name="license_photo_back" accept="image/*" required>
+              <span id="photoErrorMessage" class="error-message"></span>
+            </div>
+            <button type="submit" id="licenseUpdate">Save Changes</button>
+          </form>
+        </div>
+      </div>
     </div>
+
+
 
     <script src="../js/driver/upcomingRide.js" defer></script>
     <script src="../js/driver/addRide.js" defer></script>
