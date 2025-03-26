@@ -234,6 +234,7 @@ $revenues = json_encode(array_values($earnings_data));
   <link rel="stylesheet" href="../css/driverPage/earning.css">
   <link rel="stylesheet" href="../css/driverPage/withdrawHistory.css">
   <link rel="stylesheet" href="../css/driverPage/driverProfile.css">
+  <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- <script src="js/driver/addRideValidation.js"></script> -->
   <!-- <script src="js/driver/confirmationPopUp.js"></script> -->
@@ -691,7 +692,7 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>Reset Password:</h3>
                 <div class="show-profile-detail">
                   <p>**********</p>
-                  <a href="#" class="resetPassword"><button class="forgot">Reset Password</button></a>
+                  <button id="resetProfilePassword" class="forgot">Reset Password</button>
                 </div>
               </div>
             </div>
@@ -702,7 +703,7 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>License Number:</h3>
                 <div class="show-profile-detail">
                   <p><?php echo $license_no; ?></p>
-                  <a href="#" class="updateLicense"><button class="forgot">Update License</button></a>
+                  <a href="#" class="updateLicense"><button class="license-forgot">Update License</button></a>
                 </div>
               </div>
               <div class="profiledetail">
@@ -718,18 +719,31 @@ $revenues = json_encode(array_values($earnings_data));
               <div class="profiledetail">
                 <h3>License Photo (Front):</h3>
                 <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front" width="100%" height="60%">
+                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front" width="100%"
+                    height="60%">
                 </div>
               </div>
               <div class="profiledetail">
                 <h3>License Photo (Back):</h3>
                 <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Back" width="100%" height="60%">
+                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Back" width="100%"
+                    height="60%">
                 </div>
               </div>
             </div>
 
           </div>
+        </div>
+      </div>
+
+      <div id="passwordResetModal" class="resetpassmodal"  style="display: none;">
+        <div class="resetpassmodal-content">
+          <p id="modal-message">Processing<span class="dots">
+              <span class="dot">.</span>
+              <span class="dot">.</span>
+              <span class="dot">.</span>
+            </span>
+          </p>
         </div>
       </div>
 
@@ -750,9 +764,12 @@ $revenues = json_encode(array_values($earnings_data));
       </div>
     </div>
 
+
+
     <script src="../js/driver/upcomingRide.js" defer></script>
     <script src="../js/driver/addRide.js" defer></script>
     <script src="../js/driver/addHistoryRides.js" defer></script>
+    <script src="../js/passenger/resetpassmodal.js"></script>
 </body>
 
 </html>
