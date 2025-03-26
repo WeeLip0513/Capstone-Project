@@ -15,7 +15,7 @@ include("adminsidebar.php");
 <body>
 <div class="earnings-report-container">
         <h2>EARNINGS REPORT</h2>
-        <h3>Report of Earnings each year.</h3>
+        <h3>The Numbers That Define Your Success, Maximize Revenue, Optimize Growth.</h3>
         <div class="earnings-report-form">
             <h4>Select Year : </h4>
             <div class="earnings-report-selection">
@@ -26,10 +26,15 @@ include("adminsidebar.php");
                     <option value="2023">2023</option>
                     <option value="2022">2022</option>
                 </select>
-            <button onclick="loadChart(document.getElementById('yearSelect').value)">Load Data</button>            </div>
+            <button onclick="loadChart(document.getElementById('yearSelect').value)">Load Data</button>            
+            </div>
         </div>
         <div class="chart-container">
             <canvas id="earningsBarChart"></canvas>
+        </div>
+        <div class="summary-description">
+            <h3>Description : </h3>
+            <div id="summaryDes"></div>
         </div>
     </div>
 <script>
@@ -45,12 +50,35 @@ function loadChart(year) {
         .then(response => response.json())
         .then(data => {
             renderChart(data, year);
+            generateSummaryDescription(data, year);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
             alert('Failed to load data. Please try again.');
         });
 }
+
+function generateSummaryDescription(data, year) {
+    let totalDriverRevenue = 0;
+    let totalAppRevenue = 0;
+
+    data.forEach(item => {
+        totalDriverRevenue += parseFloat(item.total_driver_revenue);
+        totalAppRevenue += parseFloat(item.total_app_revenue);
+    });
+
+    const grandTotalRevenue = totalDriverRevenue + totalAppRevenue;
+
+    // Format as currency (RM)
+    const formatCurrency = amount => amount.toLocaleString('en-MY', { style: 'currency', currency: 'MYR' });
+
+    document.getElementById('summaryDes').innerHTML = `
+        <p>In the year <strong><span style="color:#2b8dff">${year}</span></strong>, the total revenue generated was <strong><span style="color: #2b8dff">${formatCurrency(grandTotalRevenue)}</span></strong>.</p>
+        <p><strong>Total Driver Revenue:</strong> ${formatCurrency(totalDriverRevenue)}</p>
+        <p><strong>Total App Revenue:</strong> ${formatCurrency(totalAppRevenue)}</p>
+    `;
+}
+
 
 // Helper function to get month names
 function getMonthName(monthIndex) {
@@ -97,14 +125,14 @@ function renderChart(data, year) {
                 {
                     label: 'Driver Revenue',
                     data: driverRevenue,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 },
                 {
                     label: 'App Revenue',
                     data: appRevenue,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }
@@ -146,6 +174,22 @@ function renderChart(data, year) {
         }
     });
 }
+function autoLoadCurrentYearChart() {
+    // Get current date
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    // Set the year dropdown to current year
+    const yearSelect = document.getElementById('yearSelect');
+    yearSelect.value = currentYear;
+
+    // Trigger chart loading
+    loadChart(currentYear);
+}
+
+// Add event listener to run when the page loads
+document.addEventListener('DOMContentLoaded', autoLoadCurrentYearChart);
+
 </script>
 </body>
 </html>

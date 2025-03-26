@@ -47,18 +47,21 @@ function displayPage(page) {
   ridesToShow.forEach(ride => {
     const pickupFormatted = formatLocationName(ride.pick_up_point);
     const dropoffFormatted = formatLocationName(ride.drop_off_point);
-    const passengerIcons = generatePassengerIcons(ride.slots, ride.slots - ride.slots_available);
+    const occupiedSlots = ride.slots - ride.slots_available;
+    const passengerIcons = generatePassengerIcons(ride.slots, occupiedSlots);
 
     const row = document.createElement("tr");
 
     // Check if the ride's date matches today
     const isToday = ride.date === today;
 
-    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id}, ${ride.slots - ride.slots_available})">Cancel</button>`;
-    if (isToday) {
+    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id}, ${occupiedSlots})">Cancel</button>`;
+
+    // Only show "Start" button if it's today and there is at least one passenger
+    if (isToday && occupiedSlots > 0) {
       actionButtons = `
         <button class="startBtn" onclick="startRide(${ride.id})">Start</button>
-        ` + actionButtons; // Only add Start button if the ride is today
+        ` + actionButtons;
     }
 
     row.innerHTML = `
@@ -82,6 +85,7 @@ function displayPage(page) {
 
   generatePagination();
 }
+
 
 
 // Generate Pagination with Dots Only

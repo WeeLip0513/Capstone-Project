@@ -89,3 +89,9 @@ select {
 #registerButton:hover {
   background-color: #0056b3;
 }
+
+.buttonWrap{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}

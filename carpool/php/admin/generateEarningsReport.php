@@ -1,6 +1,9 @@
 <?php
 session_start();
 include("../../dbconn.php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 
 // Validate input
 $year = isset($_GET['year']) ? intval($_GET['year']) : null;
