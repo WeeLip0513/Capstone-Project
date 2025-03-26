@@ -10,6 +10,7 @@
   margin: 0 auto;
   margin-bottom: 10rem;
   text-align: left;
+  width: 100%;
 }
 
 .profile-card h2 {
@@ -33,7 +34,7 @@
   background-color: #242323;
   color: white;
   flex-grow: 1;
-  margin: 5px 2px;
+  margin: 5px 10px;
 }
 
 .resetPassword {
@@ -68,6 +69,26 @@
   padding: 0;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+.show-license-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #242323;
+  border-radius: 10px;
+  width: 300px;
+  height: 180px;
+  padding: 0;
+  /* margin-bottom: 20px; */
+  margin-top: 20px;
+}
+
+.show-license-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .forgot {
@@ -120,9 +141,9 @@
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+  background-color: transparent; /* Semi-transparent background */
   visibility: hidden; /* Hidden by default */
   opacity: 0; /* Fully transparent by default */
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
@@ -167,13 +188,17 @@
   cursor: pointer;
 }
 
+span{
+  text-align: left;
+}
+
 /* Error Message Styles */
 .error-message {
   color: red; /* Red color for error messages */
   font-size: 12px; /* Smaller font size */
   margin-top: 5px; /* Add some spacing above the error message */
-  visibility: hidden; /* Hidden by default */
-  opacity: 0; /* Start fully transparent */
+  /* visibility: hidden; Hidden by default */
+  /* opacity: 0; Start fully transparent */
   transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
 }
 
@@ -191,6 +216,11 @@
  font-weight: bold;
 }
 
+.form-group{
+  display: flex;
+  flex-direction: column;
+}
+
 .form-group input {
   width: 100%;
   padding: 7px;
@@ -199,6 +229,7 @@
   outline: none;
   background-color: #262627;
   color: white;
+  padding-left: 10px;
 }
 
 #form-group input:focus {
@@ -223,7 +254,7 @@
   background-color: rgb(25, 75, 149);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
-/* 
+
 @media screen and (max-width: 1220px) {
   .profile-container {
       padding: 10px;
@@ -237,6 +268,7 @@
 
   .profiledetails p {
       font-size: 18px;
+      margin-left: 10px;
   }
 
   .profiledetail {
@@ -269,7 +301,7 @@
 }
 
 /* For screens smaller than 768px (e.g., large phones) */
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .profile-container {
       padding: 10px;
       max-width: 700px;
@@ -291,10 +323,10 @@
   .edit-icon {
       margin-top: 10px;
   }
-} */
+}
 
 /* For screens smaller than 480px (e.g., small phones) */
-/* @media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .profile-container {
       padding: 5px;
       max-width: 400px;
@@ -322,6 +354,6 @@
       margin-left: 50px;
       margin-top: 80px;
   }
-}  */
+} 
 
 

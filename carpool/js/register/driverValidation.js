@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function validateInput(input, pattern, errorMessage) {
         const errorSpan = document.getElementById(input.id + "Error");
         if (!pattern.test(input.value.trim())) {
-            errorSpan.textContent = errorMessage;
+            errorSpan.innerHTML = errorMessage;
             return false;
         } else {
-            errorSpan.textContent = "";
+            errorSpan.innerHTML = "";
             return true;
         }
     }
@@ -28,16 +28,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const validationRules = [
-        { id: "txtTP", pattern: /^TP\d{6}$/, message: "Please enter a valid TP Number. Example: TP012345" },
-        { id: "txtFname", pattern: /^[A-Za-z]+$/, message: "Invalid first name (only letters allowed)" },
-        { id: "txtLname", pattern: /^[A-Za-z]+$/, message: "Invalid last name (only letters allowed)" },
-        { id: "txtPass", pattern: /^(?=.*[|~`+=_!@#$%^&*:"<>?,./;'\\{}[\]-])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least 8 characters, ONE special character, ONE uppercase letter, and ONE number" },
+        { id: "txtTP", pattern: /^TP\d{6}$/, message: "Please enter a valid TP Number. Example: <b>TP012345</b>" },
+        { id: "txtFname", pattern: /^[A-Za-z]+$/, message: "Invalid first name (only <b>letters</b> allowed)" },
+        { id: "txtLname", pattern: /^[A-Za-z]+$/, message: "Invalid last name (only <b>letters</b> allowed)" },
+        { id: "txtPass", pattern: /^(?=.*[|~`+=_!@#$%^&*:"<>?,./;'\\{}[\]-])(?=.*[A-Z])(?=.*\d).{8,}$/, message: "Password must have at least <b>8</b> characters, <b>ONE</b> special character, <b>ONE</b> uppercase letter, and <b>ONE</b> number" },
         { id: "txtEmail", pattern: /^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email format" },
-        { id: "txtPhone", pattern: /^01\d{8,9}$/, message: "Please enter a valid phone number. Example: 0123456789" },
-        { id: "txtLicense", pattern: /^\d{7}[A-Za-z0-9]{7}$/, message: "Please enter a valid license number. Example: 0123456 U3OsjdU" },
+        { id: "txtPhone", pattern: /^01\d{8,9}$/, message: "Please enter a valid phone number. Example: <b>0123456789</b>" },
+        { id: "txtLicense", pattern: /^\d{7}[A-Za-z0-9]{7}$/, message: "Please enter a valid license number. Example: <b>0123456U3OsjdU</b>" },
         { id: "txtExpDate", pattern: /^\d{4}-\d{2}-\d{2}$/, message: "Please select your license expiry date." },
-        { id: "license_photo", pattern: /^.+$/, message: "Upload a photo of your license (front side)" },
-        { id: "license_photo_back", pattern: /^.+$/, message: "Upload a photo of your license (back side)" }
+        { id: "license_photo", pattern: /^.+$/, message: "Upload a photo of your license (<b>front side</b>)" },
+        { id: "license_photo_back", pattern: /^.+$/, message: "Upload a photo of your license (<b>back side</b>)" }
     ];
 
     validationRules.forEach(field => {
