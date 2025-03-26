@@ -1,21 +1,21 @@
 /* *{
     border: 1px solid red;
 } */
-.user-report-container{
+.summary-report-container{
     margin-left: 16rem;
     margin-top: 30px;
     margin-right: 2.5rem;
 }
-.user-report-container h2{
+.summary-report-container h2{
     color: #2b83ff;
     font-size: 25px;
 }
-.user-report-container h3{
+.summary-report-container h3{
     margin-top: 5px;
     color: rgb(101, 103, 103);
 }
 
-.user-report-form{
+.summary-report-form{
     width: 100%;
     margin-top: 20px;
     color: white;
@@ -25,7 +25,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-.user-report-selection{
+.summary-report-selection{
     margin-top: 15px;
     display: flex;
     column-gap: 15px;
@@ -86,7 +86,7 @@ button:hover {
 }
 
 @media screen and (max-width: 768px) {
-    .user-report-container {
+    .summary-report-container {
         width: 100%;
         margin-left: 5rem;
         padding-right: 1rem;

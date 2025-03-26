@@ -23,6 +23,11 @@ body {
     overflow-y: auto;
     transition: 0.6s ease;
     transition-property: left;
+    z-index: 1000;
+}
+
+.admin-sidebar::-webkit-scrollbar{
+    display: none;
 }
 
 
@@ -34,9 +39,9 @@ header img {
 .close-btn {
     position: absolute;
     color: #fff;
-    font-size: 23px;
+    font-size: 30px;
     right: 0;
-    margin: 15px;
+    margin: 20px 25px;
     cursor: pointer;
     display: none; /* Hide close button on desktop */
 }
@@ -126,6 +131,10 @@ header h1 {
     .admin-sidebar {
         left: -220px; /* Hide sidebar on mobile */
     }
+    header img {
+        width: 130px;
+        margin: 35px 170px 20px;
+    }
     
     .menu-btn {
         display: block; /* Show hamburger menu on mobile */
@@ -138,5 +147,6 @@ header h1 {
     
     .admin-sidebar.active {
         left: 0;
+        width: 100%;
     }
 }

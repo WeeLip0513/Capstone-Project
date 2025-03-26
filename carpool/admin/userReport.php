@@ -15,7 +15,7 @@ include("adminsidebar.php");
 <body>
     <div class="user-report-container">
         <h2>USER REPORT</h2>
-        <h3>Observe the growth of new users.</h3>
+        <h3>Observe The Growth Of New Users, See the Rise, Know Your Users.</h3>
         <div class="user-report-form">
             <h4>Select Year & Month: </h4>
             <div class="user-report-selection">
@@ -48,6 +48,10 @@ include("adminsidebar.php");
         <div class="chart-container">
             <div id="userReportSummary" class="chart-summary"></div>
             <canvas id="userGrowthChart"></canvas>
+        </div>
+        <div class="summary-description">
+            <h3>Description : </h3>
+            <div id="summaryDes"></div>
         </div>
     </div>
     <script>
@@ -90,10 +94,10 @@ include("adminsidebar.php");
             const totalUsers = totalPassengers + totalDrivers;
 
             // Update description text
-            const summaryText = `In ${monthName} ${year}, there are a total of ${totalUsers} new users. 
-                                There are ${totalDrivers} drivers and ${totalPassengers} passengers.`;
+            const summaryText = `In <strong><span style="color:#2b8dff">${monthName} ${year}</span></strong>, there are a total of <strong><span style="color:#2b8dff">${totalUsers}</span></strong> new users. 
+                                <br><strong>Drivers : </strong>${totalDrivers}<br> <strong>Passengers : </strong>${totalPassengers}`;
             
-            document.getElementById('userReportSummary').textContent = summaryText;
+            document.getElementById('summaryDes').innerHTML = summaryText;
             
             // Create the chart
             chart = new Chart(ctx, {
@@ -175,6 +179,28 @@ include("adminsidebar.php");
                 }
             });
         }
+    function autoLoadCurrentMonthChart() {
+        // Get current date
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
+
+        // Set the year and month dropdowns to current values
+        const yearSelect = document.getElementById('yearSelect');
+        const monthSelect = document.getElementById('monthSelect');
+
+        // Set year
+        yearSelect.value = currentYear;
+
+        // Set month
+        monthSelect.value = currentMonth;
+
+        // Trigger chart loading
+        loadChart(currentYear, currentMonth);
+    }
+
+    // Add event listener to run when the page loads
+    document.addEventListener('DOMContentLoaded', autoLoadCurrentMonthChart);
     </script>
 </body>
 </html>
