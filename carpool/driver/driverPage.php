@@ -711,12 +711,9 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>License Number:</h3>
                 <div class="show-profile-detail">
                   <p><?php echo $license_no; ?></p>
-<<<<<<< HEAD
-                  <a href="#" class="updateLicense"><button class="license-forgot">Update License</button></a>
-=======
-                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()" class="forgot">Update
+                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()"
+                      class="license-forgot">Update
                       License</button></a>
->>>>>>> 95e4202aa032980c3a2385fbc11c2d48146d9f7b
                 </div>
               </div>
               <div class="profiledetail">
@@ -753,55 +750,31 @@ $revenues = json_encode(array_values($earnings_data));
             <div class="profilerow">
               <div class="profiledetail">
                 <h3>License Photo (Front):</h3>
-<<<<<<< HEAD
-                <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front" width="100%"
-                    height="60%">
-=======
                 <div class="show-license-photo">
                   <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front">
->>>>>>> 95e4202aa032980c3a2385fbc11c2d48146d9f7b
                 </div>
               </div>
               <div class="profiledetail">
                 <h3>License Photo (Back):</h3>
-<<<<<<< HEAD
-                <div class="show-profile-detail">
-                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Back" width="100%"
-                    height="60%">
-=======
                 <div class="show-license-photo">
                   <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Front">
->>>>>>> 95e4202aa032980c3a2385fbc11c2d48146d9f7b
                 </div>
               </div>
             </div>
 
           </div>
 
-<<<<<<< HEAD
-      <div id="passwordResetModal" class="resetpassmodal"  style="display: none;">
-        <div class="resetpassmodal-content">
-          <p id="modal-message">Processing<span class="dots">
-              <span class="dot">.</span>
-              <span class="dot">.</span>
-              <span class="dot">.</span>
-            </span>
-          </p>
-        </div>
-      </div>
+          <div id="passwordResetModal" class="resetpassmodal" style="display: none;">
+            <div class="resetpassmodal-content">
+              <p id="modal-message">Processing<span class="dots">
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                </span>
+              </p>
+            </div>
+          </div>
 
-      <!-- Edit Profile Modal -->
-      <div id="editProfileModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form id="editProfileForm">
-            <input type="hidden" id="editFieldName" name="fieldName">
-            <label id="editLabel"></label>
-            <div class="form-group">
-              <input type="text" id="editFieldValue" name="fieldValue" required>
-              <span id="errorMessage" class="error-message"></span>
-=======
           <!-- Edit Profile Modal -->
           <div id="editProfileModal" class="modal">
             <div class="modal-content">
@@ -815,18 +788,9 @@ $revenues = json_encode(array_values($earnings_data));
                 </div>
                 <button type="submit">Save Changes</button>
               </form>
->>>>>>> 95e4202aa032980c3a2385fbc11c2d48146d9f7b
             </div>
           </div>
 
-<<<<<<< HEAD
-
-
-    <script src="../js/driver/upcomingRide.js" defer></script>
-    <script src="../js/driver/addRide.js" defer></script>
-    <script src="../js/driver/addHistoryRides.js" defer></script>
-    <script src="../js/passenger/resetpassmodal.js"></script>
-=======
           <div class="modal" id="editLicenseModal">
             <div class="modal-content">
               <span class="close">&times;</span>
@@ -857,12 +821,9 @@ $revenues = json_encode(array_values($earnings_data));
           </div>
         </div>
 
-
-
         <script src="../js/driver/upcomingRide.js" defer></script>
         <script src="../js/driver/addRide.js" defer></script>
         <script src="../js/driver/addHistoryRides.js" defer></script>
->>>>>>> 95e4202aa032980c3a2385fbc11c2d48146d9f7b
 </body>
 
 </html>
