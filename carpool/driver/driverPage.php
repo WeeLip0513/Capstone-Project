@@ -7,7 +7,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 11; // Ensure this session variable exists
+// $_SESSION['id'] = 11; // Ensure this session variable exists
 $userID = $_SESSION['id'];
 
 $query = "SELECT email FROM user WHERE id = ?";
