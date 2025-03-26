@@ -89,6 +89,3 @@ function getLocationName($location) {
     return isset($locationMapping[$location]) ? $locationMapping[$location] : ucwords(str_replace("_", " ", $location));
 }
 ?>
-
-<!-- 4242 4242 4242 4242 -->
- <!-- 4000 0000 0000 0002 -->
