@@ -34,7 +34,7 @@
   background-color: #242323;
   color: white;
   flex-grow: 1;
-  margin: 5px 2px;
+  margin: 5px 10px;
 }
 
 .resetPassword {
@@ -227,6 +227,7 @@ span{
   outline: none;
   background-color: #262627;
   color: white;
+  padding-left: 10px;
 }
 
 #form-group input:focus {
@@ -251,7 +252,7 @@ span{
   background-color: rgb(25, 75, 149);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
-/* 
+
 @media screen and (max-width: 1220px) {
   .profile-container {
       padding: 10px;
@@ -265,6 +266,7 @@ span{
 
   .profiledetails p {
       font-size: 18px;
+      margin-left: 10px;
   }
 
   .profiledetail {
@@ -297,7 +299,7 @@ span{
 }
 
 /* For screens smaller than 768px (e.g., large phones) */
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .profile-container {
       padding: 10px;
       max-width: 700px;
@@ -319,10 +321,10 @@ span{
   .edit-icon {
       margin-top: 10px;
   }
-} */
+}
 
 /* For screens smaller than 480px (e.g., small phones) */
-/* @media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .profile-container {
       padding: 5px;
       max-width: 400px;
@@ -350,6 +352,6 @@ span{
       margin-left: 50px;
       margin-top: 80px;
   }
-}  */
+} 
 
 

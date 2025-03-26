@@ -9,7 +9,7 @@
 
 /* Header: Fixed on Top */
 .header {
-  position: sticky;
+  /* position:  */
   top: 0;
   /* background: white; */
   padding: 15px;
@@ -113,4 +113,91 @@
 #withdrawBtn:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   background-color: #1a6dd9;
+}
+
+/* Existing styles remain unchanged */
+
+/* Responsive Design */
+@media (max-width: 1220px) {
+  .earningsBody {
+    max-width: 1000px;
+  }
+  #month {
+    width: 350px;
+  }
+}
+
+@media (max-width: 992px) {
+  .earningsBody {
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+  #chartContainer, #earningDetails {
+    width: 90%;
+  }
+  #chartContainer {
+    min-height: 400px;
+  }
+  #earningDetails {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    font-size: 32px;
+    padding: 10px;
+  }
+  #month {
+    width: 300px;
+    height: 35px;
+    font-size: 16px;
+  }
+  #earningDetails h3 {
+    font-size: 28px;
+  }
+  #earningDetails h1, #totalEarnings, #availableBalance {
+    font-size: 26px;
+  }
+  #earningDetails p {
+    font-size: 18px;
+  }
+  #withdrawBtn {
+    font-size: 18px;
+    width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 24px;
+  }
+  #month {
+    width: 250px;
+    height: 30px;
+    font-size: 14px;
+  }
+  .earningsBody {
+    padding-top: 10px;
+  }
+  #chartContainer {
+    min-height: 300px;
+  }
+  #earningDetails {
+    min-height: 300px;
+  }
+  #earningDetails h3 {
+    font-size: 24px;
+  }
+  #earningDetails h1, #totalEarnings, #availableBalance {
+    font-size: 22px;
+  }
+  #earningDetails p {
+    font-size: 16px;
+  }
+  #withdrawBtn {
+    font-size: 16px;
+    width: 160px;
+  }
 }

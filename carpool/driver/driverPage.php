@@ -722,78 +722,97 @@ $revenues = json_encode(array_values($earnings_data));
               </div>
             </div>
 
+            <!-- Driver's Rating Row -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>Rating:</h3>
+                <div class="show-profile-detail">
+                  <p>
+                    <?php
+                    for ($i = 1; $i <= 5; $i++) {
+                      if ($i <= floor($rating)) {
+                        echo '<i class="fas fa-star" style="color: gold;"></i> ';
+                      } elseif ($i - 0.5 == $rating) {
+                        echo '<i class="fas fa-star-half-alt" style="color: gold;"></i> ';
+                      } else {
+                        echo '<i class="far fa-star" style="color: gold;"></i> ';
+                      }
+                    }
+                    ?>
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <!-- New Row: License Images -->
             <div class="profilerow">
               <div class="profiledetail">
                 <h3>License Photo (Front):</h3>
                 <div class="show-license-photo">
-                <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front">
+                  <img src="<?php echo htmlspecialchars($license_photo_front); ?>" alt="License Front">
                 </div>
               </div>
               <div class="profiledetail">
                 <h3>License Photo (Back):</h3>
                 <div class="show-license-photo">
-                <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Front">
+                  <img src="<?php echo htmlspecialchars($license_photo_back); ?>" alt="License Front">
                 </div>
               </div>
             </div>
 
+          </div>
 
+          <!-- Edit Profile Modal -->
+          <div id="editProfileModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="editProfileForm">
+                <input type="hidden" id="editFieldName" name="fieldName">
+                <label id="editLabel"></label>
+                <div class="form-group">
+                  <input type="text" id="editFieldValue" name="fieldValue" required>
+                  <span id="errorMessage" class="error-message"></span>
+                </div>
+                <button type="submit">Save Changes</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="modal" id="editLicenseModal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="editLicenseForm">
+                <div class="form-group">
+                  <label for="newLicenseNo">New License Number:</label>
+                  <input type="text" id="newLicenseNo" name="license_no" required>
+                  <span id="licenseErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicenseExp">New License Expiry Date:</label>
+                  <input type="date" id="newLicenseExp" name="license_exp" required>
+                  <span id="expDateErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicensePhotoFront">Upload License Photo (Front):</label>
+                  <input type="file" id="newLicensePhotoFront" name="license_photo_front" accept="image/*" required>
+                  <span id="photoErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicensePhotoBack">Upload License Photo (Back):</label>
+                  <input type="file" id="newLicensePhotoBack" name="license_photo_back" accept="image/*" required>
+                  <span id="photoErrorMessage" class="error-message"></span>
+                </div>
+                <button type="submit" id="licenseUpdate">Save Changes</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Edit Profile Modal -->
-      <div id="editProfileModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form id="editProfileForm">
-            <input type="hidden" id="editFieldName" name="fieldName">
-            <label id="editLabel"></label>
-            <div class="form-group">
-              <input type="text" id="editFieldValue" name="fieldValue" required>
-              <span id="errorMessage" class="error-message"></span>
-            </div>
-            <button type="submit">Save Changes</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="modal" id="editLicenseModal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form id="editLicenseForm">
-            <div class="form-group">
-              <label for="newLicenseNo">New License Number:</label>
-              <input type="text" id="newLicenseNo" name="license_no" required>
-              <span id="licenseErrorMessage" class="error-message"></span>
-            </div>
-            <div class="form-group">
-              <label for="newLicenseExp">New License Expiry Date:</label>
-              <input type="date" id="newLicenseExp" name="license_exp" required>
-              <span id="expDateErrorMessage" class="error-message"></span>
-            </div>
-            <div class="form-group">
-              <label for="newLicensePhotoFront">Upload License Photo (Front):</label>
-              <input type="file" id="newLicensePhotoFront" name="license_photo_front" accept="image/*" required>
-              <span id="photoErrorMessage" class="error-message"></span>
-            </div>
-            <div class="form-group">
-              <label for="newLicensePhotoBack">Upload License Photo (Back):</label>
-              <input type="file" id="newLicensePhotoBack" name="license_photo_back" accept="image/*" required>
-              <span id="photoErrorMessage" class="error-message"></span>
-            </div>
-            <button type="submit" id="licenseUpdate">Save Changes</button>
-          </form>
-        </div>
-      </div>
-    </div>
 
 
 
-    <script src="../js/driver/upcomingRide.js" defer></script>
-    <script src="../js/driver/addRide.js" defer></script>
-    <script src="../js/driver/addHistoryRides.js" defer></script>
+        <script src="../js/driver/upcomingRide.js" defer></script>
+        <script src="../js/driver/addRide.js" defer></script>
+        <script src="../js/driver/addHistoryRides.js" defer></script>
 </body>
 
 </html>
