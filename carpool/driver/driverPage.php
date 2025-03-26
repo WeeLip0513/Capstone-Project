@@ -711,9 +711,7 @@ $revenues = json_encode(array_values($earnings_data));
                 <h3>License Number:</h3>
                 <div class="show-profile-detail">
                   <p><?php echo $license_no; ?></p>
-                  <a href="#" class="updateLicense"><button onclick="openEditLicenseModal()"
-                      class="license-forgot">Update
-                      License</button></a>
+                  <button onclick="openEditLicenseModal()" class="updateLicense">Update License</button>
                 </div>
               </div>
               <div class="profiledetail">
