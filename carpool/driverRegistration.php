@@ -205,8 +205,10 @@ include("headerHomepage.php");
           </tr>
           <tr>
             <td colspan="2" style="text-align: center;">
-              <button type="button" id="backButton">Back</button>
-              <button type="submit" id="registerButton">Register</button>
+              <div class="buttonWrap">
+                <button type="button" id="backButton">Back</button>
+                <button type="submit" id="registerButton">Register</button>
+              </div>
             </td>
           </tr>
         </table>
