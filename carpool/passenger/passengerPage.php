@@ -238,7 +238,7 @@ $passenger = getProfileDetails($userID, $conn);
         </div>
     </div>
 
-    <div id="passwordResetModal" class="resetpassmodal"  style="display: none;">
+    <div id="passwordResetModal" class="resetpassmodal"  style="display: none !important;">
         <div class="resetpassmodal-content">
             <!-- <span class="close-modal">&times;</span> -->
             <p id="modal-message">Processing<span class="dots">

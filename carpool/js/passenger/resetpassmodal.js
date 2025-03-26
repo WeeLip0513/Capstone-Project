@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // When the reset password button is clicked, show the modal and process the request.
     resetButton.addEventListener('click', function (e) {
         e.preventDefault();
-        modal.style.display = 'block';
+        modal.style.display = 'flex';
         modalMessage.innerHTML = 'Processing<span class="dots">' +
             '<span class="dot">.</span>' +
             '<span class="dot">.</span>' +
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.success) {
                 modalMessage.textContent = 'Reset link sent to your email!';
                 setTimeout(() => {
-                    modal.style.display = 'none';
+                    modal.style.setProperty('display', 'none', 'important');
                 }, 3000);
             } else {
                 modalMessage.textContent = data.message || 'Error occurred';
