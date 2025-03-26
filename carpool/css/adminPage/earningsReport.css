@@ -64,4 +64,35 @@ button:hover {
     width: 100%;
     margin-bottom: 20px;
 }
+.summary-description{
+    background-color: #282727;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+    margin-bottom: 30px;
+}
 
+.summary-description h3{
+    color: white;
+    margin-bottom: 10px;
+}
+
+#summaryDes{
+    color: white;
+    font-size: 16px;
+    text-align: justify;
+    margin-bottom: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .earnings-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 1rem;
+    }
+
+    .chart-container {
+        height: 450px;
+    }
+}
