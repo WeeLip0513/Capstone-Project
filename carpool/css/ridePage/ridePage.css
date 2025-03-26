@@ -171,6 +171,7 @@ td {
   height: 10px;
   width: 80%; /* Ensures it spans the full width */
   border-radius: 5px;
+  transition: ease-in-out 0.2s;
 }
 
 .completionMessage{
