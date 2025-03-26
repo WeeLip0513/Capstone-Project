@@ -5,6 +5,10 @@ header("Content-Type: application/json");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start();
+
+$driver_id = $_SESSION['driverID'];
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 // 🛠 Debugging: Log raw input

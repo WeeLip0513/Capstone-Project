@@ -280,8 +280,16 @@ function validateAndCheckConflict() {
                     </tbody>
                 </table>`;
 
-                conflictDiv.innerHTML = conflictHTML;
-                conflictDiv.appendChild(conflictBtn);
+                let conflictBtn = document.getElementById('conflictBtn');
+
+                if (!conflictBtn) {
+                    conflictBtn = document.createElement("button");
+                    conflictBtn.id = "conflictBtn";
+                    conflictBtn.textContent = "Replace Ride";
+                    conflictBtn.onclick = replaceRide;
+                }
+                
+                conflictDiv.appendChild(conflictBtn); // Now it's safe to append                
                 conflictDiv.style.display = "block";
                 addRideContainer.style.display = "none";
                 historyContainer.style.display = "none";

@@ -7,7 +7,7 @@ include("../userHeader.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$_SESSION['id'] = 14; // Ensure this session variable exists
+// $_SESSION['id'] = 14; // Ensure this session variable exists
 $userID = $_SESSION['id'];
 
 $query = "SELECT email FROM user WHERE id = ?";
@@ -30,9 +30,9 @@ if ($result && mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
 
   // Debugging: Print driver array
-  // echo "<pre>";
-  // print_r($driver);
-  // echo "</pre>";
+  echo "<pre>";
+  print_r($driver);
+  echo "</pre>";
 
   // Assign values to individual variables safely
   $firstname = isset($driver['firstname']) ? $driver['firstname'] : "N/A";
