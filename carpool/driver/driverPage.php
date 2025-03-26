@@ -764,7 +764,7 @@ $revenues = json_encode(array_values($earnings_data));
 
           </div>
 
-          <div id="passwordResetModal" class="resetpassmodal" style="display: none;">
+          <div id="passwordResetModal" class="resetpassmodal" style="display: none !important;">
             <div class="resetpassmodal-content">
               <p id="modal-message">Processing<span class="dots">
                   <span class="dot">.</span>
@@ -824,6 +824,7 @@ $revenues = json_encode(array_values($earnings_data));
         <script src="../js/driver/upcomingRide.js" defer></script>
         <script src="../js/driver/addRide.js" defer></script>
         <script src="../js/driver/addHistoryRides.js" defer></script>
+        <script src="../js/passenger/resetpassmodal.js"></script>
 </body>
 
 </html>
