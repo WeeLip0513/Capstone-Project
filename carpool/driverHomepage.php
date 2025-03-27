@@ -27,6 +27,7 @@ session_start();
       padding: 150px 20px;
       margin-top: 70px;
       height: 680px;
+      border-bottom: 3px solid #333;
     }
 
     .hero h1 {
@@ -67,8 +68,6 @@ session_start();
       max-width: 1200px;
       margin: 40px auto;
       padding: 0 20px;
-      margin-top: 100px;
-
     }
 
     .feature-box {
@@ -108,6 +107,19 @@ session_start();
       padding: 60px 20px;
       max-width: 1200px;
       margin: 0 auto;
+      margin-top: 50px;
+    }
+
+    .driver-features::after {
+      content: "";
+      display: block;
+      width: 100vw; /* 100% of viewport width */
+      height: 3px; /* Thickness of the line */
+      background: #333; 
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 150px; /* Space between section and the line */
     }
 
     .driver-features h2 {

@@ -3,6 +3,13 @@ include("../dbconn.php");
 include("adminsidebar.php");
 ?>
 
+<?php
+    $sql = "SELECT d.id, d.firstname, d.lastname, d.phone_no, d.status, u.email 
+        FROM driver d
+        INNER JOIN user u ON d.user_id = u.id 
+        WHERE d.status = 'pending' LIMIT 5";
+    $results = mysqli_query($conn, $sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +23,7 @@ include("adminsidebar.php");
     <!-- <script src ="../js/admin/popularRoutes.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/admin/dashboard.js"></script>
+    <script src="../js/admin/currentTime.js"></script>
 
 </head>
 <body>
@@ -26,6 +34,11 @@ include("adminsidebar.php");
         </div>
         <div class="first-row-container">
             <div class="first-row-item-one">
+                <div class="current">
+                    <div id="current-day"></div>
+                    <div id="current-date"></div>
+                    <div id="current-time"></div>
+                </div>
                 <h3>Manage and monitor ride-sharing activities effortlessly.</h3>
             </div>
             <div class="first-row-item">
@@ -77,12 +90,46 @@ include("adminsidebar.php");
             <div class="second-row-item-two">
                 <div class="content-driver-pending">
                     <h3>Driver Pending List</h3>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Driver ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                            <?php
+                            if(mysqli_num_rows($results)>0){
+                                while($row=mysqli_fetch_assoc($results)){
+                                    echo "<tr>";
+                                    echo "<td>".$row['id']."</td>";
+                                    echo "<td>".$row['firstname']."</td>";
+                                    echo "<td>".$row['lastname']."</td>";
+                                    echo "<td>".$row['email']."</td>";
+                                    echo "<td>".$row['phone_no']."</td>";
+                                    echo "<td>".$row['status']."</td>";
+                                    echo "<td><a href='adminViewDriver.php?id=".$row['id']."'>View driver</a></td>";
+                                    echo"</tr>";
+                                }
+                        }else{
+                            echo "<tr><td colspan='7'>No pending drivers found</td></tr>";
+                        }
+                        mysqli_close($conn);
+                            ?>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="third-row-container">
             <div class="third-row-item">
-                <h3>Popular Routes</h3>
+                <div class="content-popular-routes">
+                    <h3>Popular Routes</h3>
+                </div>
                 </div>
             </div>
         </div>

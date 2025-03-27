@@ -11,6 +11,7 @@ include("headerHomepage.php");
   <link rel="stylesheet" href="style.css"/>
 </head>
 <style>
+    /* *{ border: 2px solid red;} */
     body, html {
         margin: 0;
         padding: 0;
@@ -36,31 +37,28 @@ include("headerHomepage.php");
 
     .container {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: center;
         padding: 60px 80px;
     }
     
-
     .left {
-        max-width: 600px;
         margin-left: 30px;
     }
 
     .left h1 {
-        font-size:60px;
+        font-size:80px;
         margin-top: 40px;
         font-weight: bold;
         margin-bottom: 20px;
         color: white;
-        font-weight: bold;
     }
 
     .left p {
         font-size: 26px;
-        color: #6e6e6e;
-        line-height: 1.6;
+        color: #a0a0a0;
         margin-bottom: 30px;
+        text-align: center;
     }
 
     .right img {
@@ -101,7 +99,7 @@ include("headerHomepage.php");
 
     /* Each card */
     .service-card {
-        background-color: #fff;
+        background-color:rgba(30, 30, 30, 0.08);
         width: 400px;
         border-radius: 12px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -156,12 +154,12 @@ include("headerHomepage.php");
     .service-title {
         font-size: 25px;
         margin-top: 105px;
-        font-weight: 600;
+        font-weight: bold;
     }
 
     .service-description {
         font-size: 20px;
-        line-height: 1.4;
+        margin-top: 10px;
         color: #555;
     }
 
@@ -170,15 +168,12 @@ include("headerHomepage.php");
     <div class="scroll-wrapper">
         <section class="container">
             <div class="left">
-                <h1>Easy to School<br>Cool with APool</h1>
-                <p>Hop in quick, the ride is slick <br>APool takes you to class without a single trick.</p>
-            </div>
-            <div class="right">
-                <img src="image/homepage/passengerHomePage.jpg" alt="Carpool Image" />
+                <h1>Easy to School, Cool with <span style="color: #2b64ff;">APool</span></h1>
+                <p>Hop in quick, the ride is slick APool takes you to class without a single trick.</p>
             </div>
         </section>
         <section class="services-container">
-            <h2 class="section-h2">WHY PASSENGERS LOVE APOOL</h2>    
+            <h2 class="section-h2">Why Passenger Love Apool</h2>    
             <div class="cards-wrapper">
             <!-- Card 1 -->
             <div class="service-card">
