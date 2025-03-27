@@ -30,9 +30,9 @@ if ($result && mysqli_num_rows($result) == 1) {
   $driver = mysqli_fetch_assoc($result);
 
   // Debugging: Print driver array
-  echo "<pre>";
-  print_r($driver);
-  echo "</pre>";
+  // echo "<pre>";
+  // print_r($driver);
+  // echo "</pre>";
 
   // Assign values to individual variables safely
   $firstname = isset($driver['firstname']) ? $driver['firstname'] : "N/A";
@@ -288,7 +288,7 @@ $revenues = json_encode(array_values($earnings_data));
   <div class="contents">
     <div class="activityContent">
       <div class="upcomingHeader">
-        Start Your Ride !
+        Start Your Ride
       </div>
       <div id="rideTableContainer" class="rideTableContainer">
         <table>
@@ -312,7 +312,7 @@ $revenues = json_encode(array_values($earnings_data));
     </div>
     <div class="rideContent" style="display: none;">
       <div class="addRides" id="addRideContainer" style="display: flex;">
-        <h1>Create Rides Now !</h1><br>
+        <h1>Create Your Ride</h1><br>
         <form id="addRideForm" method="POST" action="../php/driver/addRideProcess.php" novalidate>
           <table class="addRidesTable">
             <tr>

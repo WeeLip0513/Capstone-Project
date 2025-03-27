@@ -1,16 +1,17 @@
-
 .rideContent {
   display: flex;
   flex-wrap: wrap;
   /* Ensures responsiveness */
-  gap: 15px;
+  /* gap: 15px; */
   /* Space between the two divs */
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 100% !important;
   /* Make sure it takes full width */
   height: 100%;
   /* margin-left: 40px; */
+  margin-top: 40px;
 }
 
 .addRides {
@@ -24,15 +25,15 @@
   align-items: center;
   text-align: center;
   border-radius: 15px;
-  background-color: #2b83ff;
-  box-shadow: 0px 4px 10px rgb(98, 98, 98);
+  background-color: #333;
+  /* box-shadow: 0px 4px 10px rgb(98, 98, 98); */
   padding: 30px;
   position: relative;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
 .addRides h1 {
-  font-size: 35px;
+  font-size: 30px;
   color: whitesmoke;
 }
 
@@ -154,6 +155,7 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
   font-weight: bold;
   font-size: 16px;
+  transition: all 0.2s;
 }
 
 #addRideBtn:hover {
@@ -174,16 +176,18 @@
   align-items: center;
   text-align: center;
   /* border: 2px solid black; */
-  padding: 20px;
+  /* padding: 20px; */
   /* border: 2px black solid; */
   border-radius: 10px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
+  margin-left: 40px;
 }
 
 .historyTable h1 {
   color: white;
   margin-bottom: 20px;
   position: sticky;
+  font-size: 30px;
 }
 
 .historySlots {
@@ -196,11 +200,11 @@
   border-radius: 10px;
   overflow: hidden;
   background-color: white;
-  color: #2b83ff;
-  width: 700px;
+  color: #1e1e1e;
+  width: 100%;
   /* margin: 30px; */
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   position: relative;
 }
 
@@ -219,6 +223,7 @@
 
 .rideHistory th {
   padding-top: 8px;
+  /* color: #2b83ff; */
 }
 
 .rideHistory tr {
@@ -234,6 +239,14 @@
 
 .rideHistory .divider-row {
   width: 100%;
+}
+
+.rideHistory th:nth-child(4),
+.rideHistory td:nth-child(4),
+.rideHistory th:nth-child(5),
+.rideHistory td:nth-child(5) {
+    width: 20%; /* Adjust as needed */
+    min-width: 200px; /* Ensures it doesn't shrink too much */
 }
 
 /* Rounded corners for first and last cells */
@@ -266,8 +279,8 @@
 }
 
 .addSelectBtn {
-  color: white;
-  background-color: #2b83ff;
+  color: #2b83ff;
+  background-color: white;
   width: 200px;
   height: 40px;
   border-radius: 15px;
@@ -277,11 +290,12 @@
   font-size: 16px;
   /* margin-top: 10px; */
   margin-bottom: 20px;
+  transition: all 0.2s;
 }
 
 .addSelectBtn:hover {
-  color: #004aa5;
-  background-color: rgb(255, 255, 255);
+  background-color:#007bff;
+  color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
   border: none;
 }
@@ -548,9 +562,8 @@
 /* Default styles for larger screens remain unchanged */
 
 /* For screens 1200px and below */
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
   .rideContent {
-      flex-direction: column;
       align-items: center;
   }
   .addRidesTable td:first-child {
@@ -558,7 +571,7 @@
     text-align: center;
   }
   .addRides, .historyTable {
-      width: 80%;
+      width: 100%;
       margin-left: 0;
   }
   .addRides h1, .historyTable h1 {
@@ -567,10 +580,10 @@
   .rideHistory th, .rideHistory td {
       font-size: 16px;
   }
-}
+} */
 
 /* For screens 992px and below */
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
   .addRides h1, .historyTable h1 {
       font-size: 28px;
   }
@@ -583,7 +596,7 @@
   .addRidesTable input, .addRidesTable select {
       font-size: 13px;
   }
-}
+} */
 
 /* For screens 768px and below */
 @media (max-width: 768px) {

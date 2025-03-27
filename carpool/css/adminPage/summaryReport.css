@@ -1,6 +1,6 @@
-*{
+/* *{
     border: 1px solid red;
-}
+} */
 .summary-report-container{
     margin-left: 16rem;
     margin-top: 30px;
@@ -77,6 +77,9 @@ canvas#summaryReportChart {
     margin-top: 15px;
     width: 100%;
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; 
 }
 
 .summary-description h3{
@@ -89,6 +92,14 @@ canvas#summaryReportChart {
     font-size: 16px;
     text-align: justify;
     margin-bottom: 14px;
+}
+#summaryDes p{
+    display: flex;
+}
+
+#summaryDes strong {
+    min-width: 180px; /* Adjust based on content */
+    display: inline-block;
 }
 
 @media screen and (max-width: 768px) {

@@ -18,7 +18,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 80vh;
+    /* height: 80vh; */
 }
 
 /* Features Menu (Default - Desktop View) */
@@ -121,6 +121,8 @@ screen and (max-width: 480px) {
     .contents {
         margin-top: 40px;
         /* Adjusted for better spacing */
+        display: flex;
+        /* flex-direction: column; */
     }
 }
 

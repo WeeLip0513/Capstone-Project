@@ -15,7 +15,7 @@ include("adminsidebar.php");
 <body>
     <div class="summary-report-container">
         <h2>SUMMARY REPORT</h2>
-        <h3>Observe The Growth Of New Users, See the Rise, Know Your Users.</h3>
+        <h3>Track Growth, Analyze Trends, Make Informed Decisions.</h3>
         <div class="summary-report-form">
             <h4>Select Year & Month: </h4>
             <div class="summary-report-selection">
@@ -147,11 +147,11 @@ include("adminsidebar.php");
 
         function displaySummaryDetails(summaryData) {
             document.getElementById('summaryDes').innerHTML = `
-                <p>New Drivers: ${summaryData.newDrivers}</p>
-                <p>New Passengers: ${summaryData.newPassengers}</p>
-                <p>Driver Revenue: RM${summaryData.driverRevenue}</p>
-                <p>App Revenue: RM${summaryData.appRevenue}</p>
-                ${summaryData.mostPopularRoute ? `<p>Most Popular Route: ${summaryData.mostPopularRoute.route} (${summaryData.mostPopularRoute.count} trips)</p>` : ''}
+                <p><strong>New Drivers:</strong> ${summaryData.newDrivers}</p>
+                <p><strong>New Passengers:</strong> ${summaryData.newPassengers}</p>
+                <p><strong>Driver Revenue:</strong> RM${summaryData.driverRevenue}</p>
+                <p><strong>App Revenue:</strong> RM${summaryData.appRevenue}</p>
+                ${summaryData.mostPopularRoute ? `<p><strong>Most Popular Route:</strong> ${summaryData.mostPopularRoute.route} (${summaryData.mostPopularRoute.count} trips)</p>` : ''}
             `;
         }
 
