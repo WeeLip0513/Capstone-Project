@@ -1,0 +1,201 @@
+.feedback-container{
+    margin-left: 16rem;
+    margin-right: 2.5rem;
+    margin-top: 30px;
+}
+
+.feedback-container h2{
+    font-size: 25px;
+    color: #2b83ff;
+    margin-bottom: 10px;
+}
+
+.feedback-container h4{
+    color: rgb(101, 103, 103);
+}
+
+/* Table Styling */
+.feedback-table {
+    margin-top: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1a1a1a;
+}
+
+/* Table Head */
+
+th {
+    padding: 12px 30px;
+    border-bottom: 1px solid #2b83ff;
+    color: #a0a0a0;
+    font-size: 18px;
+    font-weight: bold;
+    /* text-align: center; */
+    justify-content: center;
+}
+
+/* Table Rows */
+td {
+    padding: 12px 30px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+    background: #252525;
+    word-break: break-word;
+    color: white;
+}
+
+/* Alternate row coloring */
+tr:nth-child(even) {
+    background: #2d2d2d;
+}
+
+/* Hover Effect */
+tr:hover {
+    background: rgba(43, 131, 255, 0.2);
+}
+
+/* Adjust column widths */
+th:nth-child(1), td:nth-child(1) { /* Feedback ID */
+    width: 15%;
+}
+
+th:nth-child(2), td:nth-child(2) { /* TP Number */
+    width: 20%;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Feedback Message */
+    width: 65%;
+    text-align: left; 
+    padding: 12px 15px;
+    word-break: break-word; /* Ensures long messages wrap properly */
+}
+
+td:last-child { 
+    text-align: justify; /* Justify only the Feedback Message column */
+    padding: 15px; /* Add padding for better readability */
+}
+
+@media (max-width: 1220px) {
+    .feedback-container {
+        margin-left: 5rem;
+        margin-right: 1.5rem;
+    }
+    
+    th, td {
+        font-size: 16px;
+        padding: 10px;
+    }
+    
+    table a {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 992px) {
+    .feedback-container {
+        margin-left: 5rem;
+        margin-right: 1rem;
+    }
+    
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    table a {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .feedback-container {
+        margin-left: 5rem;
+        margin-right: 2rem;
+        margin-top: 20px;
+    }
+    
+    .table-container {
+        overflow-x: auto; /* Enable horizontal scrolling */
+    }
+    
+    table {
+        width: 100%;
+        font-size: 13px;
+    }
+    
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    
+    table a {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
+
+/* For max-width 480px */
+@media (max-width: 480px) {
+    .feedback-container {
+        margin-left: 5rem;
+        margin-right: 1rem;
+        margin-top: 15px;
+    }
+    
+    
+    table {
+        font-size: 12px;
+        border-radius: 8px;
+    }
+    
+    th, td {
+        font-size: 11px;
+        padding: 5px;
+    }
+    
+    table a {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+    
+    /* Stack table content vertically on very small screens */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none; /* Hide table headers */
+    }
+
+    tr {
+        margin-bottom: 10px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #252525;
+    }
+
+    td {
+        text-align: right;
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        flex: 1;
+        color: #2b83ff;
+    }
+}
+

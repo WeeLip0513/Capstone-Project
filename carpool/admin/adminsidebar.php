@@ -45,7 +45,7 @@
                     <a href="popularRoutesReport.php" class="sub-item <?= ($currentPage == 'popularRoutesReport.php') ? 'active' : '' ?>">Popular Routes Report</a>
                 </div>
             </div>
-            <div class="item"><a href="">Feedbacks</a></div>
+            <div class="item"><a href="adminFeedback.php" class="sub-item <?= ($currentPage == 'adminFeedback.php') ? 'active' : '' ?>">Feedbacks</a></div>
             <div class="item"><a href="../logout.php">Log Out</a></div>
         </div>
     </div>

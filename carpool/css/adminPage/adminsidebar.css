@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* border: 3px solid red; */
 }
 
 body {
@@ -115,8 +114,8 @@ header h1 {
     color: #2b64ff;
     font-size: 35px;
     cursor: pointer;
+    margin-top: 0;
     margin: 25px;
-    /* padding-top: 1rem; */
     display: none;
     visibility: visible; /* Override the visibility property */
 }
