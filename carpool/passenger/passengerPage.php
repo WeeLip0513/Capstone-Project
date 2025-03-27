@@ -13,7 +13,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 $userID = $_SESSION['id'];
-echo "<h2 style='color:white;'>$userID</h2>";
+// echo "<h2 style='color:white;'>$userID</h2>";
 
 $passenger = getProfileDetails($userID, $conn);
 
@@ -31,7 +31,7 @@ if (!$row) {
 }
 
 $passenger_id = $row['id'];
-echo "Passenger ID: " . $passenger_id . "<br>";
+// echo "Passenger ID: " . $passenger_id . "<br>";
 
 // Get ride IDs from passenger_transaction table
 $stmt = $conn->prepare("SELECT ride_id FROM passenger_transaction WHERE passenger_id = ?");
