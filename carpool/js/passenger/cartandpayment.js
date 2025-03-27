@@ -193,21 +193,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function proceedToPayment() {
-        // console.log('Proceeding to payment');
-        // console.log('Current cart:', <?php echo json_encode($_SESSION['cart'] ?? []); ?>);
+        console.log('Proceeding to payment');
+        console.log('Current URL:', window.location.href);
 
-        // Use the full path to ensure correct routing
         fetch('http://localhost/Capstone-Project/carpool/php/passenger/payment.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            credentials: 'include',
+            credentials: 'include', // Ensures cookies are sent with the request
             body: 'action=proceed_to_payment'
         })
             .then(response => {
                 console.log('Response status:', response.status);
                 console.log('Response headers:', response.headers);
+
+                // Check if response is OK before parsing JSON
+                if (!response.ok) {
+                    // Try to get more details about the error
+                    return response.text().then(errorText => {
+                        console.error('Error response text:', errorText);
+                        throw new Error(`HTTP error! status: ${response.status}, text: ${errorText}`);
+                    });
+                }
                 return response.json();
             })
             .then(data => {
@@ -217,25 +225,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = data.checkout_url;
                 } else {
                     console.error('Payment processing error:', data);
-                    showNotification(data.message || 'Payment processing failed');
 
-                    // Additional debug information
+                    // Log debug information if available
                     if (data.debug) {
-                        console.error('Debug info:', data.debug);
+                        console.error('Debug information:', data.debug);
                     }
+
+                    showNotification(data.message || 'Payment processing failed');
                 }
             })
             .catch(error => {
-                console.error('Fetch error details:', error);
+                // Comprehensive error logging
+                console.error('Complete error object:', error);
+                console.error('Error name:', error.name);
+                console.error('Error message:', error.message);
+                console.error('Error stack:', error.stack);
 
-                // Try to get more information about the error
-                if (error.response) {
-                    error.response.text().then(errorText => {
-                        console.error('Error response text:', errorText);
-                    });
+                // More detailed error type checking
+                if (error instanceof TypeError) {
+                    console.error('Network error or fetch failed');
+                } else if (error instanceof SyntaxError) {
+                    console.error('JSON parsing error');
                 }
 
-                showNotification('An error occurred. Please check the console for details.');
+                // Show user-friendly notification
+                showNotification('An error occurred during payment. Please try again or contact support.');
             });
     }
     function checkBookedRides() {

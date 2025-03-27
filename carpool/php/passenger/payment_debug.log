@@ -1,0 +1,80 @@
+[2025-03-27 02:21:50] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:21:50] Passenger ID: 13
+[2025-03-27 02:21:50] Ride IDs in cart: 122,123
+[2025-03-27 02:21:50] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:46:00] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:46:00] Passenger ID: 13
+[2025-03-27 02:46:00] Ride IDs in cart: 122,123
+[2025-03-27 02:46:00] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:46:06] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:46:06] Passenger ID: 13
+[2025-03-27 02:46:06] Ride IDs in cart: 122,123
+[2025-03-27 02:46:06] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:46:10] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:46:10] Passenger ID: 13
+[2025-03-27 02:46:10] Ride IDs in cart: 122,123
+[2025-03-27 02:46:10] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:46:14] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:46:14] Passenger ID: 13
+[2025-03-27 02:46:14] Ride IDs in cart: 122,123
+[2025-03-27 02:46:14] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:46:18] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:46:18] Passenger ID: 13
+[2025-03-27 02:46:18] Ride IDs in cart: 122,123
+[2025-03-27 02:46:18] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:47:07] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:47:07] Passenger ID: 13
+[2025-03-27 02:47:07] Ride IDs in cart: 123,122
+[2025-03-27 02:47:07] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:47:11] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:47:11] Passenger ID: 13
+[2025-03-27 02:47:11] Ride IDs in cart: 123,122
+[2025-03-27 02:47:11] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:48:16] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:48:16] Passenger ID: 13
+[2025-03-27 02:48:16] Ride IDs in cart: 123,122
+[2025-03-27 02:48:16] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))
+[2025-03-27 02:48:20] Script started. POST data: Array
+(
+    [action] => proceed_to_payment
+)
+
+[2025-03-27 02:48:20] Passenger ID: 13
+[2025-03-27 02:48:20] Ride IDs in cart: 123,122
+[2025-03-27 02:48:21] Exception occurred: Cannot add or update a child row: a foreign key constraint fails (`carpool`.`passenger_transaction`, CONSTRAINT `passenger_transaction_ibfk_1` FOREIGN KEY (`passenger_id`) REFERENCES `passenger` (`id`))

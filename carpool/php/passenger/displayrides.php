@@ -127,7 +127,7 @@ if (isset($_POST['action'])) {
             $_SESSION['cart'] = array_values($_SESSION['cart']); // Reindex array
 
             // Update ride status back to upcoming
-            // $sql = "UPDATE ride SET status = 'upcoming' WHERE id = ?";
+            // $sql = "UPDATE ride SET status = 'pending' WHERE id = ?";
             // $stmt = mysqli_prepare($conn, $sql);
             // mysqli_stmt_bind_param($stmt, "i", $ride_id);
             // mysqli_stmt_execute($stmt);
