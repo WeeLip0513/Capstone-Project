@@ -177,6 +177,8 @@ session_start();
       color: #ccc; /* Subtle contrast for paragraph text */
       text-align: justify;
     }
+
+    
   </style>
 </head>
 <body>
