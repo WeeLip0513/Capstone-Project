@@ -89,14 +89,6 @@ $conn->close();
         <div class="bar"></div>
     </div>
 
-    <!-- Mobile Navigation Menu -->
-    <!-- <div id="mobileMenu" class="mobile-menu">
-        <button class="featureBtn" data-content="content-upcomingrides">Upcoming Rides</button>
-        <button class="featureBtn" data-content="content-availablerides">Available Rides</button>
-        <button class="featureBtn" data-content="content-tab3">Rides History</button>
-        <button class="featureBtn" data-content="content-tab4">My Profile</button>
-    </div> -->
-
     <div class="passenger">
         <div class="navigation-user" id="navigation-user">
             <div class="tabs">

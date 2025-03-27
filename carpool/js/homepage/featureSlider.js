@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update slider position (ensure CSS transition is applied on cardsContainer)
     function updateSlider() {
         const visibleCount = getVisibleCardCount();
-        const cardWidth = cards[0].offsetWidth + 60;
+        const cardWidth = cards[0].offsetWidth + 30;
         const maxIndex = cardCount - visibleCount;
         currentIndex=Math.max(0, Math.min(currentIndex, maxIndex));
         // if (currentIndex < 0) currentIndex = 0;
