@@ -94,6 +94,7 @@ mysqli_close($conn);
                 <div class="form-container">
                 <form action="support.php" method="POST">
                     <h2>Feedback</h2>
+                    <p class="subtext">We’d love to hear your thoughts! Let us know how we can improve your experience.</p>
 
                     <!-- Container for all input fields -->
                     <div class="input-container">
@@ -125,16 +126,10 @@ mysqli_close($conn);
                     </div> <!-- End of .input-container -->
 
                     <!-- Container for the submit button -->
-                    <div class="feedbackbutton-container">
-                        <button type="submit" class="feedback-button">Submit</button>
+                    <div class="button-container">
+                        <button type="submit" class="submit-button">Submit Feedback</button>
                     </div>
-
                     </form>
-
-                </div>
-                <!-- Right side: Image -->
-                <div class="image-container">
-                <img src="image/homepage/feedback.png" alt="Feedback Image">
                 </div>
             </div>
         </section>
