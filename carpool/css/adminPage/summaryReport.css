@@ -102,10 +102,31 @@ canvas#summaryReportChart {
     display: inline-block;
 }
 
+@media screen and (max-width: 1220px) {
+    .summary-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+}
+@media screen and (max-width: 992px) {
+    .summary-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+}
 @media screen and (max-width: 768px) {
     .summary-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 1rem;
+        padding-right: 2rem;
+    }
+}
+@media screen and (max-width: 480px) {
+    .summary-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
     }
 }

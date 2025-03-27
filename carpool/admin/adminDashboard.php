@@ -7,7 +7,7 @@ include("adminsidebar.php");
     $sql = "SELECT d.id, d.firstname, d.lastname, d.phone_no, d.status, u.email 
         FROM driver d
         INNER JOIN user u ON d.user_id = u.id 
-        WHERE d.status = 'pending' LIMIT 5";
+        WHERE d.status = 'pending' LIMIT 4";
     $results = mysqli_query($conn, $sql);
 ?>
 
@@ -18,12 +18,24 @@ include("adminsidebar.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin/Dashboard</title>
     <link rel="stylesheet" href="../css/adminPage/dashboard.css">
+    <link rel="stylesheet" href="../css/adminPage/resDashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- <script src ="../js/admin/popularRoutes.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/admin/dashboard.js"></script>
     <script src="../js/admin/currentTime.js"></script>
+    <script src="../js/admin/progressChart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("earningsClicked").addEventListener("click", function () {
+                window.location.href = "earningsReport.php";
+            });
+
+            document.getElementById("routesClicked").addEventListener("click", function () {
+                window.location.href = "popularRoutesReport.php";
+            });
+        });
+    </script>
 
 </head>
 <body>
@@ -38,8 +50,8 @@ include("adminsidebar.php");
                     <div id="current-day"></div>
                     <div id="current-date"></div>
                     <div id="current-time"></div>
+                    <h3>Manage and monitor ride-sharing activities.</h3>
                 </div>
-                <h3>Manage and monitor ride-sharing activities effortlessly.</h3>
             </div>
             <div class="first-row-item">
                 <div class="content">
@@ -76,7 +88,7 @@ include("adminsidebar.php");
         </div>
         <div class="second-row-container">
             <div class="second-row-item-one">
-                <div class="content-earnings">
+                <div id="earningsClicked" class="content-earnings">
                     <h3>Earnings Breakdown</h3>
                     <div id="earnings-chart-container">
                         <canvas id="earnings-chart"></canvas>
@@ -126,14 +138,39 @@ include("adminsidebar.php");
             </div>
         </div>
         <div class="third-row-container">
-            <div class="third-row-item">
+            <div id="routesClicked"class="third-row-item">
                 <div class="content-popular-routes">
-                    <h3>Popular Routes</h3>
-                </div>
+                    <div class="route-title">
+                        <h3>Popular Routes</h3> 
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="popularRoutesChart"></canvas>
+                    </div>
+                    <div class="content-top-route">
+                        <div class="route-1">
+                            <div class="progress-container">
+                                <canvas id="progressChart"></canvas>
+                            </div>
+                            <div class="top-text-route">
+                                <h3>Top 1 Route</h3>
+                                <div id="top-1-number" class="number"></div>
+                                <div id="top-1-name" class="text"></div>
+                            </div>
+                        </div>
+                        <div class="route-2">
+                            <div class="progress-container">
+                                <canvas id="progressChart2"></canvas>
+                            </div>
+                            <div class="top-text-route">
+                                <h3>Top 2 Route</h3>
+                                <div id="top-2-number" class="number"></div>
+                                <div id="top-2-name" class="text"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>

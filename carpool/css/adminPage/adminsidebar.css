@@ -31,9 +31,17 @@ body {
 }
 
 
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top:32px;
+}
+
 header img {
     width: 130px;
-    margin: 35px 38px 20px;
+    margin-bottom: 20px;
 }
 
 .close-btn {
@@ -108,7 +116,8 @@ header h1 {
     font-size: 35px;
     cursor: pointer;
     margin: 25px;
-    display: none; /* Hidden by default on desktop */
+    /* padding-top: 1rem; */
+    display: none;
     visibility: visible; /* Override the visibility property */
 }
 
@@ -125,6 +134,86 @@ header h1 {
     margin-left: 250px;
     padding: 20px;
     transition: margin-left 0.6s ease;
+}
+
+@media (max-width: 1220px) {
+    .admin-sidebar {
+        left: -220px; /* Hide sidebar on mobile */
+    }
+    header img {
+        width: 130px;
+    }
+
+    img{
+        align-items: center;
+    }
+    
+    .menu-btn {
+        display: block; /* Show hamburger menu on mobile */
+        margin-top: 0px;
+    }
+    
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+    
+    .admin-sidebar.active {
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .admin-sidebar {
+        left: -220px; /* Hide sidebar on mobile */
+    }
+    header img {
+        width: 130px;
+    }
+
+    img{
+        align-items: center;
+    }
+    
+    .menu-btn {
+        display: block; /* Show hamburger menu on mobile */
+        margin-top: 0px;
+    }
+    
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+    
+    .admin-sidebar.active {
+        left: 0;
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .admin-sidebar {
+        left: -220px; /* Hide sidebar on mobile */
+    }
+    header img {
+        width: 130px;
+    }
+
+    img{
+        align-items: center;
+    }
+    
+    .menu-btn {
+        display: block; /* Show hamburger menu on mobile */
+        margin-top: 0px;
+    }
+    
+    .close-btn {
+        display: block; /* Show close button on mobile */
+    }
+    
+    .admin-sidebar.active {
+        left: 0;
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
