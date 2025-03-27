@@ -50,7 +50,7 @@ include("adminsidebar.php");
             <canvas id="userGrowthChart"></canvas>
         </div>
         <div class="summary-description">
-            <h3>Description : </h3>
+            <h3>Description: </h3>
             <div id="summaryDes"></div>
         </div>
     </div>

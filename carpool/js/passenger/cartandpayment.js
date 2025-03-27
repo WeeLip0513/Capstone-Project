@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // console.log('Current cart:', <?php echo json_encode($_SESSION['cart'] ?? []); ?>);
 
         // Use the full path to ensure correct routing
-        fetch('../php/passenger/payment.php', {
+        fetch('http://localhost/Capstone-Project/carpool/php/passenger/payment.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
