@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 datasets: [
                     {
                         data: [driverRevenue, appRevenue],
-                        backgroundColor: ["#2e80f2", "#ff8c00"], // Colors
+                        backgroundColor: ["#2e80f2", "#ff8c00"],
                         hoverOffset: 5,
                     },
                 ],

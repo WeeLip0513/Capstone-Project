@@ -523,8 +523,8 @@ include("headerHomepage.php");
         </script>
     </div>
 </body>
-
 </html>
+<?php include('footer.php'); ?>
 
 
 

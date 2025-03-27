@@ -17,44 +17,46 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
 </head>
 
 <body>
-    <div class="login-all-container <?= $showSignup ? 'signup-right-active' : '' ?>" id="login-all-container">
-        <div class="login-container sign-in-container <?= !$showSignup ? 'active' : '' ?>">
-            <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
-                <h1>Login</h1>
-                <div class="infield">
-                    <input type="text" placeholder="TP Number" name="tpnumber" id="tpnumber" />
-                    <label id="tpLabel"></label>
-                </div>
-                <span class="error" id="tpError">TP Number is required</span>
-                <div class="infield">
-                    <input type="password" placeholder="Password" name="password" id="password" />
-                    <label id="passwordLabel"></label>
-                </div>
-                <span class="error" id="passwordError">Password is required</span>
-                <a href="#" class="forgot">Forgot your password?</a>
-                <br>
-                <button class="log-button" id="loginBtn" type="submit">Login</button>
-            </form>
-        </div>
-        <div class="login-container sign-up-container <?= $showSignup ? 'active' : '' ?>">
-            <h1>Register As</h1>
-            <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
-            <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
-        </div>
-        <div class="overlay-container" id="overlay-Con">
-            <div class="overlay">
-                <div class="overlay-panel signup-left">
-                    <h1>Welcome Back!</h1>
-                    <p>Experience Unique Service</p>
-                    <button class="log-button">Sign In</button>
-                </div>
-                <div class="overlay-panel signup-right">
-                    <h1>Let's Ride!</h1>
-                    <p>Start your journey with us</p>
-                    <button class="log-button" id="signUpBtn">Sign Up</button>
-                </div>
+    <div class="login-wrap">
+        <div class="login-all-container <?= $showSignup ? 'signup-right-active' : '' ?>" id="login-all-container">
+            <div class="login-container sign-in-container <?= !$showSignup ? 'active' : '' ?>">
+                <form id="form" action="/Capstone-Project/carpool/php/login/loginValid.php" method="POST">
+                    <h1>Login</h1>
+                    <div class="infield">
+                        <input type="text" placeholder="TP Number" name="tpnumber" id="tpnumber" />
+                        <label id="tpLabel"></label>
+                    </div>
+                    <span class="error" id="tpError">TP Number is required</span>
+                    <div class="infield">
+                        <input type="password" placeholder="Password" name="password" id="password" />
+                        <label id="passwordLabel"></label>
+                    </div>
+                    <span class="error" id="passwordError">Password is required</span>
+                    <a href="#" class="forgot">Forgot your password?</a>
+                    <br>
+                    <button class="log-button" id="loginBtn" type="submit">Login</button>
+                </form>
             </div>
-            <button id="overlayBtn"></button>
+            <div class="login-container sign-up-container <?= $showSignup ? 'active' : '' ?>">
+                <h1>Register As</h1>
+                <button class="log-button" onclick="location.href='passengerRegistration.php'">Passenger</button>
+                <button class="log-button" onclick="location.href='driverRegistration.php'">Driver</button>
+            </div>
+            <div class="overlay-container" id="overlay-Con">
+                <div class="overlay">
+                    <div class="overlay-panel signup-left">
+                        <h1>Welcome Back!</h1>
+                        <p>Experience Unique Service</p>
+                        <button class="log-button">Sign In</button>
+                    </div>
+                    <div class="overlay-panel signup-right">
+                        <h1>Let's Ride!</h1>
+                        <p>Start your journey with us</p>
+                        <button class="log-button" id="signUpBtn">Sign Up</button>
+                    </div>
+                </div>
+                <button id="overlayBtn"></button>
+            </div>
         </div>
     </div>
     <script>
@@ -213,3 +215,4 @@ $showSignup = isset($_GET['action']) && $_GET['action'] === 'signup';
 </body>
 
 </html>
+<?php include('footer.php'); ?>
