@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Redirect to driverPage.php after 3 seconds
             setTimeout(() => {
                 window.location.href = "driverPage.php";
-            }, 2000);
+            }, 3000);
             
         } else {
             messageDiv.innerHTML = `<p style="color: red; font-weight: bold;">Error: ${data.message}</p>`;

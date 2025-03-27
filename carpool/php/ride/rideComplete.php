@@ -1,5 +1,9 @@
 <?php
-include '../config.php'; // Ensure this file contains database connection details
+include ("../../dbconn.php"); // Ensure this file contains database connection details
+session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if (!isset($_SESSION['rideID']) || !isset($_SESSION['driverID'])) {
     echo json_encode(["success" => false, "error" => "Session data missing."]);
@@ -51,7 +55,7 @@ if ($driver_status === "restricted") {
 $sql = "INSERT INTO driver_transaction (driver_id, ride_id, driver_revenue, app_revenue, status, ride_completion_date) 
         VALUES (?, ?, ?, ?, 'completed', NOW())";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iidds", $driver_id, $ride_id, $driver_revenue, $app_revenue, $status);
+$stmt->bind_param("iidd", $driver_id, $ride_id, $driver_revenue, $app_revenue);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "driver_revenue" => $driver_revenue, "app_revenue" => $app_revenue]);

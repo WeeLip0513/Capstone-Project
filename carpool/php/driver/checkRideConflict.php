@@ -3,6 +3,10 @@ header('Content-Type: application/json'); // Tell the browser we are sending JSO
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start();
+
+$driver_id = $_SESSION['driverID'];
+
 include('../../dbconn.php'); // Include database connection
 
 // Check if required fields are present
@@ -22,6 +26,7 @@ file_put_contents('debug.log', "Checking conflict for: Date=$date, Time=$selecte
 $sql = "SELECT id, date, time, pick_up_point, drop_off_point 
         FROM ride 
         WHERE date = ? 
+        AND driver_id = ?
         AND ABS(TIME_TO_SEC(TIMEDIFF(time, ?))) <= TIME_TO_SEC('02:00:00')";
 
 $stmt = $conn->prepare($sql);
@@ -29,7 +34,7 @@ if (!$stmt) {
     die(json_encode(["error" => "SQL prepare failed: " . $conn->error]));
 }
 
-$stmt->bind_param("ss", $date, $selectedTime);
+$stmt->bind_param("sis", $date,$driver_id, $selectedTime);
 $stmt->execute();
 $result = $stmt->get_result();
 

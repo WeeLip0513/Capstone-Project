@@ -1,0 +1,111 @@
+/* *{
+    border: 1px solid red;
+} */
+.summary-report-container{
+    margin-left: 16rem;
+    margin-top: 30px;
+    margin-right: 2.5rem;
+}
+.summary-report-container h2{
+    color: #2b83ff;
+    font-size: 25px;
+}
+.summary-report-container h3{
+    margin-top: 5px;
+    color: rgb(101, 103, 103);
+}
+
+.summary-report-form{
+    width: 100%;
+    margin-top: 20px;
+    color: white;
+    background-color: #1e1e1e;
+    padding: 12px 20px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px;
+}
+
+.summary-report-selection{
+    margin-top: 15px;
+    display: flex;
+    column-gap: 15px;
+}
+
+select, input {
+    padding: 7px 20px;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    background-color: #2C2C2C;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button{
+    margin-left: 10px;
+    background-color: #2b83ff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: #1a6dd9;
+}
+
+.chart-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+canvas#summaryReportChart {
+    width: 100% !important; /* Ensures responsiveness */
+    height: auto !important; /* Maintains aspect ratio */
+    max-height: 400px; /* Restricts excessive height */
+}
+
+.summary-description{
+    background-color: #282727;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; 
+}
+
+.summary-description h3{
+    color: white;
+    margin-bottom: 10px;
+}
+
+#summaryDes{
+    color: white;
+    font-size: 16px;
+    text-align: justify;
+    margin-bottom: 14px;
+}
+#summaryDes p{
+    display: flex;
+}
+
+#summaryDes strong {
+    min-width: 180px; /* Adjust based on content */
+    display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+    .summary-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 1rem;
+    }
+}

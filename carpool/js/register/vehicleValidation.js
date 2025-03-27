@@ -170,12 +170,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // Handle form submission only when "Register" button is clicked
   registerButton.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent default form submission
-
+  
+    // Allow plate numbers in formats: ABC1234, W9182P, WA1234P
+    const plateFormat = /^[A-Z]{1,3}\d{1,4}[A-Z]?$/i; 
+  
+    if (!plateFormat.test(plateNo.value)) {
+      plateNoError.textContent = "Invalid plate number format. Use ABC1234, W9182P, or WA1234P.";
+      return;
+    } else {
+      plateNoError.textContent = ""; // Clear error if valid
+    }
+  
     if (!vehicleType.value) {
       alert("Please select a vehicle type first.");
       return;
     }
-
+  
     checkPlateNumberExists(function (isValid) {
       if (isValid) {
         console.log("Form submitted!");
@@ -183,4 +193,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+  
 });

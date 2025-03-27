@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
+    console.log(selectedRides);
+
     if (selectedRides.length === 0) {
       alert("No rides selected!");
       return;
@@ -42,21 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ride_ids: selectedRides.map(r => r.ride_id) })
       });
-
-      const data = await response.json();
-
-      // Store the fetched data globally
-      rideConflicts = data;
-
-      buildConflictMap(data); // Store conflict mapping
-      displayRides(data); // Show ride selection table
-
-      console.log("Ride Conflicts Data:", rideConflicts); // Debugging output
-
+  
+      const text = await response.text(); // Read raw response
+      console.log("Raw Response:", text); // ✅ Log full response
+  
+      try {
+        const data = JSON.parse(text); // Try parsing JSON
+        console.log("Parsed JSON:", data);
+        rideConflicts = data;
+        buildConflictMap(data);
+        displayRides(data);
+      } catch (jsonError) {
+        console.error("Invalid JSON response. Raw output:", text);
+      }
+  
     } catch (error) {
       console.error("Error fetching rides:", error);
     }
   }
+  
 
   // Create a conflict mapping between rides
   function buildConflictMap(data) {

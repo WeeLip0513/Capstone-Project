@@ -28,7 +28,7 @@ include("headerHomepage.php");
     <form action="php/register/registerDriverVehicle.php" method="post" id="registrationForm"
       enctype="multipart/form-data" novalidate>
       <div class="driverSection" id="driverSection">
-        <h1>Register Driver</h1>
+        <h1>Driver Registration</h1>
         <table>
           <tr>
             <td>TP Number</td>
@@ -205,8 +205,10 @@ include("headerHomepage.php");
           </tr>
           <tr>
             <td colspan="2" style="text-align: center;">
-              <button type="button" id="backButton">Back</button>
-              <button type="submit" id="registerButton">Register</button>
+              <div class="buttonWrap">
+                <button type="button" id="backButton">Back</button>
+                <button type="submit" id="registerButton">Register</button>
+              </div>
             </td>
           </tr>
         </table>

@@ -23,6 +23,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify password
         if (password_verify($password, $user["password"])) {
+            if ($user["role"] == "driver") {
+                $driver_query = "SELECT status FROM driver WHERE user_id = ?";
+                $driver_stmt = $conn->prepare($driver_query);
+                $driver_stmt->bind_param("s", $user["id"]);
+                $driver_stmt->execute();
+                $driver_result = $driver_stmt->get_result();
+                
+                if ($driver_result->num_rows == 1) {
+                    $driver = $driver_result->fetch_assoc();
+                    if ($driver["status"] !== "approved") {
+                        echo "<script>alert('Your driver account is not approved yet. Please wait for approval.'); window.history.back();</script>";
+                        exit();
+                    }
+                }
+            }
             $_SESSION["tpnumber"] = $user["tpnumber"];
             $_SESSION["role"] = $user["role"];
             $_SESSION["id"] = $user["id"];

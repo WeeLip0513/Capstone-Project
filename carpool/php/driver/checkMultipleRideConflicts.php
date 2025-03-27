@@ -5,6 +5,10 @@ header("Content-Type: application/json");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start();
+
+$driver_id = $_SESSION['driverID'];
+
 $data = json_decode(file_get_contents("php://input"), true);
 
 // 🛠 Debugging: Log raw input
@@ -65,12 +69,14 @@ foreach ($rideIds as $rideId) {
     $conflictSql = "SELECT id AS conflict_id, date, time, pick_up_point, drop_off_point, vehicle_id, driver_id, slots 
                     FROM ride 
                     WHERE date = ? 
-                    AND time BETWEEN ? AND ?";
+                    AND time BETWEEN ? AND ? 
+                    AND driver_id = ?";
 
     $stmt = $conn->prepare($conflictSql);
-    $stmt->bind_param("sss", $nextWeekDate, $startTime, $endTime);
+    $stmt->bind_param("ssss", $nextWeekDate, $startTime, $endTime, $driverId);
     $stmt->execute();
     $conflictResult = $stmt->get_result();
+
 
     while ($conflict = $conflictResult->fetch_assoc()) {
         // ✅ Store conflicts separately in `conflicts` (Including `slots`, `vehicle_id`, and `driver_id`)
@@ -83,7 +89,7 @@ foreach ($rideIds as $rideId) {
             "vehicle_id" => $conflict['vehicle_id'],
             "driver_id" => $conflict['driver_id'],
             "slots" => $conflict['slots'], // ✅ Added slots
-            "original_ride_id" => (int)$rideId // Link to the original ride
+            "original_ride_id" => (int) $rideId // Link to the original ride
         ];
     }
 }

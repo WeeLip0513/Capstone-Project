@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 let currentPage = 1;
-const rowsPerPage = 7;
+const rowsPerPage = 10;
 let ridesData = [];
 
 function fetchUpcomingRides() {
@@ -47,18 +47,21 @@ function displayPage(page) {
   ridesToShow.forEach(ride => {
     const pickupFormatted = formatLocationName(ride.pick_up_point);
     const dropoffFormatted = formatLocationName(ride.drop_off_point);
-    const passengerIcons = generatePassengerIcons(ride.slots, ride.slots - ride.slots_available);
+    const occupiedSlots = ride.slots - ride.slots_available;
+    const passengerIcons = generatePassengerIcons(ride.slots, occupiedSlots);
 
     const row = document.createElement("tr");
 
     // Check if the ride's date matches today
     const isToday = ride.date === today;
 
-    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id}, ${ride.slots - ride.slots_available})">Cancel</button>`;
-    if (isToday) {
+    let actionButtons = `<button class="cancelBtn" onclick="showCancelWarning(${ride.id}, ${occupiedSlots})">Cancel</button>`;
+
+    // Only show "Start" button if it's today and there is at least one passenger
+    if (isToday && occupiedSlots > 0) {
       actionButtons = `
         <button class="startBtn" onclick="startRide(${ride.id})">Start</button>
-        ` + actionButtons; // Only add Start button if the ride is today
+        ` + actionButtons;
     }
 
     row.innerHTML = `
@@ -82,6 +85,7 @@ function displayPage(page) {
 
   generatePagination();
 }
+
 
 
 // Generate Pagination with Dots Only
@@ -329,9 +333,9 @@ function startRide(rideId) {
   const rideTimeInMinutes = rideHour * 60 + rideMinute;
   const currentTimeInMinutes = currentHour * 60 + currentMinute;
 
-  console.log(`🕒 Current Time: ${currentHour}:${currentMinute} (${currentTimeInMinutes} minutes)`);
-  console.log(`🚗 Ride Time: ${rideHour}:${rideMinute} (${rideTimeInMinutes} minutes)`);
-  console.log(`⌛ Time Difference: ${rideTimeInMinutes - currentTimeInMinutes} minutes`);
+  // console.log(`🕒 Current Time: ${currentHour}:${currentMinute} (${currentTimeInMinutes} minutes)`);
+  // console.log(`🚗 Ride Time: ${rideHour}:${rideMinute} (${rideTimeInMinutes} minutes)`);
+  // console.log(`⌛ Time Difference: ${rideTimeInMinutes - currentTimeInMinutes} minutes`);
 
   if (currentTimeInMinutes < rideTimeInMinutes - 30) {
     alert("⏳ You can only start the ride within 30 minutes of the scheduled time.");

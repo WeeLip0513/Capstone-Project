@@ -147,7 +147,7 @@ function displayRideDetails() {
 
       arrivedBtn.addEventListener("click", function () {
         showProgress(3);
-        alert("Ride Completed Successfully!");
+        // alert("Ride Completed Successfully!");
       });
     }
   }, 100); // Small delay to ensure elements exist before attaching listeners

@@ -1,5 +1,9 @@
+/* *{
+    border: 2px solid red;
+} */
 .dashboard-container{
     margin-left: 16rem;
+    padding-right: 2rem;
 }
 
 .welcome{
@@ -14,31 +18,150 @@
 .welcome h3{
     margin-top: 5px;
     color: rgb(101, 103, 103);
-    font-size: 13px;
+    font-size: 18px;
 }
 
 .first-row-container{
     margin-top: 1.6rem;
     display: flex;
-    column-gap: 15px;
+    column-gap: 1.3rem;
 }
 
-.second-row-item{
-    height: 420px;
-    width: 640px;
-    background-color:#333333;
+.first-row-container h3{
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+.first-row-item-one{
+    height: 170px;
+    width: 100%;
+    background-color:#252525;
     border-radius: 16px;
 }
 .first-row-item{
-    height: 220px;
-    width: 280px;
-    background-color:#333333;
+    height: 170px;
+    width: 45%;
+    background-color:#252525;
+    border-radius: 16px;
+}
+
+.content{
+    padding: 15px 16px;
+}
+
+.first-row-container i{
+    color: #2b83ff;
+    background-color: #2b83ff38;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    display: flex;
+}
+
+#new-users,
+#new-drivers,
+#new-passengers,#total-rides{
+    margin-left: 3px;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#percentage-users,#percentage-drivers,#percentage-passengers,#percentage-rides{
+    margin-top: 10px;
+}
+
+.second-row-container{
+    margin-top: 1.6rem;
+    display: flex;
+    column-gap: 1.3rem;
+}
+
+.second-row-item-one{
+    height: 400px;
+    width: 50.5%;
+    background-color:#252525;
+    border-radius: 16px;
+}
+
+.content-earnings{
+    padding: 15px 16px;
+}
+
+.content-earnings h3{
+    color: #a0a0a0;
+    margin-bottom: 20px;
+}
+
+#earnings-chart-container {
+    width: 250px;  /* Set width to resize */
+    height: 250px; /* Set height to resize */
+    margin: 0 auto;
+}
+
+#earnings-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.earnings-description p {
+    color: #fff;
+    font-size: 16px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.earnings-description i {
+    margin-right: 8px;
+}
+
+.earnings-description {
+    display: flex;
+    justify-content: space-between; /* Push labels to left and percentages to right */
+    align-items: center;
+    width: 100%;
+    color: white;
+}
+
+#earnings-label, #earnings-percentage {
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.second-row-item-two{
+    height: 400px;
+    width: 100%;
+    background-color:#252525;
+    border-radius: 16px;
+}
+
+.content-driver-pending{
+    padding: 15px 16px;
+}
+
+.content-driver-pending h3{
+    color: #a0a0a0;
+}
+
+.third-row-container{
+    margin-top: 1.6rem;
+}
+
+.third-row-item{
+    height: 400px;
+    width: 100%;
+    background-color:#252525;
     border-radius: 16px;
 }
 
 @media (max-width: 768px) {
     .dashboard-container {
         margin-left: 5rem;
+        padding-right: 1.5rem;
     }
     
 }

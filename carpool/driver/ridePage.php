@@ -5,6 +5,7 @@ include("../rideHeader.php");
 
 $ride_id = $_GET['ride_id'];
 $_SESSION['rideID'] = $ride_id;
+echo($_SESSION['rideID']);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -30,10 +31,10 @@ $passengerCount = $slots - $slots_available;
 
 // Predefined locations with lat & lng
 $locations = [
-  "apu" => ["lat" => 3.0470, "lng" => 101.7009, "name" => "APU University"],
-  "lrtbukitjalil" => ["lat" => 3.0597, "lng" => 101.6895, "name" => "LRT Bukit Jalil"],
-  "pavbukitjalil" => ["lat" => 3.0515, "lng" => 101.6710, "name" => "Pavilion Bukit Jalil"],
-  "sripetaling" => ["lat" => 3.0701, "lng" => 101.6951, "name" => "Sri Petaling"]
+  "apu" => ["lat" => 3.05560, "lng" => 101.70069, "name" => "APU University"],
+  "lrtbukitjalil" => ["lat" => 3.0593243832900945, "lng" =>  101.69242002219941, "name" => "LRT Bukit Jalil"],
+  "pavbukitjalil" => ["lat" => 3.0503746741835793,  "lng" => 101.6709629957691, "name" => "Pavilion Bukit Jalil"],
+  "sripetaling" => ["lat" => 3.068877168730232,  "lng" => 101.68697247937381, "name" => "Sri Petaling"]
 ];
 
 // Convert drop-off point to lat/lng
@@ -55,6 +56,8 @@ $ride_details_json = json_encode([
   "time" => $time,
   "passenger" => $passengerCount
 ]);
+
+echo($_SESSION["driverID"]);
 ?>
 
 <!DOCTYPE html>
@@ -111,7 +114,7 @@ $ride_details_json = json_encode([
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGINGrQ2OWAupvgvS8ZbzO8QtbT8jbFek&callback=initMap&libraries=marker&map_ids=25e7edf70620c555"
     async defer></script>
 
-  <script src="../js/ride/progress.js"></script>
+  <!-- <script src="../js/ride/progress.js"></script> -->
 </body>
 
 </html>
