@@ -702,7 +702,8 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
               <div class="profiledetail">
                 <h3>Status:</h3>
                 <div class="show-profile-detail">
-                  <p style="<?php echo ($current_status == 'restricted') ? 'color: red !important;' : 'color: green;'; ?>">
+                  <p
+                    style="<?php echo ($current_status == 'restricted') ? 'color: red !important;' : 'color: green;'; ?>">
                     <?php echo $current_status; ?>
                     <?php if ($current_status == 'restricted') { ?> - Penalty End Date: <?php echo $penalty_end_date; ?>
                     <?php } ?>
@@ -743,7 +744,50 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
                 </div>
               </div>
             </div>
+          </div>
+          <!-- Edit Profile Modal -->
+          <div id="editProfileModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="editProfileForm">
+                <input type="hidden" id="editFieldName" name="fieldName">
+                <label id="editLabel"></label>
+                <div class="form-group">
+                  <input type="text" id="editFieldValue" name="fieldValue" required>
+                  <span id="errorMessage" class="error-message"></span>
+                </div>
+                <button type="submit">Save Changes</button>
+              </form>
+            </div>
+          </div>
 
+          <div class="modal" id="editLicenseModal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="editLicenseForm">
+                <div class="form-group">
+                  <label for="newLicenseNo">New License Number:</label>
+                  <input type="text" id="newLicenseNo" name="license_no" required>
+                  <span id="licenseErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicenseExp">New License Expiry Date:</label>
+                  <input type="date" id="newLicenseExp" name="license_exp" required>
+                  <span id="expDateErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicensePhotoFront">Upload License Photo (Front):</label>
+                  <input type="file" id="newLicensePhotoFront" name="license_photo_front" accept="image/*" required>
+                  <span id="photoErrorMessage" class="error-message"></span>
+                </div>
+                <div class="form-group">
+                  <label for="newLicensePhotoBack">Upload License Photo (Back):</label>
+                  <input type="file" id="newLicensePhotoBack" name="license_photo_back" accept="image/*" required>
+                  <span id="photoErrorMessage" class="error-message"></span>
+                </div>
+                <button type="submit" id="licenseUpdate">Save Changes</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
