@@ -43,7 +43,7 @@ $earning_stmt->close();
 
 // Fetch withdrawn amount
 $withdraw_sql = "SELECT SUM(driver_revenue) AS withdrawn_amount FROM driver_transaction 
-                 WHERE driver_id = ? AND status IN ('requested', 'withdrawn') 
+                 WHERE driver_id = ? AND status IN ('withdrawn') 
                  AND ride_completion_date BETWEEN ? AND ?";
 $withdraw_stmt = $conn->prepare($withdraw_sql);
 $withdraw_stmt->bind_param("iss", $driverID, $startDate, $endDate);

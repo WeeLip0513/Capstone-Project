@@ -34,7 +34,7 @@
 
 .addRides h1 {
   font-size: 30px;
-  color: whitesmoke;
+  color: #2b83ff;
 }
 
 .addRides form {
@@ -64,9 +64,10 @@
 
 .addRidesTable td h2 {
   text-align: left;
-  font-size: 20px;
-  color: white;
+  font-size: 18px;
+  color: whitesmoke;
   margin-bottom: 5px;
+  font-weight: bold;
   /* margin-left: 40px; */
 }
 
@@ -83,8 +84,8 @@
   box-sizing: border-box;
   background-color: whitesmoke;
   text-align: center;
-  color: #afafaf;
-  box-shadow: 0px 4px 10px rgba(1, 35, 109, 0.8);
+  color: #c2c2c2;
+  /* box-shadow: 0px 4px 10px rgba(1, 35, 109, 0.8); */
   font-weight: normal;
   /* color: #00b52a; */
 }
@@ -214,7 +215,7 @@
   padding: 10px;
   padding-top: 5px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -222,8 +223,9 @@
 }
 
 .rideHistory th {
+  font-size: 18px;
   padding-top: 8px;
-  /* color: #2b83ff; */
+  color: #2b83ff;
 }
 
 .rideHistory tr {
@@ -562,9 +564,10 @@
 /* Default styles for larger screens remain unchanged */
 
 /* For screens 1200px and below */
-/* @media (max-width: 1200px) {
+@media (max-width: 1200px) {
   .rideContent {
       align-items: center;
+      flex-direction: column;
   }
   .addRidesTable td:first-child {
     width: 30%;
@@ -580,10 +583,10 @@
   .rideHistory th, .rideHistory td {
       font-size: 16px;
   }
-} */
+}
 
 /* For screens 992px and below */
-/* @media (max-width: 992px) {
+@media (max-width: 992px) {
   .addRides h1, .historyTable h1 {
       font-size: 28px;
   }
@@ -596,7 +599,7 @@
   .addRidesTable input, .addRidesTable select {
       font-size: 13px;
   }
-} */
+}
 
 /* For screens 768px and below */
 @media (max-width: 768px) {
