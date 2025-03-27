@@ -15,9 +15,9 @@ if ($conn->connect_error) {
     exit;
 }
 
-// Get today's date and the start of next week (next Sunday)
-$today = date('Y-m-d'); // Start from today
-$startOfNextWeek = date('Y-m-d', strtotime('next sunday'));
+// Get the start of this week (last Sunday) and the end of next week (next Saturday)
+$startOfThisWeek = date('Y-m-d', strtotime('last sunday')); // Start from last Sunday
+$endOfNextWeek = date('Y-m-d', strtotime('next saturday +7 days')); // End of next week (next Saturday)
 
 $sql = "SELECT id, date, DATE_FORMAT(date, '%W') AS day, 
                TIME_FORMAT(time, '%h:%i %p') AS time, pick_up_point, drop_off_point, 
@@ -25,12 +25,12 @@ $sql = "SELECT id, date, DATE_FORMAT(date, '%W') AS day,
         FROM ride
         WHERE driver_id = ? 
         AND status = 'upcoming' 
-        AND date >= ?  -- Include today
-        AND date < ?   -- Only rides before next Sunday
+        AND date >= ?  -- From the start of this week
+        AND date <= ?  -- Until the end of next week (inclusive)
         ORDER BY date, time ASC";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iss", $driver_id, $today, $startOfNextWeek);
+$stmt->bind_param("iss", $driver_id, $startOfThisWeek, $endOfNextWeek);
 $stmt->execute();
 $result = $stmt->get_result();
 

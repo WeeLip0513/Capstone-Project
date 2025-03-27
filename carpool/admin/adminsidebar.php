@@ -24,10 +24,10 @@
     </div>
     
     <div class="admin-sidebar">
-        <header>
             <div class="close-btn">
                 <i class="fas fa-times"></i>
             </div>
+        <header>
             <img src="../image/logo.png" alt="logo">
             <h1>Welcome Admin</h1>
         </header>

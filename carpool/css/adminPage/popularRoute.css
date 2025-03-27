@@ -113,3 +113,79 @@ button:hover {
         margin-bottom: 14px;
     }
 }
+@media screen and (max-width: 1220px) {
+    .popularRoutes-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 3rem;
+    }
+
+    #popularRoutesChart {
+        width: 100% !important;
+        height: 100% !important;
+        }
+
+    #summaryDes{
+        color: white;
+        font-size: 14px;
+        text-align: justify;
+        margin-bottom: 14px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .popularRoutes-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 3rem;
+    }
+
+    #popularRoutesChart {
+        width: 100% !important;
+        height: 100% !important;
+        }
+
+    #summaryDes{
+        color: white;
+        font-size: 14px;
+        text-align: justify;
+        margin-bottom: 14px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .popularRoutes-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 3rem;
+    }
+
+    #popularRoutesChart {
+        width: 100% !important;
+        height: 100% !important;
+        }
+
+    #summaryDes{
+        color: white;
+        font-size: 14px;
+        text-align: justify;
+        margin-bottom: 14px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .popularRoutes-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 3rem;
+    }
+
+    #popularRoutesChart {
+        width: 100% !important;
+        height: 100% !important;
+        }
+
+    #summaryDes{
+        color: white;
+        font-size: 14px;
+        text-align: justify;
+        margin-bottom: 14px;
+    }
+}

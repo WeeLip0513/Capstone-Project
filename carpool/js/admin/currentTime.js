@@ -2,15 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateDateTime() {
         let now = new Date();
 
-        // Get the current day (e.g., Monday)
+        // Get the current day
         let optionsDay = { weekday: 'long' };
         let formattedDay = now.toLocaleDateString('en-US', optionsDay);
 
-        // Get the current date (e.g., March 27, 2025)
+        // Get the current date
         let optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
         let formattedDate = now.toLocaleDateString('en-US', optionsDate);
 
-        // Get the current time (e.g., 02:45:30 PM)
+        // Get the current time
         let formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
         // Update the elements in the DOM

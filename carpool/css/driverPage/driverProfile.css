@@ -257,10 +257,13 @@ span{
 }
 
 @media screen and (max-width: 1220px) {
+  .profileContent{
+    width: 100%;
+  }
   .profile-container {
       padding: 10px;
       margin-bottom: 50px;
-      max-width: 1170px;
+      /* max-width: 1170px; */
   }
 
   .profile-card h2 {
@@ -280,7 +283,8 @@ span{
   .profile-container {
       padding: 10px;
       margin-bottom: 50px;
-      max-width: 850px;
+      width: 100%;
+      /* max-width: 850px; */
   }
 
   .profile-card h2 {
@@ -305,7 +309,7 @@ span{
 @media screen and (max-width: 768px) {
   .profile-container {
       padding: 10px;
-      max-width: 700px;
+      /* max-width: 700px; */
       margin-bottom: 50px;
   }
 
@@ -330,7 +334,7 @@ span{
 @media screen and (max-width: 480px) {
   .profile-container {
       padding: 5px;
-      max-width: 400px;
+      /* max-width: 400px; */
   }
 
   .profile-card h2 {
