@@ -61,27 +61,29 @@ mysqli_close($conn);
 <body>
     <div class="container">
         <!-- Page Description Section -->
+        <section class="page-header">
+            <h2>Drive Together, Thrive Together</h2>
+            <p class="subtext">Share the Journey, Shape the Future.</p>
+        </section>
         <section class="page-description">
-            <h2><span>D</span><span>r</span><span>i</span><span>v</span><span>e</span><span>T</span><span>o</span><span>g</span><span>e</span><span>t</span><span>h</span><span>e</span><span>r</span><span>,</span>
-                <span>T</span><span>h</span><span>r</span><span>i</span><span>v</span><span>e</span><span>T</span><span>o</span><span>g</span><span>e</span><span>t</span><span>h</span><span>e</span><span>r</span>
-            </h2>
                 <!-- Paragraph 1 -->
-                <p class="page-description">
-                <strong class="small-header">Welcome to the APU Carpool Support Page!</strong>
+                <p class="first-page-description">
+                <strong class="small-header">Welcome to the APU Carpool Support Page</strong>
                 We're here to assist you with any questions or issues while using our carpooling platform. 
                 Our support team is ready to help with booking rides,<br> managing profiles, and ensuring your safety during carpooling.
-                
+                </p>
+                <p class="page-description">
                 <strong class="small-header">We Value Your Feedback</strong>
                 We value your feedback as it helps us enhance the platform for the Asia Pacific University community. 
                 Whether you have suggestions for new features,<br> need help with an issue, or want to share your thoughts, 
                 this is the place to do it!
-
+                </p>
+                <p class="page-description">
                 <strong class="small-header">Explore Our FAQ</strong>
-                Explore our FAQ section for quick answers or use the feedback form to reach out directly. 
-                We're dedicated to providing prompt and <br>helpful support to make your carpooling experience smooth and enjoyable. 
-                Our goal is to create a seamless experience for all users, <br>promoting safety and convenience. 
-                Join us in building a strong and connected campus community through carpooling!
-                
+                Check our FAQ for quick answers or use the feedback form to contact us. We're committed to making your carpooling 
+                experience smooth, safe, and convenient for everyone in the APU community.
+                </p>
+                <p class="page-description">
                 <strong class="small-header">Thank You for Choosing APU Carpool</strong>
                 Together, we can make campus transportation more convenient, sustainable, and community-focused!
                 </p>
