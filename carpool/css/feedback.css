@@ -1,3 +1,5 @@
+    /* *{ border: 2px solid red;} */
+
 .container{
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
@@ -14,96 +16,75 @@ section {
     align-items: center;
     scroll-snap-align: start;
 }
+.page-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;            /* Full viewport height */
+    text-align: center;       /* Centers text within each element */
+    padding: 20px;
+    position: relative;
+  }
+.page-header .subtext {
+    font-size: 26px;
+    color: #a0a0a0;
+    text-align: center;
+  }
+.page-header h2 {
+    font-size: 80px;
+    margin: 0 0 10px 0;
+    color: white;
+    overflow: hidden;
+    text-align: center;
+}
+
 .page-description {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left;
+    align-items: flex-start;
     height: 100vh;
     text-align: center;
     background-color: transparent;
-    animation: slideIn 1s ease-in-out;
-    padding: 20px;
     background-color: black;
     position: relative;
+    gap: 15px;
+    padding-top: 80px;
 }
-.page-description h2 {
-    font-size: 5.8rem;
-    margin: 0 0 30px 0;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    animation: textReveal 2s ease-in-out forwards;
-    overflow: hidden;
-    position: absolute;
-    top: 95px;
-    text-align: center;
+.page-description p .small-header {
+    display: block;        
+    font-weight: bold;   
+    font-size: 35px;      
+    color: #2b63ff;
+    text-align: left;            
 }
 .page-description p {
-    width: 1420px;
-    height: 490px;
-    font-size: 1.1rem;
-    margin: 200px auto 0 auto;
+    width: 100%;
+    font-size: 18px;
     color: #555;
+    height: 150px;  
     max-width: 100%;
-    animation: fadeSlideIn 1.5s ease-out;
-    line-height: 1.5;
     background: rgba(33, 33, 33, 0.7);
+    margin-bottom: 10px;
     padding: 20px;
     color: white;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
     text-align: left;
     align-self: flex-start;
 }
-.page-description p:hover {
+.page-header p:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
-.page-description p .small-header {
-    display: block;        
-    font-weight: bold;
-    margin-bottom: 8px;     
-    font-size: 2rem;      
-    color: #2b64ff;
-    margin-top: 10px;
-    text-align: left;            
-}
-.page-description h2 span {
+
+.page-header h2 span {
     display: inline-block;
     opacity: 0;
     transform: translateY(20px);
     animation: letterAppear 1s forwards;
 }
-
-.page-description h2 span:nth-child(1) { animation-delay: 0.1s; }
-.page-description h2 span:nth-child(2) { animation-delay: 0.25s; }
-.page-description h2 span:nth-child(3) { animation-delay: 0.4s; }
-.page-description h2 span:nth-child(4) { animation-delay: 0.55s; }
-.page-description h2 span:nth-child(5) { animation-delay: 0.7s; }
-.page-description h2 span:nth-child(6) { animation-delay: 0.85s; }
-.page-description h2 span:nth-child(7) { animation-delay: 1.0s; }
-.page-description h2 span:nth-child(8) { animation-delay: 1.15s; }
-.page-description h2 span:nth-child(9) { animation-delay: 1.3s; }
-.page-description h2 span:nth-child(10) { animation-delay: 1.45s; }
-.page-description h2 span:nth-child(11) { animation-delay: 1.6s; }
-.page-description h2 span:nth-child(12) { animation-delay: 1.75s; }
-.page-description h2 span:nth-child(13) { animation-delay: 1.9s; }
-.page-description h2 span:nth-child(14) { animation-delay: 2.05s; }
-.page-description h2 span:nth-child(15) { animation-delay: 2.2s; }
-.page-description h2 span:nth-child(16) { animation-delay: 2.35s; }
-.page-description h2 span:nth-child(17) { animation-delay: 2.5s; }
-.page-description h2 span:nth-child(18) { animation-delay: 2.65s; }
-.page-description h2 span:nth-child(19) { animation-delay: 2.7s; }
-.page-description h2 span:nth-child(20) { animation-delay: 2.8s; }
-.page-description h2 span:nth-child(21) { animation-delay: 2.95s; }
-.page-description h2 span:nth-child(22) { animation-delay: 3.1s; }
-.page-description h2 span:nth-child(23) { animation-delay: 3.25s; }
-.page-description h2 span:nth-child(24) { animation-delay: 3.4s; }
-.page-description h2 span:nth-child(25) { animation-delay: 3.55s; }
-.page-description h2 span:nth-child(26) { animation-delay: 3.7s; }
-.page-description h2 span:nth-child(27) { animation-delay: 3.85s; }
-.page-description h2 span:nth-child(28) { animation-delay: 4s; }
 
 .feedback {
     width: 100%;
