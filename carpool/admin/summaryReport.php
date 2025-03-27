@@ -119,7 +119,7 @@ include("adminsidebar.php");
                     plugins: {
                         title: {
                             display: true,
-                            text: `Carpool Summary - ${month}/${year}`,
+                            text: `APool Summary - ${month}/${year}`,
                             font: {
                                 size: 20,
                             }

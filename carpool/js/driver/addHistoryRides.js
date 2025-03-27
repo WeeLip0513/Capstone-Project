@@ -221,8 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
         row.style.setProperty("background-color", "#ffcccc", "important"); // Light red for conflicts
         row.style.setProperty("color","red");
     } else {
-        row.style.setProperty("background-color", "#ffffff", "important"); // Ensure non-conflict rides are white
-        row.style.setProperty("color","#2b83ff");
+        row.style.setProperty("background-color", "#1e1e1e", "important"); // Ensure non-conflict rides are white
+        row.style.setProperty("color","white");
     }
 
     row.innerHTML = `
@@ -363,8 +363,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${ride.pickup}</td>
             <td>${ride.dropoff}</td>
         `;
-        row.style.setProperty("background-color","white");
-        row.style.setProperty("color","#2b83ff");
+        row.style.setProperty("background-color","#1e1e1e");
+        row.style.setProperty("color","white");
         tbody.appendChild(row);
     });
 

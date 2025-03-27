@@ -185,27 +185,6 @@ if ($canceled_rides > 0) {
   }
 }
 
-
-$earning_sql = "SELECT driver_revenue, ride_completion_date FROM driver_transaction WHERE driver_id = ?
-                AND status = 'active'";
-$earning_stmt = $conn->prepare($earning_sql);
-$earning_stmt->bind_param("i", $_SESSION['driverID']);
-$earning_stmt->execute();
-
-$result = $earning_stmt->get_result();
-
-// Process Data: Group earnings by date
-$earnings_data = [];
-while ($row = $result->fetch_assoc()) {
-  $date = $row['ride_completion_date'];
-  $revenue = $row['driver_revenue'];
-
-  if (!isset($earnings_data[$date])) {
-    $earnings_data[$date] = 0;
-  }
-  $earnings_data[$date] += $revenue;
-}
-
 // Check if today is the penalty end date
 if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalty_end_date < $today)) {
   // Reset cancel count and remove restriction
@@ -221,11 +200,6 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
         alert('✅ Your restriction has been lifted. You can now accept rides again.');
   </script>";
 }
-
-
-// Convert to JSON for Chart.js
-$dates = json_encode(array_keys($earnings_data));
-$revenues = json_encode(array_values($earnings_data));
 ?>
 
 <!DOCTYPE html>
@@ -444,7 +418,7 @@ $revenues = json_encode(array_values($earnings_data));
                       seatInput.value = maxSeats;
                       seatInput.style.color = "black";
                       seatInput.style.fontWeight = "bold";
-                      seatInput.style.border = "3px solid #009432"
+                      seatInput.style.border = "3px solid #1e1e1e"
                       seatInput.removeAttribute('disabled');
                     } else {
                       seatInput.value = "";
@@ -705,24 +679,7 @@ $revenues = json_encode(array_values($earnings_data));
               </div>
             </div>
 
-            <!-- New Row: License Number -->
-            <div class="profilerow">
-              <div class="profiledetail">
-                <h3>License Number:</h3>
-                <div class="show-profile-detail">
-                  <p><?php echo $license_no; ?></p>
-                  <button onclick="openEditLicenseModal()" class="updateLicense">Update License</button>
-                </div>
-              </div>
-              <div class="profiledetail">
-                <h3>License Expiry Date:</h3>
-                <div class="show-profile-detail">
-                  <p><?php echo $license_exp; ?></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Driver's Rating Row -->
+            <!-- Driver's Rating & Status Row -->
             <div class="profilerow">
               <div class="profiledetail">
                 <h3>Rating:</h3>
@@ -742,6 +699,34 @@ $revenues = json_encode(array_values($earnings_data));
                   </p>
                 </div>
               </div>
+              <div class="profiledetail">
+                <h3>Status:</h3>
+                <div class="show-profile-detail">
+                  <p
+                    style="<?php echo ($current_status == 'restricted') ? 'color: red !important;' : 'color: green;'; ?>">
+                    <?php echo $current_status; ?>
+                    <?php if ($current_status == 'restricted') { ?> - Penalty End Date: <?php echo $penalty_end_date; ?>
+                    <?php } ?>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Row: License Number -->
+            <div class="profilerow">
+              <div class="profiledetail">
+                <h3>License Number:</h3>
+                <div class="show-profile-detail">
+                  <p><?php echo $license_no; ?></p>
+                  <button onclick="openEditLicenseModal()" class="updateLicense">Update License</button>
+                </div>
+              </div>
+              <div class="profiledetail">
+                <h3>License Expiry Date:</h3>
+                <div class="show-profile-detail">
+                  <p><?php echo $license_exp; ?></p>
+                </div>
+              </div>
             </div>
 
             <!-- New Row: License Images -->
@@ -759,20 +744,7 @@ $revenues = json_encode(array_values($earnings_data));
                 </div>
               </div>
             </div>
-
           </div>
-
-          <div id="passwordResetModal" class="resetpassmodal" style="display: none !important;">
-            <div class="resetpassmodal-content">
-              <p id="modal-message">Processing<span class="dots">
-                  <span class="dot">.</span>
-                  <span class="dot">.</span>
-                  <span class="dot">.</span>
-                </span>
-              </p>
-            </div>
-          </div>
-
           <!-- Edit Profile Modal -->
           <div id="editProfileModal" class="modal">
             <div class="modal-content">
@@ -818,11 +790,14 @@ $revenues = json_encode(array_values($earnings_data));
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <script src="../js/driver/upcomingRide.js" defer></script>
-        <script src="../js/driver/addRide.js" defer></script>
-        <script src="../js/driver/addHistoryRides.js" defer></script>
-        <script src="../js/passenger/resetpassmodal.js"></script>
+
+    <script src="../js/driver/upcomingRide.js" defer></script>
+    <script src="../js/driver/addRide.js" defer></script>
+    <script src="../js/driver/addHistoryRides.js" defer></script>
+    <script src="../js/passenger/resetpassmodal.js"></script>
 </body>
 
 </html>

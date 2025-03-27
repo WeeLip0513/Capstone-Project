@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     move_uploaded_file($back_photo['tmp_name'], $back_filename);
 
     // Update database
-    $stmt = $conn->prepare("UPDATE driver SET license_no = ?, license_expiry_date = ?, license_photo_front = ?, license_photo_back = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $license_no, $license_exp, $front_filename, $back_filename, $driver_id);
+    $stmt = $conn->prepare("UPDATE driver SET license_no = ?, license_expiry_date = ?, license_photo_front = ?, license_photo_back = ?, status ='pending' WHERE id = ?");
+    $stmt->bind_param("sssssi", $license_no, $license_exp, $front_filename, $back_filename, $driver_id);
     
     if ($stmt->execute()) {
         $response['success'] = true;

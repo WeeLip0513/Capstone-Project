@@ -85,11 +85,44 @@ button:hover {
     margin-bottom: 14px;
 }
 
+@media screen and (max-width: 1220px) {
+    .earnings-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+
+    .chart-container {
+        height: 450px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .earnings-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+
+    .chart-container {
+        height: 450px;
+    }
+}
 @media screen and (max-width: 768px) {
     .earnings-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 1rem;
+        padding-right: 2rem;
+    }
+
+    .chart-container {
+        height: 450px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .earnings-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
     }
 
     .chart-container {
