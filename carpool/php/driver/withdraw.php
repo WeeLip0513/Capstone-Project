@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   SET status = 'withdrawn' 
                   WHERE driver_id = ? 
                   AND DATE_FORMAT(ride_completion_date, '%m') = ? 
-                  AND status = 'active'";
+                  AND status = 'completed'";
 
     $stmt = $conn->prepare($updateSql);
     if (!$stmt) {

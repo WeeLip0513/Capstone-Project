@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.style.border = "3px solid red";
         } else {
             errorElement.textContent = "";
-            input.style.border = "3px solid #009432";
+            input.style.border = "3px solid #1e1e1e";
             input.style.color = "#2c2c2c";
             input.style.fontWeight = "bold";
         }
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         } else {
             pickupError.textContent = "";
-            pickup.style.border = "3px solid #009432";
+            pickup.style.border = "3px solid #1e1e1e";
             pickup.style.color = "#2c2c2c";
             pickup.style.fontWeight = "bold";
         }
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         } else {
             dropoffError.textContent = "";
-            dropoff.style.border = "3px solid #009432";
+            dropoff.style.border = "3px solid #1e1e1e";
             dropoff.style.color = "#2c2c2c";
             dropoff.style.fontWeight = "bold";
         }
