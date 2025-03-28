@@ -3,8 +3,6 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-    /* border: 2px solid red !important; */
 }
 
 .homepage-container {
@@ -244,484 +242,51 @@ input[type="time"].card-holder.has-value {
     }
 }
 
-/* Role Selection */
-.roles-section {
-    position: relative;
-    padding: 50px 0;
-    height: 90vh;
-    background-color: white;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.section-title h2 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #2b83ff;
-}
-
-.section-title p {
-    font-size: 1rem;
-    color: black;
-    margin: 0 auto;
-    max-width: 600px;
-}
-
-.role-cards {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.role-card {
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 2 15px 35px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.role-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, #2b83ff, #4dabff);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.role-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.role-card:hover::before {
-    opacity: 1;
-}
-
-.role-card:hover * {
-    color: white;
-}
-
-.role-icon {
-    width: 100px;
-    height: 100px;
-    background: #2b83ff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 25px;
-    transition: all 0.3s ease;
-}
-
-.role-card:hover .role-icon {
-    background: white;
-}
-
-.role-icon i {
-    font-size: 40px;
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.role-card:hover .role-icon i {
-    color: #2b83ff;
-}
-
-.role-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #212529;
-    transition: all 0.3s ease;
-}
-
-.role-card p {
-    color: #6c757d;
-    line-height: 1.7;
-    margin-bottom: 25px;
-    transition: all 0.3s ease;
-}
-
-.btn-role {
-    display: inline-block;
-    background: #2b83ff;
-    color: white;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border: 2px solid #2b83ff;
-}
-
-.role-card:hover .btn-role {
-    background: white;
-    color: #2b83ff;
-    border-color: white;
-}
-
-
-
-
-
-
-
-
-/* benefitd */
-.benefits-section {
-    position: relative;
-    height: 90vh;
-    background-color: white;
-}
-
-/* Benefits container */
-.benefits-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px;
-    background: white;
-}
-
-/* Header styles */
-.benefits-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 60px;
-}
-
-.benefits-header h1 {
-    font-size: 48px;
-    font-weight: 600;
-    margin: 0;
-    color: #333;
-}
-
-.shop-link {
-    color: #0070c9;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.shop-link:hover {
-    text-decoration: underline;
-}
-
-/* Cards wrapper */
-.benefits-cards-wrapper {
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 40px;
-    padding-top: 20px;
-    height: 350px;
-}
-
-/* Cards container */
-.benefits-cards {
-    display: flex;
-    transition: transform 0.5s ease;
-    padding-left: 0;
-    gap: 60px;
-}
-
-/* Individual benefit card */
-.benefit-card {
-    flex: 0 0 280px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    /* background: #f5f5f7; */
-    border-radius: 18px;
-    padding: 30px;
-    position: relative;
-    min-height: 280px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.benefit-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.icon {
-    margin-bottom: 20px;
-}
-
-.icon svg {
-    width: 32px;
-    height: 32px;
-    color: #0070c9;
-}
-
-.benefit-card h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-    color: #333;
-}
-
-.benefit-card h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 15px 0;
-    color: #333;
-}
-
-.benefit-card p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #666;
-}
-
-.expand-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: #e0e0e0;
-    border: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.expand-button:hover {
-    background: #d0d0d0;
-}
-
-/* Modal overlay and container */
-.modal-overlay {
-    display: none;
-    /* hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 0;
-    /* Start with transparent */
-    transition: opacity 0.3s ease;
-    /* Smooth fade in/out */
-}
-
-.modal-container {
-    background: #fff;
-    border-radius: 18px;
-    /* Rounded corners like image */
-    max-width: 500px;
-    width: 90%;
-    padding: 30px 40px;
-    position: relative;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-    transform: translateY(20px);
-    /* Start slightly below */
-    opacity: 0;
-    transition: transform 0.4s ease, opacity 0.3s ease;
-    /* Smooth animation */
-}
-
-/* When modal is active */
-.modal-overlay.active {
-    opacity: 1;
-}
-
-.modal-overlay.active .modal-container {
-    transform: translateY(0);
-    /* Move to original position */
-    opacity: 1;
-}
-
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #f2f2f2;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-    z-index: 10;
-}
-
-.modal-close:hover {
-    background: #e0e0e0;
-}
-
-/* Content styling in the modal */
-.modal-header {
-    margin-bottom: 20px;
-}
-
-.modal-subtitle {
-    font-size: 14px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-}
-
-.modal-container h2 {
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0 0 15px 0;
-    color: #111;
-}
-
-.modal-container p {
-    color: #666;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-.modal-footer {
-    margin-top: 30px;
-}
-
-.modal-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #0070c9;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.2s ease;
-}
-
-.modal-button:hover {
-    background: #0062ad;
-}
-
-/* Feature list styling */
-.feature-list {
-    padding: 0;
-    margin: 20px 0;
-}
-
-.feature-list li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    list-style: none;
-}
-
-.feature-icon {
-    margin-right: 10px;
-    color: #0070c9;
-}
-
-/* Carousel footer with horizontal line */
-.carousel-footer {
-    position: relative;
-    margin-top: 40px;
-}
-
-/* Horizontal line */
-.divider-line {
-    height: 1px;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-/* Carousel navigation */
-.carousel-navigation {
-    display: flex;
-    gap: 10px;
-    position: absolute;
-    right: 0;
-}
-
-.prev-button,
-.next-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.05);
-    border: none;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.prev-button:hover,
-.next-button:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-    .benefits-header {
-        flex-direction: column;
-        align-items: flex-start;
+    .main-content h1 {
+        font-size: 2.5rem;
     }
 
-    .benefits-header h1 {
-        font-size: 32px;
-        margin-bottom: 10px;
+    .search-card {
+        padding: 1.5rem;
+        max-width: 100%;
+        height: auto;
     }
 
-    .benefit-card {
-        flex: 0 0 100%;
-        width: 100%;
+    .search-selection {
+        grid-template-columns: 1fr; /* Switch to single-column layout */
+        gap: 1rem;
     }
 
-    .carousel-footer {
-        position: relative;
-        margin-top: 30px;
+    .input-wrapper {
+        min-height: 70px;
     }
 
-    .carousel-navigation {
-        position: relative;
-        width: 100%;
-        justify-content: flex-end;
-        top: 0;
+    .btn-login {
+        font-size: 0.9rem;
+        padding: 12px 16px;
     }
 
-    .modal-container {
-        flex-direction: column;
+    .wave-container {
+        height: 8vh; 
+    }
+    .wave {
+        background-size: 200% auto; 
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content h1 {
+        font-size: 2rem;
     }
 
-    .modal-content-right {
-        min-height: 200px;
-        order: -1;
-        /* Show image on top for mobile */
+    .search-card {
+        padding: 1.2rem;
+        max-width: 95%;
+    }
+
+    .btn-login {
+        font-size: 0.85rem;
+        padding: 10px 14px;
     }
 }

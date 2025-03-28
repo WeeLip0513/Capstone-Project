@@ -13,7 +13,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 $userID = $_SESSION['id'];
-echo "<h2 style='color:white;'>$userID</h2>";
+// echo "<h2 style='color:white;'>$userID</h2>";
 
 $passenger = getProfileDetails($userID, $conn);
 
@@ -31,7 +31,7 @@ if (!$row) {
 }
 
 $passenger_id = $row['id'];
-echo "Passenger ID: " . $passenger_id . "<br>";
+// echo "Passenger ID: " . $passenger_id . "<br>";
 
 // Get ride IDs from passenger_transaction table
 $stmt = $conn->prepare("SELECT ride_id FROM passenger_transaction WHERE passenger_id = ?");
@@ -52,7 +52,14 @@ if (empty($rideIDs)) {
     // Convert ride IDs into a comma-separated string
     $rideIDsString = implode(',', array_map('intval', $rideIDs));
 
-    $query = "SELECT * FROM ride WHERE id IN ($rideIDsString) AND status IN ('upcoming', 'active', 'waiting', 'ongoing')";
+    // Query to fetch rides that are not completed
+    $query = "SELECT r.* 
+              FROM ride r 
+              LEFT JOIN passenger_transaction pt ON r.id = pt.ride_id 
+              WHERE r.id IN ($rideIDsString) 
+              AND r.status IN ('upcoming', 'active', 'waiting', 'ongoing') 
+              AND (pt.status IS NULL OR pt.status <> 'paid')";
+
     $result = $conn->query($query);
 
     // Fetch ride details
@@ -72,9 +79,9 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/passengerPage/upcomingRide.css">
-    <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
+    <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
+    <link rel="stylesheet" href="../css/passengerPage/upcomingRide.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
@@ -83,26 +90,18 @@ $conn->close();
 </head>
 
 <body>
-    <button class="hamburger" id="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
-    </button>
-
-    <!-- Mobile Navigation Menu -->
-    <div id="mobileMenu" class="mobile-menu">
-        <button class="featureBtn" data-content="content-upcomingrides">Upcoming Rides</button>
-        <button class="featureBtn" data-content="content-availablerides">Available Rides</button>
-        <button class="featureBtn" data-content="content-tab3">Rides History</button>
-        <button class="featureBtn" data-content="content-tab4">My Profile</button>
+    <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
 
     <div class="passenger">
-        <div class="navigation-user">
+        <div class="navigation-user" id="navigation-user">
             <div class="tabs">
-                <input type="radio" name="tabs" id="upcomingrides">
+                <input type="radio" name="tabs" id="upcomingrides" checked>
                 <label for="upcomingrides">Upcoming Rides</label>
-                <input type="radio" name="tabs" id="availablerides" checked>
+                <input type="radio" name="tabs" id="availablerides">
                 <label for="availablerides">Available rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
@@ -393,11 +392,11 @@ $conn->close();
     <script src="../js/passenger/navbar.js"></script>
     <script src="../js/passenger/fetchrides.js"></script>
     <script src="../js/passenger/editProfileModal.js"></script>
-    <script src="../js/passenger/hamburger.js"></script>
     <script src="../js/passenger/cartandpayment.js"></script>
     <script src="../js/passenger/resetpassmodal.js"></script>
     <script src="../js/passenger/ridehistory.js"></script>
     <script src="../js/passenger/searchFormValid.js"></script>
+    <script src="../js/passenger/hamburger.js"></script>
     <script>
         var driverId = <?php echo $driver_id; ?>;
     </script>

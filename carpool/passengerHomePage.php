@@ -144,3 +144,4 @@ include("headerHomepage.php");
     </div>
 </body>
 </html>
+<?php include('footer.php'); ?>

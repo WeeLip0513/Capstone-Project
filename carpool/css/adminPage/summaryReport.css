@@ -76,10 +76,9 @@ canvas#summaryReportChart {
     border-radius: 8px;
     margin-top: 15px;
     width: 100%;
-    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    gap: 5px; 
+    margin-bottom: 30px;
 }
 
 .summary-description h3{
@@ -106,27 +105,27 @@ canvas#summaryReportChart {
     .summary-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 2rem;
+        margin-right: 2rem;
     }
 }
 @media screen and (max-width: 992px) {
     .summary-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 2rem;
+        margin-right: 2rem;
     }
 }
 @media screen and (max-width: 768px) {
     .summary-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 2rem;
+        margin-right: 2rem;
     }
 }
 @media screen and (max-width: 480px) {
     .summary-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 2rem;
+        margin-right: 2rem;
     }
 }

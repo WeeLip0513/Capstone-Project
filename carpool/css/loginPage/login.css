@@ -11,9 +11,10 @@
     padding: 0;
     font-family: Arial, Helvetica;
     box-sizing: border-box;
+    /* border: 2px solid red; */
 }
 
-body {
+.login-wrap{
     padding-top: 80px !important; 
     min-height: 100vh;
     display: flex;

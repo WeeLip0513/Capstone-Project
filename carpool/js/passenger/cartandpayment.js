@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function addToCart(rideId, buttonElement) {
         console.log('Adding ride to cart:', rideId);
 
-        fetch('http://localhost/Capstone-Project/carpool/php/passenger/displayrides.php', {
+        fetch('../php/passenger/displayrides.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadCartItems() {
         if (!cartItemsContainer) return;
 
-        fetch('http://localhost/Capstone-Project/carpool/php/passenger/displayrides.php', {
+        fetch('../php/passenger/displayrides.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function removeFromCart(rideId) {
-        fetch('http://localhost/Capstone-Project/carpool/php/passenger/displayrides.php', {
+        fetch('../php/passenger/displayrides.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Proceeding to payment');
         console.log('Current URL:', window.location.href);
 
-        fetch('http://localhost/Capstone-Project/carpool/php/passenger/payment.php', {
+        fetch('../php/passenger/payment.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

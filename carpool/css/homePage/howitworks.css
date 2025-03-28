@@ -202,6 +202,117 @@
     animation: wind 0.8s ease-out;
 }
 
+@media (max-width: 1200px) {
+    .steps-container {
+        max-width: 1100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .how-it-works {
+        padding: 100px 20px;
+        height: auto;
+    }
+    .how-it-works h2 {
+        font-size: 2.2rem;
+        margin-bottom: 50px;
+    }
+    .steps-container {
+        max-width: 900px;
+        padding: 0 20px;
+        gap: 25px;
+    }
+    .step {
+        min-width: 280px;
+        max-width: 320px;
+        padding: 25px 15px;
+    }
+    .step h3 {
+        font-size: 1.4rem;
+    }
+    .step p {
+        font-size: 1rem;
+    }
+    .progress-container {
+        height: 55px;
+        max-width: 900px;
+        margin: -35px auto 35px;
+    }
+    .progress-bar {
+        top: 28px;
+        left: 15%;
+        width: 70%;
+        height: 7px;
+    }
+    .marker {
+        width: 18px;
+        height: 18px;
+        top: 22px;
+    }
+    .progress-car {
+        top: 0;
+        left: 15%;
+        width: 35px;
+        height: 22px;
+        font-size: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .how-it-works {
+        padding: 60px 10px;
+        height: auto;
+    }
+    .how-it-works h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    .steps-container {
+        max-width: 100%;
+        gap: 15px;
+        padding: 0 10px;
+        margin-bottom: 40px;
+        flex-direction: column;
+    }
+    .step {
+        width: 100%;
+        max-width: 100%;
+        padding: 15px 10px;
+    }
+    .step h3 {
+        font-size: 1.2rem;
+    }
+    .step p {
+        font-size: 0.9rem;
+    }
+    .progress-container {
+        height: 45px;
+        max-width: 100%;
+        margin: -25px auto 25px;
+    }
+    .progress-bar {
+        top: 22px;
+        left: 15%;
+        width: 70%;
+        height: 5px;
+    }
+    .progress-markers {
+        padding: 0 12%;
+    }
+    .marker {
+        width: 14px;
+        height: 14px;
+        top: 18px;
+    }
+    .progress-car {
+        top: 0;
+        left: 15%;
+        width: 25px;
+        height: 16px;
+        font-size: 25px;
+    }
+}
+
 @media (max-width: 768px) {
     .how-it-works {
         padding: 80px 20px;
@@ -220,7 +331,7 @@
     .step {
         width: 100%;
         max-width: 100%;
-        padding: 20px 15px;
+        padding: 20px 10px;
     }
     .step h3 {
         font-size: 1.3rem;
@@ -235,12 +346,12 @@
     }
     .progress-bar {
         top: 25px;
-        left: 10%;
-        width: 80%;
+        left: 15%;
+        width: 70%;
         height: 6px;
     }
     .progress-markers {
-        padding: 0 10%;
+        padding: 0 14%;
     }
     .marker {
         width: 16px;
