@@ -56,7 +56,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-fit: contain;
   border-radius: 0;
 }
 
@@ -292,7 +291,7 @@ margin-left: 30px;
 
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="image/news/promoteSlide1.png" alt="Slide 1"></div>
+            <div class="swiper-slide"><img src="image/news/CarpoolPromotion.png" alt="Slide 1"></div>
             <div class="swiper-slide"><img src="image/news/promotion.jpg" alt="Slide 2"></div>
             <div class="swiper-slide"><img src="image/news/safety.jpg" alt="Slide 3"></div>
             <div class="swiper-slide"><img src="image/news/newupdate.jpg" alt="Slide 4"></div>
