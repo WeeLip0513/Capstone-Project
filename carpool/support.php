@@ -53,7 +53,6 @@ include("headerHomepage.php");
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/feedback.css">
-    <script src="scripts.js" defer></script>
 
 </head>
 <body>
@@ -237,13 +236,32 @@ include("headerHomepage.php");
             console.error(err);
         });
         }); 
-        //word count
+        
+        // Word count functionality
         const feedbackInput = document.getElementById("feedback");
         const charCount = document.getElementById("char-count");
 
         feedbackInput.addEventListener("input", () => {
-            const currentLength = feedbackInput.value.length;
-            charCount.textContent = `${currentLength}/100`;
+            // Count words by splitting on whitespace and filtering out empty strings
+            const words = feedbackInput.value.trim().split(/\s+/).filter(word => word !== "");
+            const wordCount = words.length;
+            
+            // Update the word count display
+            charCount.textContent = `${wordCount}/100`;
+            
+            // Add styling based on word count
+            if (wordCount > 90 && wordCount <= 100) {
+                charCount.className = "limit-near";
+            } else if (wordCount > 100) {
+                charCount.className = "limit-reached";
+                // Trim to 100 words if exceeded
+                const limitedWords = words.slice(0, 100);
+                feedbackInput.value = limitedWords.join(" ");
+                // Update count after trimming
+                charCount.textContent = "100/100";
+            } else {
+                charCount.className = "";
+            }
         });
 
         //faq section
