@@ -1,6 +1,6 @@
 var swiper = new Swiper('.swiper-container', {
   slidesPerView: 1.5, // Show part of previous & next slides
-  spaceBetween: 20, // Spacing between slides
+  spaceBetween: 2, // Spacing between slides
   centeredSlides: true, // Center active slide
   watchSlidesProgress: true, // Helps Swiper track slides correctly
   loop: true, // Enable infinite scrolling
