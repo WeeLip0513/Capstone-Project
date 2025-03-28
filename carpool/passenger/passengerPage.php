@@ -58,7 +58,7 @@ if (empty($rideIDs)) {
               LEFT JOIN passenger_transaction pt ON r.id = pt.ride_id 
               WHERE r.id IN ($rideIDsString) 
               AND r.status IN ('upcoming', 'active', 'waiting', 'ongoing') 
-              AND (pt.status IS NULL OR pt.status <> 'paid')";
+              AND (pt.status IS NULL OR pt.status <> 'complete')";
 
     $result = $conn->query($query);
 
@@ -137,7 +137,7 @@ $conn->close();
                                     <td><?= $ride['time'] ?></td>
                                     <td>
                                         <?php if (in_array($ride['status'], ['active', 'waiting', 'ongoing'])): ?>
-                                            <a href="viewRides.php?ride_id=<?= $ride['id'] ?>" class="view-link">View</a>
+                                            <a href="../passenger/viewRide.php?ride_id=<?= $ride['id'] ?>" class="view-link"><button>View</button></a>
                                         <?php else: ?>
                                             <span class="inactive-text">Unavailable</span>
                                         <?php endif; ?>
