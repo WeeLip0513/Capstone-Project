@@ -10,7 +10,7 @@
     
     section {
         width: 100vw;
-        height: 100vh;
+        height: 120vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,35 +44,35 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        height: 100vh;
         text-align: center;
         background-color: transparent;
         background-color: black;
-        position: relative;
-        gap: 15px;
-        padding-top: 80px;
+        /* position: relative; */
+        gap: 30px;
+        padding: 80px 45px;
+    }
+
+    .page-description-one{
+        padding: 20px 20px 30px;
     }
     .page-description p .small-header {
         display: block;        
         font-weight: bold;   
         font-size: 35px;      
         color: #2b63ff;
-        text-align: left;            
+        text-align: left;     
+        margin-bottom: 10px;       
     }
     .page-description p {
         width: 100%;
         font-size: 18px;
         color: #555;
-        height: 150px;  
         max-width: 100%;
         background: rgba(33, 33, 33, 0.7);
-        margin-bottom: 10px;
-        padding: 20px;
         color: white;
         border-radius: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: left;
-        align-self: flex-start;
     }
     .page-header p:hover {
         transform: scale(1.02);
@@ -180,6 +180,18 @@
         font-size: 0.875rem;
     }
 
+    .feedback-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    
+    #char-count {
+        position: absolute;
+        bottom: 10px;
+        right: 15px;
+        font-size: 0.85rem;
+        color: #999;
+    }
     
     /* Submit button styling */
     .btn {
@@ -235,7 +247,7 @@
         width: 90vw;
         margin: 0 auto;
         padding: 10px;
-        margin-top: 80px;
+        margin-top: -60px;
         height: 625px;
         background-color: black;
         border-radius: 20px;
@@ -316,24 +328,74 @@
     }
     
     /* Responsive styling for smaller screens */
-    @media (max-width: 768px) {
-        .feedback-form {
+    /* 1220px and below */
+    @media (max-width: 1220px) {
+        .feedback-container,
+        .section-content {
+            max-width: 90%;
             padding: 2rem;
         }
     }
-    
-    @media (max-width: 480px) {
+
+    /* 992px and below (tablet landscape) */
+    @media (max-width: 992px) {
+        .feedback-form h3 {
+            font-size: 36px;
+        }
+
+        .feedback-form {
+            padding: 2rem;
+        }
+
+        .nav-links {
+            gap: 1.5rem;
+        }
+    }
+
+    /* 768px and below (tablet portrait) */
+    @media (max-width: 768px) {
         .feedback-form {
             padding: 1.5rem;
         }
-        
-        .form-group input,
-        .form-group textarea {
+
+        .feedback-form h3 {
+            font-size: 28px;
+        }
+
+        .btn-submit {
+            font-size: 1rem;
             padding: 0.75rem;
         }
-        
-        .btn {
-            width: 100%;
+
+        .nav-links {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    /* 480px and below (mobile) */
+    @media (max-width: 480px) {
+        .feedback-form {
+            padding: 1rem;
+        }
+
+        .feedback-form h3 {
+            font-size: 24px;
+        }
+
+        .btn-submit {
+            font-size: 0.95rem;
+            padding: 0.65rem;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+        }
+
+        #char-count {
+            font-size: 0.75rem;
+            bottom: 8px;
+            right: 10px;
         }
     }
     

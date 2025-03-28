@@ -5,10 +5,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tp_number = $_POST['tp_number'] ?? '';
     $feedback_message = $_POST['feedback_message'] ?? '';
 
-    // Log to server console or Apache log
-    error_log("DEBUG: TP Number: $tp_number");
-    error_log("DEBUG: Feedback Message: $feedback_message");
-
     if (empty($tp_number) || empty($feedback_message)) {
         echo json_encode([
             "success" => false,
@@ -69,23 +65,23 @@ include("headerHomepage.php");
         </section>
         <section class="page-description">
                 <!-- Paragraph 1 -->
-                <p class="first-page-description">
+                <p class="page-description-one">
                 <strong class="small-header">Welcome to the APU Carpool Support Page</strong>
                 We're here to assist you with any questions or issues while using our carpooling platform. 
                 Our support team is ready to help with booking rides,<br> managing profiles, and ensuring your safety during carpooling.
                 </p>
-                <p class="page-description">
+                <p class="page-description-one">
                 <strong class="small-header">We Value Your Feedback</strong>
                 We value your feedback as it helps us enhance the platform for the Asia Pacific University community. 
                 Whether you have suggestions for new features,<br> need help with an issue, or want to share your thoughts, 
                 this is the place to do it!
                 </p>
-                <p class="page-description">
+                <p class="page-description-one">
                 <strong class="small-header">Explore Our FAQ</strong>
                 Check our FAQ for quick answers or use the feedback form to contact us. We're committed to making your carpooling 
                 experience smooth, safe, and convenient for everyone in the APU community.
                 </p>
-                <p class="page-description">
+                <p class="page-description-one">
                 <strong class="small-header">Thank You for Choosing APU Carpool</strong>
                 Together, we can make campus transportation more convenient, sustainable, and community-focused!
                 </p>
@@ -112,12 +108,16 @@ include("headerHomepage.php");
             
             <div class="form-group">
                 <label for="feedback">Your Feedback</label>
-                <textarea 
+                <div class="feedback-input-wrapper">
+                    <textarea 
                     id="feedback" 
                     name="feedback_message" 
                     placeholder="Tell us what you think about our carpooling service..." 
+                    maxlength="100"
                     required
-                ></textarea>
+                    ></textarea>
+                    <div id="char-count">0/100</div>
+                </div>
             </div>
             
             <button type="submit" class="btn btn-primary btn-submit">
@@ -212,40 +212,54 @@ include("headerHomepage.php");
         </section>
     </div>
     <script>
+        //submit form
         document.getElementById('feedbackForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
 
-        fetch('testhp.php', {
+        fetch('support.php', {
             method: 'POST',
             body: formData
         })
-        .then(res => res.text())
+        .then(res => res.json())
         .then(data => {
-            alert(data); // This will now show only the PHP message, not the whole HTML
+            if (data.success) {
+            alert(data.message); 
             this.reset();
+            } else {
+            alert(data.message); 
+            }
         })
+
         .catch(err => {
             alert("Error submitting feedback.");
             console.error(err);
         });
         }); 
-    </script>
-    <script>
-  const faqs = document.querySelectorAll("details");
+        //word count
+        const feedbackInput = document.getElementById("feedback");
+        const charCount = document.getElementById("char-count");
 
-  faqs.forEach((faq) => {
-    faq.addEventListener("toggle", () => {
-      if (faq.open) {
-        faqs.forEach((otherFaq) => {
-          if (otherFaq !== faq) {
-            otherFaq.removeAttribute("open");
-          }
+        feedbackInput.addEventListener("input", () => {
+            const currentLength = feedbackInput.value.length;
+            charCount.textContent = `${currentLength}/100`;
         });
-      }
-    });
-  });
-</script>
+
+        //faq section
+        const faqs = document.querySelectorAll("details");
+
+        faqs.forEach((faq) => {
+            faq.addEventListener("toggle", () => {
+            if (faq.open) {
+                faqs.forEach((otherFaq) => {
+                if (otherFaq !== faq) {
+                    otherFaq.removeAttribute("open");
+                }
+                });
+            }
+            });
+        });
+    </script>
 </body>
 </html>
