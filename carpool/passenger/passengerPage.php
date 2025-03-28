@@ -86,6 +86,7 @@ $conn->close();
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
     <link rel="stylesheet" href="../css/passengerPage/ridehistory.css">
+    <link rel="stylesheet" href="../css/passengerPage/deleteAccount.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -102,7 +103,7 @@ $conn->close();
                 <input type="radio" name="tabs" id="upcomingrides" checked>
                 <label for="upcomingrides">Upcoming Rides</label>
                 <input type="radio" name="tabs" id="availablerides">
-                <label for="availablerides">Available rides</label>
+                <label for="availablerides">Search Rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
                 <input type="radio" name="tabs" id="tab4">
@@ -308,6 +309,12 @@ $conn->close();
                                     </div>
                                 </div>
                             </div>
+                            <div class="profiledelete">
+                                <h3>Destroy Account:</h3>
+                                <div class="delete-account">
+                                    <button id="deletePassenger" class="deleteAccount">Delete Account</button>
+                                </div>
+                            </div>
                         </div>
                     <?php else: ?>
                         <p>No passenger record found!</p>
@@ -397,6 +404,7 @@ $conn->close();
     <script src="../js/passenger/ridehistory.js"></script>
     <script src="../js/passenger/searchFormValid.js"></script>
     <script src="../js/passenger/hamburger.js"></script>
+    <script src="../js/passenger/deleteAccount.js"></script>
     <script>
         var driverId = <?php echo $driver_id; ?>;
     </script>

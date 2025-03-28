@@ -3,7 +3,7 @@
     $hostname = 'localhost';
     $user = 'root';
     $password = '';
-    $database = 'carpool';
+    $database = 'carpool_previous';
     $conn = mysqli_connect($hostname,$user,$password,$database);
     if($conn === false){
       die('Connection Failed!'.mysqli_connect_error());

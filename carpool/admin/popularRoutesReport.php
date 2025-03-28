@@ -92,48 +92,43 @@ include("adminsidebar.php");
                 return response.json();
             })
             .then(data => {
-                // Get month name for display
                 const monthNames = [
                     "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
                 ];
                 const monthName = monthNames[month - 1];
 
-                // Check if data is an error object or empty
                 if (data.error || !data || data.length === 0) {
                     summaryElement.innerHTML = `No rides found for ${monthName} ${year}. 
                         This could be due to:
                         No rides were completed during this period,
                         No data has been recorded for this month,
                         There might be a data collection issue.`;
-                    
+
                     summaryElement.style.color = 'white';
-                    // Ensure description container remains hidden
                     summaryDesContainer.style.display = 'none';
                     return;
                 }
 
-                // Find max and min routes
-                const maxRoute = data.reduce((max, route) => 
-                    route.count > max.count ? route : max
-                );
-                const minRoute = data.reduce((min, route) => 
-                    route.count < min.count ? route : min
-                );
+                // Find max and min counts
+                const maxCount = Math.max(...data.map(route => route.count));
+                const minCount = Math.min(...data.map(route => route.count));
 
-                // Create summary text
+                // Get all routes with max and min count
+                const maxRoutes = data.filter(route => route.count === maxCount).map(route => `"${route.route}"`);
+                const minRoutes = data.filter(route => route.count === minCount).map(route => `"${route.route}"`);
+
+                // Create summary text with multiple routes
                 const summaryText = `In <strong><span style="color:#2b8dff">${monthName} ${year}</span></strong>, 
-                     the most popular route was <strong><span style="color:#2b8dff">"${maxRoute.route}"</span></strong> 
-                     with <strong>${maxRoute.count}</strong> rides, 
-                     and the least popular route was <strong><span style="color:#2b8dff;">"${minRoute.route}"</span></strong>
-                     with <strong>${minRoute.count}</strong> rides.`;
+                    the most popular route(s) ${maxRoutes.length > 1 ? "were" : "was"} <strong><span style="color:#2b8dff">${maxRoutes.join(", ")}</span></strong> 
+                    with <strong>${maxCount}</strong> rides, 
+                    and the least popular route(s) ${minRoutes.length > 1 ? "were" : "was"} <strong><span style="color:#2b8dff;">${minRoutes.join(", ")}</span></strong>
+                    with <strong>${minCount}</strong> rides.`;
 
                 document.getElementById('summaryDes').innerHTML = summaryText;
-                    
-                // Show description container and set text
+
                 summaryDesContainer.style.display = 'block';
                 summaryElement.style.color = 'white';
-                summaryElement.style.fontStyle = 'normal';
 
                 // Prepare data for chart
                 const labels = data.map(route => route.route);

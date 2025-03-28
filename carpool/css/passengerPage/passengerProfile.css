@@ -12,8 +12,10 @@
 
 .profile-card h2 {
     color: #2b83ff; /* Changed from #333 to white to match your dark theme */
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    line-height: 2;
 }
 
 .profiledetails {

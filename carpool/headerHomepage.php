@@ -27,7 +27,7 @@ include("dbconn.php");
         </div>
         <ul class="navlinks">
             <li><a href="homepage.php" class="<?= ($currentPage == 'homepage.php') ? 'active' : '' ?>">Home</a></li>
-            <li><a href="#" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About Us</a></li>
+            <li><a href="aboutus.php" class="<?= ($currentPage == 'aboutus.php') ? 'active' : '' ?>">About Us</a></li>
             <li><a href="passengerHomePage.php"
                     class="<?= ($currentPage == 'passengerHomePage.php') ? 'active' : '' ?>">Passenger</a></li>
             <li><a href="driverHomepage.php"
