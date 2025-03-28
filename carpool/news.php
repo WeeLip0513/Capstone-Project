@@ -9,18 +9,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>News</title>
-        <link rel="stylesheet" href="css/news.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+        <link rel="stylesheet" href="css/news.css"> 
     </head>
 <body>
 
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="image/news/safety.jpg" alt="Slide 1"></div>
-            <div class="swiper-slide"><img src="image/news/promotion.jpg" alt="Slide 2"></div>
-            <div class="swiper-slide"><img src="image/news/bonus2.jpg" alt="Slide 3"></div>
-            <div class="swiper-slide"><img src="image/news/newupdate.jpg" alt="Slide 4"></div>
+            <div class="swiper-slide"><img src="image/news/CarpoolPromotion.png" alt="Slide 1"></div>
+            <div class="swiper-slide"><img src="image/news/CarpoolPromotion3.png" alt="Slide 2"></div>
+            <div class="swiper-slide"><img src="image/news/CarpoolPromotion2.png" alt="Slide 3"></div>
+            <div class="swiper-slide"><img src="image/news/CarpoolPromotion4.png" alt="Slide 4"></div>
         </div>
 
  

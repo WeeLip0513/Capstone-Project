@@ -1,0 +1,203 @@
+body {
+    background: #0B0D14; /* Light background */
+    color: #333;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertical centering */
+    align-items: center;     /* Horizontal centering */
+    text-align: center;
+    height: 680px;
+    padding: 20px;           /* Reduced padding for centering */
+    margin-top: 70px;
+    border-bottom: 3px solid #333;
+    color: white;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  .hero p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.5;
+    color: white;
+  }
+
+  .hero .driverButton {
+    background: #0073e6;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .hero .driverButton:hover {
+    background: #005bb5;
+  }
+
+  /***** FEATURES SECTION *****/
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .feature-box {
+    background: #0B0D14;
+    color: white;
+    flex: 1 1 250px;
+    max-width: 300px;
+    height: 250px;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.2);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .feature-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    margin-top: 30px;
+  }
+
+  .feature-box p {
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 250px;
+  }
+
+  /* ========== DRIVER FEATURES SECTION ========== */
+  .driver-features {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 50px;
+  }
+
+  .driver-features::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px; /* Thickness of the line */
+    background: #333; 
+    margin-top: 150px; /* Space between section and the line */
+  }
+
+  .driver-features h2 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+
+  /* ========== FEATURE GRID ========== */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    justify-items: center; /* Centers items in each column */
+  }
+
+  /* ========== FEATURE CARD ========== */
+  .feature-card {
+    background-color: #141824;  /* Slightly lighter than the background */
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;           /* Controls the max width of each card */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .feature-icon {
+    margin-bottom: 20px;
+  }
+
+  /* Adjust icon size or use a font icon / SVG if preferred */
+  .feature-icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc; /* Subtle contrast for paragraph text */
+    text-align: justify;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 100px 20px;
+      height: auto;
+      margin-top: 50px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 90%;
+    }
+    
+    .driver-features {
+      padding: 40px 10px;
+      margin-top: 30px;
+    }
+    .driver-features h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    
+    .features {
+      flex-direction: column; /* Stack vertically */
+      align-items: center;    /* Center them horizontally */
+      gap: 40px; 
+    }
+
+    .feature-box {
+      max-width: 90%;
+      height: auto;
+    }
+    
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 10px;
+    }
+  }
