@@ -52,7 +52,14 @@ if (empty($rideIDs)) {
     // Convert ride IDs into a comma-separated string
     $rideIDsString = implode(',', array_map('intval', $rideIDs));
 
-    $query = "SELECT * FROM ride WHERE id IN ($rideIDsString) AND status IN ('upcoming', 'active', 'waiting', 'ongoing')";
+    // Query to fetch rides that are not completed
+    $query = "SELECT r.* 
+              FROM ride r 
+              LEFT JOIN passenger_transaction pt ON r.id = pt.ride_id 
+              WHERE r.id IN ($rideIDsString) 
+              AND r.status IN ('upcoming', 'active', 'waiting', 'ongoing') 
+              AND (pt.status IS NULL OR pt.status <> 'paid')";
+
     $result = $conn->query($query);
 
     // Fetch ride details
