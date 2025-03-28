@@ -1,5 +1,5 @@
 body {
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
 }
@@ -7,14 +7,22 @@ body {
 .driverRegForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background: #1e1e1e;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 60%;
   text-align: center;
+  margin: auto;
   margin-top: 130px;
+  margin-bottom: 40px;
+  /* height: 768px; */
   padding: 20px;
   color: white;
+}
+
+#vehicleSection{
+margin: 45px 0px;
 }
 
 h1 {
@@ -23,11 +31,15 @@ h1 {
   color: #007bff;
 }
 
+form{
+  width:100%;
+}
 
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0px;
+  margin: 0px 10px;
 }
 
 td:first-child {
@@ -94,4 +106,111 @@ select {
   display: flex;
   flex-direction: row;
   gap: 15px;
+}
+
+/* Default styles (for larger screens) */
+
+/* Media query for 1200px */
+@media (max-width: 1200px) {
+  .driverRegForm {
+    width: 70%; /* Slightly increase width */
+  }
+}
+
+/* Media query for 992px (Tablets and small laptops) */
+@media (max-width: 992px) {
+  .driverRegForm {
+    width: 80%; /* Make form wider for better fit */
+  }
+
+  td:first-child {
+    width: 40%; /* Increase label width */
+    font-size: 14px;
+  }
+
+  td:last-child {
+    width: 60%;
+  }
+
+  input, select {
+    width: calc(100% - 12px);
+  }
+
+  #nextButton,
+  #backButton,
+  #registerButton {
+    width: 60%;
+  }
+}
+
+/* Media query for 768px (Tablets) */
+@media (max-width: 768px) {
+  .driverRegForm {
+    width: 90%;
+    padding: 15px;
+  }
+
+  table {
+    margin: 0;
+  }
+
+  td:first-child {
+    display: block; /* Stack labels on top */
+    width: 100%;
+    text-align: left;
+  }
+
+  td:last-child {
+    display: block;
+    width: 100%;
+  }
+
+  input, select {
+    width: 100%;
+  }
+
+  .buttonWrap {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px;
+  }
+
+  #nextButton,
+  #backButton,
+  #registerButton {
+    width: 100%;
+  }
+}
+
+/* Media query for 480px (Mobile phones) */
+@media (max-width: 480px) {
+  .driverRegForm {
+    width: 95%;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 24px; /* Reduce heading size */
+  }
+
+  td:first-child {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  input, select {
+    padding: 6px;
+  }
+
+  .buttonWrap {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #nextButton,
+  #backButton,
+  #registerButton {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
 }
