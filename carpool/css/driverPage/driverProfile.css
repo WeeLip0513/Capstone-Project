@@ -354,9 +354,9 @@ span{
   }
 
   .modal-content {
-      width: 40%;
+      width: 80%;
       padding: 10px;
-      margin-left: 50px;
+      /* margin-left: 50px; */
       margin-top: 80px;
   }
 } 
