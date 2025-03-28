@@ -25,10 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`../php/driver/earnings.php?month=${month}`)
       .then(response => response.json())
       .then(data => {
+        console.log("Fetched Data:", data); // Log entire response
         if (data && data.earnings.length > 0) {
           updateEarningsDisplay(data.total, data.range);
           updateChart(data.earnings);
-
+  
+          console.log("Available Balance:", data.balance); // Log the balance
+  
           // Show available balance only if it's greater than 0
           if (data.balance > 0) {
             balance.textContent = `Balance: RM${data.balance.toFixed(2)}`;
@@ -38,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             withdrawBtn.style.display = "none"; // Hide withdraw button
           }
         } else {
+          console.log("No earnings found.");
           dateRange.textContent = "You Have No Earnings";
           totalEarnings.textContent = "";
           balance.textContent = ""; // Hide balance
@@ -49,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error fetching earnings:", error);
       });
   }
-
+  
   function updateEarningsDisplay(total, range) {
     totalEarnings.textContent = `Total: RM${total.toFixed(2)}`;
     dateRange.innerHTML = range.replace(" - ", "<br>"); // Replace " - " with a line break

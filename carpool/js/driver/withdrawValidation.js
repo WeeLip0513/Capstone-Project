@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Sending data:", formData); // Debugging: See if data is correct before sending
 
-    fetch("/Capstone_Project/carpool/php/driver/withdraw.php", {
+    fetch("/Capstone-Project/carpool/php/driver/withdraw.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

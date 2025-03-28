@@ -4,12 +4,14 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* border: 2px solid red; */
 }
 
 .passenger {
     max-width: 1320px;
     margin: 0 auto;
-    position: relative; /* Add this for proper positioning */
+    position: relative;
+    /* Add this for proper positioning */
 }
 
 .navigation-user {
@@ -24,7 +26,7 @@
 
 .tabs {
     background: #1E1E1E;
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
     border-radius: 0.56rem;
     padding: 13px;
     display: flex;
@@ -64,6 +66,7 @@ label {
 .content-section {
     display: none;
     border-radius: 10px;
+    width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-top: 30px;
 }
@@ -77,27 +80,27 @@ input[type="radio"]:checked+label {
     color: white;
 }
 
-label[for="upcomingrides"]:hover, 
-label[for="availablerides"]:hover, 
-label[for="tab3"]:hover, 
+label[for="upcomingrides"]:hover,
+label[for="availablerides"]:hover,
+label[for="tab3"]:hover,
 label[for="tab4"]:hover {
     color: #2b83ff;
 }
 
-#upcomingrides:checked ~ .glider {
+#upcomingrides:checked~.glider {
     transform: translateX(-480px);
     width: 350px;
 }
 
-#availablerides:checked ~ .glider {
+#availablerides:checked~.glider {
     transform: translateX(-160px);
 }
 
-#tab3:checked ~ .glider {
+#tab3:checked~.glider {
     transform: translateX(160px);
 }
 
-#tab4:checked ~ .glider {
+#tab4:checked~.glider {
     transform: translateX(480px);
     width: 350px;
 }
@@ -106,99 +109,96 @@ label[for="tab4"]:hover {
     color: white;
 }
 
-/* Hamburger Menu */
 .hamburger {
     display: none;
-    cursor: pointer;
-    background: none;
-    border: none;
-    margin: 20px 0 10px 20px;
-}
-
-.hamburger div {
-    width: 35px;
-    height: 4px;
-    background-color: white;
-    margin: 6px 0;
-    transition: 0.4s;
-}
-
-/* Hamburger animation */
-.hamburger.open div:nth-child(1) {
-    transform: rotate(-45deg) translate(-9px, 6px);
-}
-
-.hamburger.open div:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.open div:nth-child(3) {
-    transform: rotate(45deg) translate(-8px, -8px);
-}
-
-/* Mobile Navigation */
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(45, 45, 45);
-    width: 100%;
-    padding: 10px;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    z-index: 1000;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-menu.show {
-    display: flex;
-}
-
-.mobile-menu .featureBtn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    padding: 15px;
-    width: 100%;
-    text-align: center;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s;
-}
-
-.mobile-menu .featureBtn:last-child {
-    border-bottom: none;
-}
-
-.mobile-menu .featureBtn:hover {
-    background-color: rgba(43, 131, 255, 0.2);
-    color: #2b83ff;
 }
 
 /* Responsive Styles */
 @media screen and (max-width: 1200px) {
     .navigation-user {
         display: none;
+        position: fixed;
+        top: 57px;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        gap: 2rem;
+        padding: 1rem 2rem;
+        height: 110vh;
+        background-color: #1e1e1e;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999 !important;
     }
-    
+
     .hamburger {
-        display: block;
+        display: flex;
+        position: relative;
+        top: 10px;
+        left: 10px;
+        margin: 10px;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1001 !important;
+        order: 3;
     }
-    
+
+    .hamburger .bar {
+        width: 25px;
+        height: 3px;
+        background-color: white; 
+        transition: 0.3s;
+    }
+
+    .hamburger.open div:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.open div:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.open div:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .navigation-user.show {
+        display: flex;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: flex-start;
+        box-shadow: none;
+        margin-bottom: 100px;
+        gap: 2rem;
+    }
+
     .tab-content {
         margin-top: 20px;
     }
-    
-    label {
-        width: 250px;
+
+    .tabs label {
+        width: 100%;
         font-size: 18px;
+        margin-bottom: 2rem;
+        text-align: center;
     }
-    
+
+    .tabs label.active,
+    .tabs input[type="radio"]:checked + label {
+        color: #2b83ff; 
+        font-weight: bold;
+      }
+
     .glider {
-        width: 250px;
+        display: none;
+    }
+
+    .no-scroll{
+        overflow: hidden;
     }
 }
 
@@ -206,23 +206,17 @@ label[for="tab4"]:hover {
     .passenger {
         max-width: 95%;
     }
-    
+
     .content-section {
         padding: 15px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .mobile-menu .featureBtn {
-        font-size: 16px;
-        padding: 12px;
-    }
-    
-    /* Adjust form layouts and other content for smaller screens */
     .profilerow {
         flex-direction: column;
     }
-    
+
     .search-form .row {
         flex-direction: column;
     }
@@ -232,13 +226,12 @@ label[for="tab4"]:hover {
     .hamburger {
         margin-left: 10px;
     }
-    
+
     .mobile-menu .featureBtn {
         font-size: 14px;
         padding: 10px;
     }
-    
-    /* Further adjustments for very small screens */
+
     .profile-card h2,
     .content-section h2 {
         font-size: 22px;

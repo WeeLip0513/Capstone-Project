@@ -12,7 +12,7 @@ $driver_id = $_SESSION['driverID'];
 $data = json_decode(file_get_contents("php://input"), true);
 
 // 🛠 Debugging: Log raw input
-error_log("Received JSON: " . file_get_contents("php://input"));
+error_log("🔍 DEBUG: Received JSON: " . json_encode($data));
 
 if (!isset($data['ride_ids']) || !is_array($data['ride_ids'])) {
     echo json_encode(["error" => "Invalid ride details received!", "received_data" => $data]);
@@ -24,10 +24,11 @@ $originalRides = []; // Store original ride details
 $conflicts = []; // Store conflict ride details
 
 foreach ($rideIds as $rideId) {
-    // ✅ Fetch ride details including `slots`, `driver_id`, and `vehicle_id`
-    $rideSql = "SELECT id, date, time, pick_up_point, drop_off_point, vehicle_id, driver_id, slots FROM ride WHERE id = ?";
+    // ✅ Fetch ride details
+    $rideSql = "SELECT id, date, time, pick_up_point, drop_off_point, vehicle_id, driver_id, slots 
+                FROM ride WHERE id = ?";
     $stmt = $conn->prepare($rideSql);
-    $stmt->bind_param("s", $rideId);
+    $stmt->bind_param("i", $rideId);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -39,16 +40,16 @@ foreach ($rideIds as $rideId) {
     $rideDate = $ride['date'];
     $rideTime = $ride['time'];
 
-    // ✅ Convert to DateTime and find the same weekday two weeks later
+    // ✅ Generate same weekday two weeks later
     $dateObj = new DateTime($rideDate);
-    $dateObj->modify('+2 week'); // Move to the same day two weeks later
+    $dateObj->modify('+2 week');
     $nextWeekDate = $dateObj->format('Y-m-d');
 
     // ✅ Adjust Time Range (-2 to +2 hours)
-    $startTime = date("H:i", strtotime($rideTime . " -2 hours"));
-    $endTime = date("H:i", strtotime($rideTime . " +2 hours"));
+    $startTime = date("H:i:s", strtotime($rideTime . " -2 hours"));
+    $endTime = date("H:i:s", strtotime($rideTime . " +2 hours"));
 
-    // 🛠 Store ride details in `original_rides` (Including `slots`, `vehicle_id`, and `driver_id`)
+    // 🛠 Store original ride details
     $originalRides[] = [
         "original_ride_id" => $rideId,
         "original_date" => $rideDate,
@@ -57,29 +58,37 @@ foreach ($rideIds as $rideId) {
         "drop_off_point" => $ride['drop_off_point'],
         "vehicle_id" => $ride['vehicle_id'],
         "driver_id" => $ride['driver_id'],
-        "slots" => $ride['slots'], // ✅ Added slots
+        "slots" => $ride['slots'],
         "generated_next_week_date" => $nextWeekDate,
         "time_range" => ["start" => $startTime, "end" => $endTime]
     ];
 
-    // 🛠 Log generated date and time range
-    error_log("Original Ride ID: $rideId | Driver ID: " . $ride['driver_id'] . " | Vehicle ID: " . $ride['vehicle_id'] . " | Slots: " . $ride['slots'] . " | Original Date: $rideDate | Time: $rideTime | Next Week Date: $nextWeekDate | Time Range: $startTime - $endTime");
+    // 🛠 Log the original ride details
+    error_log("🔍 DEBUG: Original Ride ID: $rideId | Driver ID: " . $ride['driver_id'] . " | Vehicle ID: " . $ride['vehicle_id'] . 
+        " | Slots: " . $ride['slots'] . " | Original Date: $rideDate | Time: $rideTime | Next Week Date: $nextWeekDate | Time Range: $startTime - $endTime");
 
-    // ✅ Check for conflicts within the time range (Include `slots`, `driver_id`, and `vehicle_id`)
+    // ✅ Check for conflicts
     $conflictSql = "SELECT id AS conflict_id, date, time, pick_up_point, drop_off_point, vehicle_id, driver_id, slots 
                     FROM ride 
                     WHERE date = ? 
                     AND time BETWEEN ? AND ? 
                     AND driver_id = ?";
-
+                    
     $stmt = $conn->prepare($conflictSql);
-    $stmt->bind_param("ssss", $nextWeekDate, $startTime, $endTime, $driverId);
+    if (!$stmt) {
+        error_log("❌ ERROR: Conflict SQL Prepare Failed: " . $conn->error);
+        continue;
+    }
+
+    // ✅ Fix: Use "sssi" (last parameter should be integer)
+    $stmt->bind_param("sssi", $nextWeekDate, $startTime, $endTime, $driver_id);
     $stmt->execute();
     $conflictResult = $stmt->get_result();
 
+    $conflictCount = $conflictResult->num_rows;
+    error_log("🔍 DEBUG: Found $conflictCount conflicts for ride ID: $rideId");
 
     while ($conflict = $conflictResult->fetch_assoc()) {
-        // ✅ Store conflicts separately in `conflicts` (Including `slots`, `vehicle_id`, and `driver_id`)
         $conflicts[] = [
             "conflict_id" => $conflict['conflict_id'],
             "date" => $conflict['date'],
@@ -88,13 +97,14 @@ foreach ($rideIds as $rideId) {
             "drop_off_point" => $conflict['drop_off_point'],
             "vehicle_id" => $conflict['vehicle_id'],
             "driver_id" => $conflict['driver_id'],
-            "slots" => $conflict['slots'], // ✅ Added slots
-            "original_ride_id" => (int) $rideId // Link to the original ride
+            "slots" => $conflict['slots'],
+            "original_ride_id" => (int) $rideId
         ];
+        error_log("🔍 DEBUG: Conflict found: " . json_encode($conflict));
     }
 }
 
-// ✅ Response including `original_rides` and `conflicts` (Both contain `slots`, `vehicle_id`, and `driver_id`)
+// ✅ Return full debug data
 $response = [
     "original_rides" => $originalRides,
     "conflicts" => $conflicts

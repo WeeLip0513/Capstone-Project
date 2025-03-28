@@ -4,22 +4,65 @@ include("../dbconn.php");
 include("../userHeader.php");
 include("../php/passenger/profile.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if (isset($_SESSION['id'])) {
-    $userID = $_SESSION['id'];
-    echo "<h2 style='color:white;'>$userID</h2>";
-} else {
+if (!isset($_SESSION['id'])) {
     echo "<h2 style='color:red;'>No session ID found!</h2>";
-    echo "<pre>";
-    print_r($_SESSION);
-    echo "</pre>";
+    exit();
 }
+
+$userID = $_SESSION['id'];
+// echo "<h2 style='color:white;'>$userID</h2>";
+
 $passenger = getProfileDetails($userID, $conn);
 
-// $_SESSION['passenger_id'] = $userID;
+// Get passenger ID
+$stmt = $conn->prepare("SELECT id FROM passenger WHERE user_id = ?");
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$stmt->close();
 
-// $driver_id = isset($_SESSION['driver_id']) ? intval($_SESSION['driver_id']) : intval($_SESSION['id']);
+if (!$row) {
+    echo "Passenger ID not found.";
+    exit();
+}
 
+$passenger_id = $row['id'];
+// echo "Passenger ID: " . $passenger_id . "<br>";
+
+// Get ride IDs from passenger_transaction table
+$stmt = $conn->prepare("SELECT ride_id FROM passenger_transaction WHERE passenger_id = ?");
+$stmt->bind_param("i", $passenger_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$rideIDs = [];
+while ($row = $result->fetch_assoc()) {
+    $rideIDs[] = $row['ride_id'];
+}
+$stmt->close();
+
+// Check if we have ride IDs
+if (empty($rideIDs)) {
+    $rides = []; // Set empty rides array
+} else {
+    // Convert ride IDs into a comma-separated string
+    $rideIDsString = implode(',', array_map('intval', $rideIDs));
+
+    $query = "SELECT * FROM ride WHERE id IN ($rideIDsString) AND status IN ('upcoming', 'active', 'waiting', 'ongoing')";
+    $result = $conn->query($query);
+
+    // Fetch ride details
+    $rides = [];
+    while ($row = $result->fetch_assoc()) {
+        $rides[] = $row;
+    }
+}
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +72,9 @@ $passenger = getProfileDetails($userID, $conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passenger Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerPage.css">
+    <link rel="stylesheet" href="../css/passengerPage/availablerides.css">
+    <link rel="stylesheet" href="../css/passengerPage/upcomingRide.css">
     <link rel="stylesheet" href="../css/passengerPage/passengerProfile.css">
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
@@ -39,26 +83,18 @@ $passenger = getProfileDetails($userID, $conn);
 </head>
 
 <body>
-    <button class="hamburger" id="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
-    </button>
-
-    <!-- Mobile Navigation Menu -->
-    <div id="mobileMenu" class="mobile-menu">
-        <button class="featureBtn" data-content="content-upcomingrides">Upcoming Rides</button>
-        <button class="featureBtn" data-content="content-availablerides">Available Rides</button>
-        <button class="featureBtn" data-content="content-tab3">Rides History</button>
-        <button class="featureBtn" data-content="content-tab4">My Profile</button>
+    <div class="hamburger" id="hamburger">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
     </div>
 
     <div class="passenger">
-        <div class="navigation-user">
+        <div class="navigation-user" id="navigation-user">
             <div class="tabs">
-                <input type="radio" name="tabs" id="upcomingrides">
+                <input type="radio" name="tabs" id="upcomingrides" checked>
                 <label for="upcomingrides">Upcoming Rides</label>
-                <input type="radio" name="tabs" id="availablerides" checked>
+                <input type="radio" name="tabs" id="availablerides">
                 <label for="availablerides">Available rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
@@ -73,9 +109,44 @@ $passenger = getProfileDetails($userID, $conn);
             <div class="content-section" id="content-upcomingrides">
                 <h2>Your Upcoming Rides</h2>
                 <div class="rides-container">
-                    <p>You have no upcoming rides scheduled.</p>
+                    <table border="1" id="upcomingRides"
+                        style="width:100%; border-collapse: collapse; text-align: center;">
+                        <tr>
+                            <th>Day</th>
+                            <th>Pick Up Point</th>
+                            <th>Drop Off Point</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th></th>
+                        </tr>
+
+                        <?php if (!empty($rides)): ?>
+                            <?php foreach ($rides as $ride): ?>
+                                <tr>
+                                    <td><?= $ride['day'] ?></td>
+                                    <td><?= htmlspecialchars($ride['pick_up_point']) ?></td>
+                                    <td><?= htmlspecialchars($ride['drop_off_point']) ?></td>
+                                    <td><?= $ride['date'] ?></td>
+                                    <td><?= $ride['time'] ?></td>
+                                    <td>
+                                        <?php if (in_array($ride['status'], ['active', 'waiting', 'ongoing'])): ?>
+                                            <a href="viewRides.php?ride_id=<?= $ride['id'] ?>" class="view-link">View</a>
+                                        <?php else: ?>
+                                            <span class="inactive-text">Unavailable</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" style="color: white;">You have no upcoming rides scheduled.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
                 </div>
             </div>
+
 
             <!-- Available Rides Tab -->
             <div class="content-section" id="content-availablerides">
@@ -314,11 +385,11 @@ $passenger = getProfileDetails($userID, $conn);
     <script src="../js/passenger/navbar.js"></script>
     <script src="../js/passenger/fetchrides.js"></script>
     <script src="../js/passenger/editProfileModal.js"></script>
-    <script src="../js/passenger/hamburger.js"></script>
     <script src="../js/passenger/cartandpayment.js"></script>
     <script src="../js/passenger/resetpassmodal.js"></script>
     <script src="../js/passenger/ridehistory.js"></script>
     <script src="../js/passenger/searchFormValid.js"></script>
+    <script src="../js/passenger/hamburger.js"></script>
     <script>
         var driverId = <?php echo $driver_id; ?>;
     </script>

@@ -84,3 +84,4 @@ session_start();
 
 </body>
 </html>
+<?php include('footer.php'); ?>

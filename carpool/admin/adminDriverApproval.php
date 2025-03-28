@@ -5,7 +5,6 @@ include("adminsidebar.php");
 ?>
 
 <?php
-    // $sql = "SELECT id, firstname, lastname, phone_no, status FROM driver WHERE status = 'pending'";
     $sql = "SELECT d.id, d.firstname, d.lastname, d.phone_no, d.status, u.email 
         FROM driver d
         INNER JOIN user u ON d.user_id = u.id 

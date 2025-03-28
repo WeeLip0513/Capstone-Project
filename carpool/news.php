@@ -440,3 +440,4 @@ function openCity(cityName,elmnt,color) {
 
 </body>
 </html>
+<?php include('footer.php'); ?>

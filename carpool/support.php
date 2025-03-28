@@ -1,48 +1,50 @@
 <?php
-session_start();
-include("headerHomepage.php");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header('Content-Type: application/json');
 
-$conn = mysqli_connect("localhost", "root", "", "carpool");
+    $tp_number = $_POST['tp_number'] ?? '';
+    $feedback_message = $_POST['feedback_message'] ?? '';
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+    // Log to server console or Apache log
+    error_log("DEBUG: TP Number: $tp_number");
+    error_log("DEBUG: Feedback Message: $feedback_message");
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-   
-
-    $tpnumber = mysqli_real_escape_string($conn, $_POST['tp_number']);
-    $feedback = mysqli_real_escape_string($conn, $_POST['feedback']);
-
-    $checkUserQuery = "SELECT * FROM user WHERE tpnumber = '$tpnumber'";
-    $result = mysqli_query($conn, $checkUserQuery);
-    echo "<script>alert('TP Number: " . $tpnumber . $checkUserQuery. "');</script>";
-
-    // Debugging step: check for SQL errors first
-    if (!$result) {
-        die("SQL Error: " . mysqli_error($conn));
+    if (empty($tp_number) || empty($feedback_message)) {
+        echo json_encode([
+            "success" => false,
+            "message" => "Please fill in all fields.",
+            "tp" => $tp_number,
+            "feedback" => $feedback_message
+        ]);
+        exit;
     }
 
-    // Check if user exists
-    if (mysqli_num_rows($result) > 0) {
-        // tpnumber matches, insert feedback
-        $insertFeedbackQuery = "INSERT INTO feedback (tp_number, feedback_message) VALUES ('$tpnumber', '$feedback')";
+    // Connect and insert into DB
+    $conn = new mysqli("localhost", "root", "", "carpool");
+    if ($conn->connect_error) {
+        echo json_encode(["success" => false, "message" => "Connection failed."]);
+        exit;
+    }
 
-        if (mysqli_query($conn, $insertFeedbackQuery)) {
-            echo "<script>alert('Feedback submitted successfully!'); window.location.href='support.php';</script>";
-        } else {
-            die("Error inserting feedback: " . mysqli_error($conn));
-        }
-    }else {
-            // tpnumber doesn't match, redirect to login
-           
-            header("Location: loginpage.php");
-            exit;
-        }
+    $stmt = $conn->prepare("INSERT INTO feedback (tp_number, feedback_message) VALUES (?, ?)");
+    $stmt->bind_param("ss", $tp_number, $feedback_message);
+
+    if ($stmt->execute()) {
+        echo json_encode([
+            "success" => true,
+            "message" => "Feedback submitted successfully!",
+            "tp" => $tp_number,
+            "feedback" => $feedback_message
+        ]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Database error."]);
+    }
+
+    $stmt->close();
+    $conn->close();
+    exit;
 }
-
-mysqli_close($conn);
+include("headerHomepage.php");
 ?>
 
 <!DOCTYPE html>
@@ -88,56 +90,42 @@ mysqli_close($conn);
                 Together, we can make campus transportation more convenient, sustainable, and community-focused!
                 </p>
         </section>
-        <section class="feedback">
-            <div class="feedback-box">
-                <!-- Left side: Feedback Form -->
-                <div class="form-container">
-                <form action="support.php" method="POST">
-                    <h2>Feedback</h2>
-
-                    <!-- Container for all input fields -->
-                    <div class="input-container">
-
-                        <!-- TP Number -->
-                        <div class="form-group">
-                        <label for="tp_number">TP Number:</label>
-                        <input 
-                            type="text" 
-                            id="tp_number" 
-                            name="tp_number" 
-                            placeholder="TP123456" 
-                            required 
-                            pattern="^TP\d{6}$"
-                        >
-                        </div>
-
-                        <!-- Feedback Message -->
-                        <div class="form-group">
-                        <label for="feedback">Feedback:</label>
-                        <textarea 
-                            id="feedback" 
-                            name="feedback" 
-                            placeholder="Write your feedback here......." 
-                            required
-                        ></textarea>
-                        </div>
-
-                    </div> <!-- End of .input-container -->
-
-                    <!-- Container for the submit button -->
-                    <div class="feedbackbutton-container">
-                        <button type="submit" class="feedback-button">Submit</button>
-                    </div>
-
-                    </form>
-
-                </div>
-                <!-- Right side: Image -->
-                <div class="image-container">
-                <img src="image/homepage/feedback.png" alt="Feedback Image">
-                </div>
+        <section id="feedback-section" class="feedback-section">
+    <div class="feedback-container">
+        <form id="feedbackForm" action="support.php" method="POST" class="feedback-form">
+            <h3>Feedback</h3>
+            <p class="feedback-subtext">We’d love to hear your thoughts. Your feedback helps us improve the carpool experience for everyone!</p>
+            
+            <div class="form-group">
+                <label for="tp_number">TP Number</label>
+                <input 
+                    type="text" 
+                    id="tp_number" 
+                    name="tp_number" 
+                    placeholder="Enter your TP number (e.g., TP123456)" 
+                    required 
+                    pattern="^TP\d{6}$"
+                    title="TP Number must start with 'TP' followed by 6 digits"
+                >
+                <small>Your APU TP number is required to submit feedback</small>
             </div>
-        </section>
+            
+            <div class="form-group">
+                <label for="feedback">Your Feedback</label>
+                <textarea 
+                    id="feedback" 
+                    name="feedback_message" 
+                    placeholder="Tell us what you think about our carpooling service..." 
+                    required
+                ></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-submit">
+                Submit Feedback <span class="btn-icon">→</span>
+            </button>
+        </form>
+    </div>
+</section>
          <!-- FAQ Section -->
         <section id="faq-section">
         <div class="faq-container">
@@ -224,24 +212,41 @@ mysqli_close($conn);
         </section>
     </div>
     <script>
-        document.getElementById('feedbackForm').addEventListener('submit', function(e){
-            e.preventDefault(); // prevents page reload
+        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+        e.preventDefault();
 
-            let formData = new FormData(this);
+        const formData = new FormData(this);
 
-            fetch('support.php', {  // adjust the path to your PHP script
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);  // Display the alert message from PHP
-                document.getElementById('feedbackForm').reset(); // Reset form after submission (optional)
-            })
-            .catch(error => {
-                alert('An error occurred: ' + error);
-            });
+        fetch('testhp.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => {
+            alert(data); // This will now show only the PHP message, not the whole HTML
+            this.reset();
+        })
+        .catch(err => {
+            alert("Error submitting feedback.");
+            console.error(err);
         });
+        }); 
+    </script>
+    <script>
+  const faqs = document.querySelectorAll("details");
+
+  faqs.forEach((faq) => {
+    faq.addEventListener("toggle", () => {
+      if (faq.open) {
+        faqs.forEach((otherFaq) => {
+          if (otherFaq !== faq) {
+            otherFaq.removeAttribute("open");
+          }
+        });
+      }
+    });
+  });
 </script>
 </body>
 </html>
+<?php include('footer.php'); ?>

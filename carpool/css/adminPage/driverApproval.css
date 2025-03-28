@@ -17,6 +17,10 @@
     margin-top: 30px;
 }
 
+.table-container::-webkit-scrollbar{
+    display: none;
+}
+
 table{
     width: 100%;
     color: white;
@@ -59,18 +63,140 @@ table a:hover {
     background-color: #1a6dd9;
 }
 
-@media screen and (max-width: 768px) {
-    .driver.table {
-        display: block;
-        overflow-x: auto;
-    }
+/* Default styles remain unchanged */
 
-    .table a{
-        padding: 3px 6px;
+/* For max-width 1220px */
+@media (max-width: 1220px) {
+    .driver-list-container {
+        margin-left: 5rem;
+        margin-right: 1.5rem;
     }
     
+    th, td {
+        font-size: 16px;
+        padding: 10px;
+    }
+    
+    table a {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+}
+
+/* For max-width 992px */
+@media (max-width: 992px) {
     .driver-list-container {
-        width: 100%;
         margin-left: 5rem;
+        margin-right: 1rem;
+    }
+    
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    table a {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+/* For max-width 768px */
+@media (max-width: 768px) {
+    .driver-list-container {
+        margin-left: 5rem;
+        margin-right: 2rem;
+        margin-top: 20px;
+    }
+    
+    .driver-list-title h2 {
+        font-size: 22px;
+    }
+    
+    .driver-list-title h4 {
+        font-size: 14px;
+    }
+    
+    .table-container {
+        overflow-x: auto; /* Enable horizontal scrolling */
+    }
+    
+    table {
+        width: 100%;
+        font-size: 13px;
+    }
+    
+    th, td {
+        padding: 6px;
+        font-size: 12px;
+    }
+    
+    table a {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
+
+/* For max-width 480px */
+@media (max-width: 480px) {
+    .driver-list-container {
+        margin-left: 5rem;
+        margin-right: 1rem;
+        margin-top: 15px;
+    }
+    
+    .driver-list-title h2 {
+        font-size: 20px;
+    }
+    
+    .driver-list-title h4 {
+        font-size: 13px;
+    }
+    
+    table {
+        font-size: 12px;
+        border-radius: 8px;
+    }
+    
+    th, td {
+        font-size: 11px;
+        padding: 5px;
+    }
+    
+    table a {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+    
+    /* Stack table content vertically on very small screens */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none; /* Hide table headers */
+    }
+
+    tr {
+        margin-bottom: 10px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #252525;
+    }
+
+    td {
+        text-align: right;
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        flex: 1;
+        color: #2b83ff;
     }
 }

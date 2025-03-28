@@ -1,0 +1,42 @@
+#content-upcomingrides{
+  text-align: center;
+}
+
+#upcomingRides {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  border: none;
+}
+
+#upcomingRides th,
+#upcomingRides td {
+  border: none;
+  padding: 15px;
+  text-align: center;
+}
+
+#upcomingRides th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+#upcomingRides td {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+#upcomingRides a{
+  width: 150px;
+  height: 30px;
+  color: white;
+  background-color: rgb(29, 204, 29);
+}
+
+
+

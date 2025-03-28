@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             '</span>';
 
         // Send AJAX request to token-sent-profile.php
-        fetch('http://localhost/Capstone-Project/carpool/php/login/token-sent.php', {
+        fetch('../php/login/token-sent.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })

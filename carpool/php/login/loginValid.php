@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 if ($driver_result->num_rows == 1) {
                     $driver = $driver_result->fetch_assoc();
-                    if ($driver["status"] !== "approved") {
+                    if (!in_array($driver["status"], ["approved", "restricted"])) {
                         echo "<script>alert('Your driver account is not approved yet. Please wait for approval.'); window.history.back();</script>";
                         exit();
                     }
