@@ -1,73 +1,88 @@
-.driver-list-container{
+.feedback-container{
     margin-left: 16rem;
     margin-right: 2.5rem;
     margin-top: 30px;
 }
 
-.driver-list-title h2{
+.feedback-container h2{
     font-size: 25px;
     color: #2b83ff;
     margin-bottom: 10px;
 }
 
-.driver-list-title h4{
+.feedback-container h4{
     color: rgb(101, 103, 103);
 }
-.table-container{
-    margin-top: 30px;
+
+/* Table Styling */
+.feedback-table {
+    margin-top: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
 }
 
-.table-container::-webkit-scrollbar{
-    display: none;
-}
-
-table{
+table {
     width: 100%;
-    color: white;
     border-collapse: collapse;
-    text-align: left;
-    border-radius: 16px;
+    border-radius: 10px;
     overflow: hidden;
+    background: #1a1a1a;
 }
 
-th{
+/* Table Head */
+
+th {
+    padding: 12px 30px;
+    border-bottom: 1px solid #2b83ff;
+    color: #a0a0a0;
     font-size: 18px;
-    text-align: center;
-    background-color:  #2b83ff;
-    color: white;
     font-weight: bold;
-    padding: 12px 15px;
-    border-bottom: 2px solid #333333;
+    /* text-align: center; */
+    justify-content: center;
 }
 
-td{
-    padding: 12px 15px;
-    border-bottom: 1px solid #333333;
-    vertical-align: middle;
+/* Table Rows */
+td {
+    padding: 12px 30px;
     text-align: center;
-    background-color: #252525;
-}
-
-table a {
-    display: inline-block;
-    padding: 6px 12px;
-    background-color: #2b83ff;
+    border-bottom: 1px solid #444;
+    background: #252525;
+    word-break: break-word;
     color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: all 0.3s ease;
 }
 
-table a:hover {
-    background-color: #1a6dd9;
+/* Alternate row coloring */
+tr:nth-child(even) {
+    background: #2d2d2d;
 }
 
-/* Default styles remain unchanged */
+/* Hover Effect */
+tr:hover {
+    background: rgba(43, 131, 255, 0.2);
+}
 
-/* For max-width 1220px */
+/* Adjust column widths */
+th:nth-child(1), td:nth-child(1) { /* Feedback ID */
+    width: 15%;
+}
+
+th:nth-child(2), td:nth-child(2) { /* TP Number */
+    width: 20%;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Feedback Message */
+    width: 65%;
+    text-align: left; 
+    padding: 12px 15px;
+    word-break: break-word; /* Ensures long messages wrap properly */
+}
+
+td:last-child { 
+    text-align: justify; /* Justify only the Feedback Message column */
+    padding: 15px; /* Add padding for better readability */
+}
+
 @media (max-width: 1220px) {
-    .driver-list-container {
+    .feedback-container {
         margin-left: 5rem;
         margin-right: 1.5rem;
     }
@@ -83,9 +98,8 @@ table a:hover {
     }
 }
 
-/* For max-width 992px */
 @media (max-width: 992px) {
-    .driver-list-container {
+    .feedback-container {
         margin-left: 5rem;
         margin-right: 1rem;
     }
@@ -101,20 +115,11 @@ table a:hover {
     }
 }
 
-/* For max-width 768px */
 @media (max-width: 768px) {
-    .driver-list-container {
+    .feedback-container {
         margin-left: 5rem;
         margin-right: 2rem;
         margin-top: 20px;
-    }
-    
-    .driver-list-title h2 {
-        font-size: 22px;
-    }
-    
-    .driver-list-title h4 {
-        font-size: 14px;
     }
     
     .table-container {
@@ -139,19 +144,12 @@ table a:hover {
 
 /* For max-width 480px */
 @media (max-width: 480px) {
-    .driver-list-container {
+    .feedback-container {
         margin-left: 5rem;
         margin-right: 1rem;
         margin-top: 15px;
     }
     
-    .driver-list-title h2 {
-        font-size: 20px;
-    }
-    
-    .driver-list-title h4 {
-        font-size: 13px;
-    }
     
     table {
         font-size: 12px;
@@ -200,3 +198,4 @@ table a:hover {
         color: #2b83ff;
     }
 }
+

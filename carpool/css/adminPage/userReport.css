@@ -85,10 +85,31 @@ button:hover {
     margin-bottom: 14px;
 }
 
+@media screen and (max-width: 1220px) {
+    .user-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+}
+@media screen and (max-width: 992px) {
+    .user-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
+    }
+}
 @media screen and (max-width: 768px) {
     .user-report-container {
         width: 100%;
         margin-left: 5rem;
-        padding-right: 1rem;
+        padding-right: 2rem;
+    }
+}
+@media screen and (max-width: 480px) {
+    .user-report-container {
+        width: 100%;
+        margin-left: 5rem;
+        padding-right: 2rem;
     }
 }

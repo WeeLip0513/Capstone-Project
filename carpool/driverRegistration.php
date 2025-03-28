@@ -219,3 +219,4 @@ include("headerHomepage.php");
 </body>
 
 </html>
+<?php include('footer.php'); ?>

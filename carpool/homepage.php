@@ -14,6 +14,8 @@ include("headerHomepage.php");
     <link rel="stylesheet" href="css/homePage/whychooseApool.css">
     <link rel="stylesheet" href="css/homePage/howitworks.css">
     <link rel="stylesheet" href="css/homePage/featuresSlider.css">
+    <link rel="stylesheet" href="css/homePage/cardFeature.css">
+    <link rel="stylesheet" href="css/homePage/roleSelect.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
@@ -151,72 +153,77 @@ include("headerHomepage.php");
             </div>
         </section>
         <section class="section second-section">
-            <div class="driver-features-slider">
-                <div class="driver-content-container">
-                    <h5>Driver Features</h5>
-                    <h2>Create your ride and start earning!</h2>
-                    <div class="driver-list-style">
-                        <ul>Create your own ride</ul>
-                        <ul>Set your own schedule</ul>
-                        <ul>Earn money flexibly</ul>
+            <div class="slider-wrap">
+                <div class="driver-features-slider">
+                    <div class="driver-content-container">
+                        <h5>Driver Features</h5>
+                        <h2>Create your ride and start earning!</h2>
+                        <div class="driver-list-style">
+                            <ul>Create your own ride</ul>
+                            <ul>Set your own schedule</ul>
+                            <ul>Earn money flexibly</ul>
+                        </div>
+                    </div>
+                    <div class="slider">
+                        <div class="slide-track">
+                            <div class="slide">
+                                <img src="image/homepage/driver1.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver2.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver3.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver4.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver5.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver6.jpg" alt="Driver Features">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="slider">
-                    <div class="slide-track">
-                        <div class="slide">
-                            <img src="image/homepage/driver1.jpg" alt="Driver Features">
+            </div>
+            <div class="slider-wrap">
+                <div class="driver-features-slider">
+                    <div class="slider">
+                        <div class="slide-track">
+                            <div class="slide">
+                                <img src="image/homepage/driver1.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver2.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver3.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver4.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver5.jpg" alt="Driver Features">
+                            </div>
+                            <div class="slide">
+                                <img src="image/homepage/driver6.jpg" alt="Driver Features">
+                            </div>
                         </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver2.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver3.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver4.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver5.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver6.jpg" alt="Driver Features">
+                    </div>
+                    <div class="driver-content-container">
+                        <h5>Passenger Features</h5>
+                        <h2>Find rides that match your need!</h2>
+                        <div class="driver-list-style">
+                            <ul>Search for rides easily</ul>
+                            <ul>Choose preferred drivers</ul>
+                            <ul>Travel comfortably</ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="driver-features-slider">
-                <div class="slider">
-                    <div class="slide-track">
-                        <div class="slide">
-                            <img src="image/homepage/driver1.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver2.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver3.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver4.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver5.jpg" alt="Driver Features">
-                        </div>
-                        <div class="slide">
-                            <img src="image/homepage/driver6.jpg" alt="Driver Features">
-                        </div>
-                    </div>
-                </div>
-                <div class="driver-content-container">
-                    <h5>Passenger Features</h5>
-                    <h2>Find rides that match your need!</h2>
-                    <div class="driver-list-style">
-                        <ul>Search for rides easily</ul>
-                        <ul>Choose preferred drivers</ul>
-                        <ul>Travel comfortably</ul>
-                    </div>
-                </div>
-            </div>
+
         </section>
         <div class="wave-container">
             <div class="wave" id="wave1" style="--i:1;"></div>
@@ -276,32 +283,33 @@ include("headerHomepage.php");
 
                 <div class="benefits-cards-wrapper">
                     <div class="benefits-cards">
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Reasonable Price Range"
+                            data-subtitle="Save Big on Your Commute"
+                            data-description="Share the ride and split the expenses! Reduce your commute costs by up to 50%">
                             <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    stroke="currentColor">
                                     <rect x="9" y="2" width="6" height="20" rx="2" />
                                     <rect x="4" y="7" width="16" height="10" rx="2" />
                                     <path d="M12 22v-4" />
                                 </svg>
                             </div>
                             <h2>Cost Saving</h2>
-                            <h3>& Convenience.</h3>
-                            <p>Share the Ride, Split the Cost, Enjoy the Journey! Save up to 50% on your daily commute
-                                costs.
-                            </p>
+                            <h3>&amp; Convenience.</h3>
+                            <p>Share the ride, split the cost, and enjoy the journey together! Save up to 50% on your
+                                daily commute costs.</p>
                             <button class="expand-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    stroke="currentColor">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                             </button>
                         </div>
 
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Extra Incomes for Drivers"
+                            data-subtitle="Earn Extra Income Today"
+                            data-description="Make money effortlessly by sharing your ride on routes you already take">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -328,7 +336,9 @@ include("headerHomepage.php");
                             </button>
                         </div>
 
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Go Green with Shared Rides"
+                            data-subtitle="Eco-friendly Transportation"
+                            data-description="Enjoy sustainable EV transportation and help create a cleaner, greener world">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -353,7 +363,9 @@ include("headerHomepage.php");
                                 </svg>
                             </button>
                         </div>
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Smooth Commutes, Less Stress"
+                            data-subtitle="Reduced Traffic & Stress"
+                            data-description="Wait too long for APU bus? Experience a peaceful journey back to home">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -377,7 +389,8 @@ include("headerHomepage.php");
                             </button>
                         </div>
 
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Ride Safely Every Mile" data-subtitle="Safety & Security"
+                            data-description="Your security is paramount. With verified users, enjoy a ride where safety is always guaranteed.">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -399,7 +412,9 @@ include("headerHomepage.php");
                                 </svg>
                             </button>
                         </div>
-                        <div class="benefit-card">
+                        <div class="benefit-card" data-title="Rides Just Around the Corner"
+                            data-subtitle="Convenient Locations"
+                            data-description="Never wait long for a ride. Our platform connects APU students with rides at your favorite spots, ensuring a quick and hassle-free commute.">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -458,64 +473,18 @@ include("headerHomepage.php");
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
                         </button>
-
                         <div class="modal-header">
-                            <div class="modal-subtitle" id="modalSubtitle">Carpool Excellence</div>
-                            <h2 id="modalTitle">Experience safer, greener commuting today</h2>
+                            <div class="modal-subtitle" id="modalSubtitle"></div>
+                            <h2 id="modalTitle"></h2>
                         </div>
-
-                        <p id="modalDescription">Join thousands of commuters who are saving money, reducing emissions,
-                            and
-                            building connections on their daily routes.</p>
-
-                        <ul class="feature-list">
-                            <li>
-                                <span class="feature-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span>Save up to 50% on daily commuting costs</span>
-                            </li>
-                            <li>
-                                <span class="feature-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span>Reduce your carbon footprint by 40%</span>
-                            </li>
-                            <li>
-                                <span class="feature-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </span>
-                                <span>Verified drivers with 24/7 support</span>
-                            </li>
-                        </ul>
-
-                        <div class="modal-footer">
-                            <a href="#" class="modal-button">Get Started ></a>
-                        </div>
-                    </div>
-
-                    <!-- Right content (image) -->
-                    <div class="modal-content-right" id="modalImage"
-                        style="background-image: url('/api/placeholder/400/400');">
+                        <p id="modalDescription"></p>
                     </div>
                 </div>
             </div>
         </section>
         <script src="js/homepage/searchForm.js"></script>
         <script src="js/homepage/howitworks.js"></script>
-        <script src="js/homepage/features.js"></script>
+        <script src="js/homepage/featureSlider.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="js/homepage/swiper.js"></script>
         <script>
@@ -523,184 +492,10 @@ include("headerHomepage.php");
         </script>
     </div>
 </body>
-
 </html>
+<?php include('footer.php'); ?>
 
 
 
 
 
-<!-- /*services*/
-/* .ourservices {
-    background-color: white;
-    height: 49rem;
-}
-
-.ourservices h1 {
-    color: #343a40;
-    text-align: center;
-    font-size: 40px;
-}
-
-.rolecard {
-    display: flex;
-    gap: 5rem;
-    justify-content: center;
-}
-
-.role {
-    background: #f8f8f8;
-    border-radius: 12px;
-    padding: 5rem;
-    width: 500px;
-    text-align: center;
-    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.3);
-    transition: all 0.3 ease;
-}
-
-.role:hover {
-    box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.5);
-    transition: 0.5 ease;
-}
-
-.icon {
-    background: #ffc107;
-    width: 120px;
-    height: 125px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.role h2 {
-    color: #343a40;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
-.role p {
-    color: #5a5959;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.learn-more {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background: #2b83ff;
-    color: white;
-    border: 2px solid white;
-    text-decoration: none;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-}
-
-.learn-more:hover {
-    background: white;
-    color: #2b83ff;
-    transform: scale(1.01);
-    border: 2px solid #2b83ff;
-}
-
-/* Responsive design */
-/* @media (max-width: 768px) {
-    .rolecard {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .role {
-        width: 100%;
-        max-width: 300px;
-    }
-} */ -->
-
-
-<!-- <div class="ourservices">
-            <br><br><br>
-            <h1>Choose Your Role</h1>
-            <br><br><br>
-            <div class="rolecard">
-                <div class="role">
-                    <div class="icon">
-                        <img src="image/homepage/driver.png" alt="driver icon" width="130px" height="120px">
-                    </div>
-                    <h2>Driver</h2>
-                    <p>Join our community of drivers and start earning by sharing your rides with passengers heading in
-                        the same direction.</p>
-                    <a href="/driver" class="learn-more">Sign Up</a>
-                </div>
-                <div class="role">
-                    <div class="icon">
-                        <img src="image/homepage/passenger.png" alt="passenger icon" width="120px" height="110px">
-                    </div>
-                    <h2>Passenger</h2>
-                    <p>Find convenient and affordable rides to your destination. Connect with reliable drivers in your
-                        area.</p>
-                    <a href="/passenger" class="learn-more">Sign Up</a>
-                </div>
-            </div>
-        </div> -->
-
-<!-- feature
-.benefits {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    height: 90vh;
-}
-
-.benefits h1 {
-    color: white;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.feature-wrapper {
-    overflow: hidden;
-    max-width: 1200px;
-    margin: 40px 150px 0;
-}
-
-.feature-list .feature-item {
-    user-select: none;
-    width: 350px;
-    padding: 35px;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    flex-direction: column;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.feature-wrapper .swiper-pagination-bullet {
-    background: #fff;
-    height: 15px;
-    width: 15px;
-}
-
-.feature-wrapper .swiper-slide-button {
-    color: #fff;
-    margin-top: -50px;
-    transition: 0.2 ease;
-}
-
-.feature-wrapper .swiper-slide-button:hover {
-    color: #4658ff;
-}
-
-@media (max-width: 768px) {
-    .feature-wrapper {
-        margin: 0 10px 40px;
-    }
-
-    /* .feature-wrapper .swiper-slide-button{
-            display: none;
-    } */
-} -->

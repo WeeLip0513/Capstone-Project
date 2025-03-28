@@ -35,7 +35,7 @@ try {
                 r.status FROM passenger_transaction pt 
                 JOIN ride r ON pt.ride_id = r.id 
                 WHERE pt.passenger_id=? 
-                AND pt.status='paid' AND r.status='completed' 
+                AND pt.status='complete' AND r.status='completed' 
                 ORDER BY r.date DESC, r.time DESC";
 
     $stmt = $conn->prepare($sql);
