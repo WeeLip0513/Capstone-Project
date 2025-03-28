@@ -114,6 +114,21 @@ label[for="tab4"]:hover {
 }
 
 /* Responsive Styles */
+@media screen and (max-width: 1220px) {
+    .passenger {
+        max-width: 1220px;
+        padding: 0 20px;
+    }
+
+    label {
+        width: 300px;
+        font-size: 18px;
+    }
+
+    .glider {
+        width: 300px;
+    }
+}
 @media screen and (max-width: 1200px) {
     .navigation-user {
         display: none;
