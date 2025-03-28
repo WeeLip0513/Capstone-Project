@@ -349,7 +349,7 @@
   display: flex;
   flex-direction: column;
   /* margin-right: 40px; */
-  background-color: #2b83ff;
+  background-color: #1e1e1e;
   top: 30%;
   left: 29%;
   border-radius: 10px;
@@ -359,7 +359,7 @@
   padding-bottom: 20px;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 4px 10px rgba(60, 122, 255, 0.8);
+  /* box-shadow: 0px 4px 10px rgba(60, 122, 255, 0.8); */
   width: 600px;
 }
 
@@ -379,6 +379,7 @@
 .confirmation h2{
   font-size: 40px;
   text-align: center;
+  color: #2b83ff;
 }
 
 .rideDetails{
