@@ -185,12 +185,14 @@
         width: 100%;
     }
     
-    #char-count {
-        position: absolute;
-        bottom: 10px;
-        right: 15px;
-        font-size: 0.85rem;
-        color: #999;
+    /* Word count styling */
+    #char-count.limit-near {
+        color: #e67e22; /* Orange for approaching limit */
+    }
+    
+    #char-count.limit-reached {
+        color: #e74c3c; /* Red for at/over limit */
+        font-weight: bold;
     }
     
     /* Submit button styling */
