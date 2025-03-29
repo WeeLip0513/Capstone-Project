@@ -210,6 +210,12 @@ function updateUIBasedOnStatus(rideStatus) {
   for (let i = 0; i <= progressIndex; i++) {
     document.getElementById(`progressLine${i}`).style.backgroundColor = "#007bff"; // Active blue color
   }
+
+  // if(rideStatus === "completed"){
+  //   document.getElementById("ratingModal").style.display="flex";
+  //   document.body.classList.add('no-scroll');
+  //   showNotification("Ride Complete! Please rate your ride.");
+  // }
 }
 
 // Show progress in ride journey
@@ -220,4 +226,33 @@ function showProgress(step) {
   const progressSteps = ["0%", "33%", "66%", "100%"];
   progressBar.style.width = progressSteps[step];
 }
+
+function updateRideStatus() {
+  fetch(`../php/ride/getRideStatus.php?ride_id=${rideID}`)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.status) {
+        console.error("Invalid response from server:", data);
+        return;
+      }
+
+      const rideStatus = data.status; // Example: "reached_pickup", "started", "completed"
+      updateUIBasedOnStatus(rideStatus);
+      
+      console.log("Ride Status:", rideStatus);
+
+      // Show rating modal ONLY when the ride is completed
+      if (rideStatus === "completed") {
+        document.getElementById("ratingModal").style.display = "flex";
+        document.body.classList.add('no-scroll');
+        showNotification("Ride Complete! Please rate your ride.");
+      } else {
+        document.getElementById("ratingModal").style.display = "none";
+      }
+    })
+    .catch(error => console.error("Error fetching ride status:", error));
+}
+
+
+
 

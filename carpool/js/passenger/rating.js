@@ -1,73 +1,133 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const ratingModal = document.getElementById('ratingModal');
-    const closeRating = document.querySelector('.close-rating');
-    const stars = document.querySelectorAll('.star-rating .star');
-    const submitRatingBtn = document.getElementById('submitRating');
+document.addEventListener("DOMContentLoaded", function () {
+    const starContainer = document.getElementById("starContainer");
+    const stars = document.querySelectorAll(".star");
+    let selectedRating = 0;
 
-    let selectedRating = 0; 
+    // Function to show a notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
 
-    // show the rating modal
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('payment') === 'success') {
-        ratingModal.style.display = 'flex';
-        window.history.replaceState({}, document.title, window.location.pathname);
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
     }
 
-    // select rating and update star colors
-    stars.forEach(star => {
-        star.addEventListener('click', function () {
-            selectedRating = parseInt(this.getAttribute('data-value'));
-            updateStarDisplay(selectedRating);
+    // Reset all star states
+    function resetStars() {
+        stars.forEach(star => {
+            star.classList.remove("selected", "hover");
         });
-        // hover effects
-        star.addEventListener('mouseover', function () {
-            updateStarDisplay(parseInt(this.getAttribute('data-value')));
-        });
-        star.addEventListener('mouseout', function () {
-            updateStarDisplay(selectedRating);
-        });
+    }
+
+    // Highlight stars up to a certain point with a given class
+    function highlightStars(upTo, className) {
+        resetStars();
+        for (let i = 0; i < upTo; i++) {
+            stars[i].classList.add(className);
+        }
+    }
+
+    // Hover effect: when hovering over a star, show hover highlight
+    starContainer.addEventListener("mouseover", function (e) {
+        if (e.target.classList.contains("star")) {
+            const hoverRating = parseInt(e.target.dataset.rating);
+            highlightStars(hoverRating, "hover");
+        }
     });
 
-    function updateStarDisplay(rating) {
-        stars.forEach(star => {
-            if (parseInt(star.getAttribute('data-value')) <= rating) {
-                star.classList.add('selected');
-            } else {
-                star.classList.remove('selected');
-            }
-        });
-    }
+    // Mouse leave: revert back to selected rating (if any) or clear
+    starContainer.addEventListener("mouseleave", function () {
+        if (selectedRating > 0) {
+            highlightStars(selectedRating, "selected");
+        } else {
+            resetStars();
+        }
+    });
 
-    // Submit rating button
-    submitRatingBtn.addEventListener('click', function () {
-        if (selectedRating < 1 || selectedRating > 5) {
-            showNotification('Please select a rating between 1 and 5');
+    // Click on a star: set the rating and automatically submit it
+    starContainer.addEventListener("click", function (e) {
+        if (e.target.classList.contains("star")) {
+            selectedRating = parseInt(e.target.dataset.rating);
+            highlightStars(selectedRating, "selected");
+            submitRating(selectedRating);
+        }
+    });
+
+    // Automatically submit the rating via fetch
+    function submitRating(selectedRating) {
+        // Get values from URL or previous page context
+        const urlParams = new URLSearchParams(window.location.search);
+        const rideId = urlParams.get('ride_id') || window.rideId;
+        const passengerId = urlParams.get('passenger_id') || window.passengerId;
+
+        if (!passengerId) {
+            alert("Session timeout. Please login again.");
+            window.location.href = "../loginpage.php";
             return;
         }
-        // Send rating to server
-        fetch('http://localhost/Capstone-Project/carpool/php/passenger/updateDriverRating.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            credentials: 'include',
-            body: 'driver_id=' + encodeURIComponent(driverId) + '&rating=' + encodeURIComponent(selectedRating)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification(data.message||'Thank you for your feedback!');
-                ratingModal.style.display = 'none';
-            } else {
-                showNotification(data.message || 'Failed to update rating');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showNotification('Connection error. Please try again.');
-        });
-    });
 
-    // Close modal if close icon is clicked
-    closeRating.addEventListener('click', function () {
-        ratingModal.style.display = 'none';
-    });
+        console.log("passenger ID:", passengerId);
+        console.log("Ride ID:", rideId);
+        console.log("Ride Rating:", selectedRating);
+        fetch("../php/passenger/submitRating.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                passenger_id: passengerId,
+                ride_id: rideId,
+                ride_rating: selectedRating
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(`Thank you for your rating!
+                                    Ride Avg: ${data.rideAvgRating ? data.rideAvgRating.toFixed(1) : 'N/A'} | 
+                                    Driver Overall: ${data.overallDriverRating ? data.overallDriverRating.toFixed(1) : 'N/A'}`);
+                    document.getElementById("ratingModal").style.display = "none";
+                    setTimeout(()=>{
+                        window.location.href = "../passenger/passengerPage.php";
+                    }, 2500);
+                } else {
+                    alert("Failed to submit rating.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while submitting your rating.");
+            });
+    }
+
+    // Automatically show the modal if needed (this could be set via a global variable from PHP)
+    if (typeof showRatingModal !== 'undefined' && showRatingModal === "true") {
+        document.getElementById("ratingModal").style.display = "flex";
+    }
+
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
 });
