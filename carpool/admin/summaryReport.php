@@ -149,8 +149,8 @@ include("adminsidebar.php");
             document.getElementById('summaryDes').innerHTML = `
                 <p><strong>New Drivers:</strong> ${summaryData.newDrivers}</p>
                 <p><strong>New Passengers:</strong> ${summaryData.newPassengers}</p>
-                <p><strong>Driver Revenue:</strong> RM${summaryData.driverRevenue}</p>
-                <p><strong>App Revenue:</strong> RM${summaryData.appRevenue}</p>
+                <p><strong>Driver Revenue:</strong> RM ${summaryData.driverRevenue}</p>
+                <p><strong>App Revenue:</strong> RM ${summaryData.appRevenue}</p>
                 ${summaryData.mostPopularRoute ? `<p><strong>Most Popular Route:</strong> ${summaryData.mostPopularRoute.route} (${summaryData.mostPopularRoute.count} trips)</p>` : ''}
             `;
         }

@@ -1,0 +1,253 @@
+/* *{
+    border: 2px solid red;
+} */
+.about-container{
+    padding-top: 80px !important;
+}
+
+.introduction{
+    padding: 250px 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.introduction h1{
+    font-size: 60px;
+    color: white;
+    padding-right: 20px;
+}
+img{
+    width:260px;
+}
+
+.intro-description{
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 350px;
+}
+.intro-description h3{
+    color: #a0a0a0;
+    text-align: center;
+}
+
+.about-us{
+    padding: 140px 100px;
+    background-color: #1e1e1e;
+}
+
+.about-container-2{
+    /* background-color: #1e1e1e; */
+    border-radius: 16px;
+}
+
+.our-story{
+    padding-left: 100px;
+}
+.our-story h1{
+    color: #2b83ff;
+    padding-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+.about-us p{
+    color: white;
+    line-height: 2;
+    text-align: justify;
+    font-size: 17.5px;
+}
+
+.about-des{
+    display: flex;
+}
+.about-image {
+    display: flex;
+    align-items: center; /* Ensures the image stays centered */
+    justify-content: center;
+}
+
+.about-des img{
+    width: 450px;
+}
+
+.mission-vision-container{
+    padding: 150px 80px;
+}
+
+.mission-vision-wrapper{
+    display: flex;
+}
+
+.mission-vision-des{
+    padding: 0px 100px;
+}
+.mission-vision-des h1{
+    color: #2b83ff;
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 2.5rem;
+}
+.mission-vision-des h2{
+    color: white;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.vision{
+    padding-top: 20px;
+}
+.mission-vision-des p{
+    color: #cecdcd;
+    text-align: justify;
+    line-height: 2.0;
+    font-size: 17.5px;
+}
+
+.core-values-container{
+    padding: 180px 80px;
+    background-color: white;
+}
+
+.core-values h1{
+    color: #2b83ff;
+    padding: 0px 100px;
+    text-align: center;
+    font-size: 2.5rem;
+    padding-bottom: 50px;
+}
+
+.core-elements{
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+}
+.element{
+    background-color: #1e1e1e61;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    display: flex; /* Flexbox to align content */
+    flex-direction: column;
+    flex: 0 0 280px;
+    position: relative;
+    min-height: 280px;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.element:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.element i{
+    color: #2b83ff;
+    font-size: 50px;
+    padding-bottom: 50px;
+}
+.element h3{
+    color: #333;
+}
+
+.our-team-container{
+    padding: 180px 80px;
+}
+
+.our-team{
+    padding: 0 100px;
+    text-align: center;
+}
+.our-team h1{
+    color: #2b83ff;
+    padding-bottom: 50px;
+    font-size: 2.5rem;
+}
+
+.member-row{
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+}
+.member-row-2{
+    display: flex;
+    gap: 5rem;
+    justify-content: center;
+    padding-top: 70px;
+}
+
+.member h3{
+    font-size: 20px;
+}
+.member{
+    display: flex; /* Flexbox to align content */
+    flex-direction: column;
+    flex: 0 0 350px;
+    position: relative;
+    min-height: 150px;
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    border-radius: 16px;
+    color: white;
+    background: rgba(33, 33, 33, 0.433);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.member p{
+    padding-top: 5px;
+    color: #a0a0a0;
+}
+
+@media(max-width:1220px){
+    .introduction {
+        padding: 250px 100px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .introduction h1 {
+        font-size: 60px;
+        color: white;
+        padding-right: 20px;
+    }
+    
+    img {
+        width: 260px;
+    }
+    
+    .intro-description h3 {
+        color: #a0a0a0;
+        text-align: center;
+    }
+    
+    .about-us {
+        padding: 140px 100px;
+        background-color: #1e1e1e;
+    }
+    
+    .about-des {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .about-des img {
+        width: 450px;
+    }
+    
+    .mission-vision-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .core-elements, .member-row, .member-row-2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+    }
+}
