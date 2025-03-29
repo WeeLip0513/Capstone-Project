@@ -289,6 +289,7 @@ function validateAndCheckConflict() {
                     conflictBtn.onclick = replaceRide;
                 }
                 
+                conflictDiv.innerHTML = conflictHTML;
                 conflictDiv.appendChild(conflictBtn); // Now it's safe to append                
                 conflictDiv.style.display = "block";
                 addRideContainer.style.display = "none";
@@ -311,7 +312,7 @@ document.getElementById('keepBtn').addEventListener('click', function () {
         select.style.backgroundColor = "whitesmoke";
         select.style.textAlign = "center";
         select.style.color = "#afafaf";
-        select.style.boxShadow = "0px 4px 10px rgba(1, 35, 109, 0.8)";
+        // select.style.boxShadow = "0px 4px 10px rgba(1, 35, 109, 0.8)";
         select.style.fontWeight = "normal";
 
         // Hide conflict section

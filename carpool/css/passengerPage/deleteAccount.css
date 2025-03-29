@@ -1,0 +1,27 @@
+.profiledelete{
+   flex-direction: column;
+}
+/* .delete-account{
+    display: flex;
+} */
+
+.deleteAccount {
+    margin-top: 10px;
+    background-color: rgb(197, 13, 13);
+    color: white;
+    border: none;
+    padding: 10px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s ease;
+    margin-bottom: 8px;
+}
+
+.delete-account p{
+    font-size: 14px;
+}
+
+.deleteAccount:hover {
+    background-color: rgba(197, 13, 13, 0.648);
+}

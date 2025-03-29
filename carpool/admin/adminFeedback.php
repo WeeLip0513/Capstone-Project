@@ -37,7 +37,7 @@ $result = mysqli_query($conn,$sql);
                         echo"<td>".$row['feedback_message']."</td>";
                     }
                 }else{
-                    echo "<tr><td colspan='7'>No feedbacks found</td></tr>";
+                    echo "<tr><td colspan='3'style='text-align:center; padding: 10px;'>No Feedbacks Found.</td></tr>";
                 }
                 mysqli_close($conn);
                 ?>
