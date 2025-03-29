@@ -3,6 +3,7 @@ session_start();
 include("../dbconn.php");
 include("../userHeader.php");
 include("../php/passenger/profile.php");
+// include("../php/passenger/checkRefundStatus.php?passenger_id=" . $passenger_id);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -31,7 +32,8 @@ if (!$row) {
 }
 
 $passenger_id = $row['id'];
-// echo "Passenger ID: " . $passenger_id . "<br>";
+$_SESSION['passenger_id'] = $passenger_id;
+error_log("Debug: passenger_id retrieved from DB = " . $passenger_id); // 
 
 // Get ride IDs from passenger_transaction table
 $stmt = $conn->prepare("SELECT ride_id FROM passenger_transaction WHERE passenger_id = ?");
@@ -44,6 +46,8 @@ while ($row = $result->fetch_assoc()) {
     $rideIDs[] = $row['ride_id'];
 }
 $stmt->close();
+
+
 
 // Check if we have ride IDs
 if (empty($rideIDs)) {
@@ -58,7 +62,7 @@ if (empty($rideIDs)) {
               LEFT JOIN passenger_transaction pt ON r.id = pt.ride_id 
               WHERE r.id IN ($rideIDsString) 
               AND r.status IN ('upcoming', 'active', 'waiting', 'ongoing') 
-              AND (pt.status IS NULL OR pt.status <> 'complete')";
+              AND (pt.status IS NULL OR pt.status <> 'canceled')";
 
     $result = $conn->query($query);
 
@@ -86,6 +90,7 @@ $conn->close();
     <link rel="stylesheet" href="../css/passengerPage/ridecart.css">
     <link rel="stylesheet" href="../css/passengerPage/resetpassmodal.css">
     <link rel="stylesheet" href="../css/passengerPage/ridehistory.css">
+    <link rel="stylesheet" href="../css/passengerPage/notification.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
@@ -137,7 +142,8 @@ $conn->close();
                                     <td><?= $ride['time'] ?></td>
                                     <td>
                                         <?php if (in_array($ride['status'], ['active', 'waiting', 'ongoing'])): ?>
-                                            <a href="../passenger/viewRide.php?ride_id=<?= $ride['id'] ?>" class="view-link"><button>View</button></a>
+                                            <a href="../passenger/viewRide.php?ride_id=<?= $ride['id'] ?> &passenger_id=<?= $passenger_id ?>"
+                                                class="view-link"><button>View</button></a>
                                         <?php else: ?>
                                             <span class="inactive-text">Unavailable</span>
                                         <?php endif; ?>
@@ -329,19 +335,13 @@ $conn->close();
         </div>
     </div>
 
-    <!-- <div id="ratingModal" class="rate-modal">
-      <div class="rate-modal-content rating-content">
-        <span class="close-rating">&times;</span>
-        <h3>Please rate your driver</h3>
-        <div class="star-rating">
-            <span data-value="1" class="star">&#9733;</span>
-            <span data-value="2" class="star">&#9733;</span>
-            <span data-value="3" class="star">&#9733;</span>
-            <span data-value="4" class="star">&#9733;</span>
-            <span data-value="5" class="star">&#9733;</span>
+    <!-- <div id="notificationModal" class="notification-modal">
+        <div class="notification-modal-content">
+            <span id="modalClose" class="notification-close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div id="modalBody"></div>
+            <button id="modalOkBtn">OK</button>
         </div>
-        <button id="submitRating">Submit Rating</button>
-      </div>
     </div> -->
 
     <div id="editProfileModal" class="modal">
@@ -389,6 +389,76 @@ $conn->close();
         <span id="cart-count" class="cart-count">0</span>
     </div>
 
+    <div id="refundModal" class="refundmodal">
+        <div class="refundmodal-content">
+            <span class="refundclose">&times;</span>
+            <h3>Ride Cancellation</h3>
+            <p id="refundMessage"></p>
+            <button id="refundcloseModal">OK</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let modal = document.getElementById("refundModal");
+            let refundMessage = document.getElementById("refundMessage");
+            let closeModalBtn = document.getElementById("refundcloseModal");
+            let closeSpan = document.querySelector(".refundclose");
+
+            // Get the number of times the modal has been shown
+            let showCount = parseInt(sessionStorage.getItem("refundModalShown")) || 0;
+
+            fetch("../php/passenger/checkRefundStatus.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "passenger_id=<?php echo $passenger_id; ?>"
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Debugging
+
+                    if ((data.status === "refunded" || data.status === "pending") && showCount < 2) {
+                        let message = (data.status === "refunded")
+                            ? "Your ride has been canceled. The refund has been processed. Check History!"
+                            : "Your ride has been canceled. The refund is still pending.";
+
+                        refundMessage.innerText = message;
+
+                        // Show modal
+                        modal.style.display = "block";
+                        document.body.style.overflow = "hidden";
+
+                        // Increase the counter and store it in sessionStorage
+                        sessionStorage.setItem("refundModalShown", showCount + 1);
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+
+            // Function to close modal and re-enable scrolling
+            function closeModal() {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+
+            // Close modal when clicking 'X' button
+            closeSpan.onclick = closeModal;
+
+            // Close modal when clicking 'OK' button
+            closeModalBtn.onclick = closeModal;
+
+            // Close modal when clicking outside of it
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+        });
+
+    </script>
+
     <script src="../js/passenger/navbar.js"></script>
     <script src="../js/passenger/fetchrides.js"></script>
     <script src="../js/passenger/editProfileModal.js"></script>
@@ -397,6 +467,7 @@ $conn->close();
     <script src="../js/passenger/ridehistory.js"></script>
     <script src="../js/passenger/searchFormValid.js"></script>
     <script src="../js/passenger/hamburger.js"></script>
+
     <script>
         var driverId = <?php echo $driver_id; ?>;
     </script>
@@ -410,12 +481,15 @@ $conn->close();
                 'apu': 'APU (Asia Pacific University)',
                 'sri_petaling': 'Sri Petaling',
                 'lrt_bukit_jalil': 'LRT Bukit Jalil',
-                'pav_bukit_jalil': 'Pavilion Bukit Jalil'
+                'pav_bukit_jalil': 'Pavilion Bukit Jalil',
+                'completed': 'Completed',
+                'canceled': 'Refunded'
             };
 
             return locationMapping[location] || location.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
     </script>
+
 
 
     <!-- Edit Profile Modal -->

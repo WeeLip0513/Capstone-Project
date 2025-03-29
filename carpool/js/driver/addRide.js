@@ -321,3 +321,22 @@ document.getElementById('keepBtn').addEventListener('click', function () {
     });
 });
 
+docuement.getElementById("refund").addEventListener("click",function(){
+    fetch('../php/passenger/paymentRefund.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Refund was successful: hide confirmation and update UI
+            console.log("Refund processed successfully:", data.message);
+            hideConfirmation();
+        } else {
+            // Refund failed: display error message
+            console.error("Refund failed:", data.message);
+            alert("Refund failed: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error during refund:", error);
+        alert("An error occurred during the refund process.");
+    });
+});

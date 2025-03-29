@@ -9,6 +9,9 @@ $response = [];
 
 $passengerId = $_SESSION['passenger_id'] ?? null;
 
+// ✅ Debugging Output: Print passenger ID
+error_log("Debug: passenger_id from SESSION = " . ($passengerId ?? 'NULL'));
+
 if (!$passengerId) {
     echo json_encode([
         'status' => 'error',
@@ -25,18 +28,20 @@ try {
     // Fetch results using mysqli method
     // $result = $stmt->get_result();
 
-    $sql = "SELECT 
-                r.id, 
-                r.pick_up_point, 
-                r.drop_off_point, 
-                r.date, 
-                r.time, 
-                r.price, 
-                r.status FROM passenger_transaction pt 
-                JOIN ride r ON pt.ride_id = r.id 
-                WHERE pt.passenger_id=? 
-                AND pt.status='complete' AND r.status='completed' 
-                ORDER BY r.date DESC, r.time DESC";
+    $sql = "SELECT r.id, 
+            r.pick_up_point, 
+            r.drop_off_point, 
+            r.date, r.time, 
+            r.price, 
+            pt.status AS pt_status, r.status AS ride_status
+            FROM passenger_transaction pt 
+            JOIN ride r ON pt.ride_id = r.id 
+            WHERE pt.passenger_id = ? 
+            AND (
+                (pt.status = 'complete' AND r.status = 'completed') 
+                OR (pt.status IN ('requested', 'refunded') AND r.status = 'canceled')
+            ) 
+            ORDER BY r.date DESC, r.time DESC";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $passengerId);

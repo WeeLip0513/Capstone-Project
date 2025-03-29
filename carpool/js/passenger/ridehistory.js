@@ -4,7 +4,8 @@ function getLocationName(location) {
         'sri_petaling': 'Sri Petaling',
         'lrt_bukit_jalil': 'LRT Bukit Jalil',
         'pav_bukit_jalil': 'Pavilion Bukit Jalil',
-        'completed': 'Completed'
+        'completed': 'Completed',
+        'canceled': 'Refunded'
     };
 
     return locationMapping[location] || location.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -41,12 +42,11 @@ function fetchRides() {
                         </thead>
                         <tbody>
                 `;
-
                 data.rides.forEach(ride => {
                     const pickUpLocation = getLocationName(ride.pick_up_point);
                     const dropOffLocation = getLocationName(ride.drop_off_point);
-                    const rideStatus = getLocationName(ride.status);
-
+                    const rideStatus = getLocationName(ride.ride_status); // ✅ Fix: use ride.ride_status
+                
                     tableHtml += `
                         <tr>
                             <td>${pickUpLocation}</td>
@@ -58,7 +58,6 @@ function fetchRides() {
                         </tr>
                     `;
                 });
-
                 tableHtml += '</tbody></table>';
                 container.innerHTML = tableHtml;
             } else {
