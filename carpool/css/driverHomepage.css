@@ -174,8 +174,11 @@
 
   @media (max-width: 768px) {
     .step {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
+    }
+    .step.reverse {
+    flex-direction: column; /* Remove reverse order on small screens */  
     }
     .step-text {
       margin-right: 0;
@@ -184,5 +187,47 @@
     }
     .step-img {
       margin: 0 auto;
+    }
+    /* Adjust the image size for all steps */
+    .step-img img {
+      max-width: 60%;   /* Reduced from 80% to 60% for a smaller image */
+      height: auto;
+    }
+    /* Adjust font sizes */
+    .step-text h3 {
+      font-size: 1.5rem;  /* Smaller heading */
+    }
+    .step-text p {
+      font-size: 1rem;    /* Slightly smaller paragraph text */
+      text-align: center;
+    }
+
+    .driver-howto {
+      max-width: 100%;
+      padding: 40px 10px;
+      margin: 20px auto;
+    }
+    .driver-howto h2 {
+      font-size: 1.8rem;      /* Reduce heading size */
+      transform: none;        /* Remove the left translation */
+      margin-bottom: 20px;
+      text-align: center;     /* Ensure it's centered */
+    }
+    /* Adjust driver-features section */
+    .driver-features {
+      padding: 40px 10px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .driver-features h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    /* Adjust feature grid to a single column */
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 10px;
     }
   }
