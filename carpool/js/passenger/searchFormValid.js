@@ -44,8 +44,8 @@ function fetchAvailableRides() {
 
 document.addEventListener('DOMContentLoaded', function () {
     // ** REMEMBER UNCOMMENT IN PRESENTATION**
-    // const today = new Date().toISOString().split("T")[0];
-    // document.getElementById("date").min = today;
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("date").min = today;
     document.getElementById('pickup').addEventListener('change', fetchAvailableRides);
     document.getElementById('dropoff').addEventListener('change', fetchAvailableRides);
     document.getElementById('date').addEventListener('change', fetchAvailableRides);

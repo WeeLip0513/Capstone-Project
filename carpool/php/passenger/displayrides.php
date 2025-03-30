@@ -176,22 +176,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $types .= 's';
     }
     // ** COMMENT IT**
-    if ($date !== "") {
-        $sql .= " AND r.date = ?";
-        $params[] = $date;
-        $types .= 's';
-    }
-     // ** REMEMBER UNCOMMENT IN PRESENTATION**
-    // if ($date === "") {
-    //     $today = date('Y-m-d');
-    //     $sql .= " AND r.date >= ?";
-    //     $params[] = $today;
-    //     $types .= 's';
-    // } else {
+    // if ($date !== "") {
     //     $sql .= " AND r.date = ?";
     //     $params[] = $date;
     //     $types .= 's';
     // }
+     // ** REMEMBER UNCOMMENT IN PRESENTATION**
+    if ($date === "") {
+        $today = date('Y-m-d');
+        $sql .= " AND r.date >= ?";
+        $params[] = $today;
+        $types .= 's';
+    } else {
+        $sql .= " AND r.date = ?";
+        $params[] = $date;
+        $types .= 's';
+    }
     if ($time !== "") {
         $sql .= " AND r.time = ?";
         $params[] = $time;
