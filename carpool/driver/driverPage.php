@@ -744,6 +744,14 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
                 </div>
               </div>
             </div>
+            <div class="profilerow">
+              <div class="profiledelete">
+                <h3>Destroy Account:</h3>
+                <div class="delete-account">
+                  <button id="deleteDriver" class="deleteAccount">Delete Account</button>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- Edit Profile Modal -->
           <div id="editProfileModal" class="modal">

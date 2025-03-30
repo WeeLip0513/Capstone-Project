@@ -80,7 +80,7 @@
   width: 300px;
   height: 180px;
   padding: 0;
-  /* margin-bottom: 20px; */
+  margin-bottom: 20px;
   margin-top: 20px;
 }
 
@@ -254,6 +254,34 @@ span{
 .modal-content button:hover {
   background-color: rgb(25, 75, 149);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.profiledelete{
+  flex-direction: column;
+}
+/* .delete-account{
+   display: flex;
+} */
+
+.deleteAccount {
+   margin-top: 10px;
+   background-color: rgb(197, 13, 13);
+   color: white;
+   border: none;
+   padding: 10px 8px;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 15px;
+   transition: 0.3s ease;
+   margin-bottom: 8px;
+}
+
+.delete-account p{
+   font-size: 14px;
+}
+
+.deleteAccount:hover {
+   background-color: rgba(197, 13, 13, 0.648);
 }
 
 @media screen and (max-width: 1220px) {

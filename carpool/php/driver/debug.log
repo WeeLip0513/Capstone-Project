@@ -196,3 +196,37 @@ Checking conflict for: Date=2025-04-01, Time=06:00:00
 Conflicts Found: [{"ride_id":125,"ride_date":"2025-04-01","ride_time":"07:00","pickup":"sri_petaling","dropoff":"apu"}]
 Checking conflict for: Date=2025-04-01, Time=07:00:00
 Conflicts Found: [{"ride_id":125,"ride_date":"2025-04-01","ride_time":"07:00","pickup":"sri_petaling","dropoff":"apu"}]
+Checking conflict for: Date=2025-04-05, Time=06:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-02, Time=09:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-03, Time=07:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-03-31, Time=07:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-03-30, Time=07:30:00
+Conflicts Found: []
+Checking conflict for: Date=2025-03-30, Time=13:45:00
+Conflicts Found: []
+Checking conflict for: Date=2025-03-30, Time=12:00:00
+Conflicts Found: [{"ride_id":125,"ride_date":"2025-03-30","ride_time":"13:45","pickup":"pav_bukit_jalil","dropoff":"apu"}]
+Checking conflict for: Date=2025-03-30, Time=09:30:00
+Conflicts Found: [{"ride_id":124,"ride_date":"2025-03-30","ride_time":"07:30","pickup":"lrt_bukit_jalil","dropoff":"apu"}]
+Checking conflict for: Date=2025-03-30, Time=10:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-02, Time=07:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-03, Time=09:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-04, Time=12:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-05, Time=10:15:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-01, Time=18:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-04, Time=21:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-02, Time=21:25:00
+Conflicts Found: []
+Checking conflict for: Date=2025-03-31, Time=10:00:00
+Conflicts Found: []
