@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     prevButton.addEventListener('click', slidePrev);
 
     // Modal open/close using no-scroll class
-    function openModal(title, description, subtitle = 'Carpool Benefits', imageUrl = '/api/placeholder/400/400', details = '') {
+    function openModal(title, description, subtitle = 'Carpool Benefits') {
         modalTitle.textContent = title;
         modalDescription.textContent = description;
         modalSubtitle.textContent = subtitle;
@@ -95,10 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // Animate slider to next card
         slideNext();
         // After slider animation (300ms), update modal content to the next card
-        setTimeout(() => {
-            currentModalIndex = (currentModalIndex + 1) % cardCount;
-            updateModalContent();
-        }, 300);
+        // setTimeout(() => {
+        //     currentModalIndex = (currentModalIndex + 1) % cardCount;
+        //     updateModalContent();
+        // }, 300);
     }
 
     // Card click events

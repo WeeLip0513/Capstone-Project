@@ -1,11 +1,17 @@
     /* *{ border: 2px solid red;} */
-
+    html, body {
+        overflow: hidden;
+    }
     .container{
         scroll-snap-type: y mandatory;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 100vh;
         scrollbar-width: none; /* For Firefox */
         -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
     }
     
     section {
@@ -171,6 +177,7 @@
     .form-group textarea {
         min-height: 100px;
         resize: vertical;
+        padding-bottom: 30px;
     }
 
     .form-group small {
@@ -193,6 +200,16 @@
     #char-count.limit-reached {
         color: #e74c3c; /* Red for at/over limit */
         font-weight: bold;
+    }
+    
+    #char-count {
+        position: absolute;
+        bottom: 10px;
+        right: 15px;
+        font-size: 0.8rem;
+        color: #888;
+        z-index: 1;
+        pointer-events: none;
     }
     
     /* Submit button styling */
@@ -355,25 +372,33 @@
     }
 
     /* 768px and below (tablet portrait) */
-    @media (max-width: 768px) {
-        .feedback-form {
-            padding: 1.5rem;
+    @media (max-width: 700px) {
+        body {
+            font-size: 14px;
         }
-
+    
+        .page-header h2 {
+            font-size: 40px;
+        }
+    
+        .page-header .subtext {
+            font-size: 18px;
+        }
+    
+        .page-description p,
+        .page-description p .small-header {
+            font-size: 16px;
+        }
+    
+        .form-group label {
+            font-size: 16px;
+        }
+    
         .feedback-form h3 {
-            font-size: 28px;
-        }
-
-        .btn-submit {
-            font-size: 1rem;
-            padding: 0.75rem;
-        }
-
-        .nav-links {
-            flex-direction: column;
-            align-items: flex-start;
+            font-size: 24px;
         }
     }
+    
 
     /* 480px and below (mobile) */
     @media (max-width: 480px) {
