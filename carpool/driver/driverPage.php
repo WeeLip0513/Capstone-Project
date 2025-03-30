@@ -494,6 +494,7 @@ $_SESSION['driver_id'] = $driverID;
               FROM ride 
               WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
               AND status = 'completed' 
+              AND driver_id = '$driverID'
               ORDER BY date ASC;";
 
       $result = $conn->query($sql);
@@ -760,6 +761,14 @@ $_SESSION['driver_id'] = $driverID;
                 </div>
               </div>
             </div>
+            <div class="profilerow">
+              <div class="profiledelete">
+                <h3>Destroy Account:</h3>
+                <div class="delete-account">
+                  <button id="deleteDriver" class="deleteAccount">Delete Account</button>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- Edit Profile Modal -->
           <div id="editProfileModal" class="modal">
@@ -776,6 +785,19 @@ $_SESSION['driver_id'] = $driverID;
               </form>
             </div>
           </div>
+
+          <div id="passwordResetModal" class="resetpassmodal" style="display: none !important;">
+            <div class="resetpassmodal-content">
+              <!-- <span class="close-modal">&times;</span> -->
+              <p id="modal-message">Processing<span class="dots">
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
 
           <div class="modal" id="editLicenseModal">
             <div class="modal-content">

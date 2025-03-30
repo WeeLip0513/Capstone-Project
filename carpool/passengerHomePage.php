@@ -29,15 +29,15 @@ include("headerHomepage.php");
                 <div class="step-container">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/driver1.jpg" 
-                            alt="Save Time" 
+                            src="image/homepage/passenger1.jpg" 
+                            alt="passenger1" 
                             class="step-image"
                         >
                     </div>
                     <div class="step-text">
                         <div class="step-header">
                             <div class="step-number">1</div>
-                            <h2 class="step-title">Request a Ride</h2>
+                            <h2 class="step-title">Search for Rides</h2>
                         </div>
                         <p class="step-description">
                             Open the APool app or website and navigate to the "Request Ride" section.
@@ -51,15 +51,15 @@ include("headerHomepage.php");
                 <div class="step-container reverse">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/driver1.jpg" 
-                            alt="Confirm and ride with APool" 
+                            src="image/homepage/passenger2.jpg" 
+                            alt="passenger2" 
                             class="step-image"
                         >
                     </div>
                     <div class="step-text">
                         <div class="step-header">
                             <div class="step-number">2</div>
-                            <h2 class="step-title">Confirm & Ride</h2>
+                            <h2 class="step-title">Book & Pay</h2>
                         </div>
                         <p class="step-description">
                             Once a driver accepts your request, confirm the pickup details and wait 
@@ -74,15 +74,15 @@ include("headerHomepage.php");
                 <div class="step-container">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/driver1.jpg" 
-                            alt="Rate and pay for your APool ride" 
+                            src="image/homepage/passenger3.jpg" 
+                            alt="passenger3" 
                             class="step-image"
                         >
                     </div>
                     <div class="step-text">
                         <div class="step-header">
                             <div class="step-number">3</div>
-                            <h2 class="step-title">Rate & Pay</h2>
+                            <h2 class="step-title">Rate Your Ride</h2>
                         </div>
                         <p class="step-description">
                             After completing your journey, you'll be prompted to rate your driver and 

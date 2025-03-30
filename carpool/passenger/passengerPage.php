@@ -111,7 +111,7 @@ $conn->close();
                 <label for="availablerides">Search Rides</label>
                 <input type="radio" name="tabs" id="tab3">
                 <label for="tab3">Rides History</label>
-                <input type="radio" name="tabs" id="tab4">
+                <input type="radio" name="tabs" id="tab4" >
                 <label for="tab4">My Profile</label>
                 <div class="glider"></div>
             </div>

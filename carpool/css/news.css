@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica;
+  /* font-family: Arial, Helvetica; */
   background-color: black;
   color: white;
 }
@@ -135,7 +135,7 @@ margin-left: 30px;
 /* Center and style the NEWS header */
 .news-header {
   text-align: center;
-  margin-top: 250px;  
+  margin-top: 400px;  
 }
 
 /* Make the text large, bold, and white */

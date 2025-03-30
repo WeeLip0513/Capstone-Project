@@ -80,7 +80,7 @@
   width: 300px;
   height: 180px;
   padding: 0;
-  /* margin-bottom: 20px; */
+  margin-bottom: 20px;
   margin-top: 20px;
 }
 
@@ -254,6 +254,91 @@ span{
 .modal-content button:hover {
   background-color: rgb(25, 75, 149);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.profiledelete{
+  flex-direction: column;
+}
+/* .delete-account{
+   display: flex;
+} */
+
+.deleteAccount {
+   margin-top: 10px;
+   background-color: rgb(197, 13, 13);
+   color: white;
+   border: none;
+   padding: 10px 8px;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 15px;
+   transition: 0.3s ease;
+   margin-bottom: 8px;
+}
+
+.delete-account p{
+   font-size: 14px;
+}
+
+.deleteAccount:hover {
+   background-color: rgba(197, 13, 13, 0.648);
+}
+
+
+.resetpassmodal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 9999;
+}
+
+.resetpassmodal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  height: 80px;
+  max-width: 400px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.dots .dot {
+  opacity: 0;
+  animation: blink 1.4s infinite both;
+}
+
+.dots .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+
+  0%,
+  80%,
+  100% {
+      opacity: 0;
+  }
+
+  40% {
+      opacity: 1;
+  }
 }
 
 @media screen and (max-width: 1220px) {

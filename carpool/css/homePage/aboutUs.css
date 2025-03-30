@@ -316,7 +316,7 @@ img{
 
 @media(max-width: 768px){
     .introduction {
-        padding: 150px 40px 0px;
+        padding: 245px 40px 0px;
     }
     
     .introduction h1 {
@@ -331,9 +331,9 @@ img{
         width: 250px;
     }
     
-    .intro-description {
+    /* .intro-description {
         padding-bottom: 250px;
-    }
+    } */
     
     .about-us {
         padding: 60px 40px;
@@ -391,20 +391,18 @@ img{
 
 @media(max-width: 480px){
     .introduction {
-        flex-direction: column;
-        padding: 120px 20px 0px;
+        padding: 280px 20px 0px;
     }
     
     .introduction h1 {
-        font-size: 32px;
+        font-size: 50px;
         padding-right: 0;
-        padding-bottom: 20px;
     }
     
-    .intro-description {
-        padding-bottom: 180px;
-        padding: 0 20px 180px;
+    .logo-image img{
+        width: 180px;
     }
+
     
     .about-us {
         padding: 50px 20px;

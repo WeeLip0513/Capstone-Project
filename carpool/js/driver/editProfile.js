@@ -171,3 +171,29 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.target === licenseModal) closeModal(licenseModal);
   };
 });
+
+document.getElementById("deleteDriver").addEventListener("click", function () {
+  if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      fetch("../php/driver/deleteDriver.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: "action=delete"
+      })
+      .then(response => response.text())
+      .then(data => {
+          console.log("Server Response:", data);
+          if (data.trim() === "success") {
+              alert("Your account has been deleted successfully.");
+              window.location.href = "../homepage.php"; // Redirect after deletion
+          } else {
+              alert("Error: " + data); // Show exact error message
+          }
+      })
+      .catch(error => {
+          console.error("Fetch Error:", error);
+          alert("Error deleting account. Please try again.");
+      });
+  }
+});

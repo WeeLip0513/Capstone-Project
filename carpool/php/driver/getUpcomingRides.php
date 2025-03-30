@@ -27,7 +27,7 @@ $sql = "SELECT id, date, DATE_FORMAT(date, '%W') AS day,
         AND status = 'upcoming' 
         AND date >= ?  -- From the start of this week
         AND date <= ?  -- Until the end of next week (inclusive)
-        ORDER BY date, time ASC";
+        ORDER BY date ASC, time DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("iss", $driver_id, $startOfThisWeek, $endOfNextWeek);
