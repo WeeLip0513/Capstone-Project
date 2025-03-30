@@ -74,6 +74,50 @@ session_start();
 </section>
 
 
+<section class="driver-features">
+    <h2>What You Can Do as a Driver</h2>
+    <div class="feature-grid">
+      
+      <!-- Feature 1 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/car2.png" alt="Manage Vehicles Icon">
+        </div>
+        <h3>Manage Vehicles</h3>
+        <p>Add multiple vehicles to your profile and choose which one to use for each ride.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/address.png" alt="Create Rides Icon">
+        </div>
+        <h3>Create Rides</h3>
+        <p>Set up one-time or recurring rides with your preferred routes, times, and pricing.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/money.png" alt="Track Earnings Icon">
+        </div>
+        <h3>Track Earnings</h3>
+        <p>Monitor your income and withdraw your earnings directly to your bank account.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="image/news/profile.png" alt="Manage Profile Icon">
+        </div>
+        <h3>Manage Profile</h3>
+        <p>Keep your driver details up to date and maintain your driver verification status.</p>
+      </div>
+
+    </div>
+</section>
+
+
 </body>
 </html>
 <?php include('footer.php'); ?>

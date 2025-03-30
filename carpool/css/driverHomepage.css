@@ -108,6 +108,70 @@
     transform: scale(1.02); /* Enlarge image on hover */
   }
 
+  .driver-features {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+
+  .driver-features h2 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-bottom: 80px;
+    color: #fff;
+  }
+
+  /* ========== FEATURE GRID ========== */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    justify-items: center; /* Centers items in each column */
+  }
+
+  /* ========== FEATURE CARD ========== */
+  .feature-card {
+    background-color: #141824;  /* Slightly lighter than the background */
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;           /* Controls the max width of each card */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .feature-icon {
+    margin-bottom: 20px;
+  }
+
+  .feature-icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+    text-align: justify;
+  }
+
   @media (max-width: 768px) {
     .step {
       flex-direction: column;
