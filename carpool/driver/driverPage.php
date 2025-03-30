@@ -785,6 +785,19 @@ $_SESSION['driver_id'] = $driverID;
             </div>
           </div>
 
+          <div id="passwordResetModal" class="resetpassmodal" style="display: none !important;">
+            <div class="resetpassmodal-content">
+              <!-- <span class="close-modal">&times;</span> -->
+              <p id="modal-message">Processing<span class="dots">
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                  <span class="dot">.</span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+
           <div class="modal" id="editLicenseModal">
             <div class="modal-content">
               <span class="close">&times;</span>
