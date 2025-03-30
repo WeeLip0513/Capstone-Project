@@ -494,6 +494,7 @@ $_SESSION['driver_id'] = $driverID;
               FROM ride 
               WHERE date BETWEEN '$last_sunday' AND '$last_saturday'
               AND status = 'completed' 
+              AND driver_id = '$driverID'
               ORDER BY date ASC;";
 
       $result = $conn->query($sql);
