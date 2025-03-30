@@ -3,6 +3,10 @@ session_start();
 include("../dbconn.php");
 include("../rideHeader.php");
 
+
+
+$passenger_id = $_GET['passenger_id'];
+$_SESSION['passengerID'] = $passenger_id;
 $ride_id = $_GET['ride_id'];
 $_SESSION['rideID'] = $ride_id;
 // echo($_SESSION['rideID']);
@@ -57,6 +61,23 @@ $ride_details_json = json_encode([
   "passenger" => $passengerCount
 ]);
 
+// $ride_id = $_GET['ride_id'] ?? null;
+$sql = "SELECT COUNT(*) as count 
+        FROM passenger_transaction pt
+        JOIN ride r ON pt.ride_id = r.id
+        WHERE pt.ride_id = ? 
+          AND pt.status = 'complete' 
+          AND r.status = 'completed'
+          AND pt.ride_rating IS NULL";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $ride_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$pending_ratings = $result->fetch_assoc()['count'];
+
+$showRatingModal = ($pending_ratings > 0) ? "true" : "false";
+
+
 // echo($_SESSION["driverID"]);
 ?>
 
@@ -74,6 +95,7 @@ $ride_details_json = json_encode([
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ride</title>
   <link rel="stylesheet" href="../css/ridePage/viewRide.css">
+  <link rel="stylesheet" href="../css/ridePage/rating.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -106,10 +128,31 @@ $ride_details_json = json_encode([
     </div>
   </div>
 
+  <div id="ratingModal" class="rating-modal">
+    <div class="rating-modal-content">
+      <h3>Rate Your Ride</h3>
+      <h4>You have reached your destination</h4>
+      <div id="starContainer" class="star-container">
+        <span class="star" data-rating="1">★</span>
+        <span class="star" data-rating="2">★</span>
+        <span class="star" data-rating="3">★</span>
+        <span class="star" data-rating="4">★</span>
+        <span class="star" data-rating="5">★</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Pass PHP data to JS -->
   <script id="dropOffData" type="application/json"><?php echo $drop_off_json; ?></script>
   <script id="pickUpData" type="application/json"><?php echo $pick_up_json; ?></script>
   <script id="rideDetailsData" type="application/json"><?php echo $ride_details_json; ?></script>
+
+  <script>
+    var showRatingModal = <?php echo json_encode($showRatingModal); ?>;
+    var passengerID = <?php echo json_encode($passenger_id); ?>;
+    var rideID = <?php echo json_encode($ride_id); ?>;
+    console.log("showRatingModal:", showRatingModal, "rideID:", rideID, "passenger ID:", passengerID);
+  </script>
 
   <!-- Load JS first -->
   <!-- <script src="../js/ride/map.js"></script> -->
@@ -120,6 +163,7 @@ $ride_details_json = json_encode([
     async defer></script>
 
   <script src="../js/passenger/viewRide.js"></script>
+  <script src="../js/passenger/rating.js"></script>
 
   <script>
     const reachPickUpBtn = document.getElementById("reachPickUp");
@@ -130,6 +174,8 @@ $ride_details_json = json_encode([
     startBtn.style.visibility = "hidden";
     arrivedBtn.style.visibility = "hidden";
   </script>
+
+
 </body>
 
 </html>

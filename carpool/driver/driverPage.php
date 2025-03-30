@@ -200,6 +200,22 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
         alert('✅ Your restriction has been lifted. You can now accept rides again.');
   </script>";
 }
+// handle refund
+$query = "SELECT s.session_id 
+          FROM stripe_sessions s 
+          JOIN passenger_transaction pt ON s.transaction_id = pt.id 
+          JOIN ride r ON pt.ride_id = r.id 
+          WHERE r.driver_id = ?
+          ORDER BY r.date DESC, r.time DESC
+          LIMIT 1";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $driverID);
+$stmt->execute();
+$stmt->bind_result($sessionId);
+$stmt->fetch();
+$stmt->close();
+
+$_SESSION['driver_id'] = $driverID;
 ?>
 
 <!DOCTYPE html>
@@ -464,7 +480,7 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
         </div>
         <div class="confirmationBtn">
           <button onclick="submitForm()">Confirm</button>
-          <button onclick="hideConfirmation()">Cancel</button>
+          <button onclick="hideConfirmation()" id="refund">Cancel</button>
         </div>
       </div>
       <?php
@@ -801,7 +817,10 @@ if ($current_status === 'restricted' && ($penalty_end_date === $today || $penalt
       </div>
     </div>
 
-
+    <script>
+      var stripeSessionId = "<?php echo isset($sessionId) ? $sessionId : ''; ?>";
+      console.log("Global stripeSessionId:", stripeSessionId);
+    </script>
     <script src="../js/driver/upcomingRide.js" defer></script>
     <script src="../js/driver/addRide.js" defer></script>
     <script src="../js/driver/addHistoryRides.js" defer></script>

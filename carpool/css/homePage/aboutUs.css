@@ -85,7 +85,7 @@ img{
     color: #2b83ff;
     text-align: center;
     padding-bottom: 20px;
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 .mission-vision-des h2{
     color: white;
@@ -98,7 +98,7 @@ img{
 }
 .mission-vision-des p{
     color: #cecdcd;
-    text-align: justify;
+    text-align: center;
     line-height: 2.0;
     font-size: 17.5px;
 }
@@ -118,7 +118,7 @@ img{
 
 .core-elements{
     display: flex;
-    gap: 5rem;
+    gap: 3.3rem;
     justify-content: center;
 }
 .element{
@@ -126,7 +126,7 @@ img{
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     display: flex; /* Flexbox to align content */
     flex-direction: column;
-    flex: 0 0 280px;
+    flex: 0 0 262px;
     position: relative;
     min-height: 280px;
     justify-content: center; /* Center items vertically */
@@ -199,55 +199,268 @@ img{
     color: #a0a0a0;
 }
 
-@media(max-width:1220px){
-    .introduction {
-        padding: 250px 100px 0px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+/* Existing CSS remains as is - adding responsive rules below */
+
+@media(max-width: 1220px){
+    .about-image img{
+        width: 300px;
     }
     
-    .introduction h1 {
-        font-size: 60px;
-        color: white;
-        padding-right: 20px;
+    .core-elements {
+        gap: 2.5rem;
     }
     
-    img {
-        width: 260px;
-    }
-    
-    .intro-description h3 {
-        color: #a0a0a0;
-        text-align: center;
+    .element {
+        flex: 0 0 220px;
+        min-height: 220px;
     }
     
     .about-us {
-        padding: 140px 100px;
-        background-color: #1e1e1e;
+        padding: 100px 80px;
+    }
+    
+    .our-story {
+        padding-left: 60px;
+    }
+
+    .member{
+        flex: 0 0 250px;
+    }
+}
+
+@media(max-width: 992px){
+    .introduction {
+        padding: 200px 60px 0px;
+    }
+    
+    .introduction h1 {
+        font-size: 48px;
     }
     
     .about-des {
-        display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
     }
     
-    .about-des img {
-        width: 450px;
+    .our-story {
+        padding-left: 0;
+        padding-top: 40px;
+        text-align: center;
     }
     
-    .mission-vision-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+    .our-story p {
+        text-align: justify;
+        font-size: 14px;
     }
     
-    .core-elements, .member-row, .member-row-2 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+    .about-us {
+        padding: 80px 60px;
+    }
+    
+    .mission-vision-container {
+        padding: 100px 60px;
+    }
+    
+    .mission-vision-des {
+        padding: 0 60px;
+    }
+
+    .mission-vision-des h1 {
+        font-size: 2.5rem;
+    }
+    
+    .mission-vision-des h2{
+        font-size: 1.5rem;
+    }
+    
+    .mission-vision-des p{
+        font-size: 14px;
+        text-align: justify;
+    }
+
+    
+    .core-values-container {
+        padding: 120px 60px;
+    }
+    
+    .core-elements {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
+    }
+    
+    .our-team-container {
+        padding: 120px 60px;
+    }
+    
+    .our-team {
+        padding: 0 60px;
+    }
+    
+    .member-row, .member-row-2 {
+        gap: 2rem;
+    }
+    
+    .member {
+        flex: 0 0 230px;
+    }
+
+    .member h3{
+        font-size: 16px;
+    }
+
+    .member p{
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 768px){
+    .introduction {
+        padding: 150px 40px 0px;
+    }
+    
+    .introduction h1 {
+        font-size: 36px;
+    }
+    
+    img {
+        width: 200px;
+    }
+    
+    .about-image img {
+        width: 250px;
+    }
+    
+    .intro-description {
+        padding-bottom: 250px;
+    }
+    
+    .about-us {
+        padding: 60px 40px;
+    }
+    
+    .our-story h1 {
+        font-size: 2rem;
+    }
+    
+    .mission-vision-container {
+        padding: 80px 40px;
+    }
+    
+    .mission-vision-des {
+        padding: 0 30px;
+    }
+    
+    .core-values-container {
+        padding: 100px 40px;
+    }
+    
+    .core-values h1 {
+        padding: 0 40px;
+        font-size: 2rem;
+        padding-bottom: 30px;
+    }
+    
+    .member-row, .member-row-2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .member-row-2 {
+        padding-top: 20px;
+    }
+    
+    .member {
+        flex: 0 0 auto;
+        width: 80%;
+    }
+    
+    .our-team-container {
+        padding: 100px 40px;
+    }
+    
+    .our-team {
+        padding: 0 30px;
+    }
+    
+    .our-team h1 {
+        font-size: 2rem;
+    }
+}
+
+@media(max-width: 480px){
+    .introduction {
+        flex-direction: column;
+        padding: 120px 20px 0px;
+    }
+    
+    .introduction h1 {
+        font-size: 32px;
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+    
+    .intro-description {
+        padding-bottom: 180px;
+        padding: 0 20px 180px;
+    }
+    
+    .about-us {
+        padding: 50px 20px;
+    }
+    
+    .about-us p {
+        font-size: 16px;
+    }
+    
+    .mission-vision-container {
+        padding: 60px 20px;
+    }
+    
+    .mission-vision-des {
+        padding: 0 15px;
+    }
+    
+    .mission-vision-des h1 {
+        font-size: 1.5rem;
+    }
+    
+    .mission-vision-des p {
+        font-size: 16px;
+    }
+    
+    .core-values-container {
+        padding: 80px 20px;
+    }
+    
+    .core-values h1 {
+        padding: 0 15px;
+    }
+    
+    .core-elements {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .element {
+        min-height: 180px;
+    }
+    
+    .element i {
+        font-size: 40px;
+        padding-bottom: 30px;
+    }
+    
+    .our-team-container {
+        padding: 80px 20px;
+    }
+    
+    .our-team {
+        padding: 0 15px;
+    }
+    
+    .member {
+        width: 100%;
     }
 }

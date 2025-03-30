@@ -112,7 +112,6 @@ include("headerHomepage.php");
                     id="feedback" 
                     name="feedback_message" 
                     placeholder="Tell us what you think about our carpooling service..." 
-                    maxlength="100"
                     required
                     ></textarea>
                     <div id="char-count">0/100</div>
@@ -211,60 +210,68 @@ include("headerHomepage.php");
         </section>
     </div>
     <script>
-        //submit form
-        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(this);
-
-        fetch('support.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-            alert(data.message); 
-            this.reset();
-            } else {
-            alert(data.message); 
-            }
-        })
-
-        .catch(err => {
-            alert("Error submitting feedback.");
-            console.error(err);
-        });
-        }); 
-        
-        // Word count functionality
         const feedbackInput = document.getElementById("feedback");
-        const charCount = document.getElementById("char-count");
+const charCount = document.getElementById("char-count");
 
-        feedbackInput.addEventListener("input", () => {
-            // Count words by splitting on whitespace and filtering out empty strings
-            const words = feedbackInput.value.trim().split(/\s+/).filter(word => word !== "");
-            const wordCount = words.length;
+feedbackInput.addEventListener("input", () => {
+    let text = feedbackInput.value.trim();
+
+    // Split into words safely
+    let words = text === "" ? [] : text.split(/\s+/);
+    let wordCount = words.length;
+
+    // Limit to exactly 100 words
+    if (wordCount > 100) {
+        words = words.slice(0, 100);
+        feedbackInput.value = words.join(" ") + " ";
+        wordCount = 100;
+    }
+
+    charCount.textContent = `${wordCount}/100`;
+
+    if (wordCount > 90 && wordCount < 100) {
+        charCount.className = "limit-near";
+    } else if (wordCount === 100) {
+        charCount.className = "limit-reached";
+    } else {
+        charCount.className = "";
+    }
+});
+
+
+        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+            e.preventDefault();
             
-            // Update the word count display
-            charCount.textContent = `${wordCount}/100`;
+            const text = feedbackInput.value;
+            const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
             
-            // Add styling based on word count
-            if (wordCount > 90 && wordCount <= 100) {
-                charCount.className = "limit-near";
-            } else if (wordCount > 100) {
-                charCount.className = "limit-reached";
-                // Trim to 100 words if exceeded
-                const limitedWords = words.slice(0, 100);
-                feedbackInput.value = limitedWords.join(" ");
-                // Update count after trimming
-                charCount.textContent = "100/100";
-            } else {
-                charCount.className = "";
+            if (wordCount > 100) {
+                alert("Please limit your feedback to 100 words.");
+                return;
             }
+
+            const formData = new FormData(this);
+
+            fetch('support.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    this.reset();
+                    charCount.textContent = "0/100";
+                } else {
+                    alert(data.message); 
+                }
+            })
+            .catch(err => {
+                alert("Error submitting feedback.");
+                console.error(err);
+            });
         });
 
-        //faq section
         const faqs = document.querySelectorAll("details");
 
         faqs.forEach((faq) => {

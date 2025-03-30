@@ -225,7 +225,7 @@ function showCancelWarning(rideId, passengerCount) {
     <p><strong>Are you sure you want to <span style="color: red; font-weight: bold;">CANCEL</span> this ride?</strong></p>
   `;
 
-  let confirmFunction = `cancelWithPenalty(${rideId})`;
+  let confirmFunction = `cancelWithPenalty(${rideId},'${stripeSessionId}')`;
 
   // If there are no passengers, show a simpler warning and change the function
   if (passengerCount === 0) {
@@ -254,8 +254,8 @@ function hideWarning() {
   document.getElementById('rideTableContainer').style.display = "block";
 }
 
-function cancelWithPenalty(rideId) {
-  console.log("Canceling: ",rideId);
+function cancelWithPenalty(rideId, stripeSessionId) {
+  console.log("Canceling: ", rideId);
   hideWarning();
 
   fetch('../php/driver/cancelRideWithPenalty.php', {
@@ -266,17 +266,26 @@ function cancelWithPenalty(rideId) {
     .then(response => response.json())
     .then(data => {
       if (data.status === "success") {
-        alert("✅ Ride canceled successfully. Penalty applied.");
-        fetchUpcomingRides();
+        if (stripeSessionId) {
+          return processRefund(stripeSessionId).then(() => data);
+        }
+        return data;
       } else {
-        alert("❌ Failed to cancel ride: " + data.message);
+        throw new Error("Cancellation failed: " + data.message);
       }
     })
-    .catch(error => console.error('❌ Error canceling ride:', error));
+    .then(data => {
+      alert("✅ Ride canceled successfully" + (stripeSessionId ? " and refund processed." : "."));
+      fetchUpcomingRides();
+    })
+    .catch(error => {
+      console.error("❌ Error in cancellation process:", error);
+      alert("❌ " + error.message);
+    });
 }
 
 function cancelWithoutPenalty(rideId) {
-  console.log("Caceling without penalty: ",rideId)
+  console.log("Canceling without penalty: ", rideId)
   hideWarning();
 
   fetch('../php/driver/cancelRide.php', {
@@ -288,12 +297,21 @@ function cancelWithoutPenalty(rideId) {
     .then(data => {
       if (data.status === "success") {
         alert("✅ Ride canceled successfully.");
-        fetchUpcomingRides();
+        return fetch(`../php/passenger/paymentRefund.php?session_id=${encodeURIComponent(stripeSessionId)}`);
       } else {
-        alert("❌ Failed to cancel ride: " + data.message);
+        throw new Error("Cancellation failed: " + data.message);
       }
     })
-    .catch(error => console.error('❌ Error canceling ride:', error));
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        console.log("Refund processed successfully.");
+        fetchUpcomingRides();
+      } else {
+        alert("❌ Failed to process refund: " + data.message);
+      }
+    })
+    .catch(error => console.error('❌ Error in cancellation process:', error));
 }
 
 
@@ -314,7 +332,7 @@ function startRide(rideId) {
 
   // Check if the ride time is in 12-hour format and convert it to 24-hour format
   let [rideHour, rideMinute] = ride.time.split(":").map(num => parseInt(num, 10));
-  
+
   // Handle if hour is a single digit, assuming it's in 12-hour format and AM
   if (rideHour < 10) {
     rideHour += 12;  // Convert single digit hour (e.g., 1 -> 13)
@@ -343,19 +361,47 @@ function startRide(rideId) {
   }
 
   fetch('../php/driver/startRide.php', {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `ride_id=${rideId}`
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `ride_id=${rideId}`
   })
-  .then(response => response.json())
-  .then(data => {
+    .then(response => response.json())
+    .then(data => {
       if (data.status === "success") {
-          window.location.href = `ridePage.php?ride_id=${rideId}`;
+        window.location.href = `ridePage.php?ride_id=${rideId}`;
       } else {
-          alert("❌ Failed to start ride: " + data.message);
+        alert("❌ Failed to start ride: " + data.message);
       }
+    })
+    .catch(error => console.error('❌ Error starting ride:', error));
+}
+
+
+function processRefund(stripeSessionId) {
+  if (!stripeSessionId) {
+    console.log("DEBUG: No Stripe session ID provided; skipping refund.");
+    return Promise.resolve(null);
+  }
+  const refundUrl = `../php/passenger/paymentRefund.php?session_id=${encodeURIComponent(stripeSessionId)}`;
+  console.log("DEBUG: Calling refund endpoint at:", refundUrl);
+  return fetch(refundUrl, {
+    method: "GET",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }
   })
-  .catch(error => console.error('❌ Error starting ride:', error));
+    .then(response => {
+      console.log("DEBUG: Refund endpoint response received.");
+      return response.json();
+    })
+    .then(data => {
+      console.log("DEBUG: Response from paymentRefund:", data);
+      if (data.success) {
+        console.log("DEBUG: Refund processed successfully.");
+        return data;
+      } else {
+        console.log("Successfully requested refund. The refund amount will be credited into your account in 3 to 5 working days.");
+        return data;
+      }
+    });
 }
 
 
