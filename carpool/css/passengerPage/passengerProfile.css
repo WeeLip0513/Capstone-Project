@@ -316,10 +316,10 @@
 
 /* For screens smaller than 480px (e.g., small phones) */
 @media screen and (max-width: 480px) {
-    .profile-container {
+    /* .profile-container {
         padding: 5px;
         max-width: 400px;
-    }
+    } */
 
     .profile-card h2 {
         font-size: 23px;
@@ -338,10 +338,10 @@
     }
 
     .modal-content {
-        width: 40%;
         padding: 10px;
-        margin-left: 50px;
+        margin-left: 43px;
         margin-top: 80px;
     }
+    
 }
 
