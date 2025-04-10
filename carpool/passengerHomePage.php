@@ -29,7 +29,7 @@ include("headerHomepage.php");
                 <div class="step-container">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/passenger1.jpg" 
+                            src="image/homepage/passenger2.jpg" 
                             alt="passenger1" 
                             class="step-image"
                         >
@@ -51,7 +51,7 @@ include("headerHomepage.php");
                 <div class="step-container reverse">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/passenger2.jpg" 
+                            src="image/homepage/passenger3.jpg" 
                             alt="passenger2" 
                             class="step-image"
                         >
@@ -74,7 +74,7 @@ include("headerHomepage.php");
                 <div class="step-container">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/passenger3.jpg" 
+                            src="image/homepage/passenger5.png" 
                             alt="passenger3" 
                             class="step-image"
                         >

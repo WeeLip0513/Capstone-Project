@@ -292,3 +292,15 @@ Checking conflict for: Date=2025-04-03, Time=10:00:00
 Conflicts Found: []
 Checking conflict for: Date=2025-04-04, Time=10:05:00
 Conflicts Found: []
+Checking conflict for: Date=2025-04-16, Time=11:05:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-11, Time=10:05:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-11, Time=12:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-11, Time=15:00:00
+Conflicts Found: []
+Checking conflict for: Date=2025-04-11, Time=14:00:00
+Conflicts Found: [{"ride_id":140,"ride_date":"2025-04-11","ride_time":"15:00","pickup":"apu","dropoff":"lrt_bukit_jalil"}]
+Checking conflict for: Date=2025-04-11, Time=15:00:00
+Conflicts Found: []

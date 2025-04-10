@@ -95,7 +95,7 @@ try {
                 error_log("DEBUG: Error updating passenger_transaction for transaction_id " . $transaction_id);
             }
             mysqli_stmt_close($stmt_update1);
-        } elseif ($refund->status == 'pending') {
+        } elseif ($refund->status == 'requesting') {
             $update2 = "UPDATE passenger_transaction SET status = 'requesting' WHERE id = ?";
             $stmt_update2 = mysqli_prepare($conn, $update2);
             mysqli_stmt_bind_param($stmt_update2, "i", $transaction_id);
