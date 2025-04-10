@@ -29,7 +29,7 @@ include("headerHomepage.php");
                 <div class="step-container">
                     <div class="image-container">
                         <img 
-                            src="image/homepage/passenger1.jpg" 
+                            src="image/homepage/searchRides.png" 
                             alt="passenger1" 
                             class="step-image"
                         >
