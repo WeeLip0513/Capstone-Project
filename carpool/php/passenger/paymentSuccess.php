@@ -9,7 +9,7 @@ $stripe_secret_key = "sk_test_51R4itsICYgzkaiaB2pjFAClhJIHxtD74dimmn0DkCl9OEHAyQ
 /* Update rides after successful payment */
 function updateRidesAfterPayment($conn, $session_id) {
     // Get all transaction IDs linked to this session
-    $stmt = $conn->prepare("SELECT transaction_id FROM stripe_sessions WHERE session_id = ?");
+    $stmt = $conn->prepare("SELECT transaction_id  FROM stripe_sessions WHERE session_id = ?");
     $stmt->bind_param("s", $session_id);
     $stmt->execute();
     $result = $stmt->get_result();

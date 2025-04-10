@@ -117,8 +117,8 @@ try {
 
     if ($refund->status === 'succeeded') {
         $update = "UPDATE passenger_transaction SET status = 'refunded' WHERE id = ?";
-    } elseif ($refund->status === 'pending') {
-        $update = "UPDATE passenger_transaction SET status = 'pending' WHERE id = ?";
+    } elseif ($refund->status === 'requesting') {
+        $update = "UPDATE passenger_transaction SET status = 'requesting' WHERE id = ?";
     } else {
         error_log("Refund failed: " . $refund->status);
         echo json_encode(["status" => "error", "message" => "Refund failed, status: " . $refund->status]);

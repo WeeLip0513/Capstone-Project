@@ -39,7 +39,7 @@ try {
             WHERE pt.passenger_id = ? 
             AND (
                 (pt.status = 'complete' AND r.status = 'completed') 
-                OR (pt.status IN ('requested', 'refunded') AND r.status = 'canceled')
+                OR (pt.status IN ('refunded') AND r.status = 'canceled')
             ) 
             ORDER BY r.date DESC, r.time DESC";
 

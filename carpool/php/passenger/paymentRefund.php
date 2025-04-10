@@ -29,7 +29,7 @@ try {
     $session_id = $_GET['session_id'];
     error_log("DEBUG: Received session_id: " . $session_id);
     
-    // Retrieve the stripe_sessions record to obtain the transaction id
+    // Retrieve the stripe_sessions record to obtain the transaction ids
     $query = "SELECT * FROM stripe_sessions WHERE session_id = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $session_id);
@@ -43,8 +43,8 @@ try {
         ]);
         exit;
     }
-    $transaction_id = $stripeSession['transaction_id'];
-    error_log("DEBUG: Found transaction_id: " . $transaction_id);
+    $transaction_ids = explode(",", $stripeSession['transaction_id']);  // Assuming multiple transaction IDs are stored as a comma-separated list
+    error_log("DEBUG: Found transaction_ids: " . json_encode($transaction_ids));
     mysqli_stmt_close($stmt);
     
     // Include Stripe's PHP library and set the API key
@@ -63,7 +63,7 @@ try {
     error_log("DEBUG: Payment Intent object: " . json_encode($payment_intent));
 
     if (!empty($payment_intent->charges->data)) {
-        // Use the first charge in the list
+        // Use the first charge in the list (can also loop over charges if needed)
         $charge_id = $payment_intent->charges->data[0]->id;
     } else if (isset($payment_intent->latest_charge)) {
         // Fallback to latest_charge property if available
@@ -74,43 +74,56 @@ try {
     
     error_log("DEBUG: Charge id: " . $charge_id);
     
-    // Create a refund using the Stripe API
-    $refund = \Stripe\Refund::create([
-        'charge' => $charge_id,
-    ]);
-    error_log("DEBUG: Refund created, status: " . $refund->status);
+    // Refund each transaction related to the session
+    $refund_success = true;
+    $refund_message = '';
     
-    if ($refund->status == 'succeeded') {
-        // Update the passenger_transaction table for the corresponding transaction only
-        $update1 = "UPDATE passenger_transaction SET status = 'refunded' WHERE id = ?";
-        $stmt_update1 = mysqli_prepare($conn, $update1);
-        mysqli_stmt_bind_param($stmt_update1, "i", $transaction_id);
-        mysqli_stmt_execute($stmt_update1);
-        mysqli_stmt_close($stmt_update1);
-    
+    foreach ($transaction_ids as $transaction_id) {
+        // Create a refund using the Stripe API
+        $refund = \Stripe\Refund::create([
+            'charge' => $charge_id,
+        ]);
+        error_log("DEBUG: Refund created, status: " . $refund->status);
+
+        if ($refund->status == 'succeeded') {
+            // Update the passenger_transaction table for the corresponding transaction only
+            $update1 = "UPDATE passenger_transaction SET status = 'refunded' WHERE id = ?";
+            $stmt_update1 = mysqli_prepare($conn, $update1);
+            mysqli_stmt_bind_param($stmt_update1, "i", $transaction_id);
+            $execute_success = mysqli_stmt_execute($stmt_update1);
+            if (!$execute_success) {
+                error_log("DEBUG: Error updating passenger_transaction for transaction_id " . $transaction_id);
+            }
+            mysqli_stmt_close($stmt_update1);
+        } elseif ($refund->status == 'pending') {
+            $update2 = "UPDATE passenger_transaction SET status = 'requesting' WHERE id = ?";
+            $stmt_update2 = mysqli_prepare($conn, $update2);
+            mysqli_stmt_bind_param($stmt_update2, "i", $transaction_id);
+            $execute_success = mysqli_stmt_execute($stmt_update2);
+            if (!$execute_success) {
+                error_log("DEBUG: Error updating passenger_transaction for transaction_id " . $transaction_id);
+            }
+            mysqli_stmt_close($stmt_update2);
+        } else {
+            $refund_success = false;
+            $refund_message = 'Refund failed for transaction_id ' . $transaction_id . ', status: ' . $refund->status;
+            break;
+        }
+    }
+
+    if ($refund_success) {
         echo json_encode([
             'success' => true,
-            'message' => 'Refund processed successfully'
+            'message' => 'Refund processed successfully for all transactions'
         ]);
-        exit;
-    } elseif ($refund->status == 'pending') {
-        $update2 = "UPDATE passenger_transaction SET status = 'pending' WHERE id = ?";
-        $stmt_update2 = mysqli_prepare($conn, $update2);
-        mysqli_stmt_bind_param($stmt_update2, "i", $transaction_id);
-        mysqli_stmt_execute($stmt_update2);
-        mysqli_stmt_close($stmt_update2);
-        echo json_encode([
-            'success' => true,
-            'message' => 'Refund is pending and will be completed shortly.'
-        ]);
-        exit;
     } else {
         echo json_encode([
             'success' => false,
-            'message' => 'Refund failed, status: ' . $refund->status
+            'message' => $refund_message
         ]);
-        exit;
     }
+    exit;
+
 } catch (Exception $e) {
     ob_clean();
     error_log("Refund error: " . $e->getMessage());
