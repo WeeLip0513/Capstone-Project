@@ -93,7 +93,7 @@ try {
             'message' => 'Refund processed successfully'
         ]);
         exit;
-    } elseif ($refund->status == 'pending') {
+    } elseif ($refund->status == 'requesting') {
         $update2 = "UPDATE passenger_transaction SET status = 'pending' WHERE id = ?";
         $stmt_update2 = mysqli_prepare($conn, $update2);
         mysqli_stmt_bind_param($stmt_update2, "i", $transaction_id);

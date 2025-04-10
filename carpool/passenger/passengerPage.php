@@ -427,7 +427,7 @@ $conn->close();
                 .then(data => {
                     console.log(data); // Debugging
 
-                    if ((data.status === "refunded" || data.status === "pending") && showCount < 2) {
+                    if ((data.status === "refunded" || data.status === "requesting") && showCount < 2) {
                         let message = (data.status === "refunded")
                             ? "Your ride has been canceled. The refund has been processed. Check History!"
                             : "Your ride has been canceled. The refund is still pending.";
