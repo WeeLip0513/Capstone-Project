@@ -193,22 +193,22 @@ include("headerHomepage.php");
                     <div class="slider">
                         <div class="slide-track">
                             <div class="slide">
-                                <img src="image/homepage/passenger1.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger1.jpg" alt="Passenger Features">
                             </div>
                             <div class="slide">
-                                <img src="image/homepage/passenger2.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger2.jpg" alt="Passenger Features">
                             </div>
                             <div class="slide">
-                                <img src="image/homepage/passenger3.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger3.jpg" alt="Passenger Features">
                             </div>
                             <div class="slide">
-                                <img src="image/homepage/passenger4.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger4.jpg" alt="Passenger Features">
                             </div>
                             <div class="slide">
-                                <img src="image/homepage/passenger5.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger5.png" alt="Passenger Features">
                             </div>
                             <div class="slide">
-                                <img src="image/homepage/passenger6.jpg" alt="Driver Features">
+                                <img src="image/homepage/passenger6.jpg" alt="Passenger Features">
                             </div>
                         </div>
                     </div>
