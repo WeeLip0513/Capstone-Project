@@ -3,7 +3,7 @@ session_start();
 include("../../dbconn.php");
 include("../../payment/vendor/autoload.php");
 
-$stripe_secret_key = "sk_test_51R4itsICYgzkaiaB2pjFAClhJIHxtD74dimmn0DkCl9OEHAyQUb4eM797FyOgFmrj58R3xvNHGnyzn5xE3a25xj800PCRUFhvq";
+$stripe_secret_key = "YOUR SECRET KEY";
 \Stripe\Stripe::setApiKey($stripe_secret_key);
 
 /* Update rides after successful payment */

@@ -60,7 +60,7 @@ try {
     if (isset($_POST['action']) && $_POST['action'] == 'proceed_to_payment') {
         require_once '../../payment/vendor/autoload.php';
         
-        $stripe_secret_key = "sk_test_51R4itsICYgzkaiaB2pjFAClhJIHxtD74dimmn0DkCl9OEHAyQUb4eM797FyOgFmrj58R3xvNHGnyzn5xE3a25xj800PCRUFhvq";
+        $stripe_secret_key = "YOUR SECRET KEY";
         \Stripe\Stripe::setApiKey($stripe_secret_key);
 
         // Fetch ride details for rides in the cart

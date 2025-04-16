@@ -4,7 +4,7 @@ session_start();
 header("Content-Type: application/json");
 
 require_once '../../payment/vendor/autoload.php';
-\Stripe\Stripe::setApiKey("sk_test_51R4itsICYgzkaiaB2pjFAClhJIHxtD74dimmn0DkCl9OEHAyQUb4eM797FyOgFmrj58R3xvNHGnyzn5xE3a25xj800PCRUFhvq");
+\Stripe\Stripe::setApiKey("YOUR SECRET KEY");
 
 // Step 1: Validate POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
